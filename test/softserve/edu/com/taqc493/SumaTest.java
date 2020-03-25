@@ -60,8 +60,8 @@ public class SumaTest {
 	
 	@Test
 	public final void testCountSum3() {
-		ISuma suma3 = new Suma(12345, 4);
-		Assert.assertEquals(14, suma3.countSum());
+		ISuma suma3 = new Suma(12345, 5);
+		Assert.assertEquals(15, suma3.countSum());
 		System.out.println("\tCountSum3 " );
 	}
 	
@@ -70,6 +70,36 @@ public class SumaTest {
 		ISuma suma4 = new Suma(4321, 3);
 		Assert.assertEquals(6, suma4.countSum());
 		System.out.println("\tCountSum4 " );
+	}
+
+	/*
+	 * check Exception
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public final void testCountSum5() throws IllegalArgumentException {
+		ISuma suma1 = new Suma(-12345, 6);
+		suma1.countSum();
+		System.out.println("\tException");
+	}
+	
+	/*
+	 * check Exception
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public final void testCountSum6() throws IllegalArgumentException {
+		ISuma suma1 = new Suma(0, 0);
+		suma1.countSum();
+		System.out.println("\tException");
+	}
+	
+	/*
+	 * check Exception
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public final void testCountSum7() throws IllegalArgumentException {
+		ISuma suma7 = new Suma(12345, 0);
+		suma7.countSum();
+		System.out.println("\tException");
 	}
 
 }
