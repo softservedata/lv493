@@ -8,7 +8,7 @@ package kryvenko.sergii.automation.tasks108;
 public final class Task108 {
 
     /** Natural number. */
-    private static final int N = 1;
+    private static final int N = 15;
 
     /** Default constructor. */
     private Task108() {
