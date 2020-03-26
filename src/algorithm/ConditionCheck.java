@@ -46,10 +46,6 @@ public final class ConditionCheck {
      */
     public int findNumbersCountLessThanCondition() {
 
-        if (numbers.size() == 0) {
-            throw new IllegalArgumentException();
-        }
-
         int count = 0;
         for (int i = 1; i < numbers.size() - 1; i++) {
             if (numbers.get(i) < (numbers.get(i - 1) + numbers.get(i + 1))
@@ -83,10 +79,6 @@ public final class ConditionCheck {
      * @return count of elements that match the condition
      */
     public int findNumbersCountBetweenConditions() {
-
-        if (numbers.size() == 0) {
-            throw new IllegalArgumentException();
-        }
 
         int count = 0;
 

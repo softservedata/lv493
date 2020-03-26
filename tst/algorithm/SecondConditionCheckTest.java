@@ -7,8 +7,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import algorithm.ConditionCheck;
-
 /**
  * Class with test methods of ConditionCheck class that check condition: element
  * less than factorial of sequence number and more than 2^sequence number.
@@ -45,18 +43,10 @@ public class SecondConditionCheckTest {
      * Test negative scenario that means finding elements that match condition
      * in empty array.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNegativePathWithEmptyArray() {
         List<Integer> list = Arrays.asList();
         ConditionCheck condCheck = new ConditionCheck(list);
         condCheck.findNumbersCountBetweenConditions();
     }
-    /**
-     * Test negative scenario with null value as array.
-     */
-    @Test(expected = NullPointerException.class)
-    public void testNegativePathWithNull() {
-        ConditionCheck condCheck = new ConditionCheck(null);
-    }
-
 }
