@@ -1,4 +1,4 @@
-package lv493Selen;
+package com.softserve.edu;
 
 import java.util.concurrent.TimeUnit;
 
