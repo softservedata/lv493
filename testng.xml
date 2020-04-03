@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Suite01">
+
+	<test thread-count="5" name="Test01a">
+		<classes>
+			<class name="com.softserve.testng.AppTest" />
+			<class name="com.softserve.testng.TestNGTest4" />
+		</classes>
+	</test> <!-- Test -->
+
+	<test name="Test01b">
+		<classes>
+			<class name="com.softserve.testng.AppTest">
+				<methods>
+					<include name="check2" />
+					<include name="check1" />
+				</methods>
+			</class>
+			<class name="com.softserve.testng.TestNGTest2">
+				<methods>
+					<include name="divisionWithException" />
+				</methods>
+			</class>
+		</classes>
+	</test> <!-- Test -->
+
+</suite> <!-- Suite -->
