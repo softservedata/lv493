@@ -287,11 +287,11 @@ public class SearchTest {
 		// Steps
 		// Add to Cart
 		driver.findElement(By.xpath("//a[text()='iPhone 3']/../../following-sibling::div/button[contains(@onclick, 'cart.add')]")).click();
-		//Thread.sleep(1000); // For Presentation Only
+		Thread.sleep(1000); // For Presentation Only
 		//
 		// Check
 		WebElement alert1 = driver.findElement(By.xpath("//div[contains(@class, 'alert')]"));
-		Thread.sleep(1000); // For Presentation Only
+		//Thread.sleep(1000); // For Presentation Only
 		System.out.println("alert.getText(): " + alert1.getText()); // Error, Element not present in DOM
 		Assert.assertTrue(alert1.getAttribute("class").contains("success"));
 		Assert.assertTrue(alert1.getText().contains("Success"));
