@@ -7,14 +7,25 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-public class AcademyTest {
+import io.github.bonigarcia.wdm.WebDriverManager;
 
-	@Test
+public class AcademyTest {
+	
+	@BeforeSuite
+	public void beforeSuite() {
+		WebDriverManager.chromedriver().setup();
+		//WebDriverManager.firefoxdriver().setup();
+		//System.out.println("@BeforeSuite class SecondNg beforeSuite()");
+	}
+	
+	//@Test
 	public void unsuccessfulLogin() throws Exception {
-		System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
+		//System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
@@ -98,6 +109,33 @@ public class AcademyTest {
 		Assert.assertTrue(alert.getText().contains(expected));
 		// */
 		// driver.close();
+		driver.quit();
+	}
+	
+	@Test
+	public void checkScroll() throws Exception {
+//		System.setProperty("webdriver.chrome.driver",
+//				this.getClass().getResource("/chromedriver-windows-32bit.exe").getPath());
+		WebDriver driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		Thread.sleep(1000); // For Presentation Only
+		//
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.get("https://selenium.dev/downloads/");
+		Thread.sleep(1000); // For Presentation Only
+		//
+		WebElement linkProject = driver.findElement(By.cssSelector(".button-container a"));
+		//
+		// Scrolling by Action class
+//		Actions action = new Actions(driver);		
+//		action.moveToElement(linkProject).perform();
+//		Thread.sleep(1000); // For Presentation Only
+		//
+		// Scrolling by JavaScript injection
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", linkProject);
+		Thread.sleep(10000); // For Presentation Only
+		//
+		Thread.sleep(4000); // For Presentation Only
 		driver.quit();
 	}
 }

@@ -7,23 +7,40 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class SearchTest {
 	private static WebDriver driver;
 
+	@BeforeSuite
+	public void beforeSuite() {
+		WebDriverManager.chromedriver().setup();
+		//WebDriverManager.firefoxdriver().setup();
+		//System.out.println("@BeforeSuite class SecondNg beforeSuite()");
+	}
+	
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
 		System.out.println("@BeforeClass");
 		//System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
-		System.setProperty("webdriver.chrome.driver",
-				SearchTest.class.getResource("/chromedriver-windows-32bit.exe").getPath());
+//		System.setProperty("webdriver.chrome.driver",
+//				SearchTest.class.getResource("/chromedriver-windows-32bit.exe").getPath());
+		//System.out.println("+++webdriver.chrome.driver = " + System.getProperty("webdriver.chrome.driver"));
+		//System.out.println("+++webdriver.gecko.driver = " + System.getProperty("webdriver.gecko.driver"));
+		//System.out.println("+++webdriver.chrome.driver = " + System.getenv().get("webdriver.chrome.driver"));
+		//
 		driver = new ChromeDriver();
+		//driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		// driver.manage().window().maximize();
 	}
@@ -287,7 +304,12 @@ public class SearchTest {
 		// Steps
 		// Add to Cart
 		driver.findElement(By.xpath("//a[text()='iPhone 3']/../../following-sibling::div/button[contains(@onclick, 'cart.add')]")).click();
-		Thread.sleep(1000); // For Presentation Only
+		//Thread.sleep(1000); // For Presentation Only
+		//
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		(new WebDriverWait(driver, 10))
+        	.until(ExpectedConditions.stalenessOf(alert));
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		//
 		// Check
 		WebElement alert1 = driver.findElement(By.xpath("//div[contains(@class, 'alert')]"));

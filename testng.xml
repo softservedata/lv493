@@ -3,8 +3,9 @@
 
 <suite name="Suite1">
 
-	<test name="Test1a">
+	<test name="Test01a">
 		<classes>
+			<class name="com.softserve.edu.AppTest" />
 			<class name="com.softserve.edu.SearchTest">
 				<methods>
 					<include name="checkCart" />
