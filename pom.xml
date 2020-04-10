@@ -81,6 +81,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>htmlunit-driver</artifactId>
+			<version>${org.seleniumhq.selenium.htmlunit-driver}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.codeborne</groupId>
+			<artifactId>phantomjsdriver</artifactId>
+			<version>${com.codeborne.phantomjsdriver.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
 			<version>${io.github.bonigarcia.version}</version>
