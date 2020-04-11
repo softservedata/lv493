@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="TestAll">
 
-<suite name="Suite1">
+    <test name="catalog">
+        <classes>
+            <class name="com.softserve.edu.CategoriesMenuEqualsTest" />
+            <class name="com.softserve.edu.CategoryTest" />
+        </classes>
+    </test>
 
-	<test name="Test1a">
-		<classes>
-			<class name="com.softserve.edu.SearchTest">
-				<methods>
-					<include name="checkCart" />
-				</methods>
-			</class>
-		</classes>
-	</test> <!-- Test -->
 
-</suite> <!-- Suite -->
+</suite>

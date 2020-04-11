@@ -1,5 +1,7 @@
 # Compiled class file
 *.class
+# Testing data
+newCategories.json
 
 # Log file
 *.log
@@ -27,6 +29,7 @@ hs_err_pid*
 
 # Config Files
 *.ini
+*.properties
 
 # Binary Files
 *.dat
