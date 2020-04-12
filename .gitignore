@@ -89,9 +89,10 @@ hs_err_pid*
 
 # Ignore Picture
 *.bmp
-# *.png
+*.png
 *.jpg
 *.jpeg
+*.gif
 
 # Ignore doc/notes.txt, but not doc/info/arch.txt
 # doc/*.txt
