@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Suite_KryvenkoSergii">
+	<test name="Test">
+		<parameter name="waitTime" value="5" />
+		<parameter name="url" value="192.168.88.128" />
+		<parameter name="couponCode" value="123456" />
+		<parameter name="certificateCode" value="123654" />
+		<parameter name="itemToDelete" value="Nikon D300" />
+		<parameter name="itemToSearch" value="Nikon D300" />
+		<classes>
+			<class name="sergii.kryvenko.selenium.testng.OpenCartTestNG">
+				<methods>
+					<include name = "addItem" />
+					<include name = "changeQuantityItemInCart" />
+					<include name = "serachAndAddItem" />
+					<include name = "deleteItemPosition" />
+					<include name = "useCoupon" />
+					<include name = "useCertificate" />
+					<include name = "fillEstimateShipping" />
+					<include name = "finishOrder" />
+				</methods>
+			</class>
+		</classes>
+	</test> <!-- Test -->
+</suite> <!-- Suite -->
