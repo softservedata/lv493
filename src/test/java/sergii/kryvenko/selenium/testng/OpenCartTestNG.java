@@ -36,7 +36,6 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import sergii.kryvenko.selenium.AppTest;
 
 public class OpenCartTestNG {
 
