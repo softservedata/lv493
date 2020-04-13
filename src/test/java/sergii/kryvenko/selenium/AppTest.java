@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -113,458 +114,458 @@ public class AppTest {
         }
     }
 
-//    /**
-//     * Add to shopping cart 'MacBook'.
-//     */
-//    @Test
-//    public void addMacBook() {
-//
-//        System.out.println(
-//                "--------------------------Begin add MackBook to cart");
-//        String nameItem = "MacBook";
-//        String xpathForAddToCart = "//a[text()='" + nameItem
-//                + "']/../../following-sibling::div/button[contains(@onclick, 'cart.add')]";
-//        String cssSelectorToAlert = "div[class*='alert']";
-//        driver.findElement(By.xpath(xpathForAddToCart)).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(
-//                By.cssSelector(cssSelectorToAlert)));
-//        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
-//                .getText();
-//        System.out.println("\t@ " + alert);
-//        Assert.assertTrue(alert.contains("Success"));
-//        Assert.assertTrue(alert.contains("MacBook"));
-//
-//    }
-//
-//    /**
-//     * Add to shopping cart 'iPhone'.
-//     */
-//    @Test
-//    public void addIPhone() {
-//
-//        System.out
-//                .println("--------------------------Begin add iPhone to cart");
-//        String nameItem = "iPhone";
-//        String xpathForAddToCart = "//a[text()='" + nameItem
-//                + "']/../../following-sibling::div/button[contains(@onclick, 'cart.add')]";
-//        String cssSelectorToAlert = "div[class*='alert']";
-//        driver.findElement(By.xpath(xpathForAddToCart)).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(
-//                By.cssSelector(cssSelectorToAlert)));
-//        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
-//                .getText();
-//        System.out.println("\t@ " + alert);
-//        Assert.assertTrue(alert.contains("Success"));
-//        Assert.assertTrue(alert.contains("iPhone"));
-//    }
-//
-//    /**
-//     * Change in shopping cart quantity 'MacBook' items on 15.
-//     */
-//    @Test
-//    public void changeQuantityMacBookInCart() {
-//
-//        System.out.println("---------------Go to shoping cart--");
-//        String nameItem = "MacBook";
-//        String xpathForTextBoxQuantity = "//img[@title='" + nameItem
-//                + "']/../../following-sibling::td//input[@type='text']";
-//        String xpathForButtonUpdate = "//img[@title='" + nameItem
-//                + "']/../../following-sibling::td//button[@data-original-title='Update']";
-//        String xpathForButtonRemove = "//img[@title='" + nameItem
-//                + "']/../../following-sibling::td//button[@data-original-title='Remove']";
-//        String cssSelectorToAlert = "div[class*='alert']";
-//
-//        driver.findElement(
-//                By.cssSelector("#top-links a[title*='Shopping Cart']")).click();
-//        // finding field with quantity
-//        driver.findElement(By.xpath(xpathForTextBoxQuantity)).clear();
-//        driver.findElement(By.xpath(xpathForTextBoxQuantity)).sendKeys("15");
-//        driver.findElement(By.xpath(xpathForButtonUpdate)).click();
-//
-//        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
-//                .getText();
-//        System.out.println("\t@ " + alert);
-//        Assert.assertTrue(alert.contains("Success"));
-//
-//        int currentQuantity = Integer
-//                .parseInt(driver.findElement(By.xpath(xpathForTextBoxQuantity))
-//                        .getAttribute("value"));
-//        Assert.assertEquals(15, currentQuantity);
-//
-//    }
-//
-//    /**
-//     * Delete in shopping cart 'iPhone' position.
-//     */
-//    @Test
-//    public void deleteIPhonePosition() {
-//
-//        System.out.println("---------------Remove iPhone from shoping cart--");
-//        String nameItem = "iPhone";
-//        String xpathForTextBoxQuantity = "//img[@title='" + nameItem
-//                + "']/../../following-sibling::td//input[@type='text']";
-//        String xpathForButtonUpdate = "//img[@title='" + nameItem
-//                + "']/../../following-sibling::td//button[@data-original-title='Update']";
-//        String xpathForButtonRemove = "//img[@title='" + nameItem
-//                + "']/../../following-sibling::td//button[@data-original-title='Remove']";
-//
-//        driver.findElement(
-//                By.cssSelector("#top-links a[title*='Shopping Cart']")).click();
-//        wait.until(ExpectedConditions
-//                .visibilityOfElementLocated(By.xpath(xpathForButtonRemove)));
-//        // finding button 'remove' and clicking
-//        driver.findElement(By.xpath(xpathForButtonRemove)).click();
-//
-//        boolean actual = driver
-//                .findElement(By.xpath("//img[@title='" + nameItem + "']"))
-//                .isDisplayed();
-//        Assert.assertFalse(actual);
-//    }
-//
-//    /**
-//     * Use coupon (-15%) and check sum.
-//     */
-//    @Test
-//    public void useCoupon() {
-//
-//        System.out.println("---------------Use coupon --");
-//        String cssSelectorToAlert = "div[class*='alert']";
-//        driver.findElement(
-//                By.cssSelector("#top-links a[title*='Shopping Cart']")).click();
-//
-//        // Opened 'accordion' and entering a coupon's number in the textbox
-//        driver.findElement(By.cssSelector("a[href*='coupon']")).click();
-//        driver.findElement(By.cssSelector("input[name='coupon']")).clear();
-//        driver.findElement(By.cssSelector("input[name='coupon']"))
-//                .sendKeys(couponCode);
-//        driver.findElement(By.cssSelector("input[value='Apply Coupon']"))
-//                .click();
-//        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
-//                .getText();
-//        System.out.println("--------------" + alert);
-//        Assert.assertTrue(alert
-//                .contains("Success: Your coupon discount has been applied!"));
-//
-//        // Check number of coupon and sum discount
-//        String sumSubTotalString = driver.findElement(By.xpath(
-//                "//strong[text()='Sub-Total:']/../following-sibling::td[1]"))
-//                .getText();
-//        float sumSubTotal = Float
-//                .parseFloat(sumSubTotalString.replaceAll("[$,]", ""));
-//        System.out.println("------------------sumSubTotal = " + sumSubTotal);
-//
-//        String couponString = driver
-//                .findElement(By.xpath("//strong[text()='Coupon (" + couponCode
-//                        + "):']/../following-sibling::td[1]"))
-//                .getText();
-//        float sumDiscountCoupon = Float
-//                .parseFloat(couponString.replaceAll("[$-,]", ""));
-//        System.out.println(
-//                "------------------sumDiscountCoupon = " + sumDiscountCoupon);
-//        float expected = (float) (-sumSubTotal * 0.15);
-//        System.out.println("---------------expected = " + expected);
-//
-//        Assert.assertEquals(expected, sumDiscountCoupon, 0.01);
-//
-//    }
-//
-//    /**
-//     * Use gift certificate (1000$) and check sum.
-//     */
-//    @Test
-//    public void useCertificate() {
-//
-//        System.out.println("---------------Use gift certificate--");
-//        String cssSelectorToAlert = "div[class*='alert']";
-//        driver.findElement(
-//                By.cssSelector("#top-links a[title*='Shopping Cart']")).click();
-//
-//        // Opened 'accordion' and entering a certificate's number in the textbox
-//        driver.findElement(By.cssSelector("a[href*='voucher']")).click();
-//        driver.findElement(By.cssSelector("input[name='voucher']")).clear();
-//        driver.findElement(By.cssSelector("input[name='voucher']"))
-//                .sendKeys(certificateCode);
-//        driver.findElement(
-//                By.cssSelector("input[value='Apply Gift Certificate']"))
-//                .click();
-//        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
-//                .getText();
-//        System.out.println("--------------" + alert);
-//        Assert.assertTrue(alert.contains(
-//                "Success: Your gift certificate discount has been applied!"));
-//
-//        // Check number of certificate and sum discount
-//        String sumSubTotalString = driver.findElement(By.xpath(
-//                "//strong[text()='Sub-Total:']/../following-sibling::td[1]"))
-//                .getText();
-//        float sumSubTotal = Float
-//                .parseFloat(sumSubTotalString.replaceAll("[$,]", ""));
-//        System.out.println("------------------sumSubTotal = " + sumSubTotal);
-//
-//        String certificateString = driver
-//                .findElement(By.xpath("//strong[text()='Gift Certificate ("
-//                        + certificateCode + "):']/../following-sibling::td[1]"))
-//                .getText();
-//        float sumDiscountCertificate = Float
-//                .parseFloat(certificateString.replaceAll("[$-,]", ""));
-//        System.out.println("------------------sumDiscountCertificate = "
-//                + sumDiscountCertificate);
-//        float expected = (float) (-1000.00);
-//        System.out.println("---------------expected = " + expected);
-//
-//        Assert.assertEquals(expected, sumDiscountCertificate, 0.01);
-//
-//    }
-//
-//    // Fill Estimate Shipping & Taxes in shopping cart
-//    @Test
-//    public void fillEstimateShipping() {
-//
-//        System.out.println(
-//                "---------------Fill Estimate Shipping & Taxes in shopping cart--");
-//        String cssSelectorToAlert = "div[class*='alert']";
-//
-//        String selectedCountry = "Ukraine";
-//        String xpathPrintCountry = "//select[@id='input-country']//option[text()='"
-//                + selectedCountry + "']";
-//
-//        String selectedRegion = "Kyiv";
-//        String xpathPrintRegion = "//select[@id='input-zone']//option[text()='"
-//                + selectedRegion + "']";
-//
-//        String postCode = "12345";
-//
-//        driver.findElement(
-//                By.cssSelector("#top-links a[title*='Shopping Cart']")).click();
-//
-//        // Opened 'accordion' and filled need values
-//        try {
-//            driver.findElement(By.cssSelector("a[href*='shipping']")).click();
-//
-//            // selected need country
-//            driver.findElement(By.id("input-country")).click();
-//            new Select(driver.findElement(By.id("input-country")))
-//                    .selectByVisibleText(selectedCountry);
-//            System.out.println("------Selected country is " + driver
-//                    .findElement(By.xpath(xpathPrintCountry)).getText());
-//
-//            // selected need region
-//            new Select(driver.findElement(By.id("input-zone")))
-//                    .selectByVisibleText(selectedRegion);
-//            System.out.println("------Selected Region/State is "
-//                    + driver.findElement(By.xpath(xpathPrintRegion)).getText());
-//
-//            // filled the postcode
-//            driver.findElement(By.name("postcode")).click();
-//            driver.findElement(By.name("postcode")).clear();
-//            driver.findElement(By.name("postcode")).sendKeys(postCode);
-//            System.out.println("------Entered Post Code is " + driver
-//                    .findElement(By.name("postcode")).getAttribute("value"));
-//
-//            driver.findElement(By.id("button-quote")).click();
-//
-//            // chose "shipping method" in alert
-//            driver.findElement(By.name("shipping_method")).click();
-//            driver.findElement(By.id("button-shipping")).click();
-//            String alert = driver
-//                    .findElement(By.cssSelector(cssSelectorToAlert)).getText();
-//            System.out.println("\t@ " + alert);
-//            Assert.assertTrue(alert.contains("Success"));
-//
-//        } catch (NoSuchElementException e) {
-//            System.err
-//                    .println("Field 'Estimate Shipping & Taxes' doesn't exist");
-//        }
-//    }
-//
-//    // Finishing fill order
-//    @Test
-//    public void finishOrder() throws Exception {
-//        String firstName = "John";
-//        String lastName = "Shepard";
-//        String company = "freelancer";
-//        String address1 = "USA";
-//        String address2 = "England";
-//        String city = "London";
-//        String postcode = "123456";
-//        String country = "United Kingdom";
-//        String region = "Cambridgeshire";
-//        String commentInOrder = "Comments About Your Order";
-//
-//        String productName1 = "iPhone";
-//        String productName2 = "MacBook";
-//
-//        driver.findElement(By.cssSelector("a[href*='route=checkout/checkout']"))
-//                .click();
-//
-//        // Step 2: Billing Details
-//        // chose radiobutton 'I want to use a new address'
-//        driver.findElement(
-//                By.cssSelector("#collapse-payment-address input[value='new']"))
-//                .click();
-//        driver.findElement(By.id("input-payment-firstname"))
-//                .sendKeys(firstName);
-//        {
-//            driver.findElement(By.id("input-payment-lastname")).clear();
-//            driver.findElement(By.id("input-payment-company")).clear();
-//            driver.findElement(By.id("input-payment-address-1")).clear();
-//            driver.findElement(By.id("input-payment-address-2")).clear();
-//            driver.findElement(By.id("input-payment-city")).clear();
-//            driver.findElement(By.id("input-payment-postcode")).clear();
-//        }
-//        driver.findElement(By.id("input-payment-lastname")).sendKeys(lastName);
-//        driver.findElement(By.id("input-payment-company")).sendKeys(company);
-//        driver.findElement(By.id("input-payment-address-1")).sendKeys(address1);
-//        driver.findElement(By.id("input-payment-address-2")).sendKeys(address2);
-//        driver.findElement(By.id("input-payment-city")).sendKeys(city);
-//        driver.findElement(By.id("input-payment-postcode")).sendKeys(postcode);
-//
-//        // selected need country
-//        driver.findElement(By.id("input-payment-country")).click();
-//        new Select(driver.findElement(By.id("input-payment-country")))
-//                .selectByVisibleText(country);
-//
-//        // selected need region
-//        new Select(driver.findElement(By.id("input-payment-zone")))
-//                .selectByVisibleText(region);
-//
-//        // button 'Continue'
-//        driver.findElement(By.id("button-payment-address")).click();
-//
-//        // Step 3: Delivery Details
-//        // chose radiobutton 'I want to use a new address'
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By
-//                .cssSelector("#collapse-shipping-address input[value='new']")));
-//        driver.findElement(
-//                By.cssSelector("#collapse-shipping-address input[value='new']"))
-//                .click();
-//        {
-//            driver.findElement(By.id("input-shipping-firstname")).clear();
-//            driver.findElement(By.id("input-shipping-lastname")).clear();
-//            driver.findElement(By.id("input-shipping-company")).clear();
-//            driver.findElement(By.id("input-shipping-address-1")).clear();
-//            driver.findElement(By.id("input-shipping-address-2")).clear();
-//            driver.findElement(By.id("input-shipping-city")).clear();
-//            driver.findElement(By.id("input-shipping-postcode")).clear();
-//        }
-//        {
-//            driver.findElement(By.id("input-shipping-firstname"))
-//                    .sendKeys(firstName);
-//            driver.findElement(By.id("input-shipping-lastname"))
-//                    .sendKeys(lastName);
-//            driver.findElement(By.id("input-shipping-company"))
-//                    .sendKeys(company);
-//            driver.findElement(By.id("input-shipping-address-1"))
-//                    .sendKeys(address1);
-//            driver.findElement(By.id("input-shipping-address-2"))
-//                    .sendKeys(address2);
-//            driver.findElement(By.id("input-shipping-city")).sendKeys(city);
-//            driver.findElement(By.id("input-shipping-postcode"))
-//                    .sendKeys(postcode);
-//        }
-//
-//        // selected need country
-//        driver.findElement(By.id("input-shipping-country")).click();
-//        new Select(driver.findElement(By.id("input-shipping-country")))
-//                .selectByVisibleText(country);
-//
-//        // selected need region
-//        new Select(driver.findElement(By.id("input-shipping-zone")))
-//                .selectByVisibleText(region);
-//
-//        // button 'Continue'
-//        driver.findElement(By.id("button-shipping-address")).click();
-//
-//        // Step 4: Delivery Method. Add Comments
-//        driver.findElement(
-//                By.cssSelector("#collapse-shipping-method input[type='radio']"))
-//                .click();
-//        System.out.println("\tFlat Rate: " + driver
-//                .findElement(By
-//                        .xpath("//div[@id='collapse-shipping-method']//label"))
-//                .getText());
-//        driver.findElement(By.cssSelector(
-//                "#collapse-shipping-method textarea[name='comment']")).click();
-//        driver.findElement(By.cssSelector(
-//                "#collapse-shipping-method textarea[name='comment']"))
-//                .sendKeys(commentInOrder + " about Delivery Method");
-//        // button 'Continue'
-//        driver.findElement(By.id("button-shipping-method")).click();
-//
-//        // Step 5: Payment Method. Add Comments
-//        driver.findElement(
-//                By.cssSelector("#collapse-payment-method input[type='radio']"))
-//                .click();
-//        System.out.println("\tPayment method: " + driver
-//                .findElement(
-//                        By.xpath("//div[@id='collapse-payment-method']//label"))
-//                .getText());
-//        driver.findElement(By.cssSelector(
-//                "#collapse-payment-method textarea[name='comment']")).click();
-//        driver.findElement(By.cssSelector(
-//                "#collapse-payment-method textarea[name='comment']"))
-//                .sendKeys(commentInOrder + " about Payment Method");
-//        // checkbox 'Terms & Conditions'
-//        driver.findElement(By
-//                .cssSelector("#collapse-payment-method input[type='checkbox']"))
-//                .click();
-//
-//        // button 'Continue'
-//        driver.findElement(By.id("button-payment-method")).click();
-//
-//        // Step 6: Confirm Order
-//        {
-//            // print position with 'iPhone'
-//            String xpathProduct1 = "//div[@id='collapse-checkout-confirm']//a[text()='"
-//                    + productName1 + "']/../../td";
-//            List<WebElement> elementProduct1 = driver
-//                    .findElements(By.xpath(xpathProduct1));
-//            System.out
-//                    .print("Product Name: " + elementProduct1.get(0).getText());
-//            System.out.print("\tModel: " + elementProduct1.get(1).getText());
-//            System.out.print("\tQuantity: " + elementProduct1.get(2).getText());
-//            System.out
-//                    .print("\tUnit Price: " + elementProduct1.get(3).getText());
-//            System.out.println("\tTotal: " + elementProduct1.get(4).getText());
-//        }
-//        {
-//            // print position with 'MacBook'
-//            String xpathProduct2 = "//div[@id='collapse-checkout-confirm']//a[text()='"
-//                    + productName2 + "']/../../td";
-//            List<WebElement> elementProduct2 = driver
-//                    .findElements(By.xpath(xpathProduct2));
-//            System.out
-//                    .print("Product Name: " + elementProduct2.get(0).getText());
-//            System.out.print("\tModel: " + elementProduct2.get(1).getText());
-//            System.out.print("\tQuantity: " + elementProduct2.get(2).getText());
-//            System.out
-//                    .print("\tUnit Price: " + elementProduct2.get(3).getText());
-//            System.out.println("\tTotal: " + elementProduct2.get(4).getText());
-//        }
-//        {
-//            // print Total Sums
-//            String xpathTotalSums = "//strong[text()='Sub-Total:']/../../../tr";
-//            List<WebElement> elementTotalSums = driver
-//                    .findElements(By.xpath(xpathTotalSums));
-//            for (WebElement webElement : elementTotalSums) {
-//                int numElementDollar = webElement.getText().indexOf("$");
-//                System.out.print(
-//                        webElement.getText().substring(0, numElementDollar - 1)
-//                                + " ");
-//                System.out.println(Float.parseFloat(
-//                        webElement.getText().substring(numElementDollar + 1)
-//                                .replaceAll("[,]", "")));
-//            }
-//
-//        }
-//
-//        // button 'Confirm Order'
-//        driver.findElement(By.id("button-confirm")).click();
-//
-//        String text = driver.findElement(By.xpath("//div[@id='content']/p"))
-//                .getText();
-//        System.out.println(text);
-//    }
+    /**
+     * Add to shopping cart 'MacBook'.
+     */
+    @Test
+    public void addMacBook() {
+
+        System.out.println(
+                "--------------------------Begin add MackBook to cart");
+        String nameItem = "MacBook";
+        String xpathForAddToCart = "//a[text()='" + nameItem
+                + "']/../../following-sibling::div/button[contains(@onclick, 'cart.add')]";
+        String cssSelectorToAlert = "div[class*='alert']";
+        driver.findElement(By.xpath(xpathForAddToCart)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector(cssSelectorToAlert)));
+        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
+                .getText();
+        System.out.println("\t@ " + alert);
+        Assert.assertTrue(alert.contains("Success"));
+        Assert.assertTrue(alert.contains("MacBook"));
+
+    }
+
+    /**
+     * Add to shopping cart 'iPhone'.
+     */
+    @Test
+    public void addIPhone() {
+
+        System.out
+                .println("--------------------------Begin add iPhone to cart");
+        String nameItem = "iPhone";
+        String xpathForAddToCart = "//a[text()='" + nameItem
+                + "']/../../following-sibling::div/button[contains(@onclick, 'cart.add')]";
+        String cssSelectorToAlert = "div[class*='alert']";
+        driver.findElement(By.xpath(xpathForAddToCart)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector(cssSelectorToAlert)));
+        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
+                .getText();
+        System.out.println("\t@ " + alert);
+        Assert.assertTrue(alert.contains("Success"));
+        Assert.assertTrue(alert.contains("iPhone"));
+    }
+
+    /**
+     * Change in shopping cart quantity 'MacBook' items on 15.
+     */
+    @Test
+    public void changeQuantityMacBookInCart() {
+
+        System.out.println("---------------Go to shoping cart--");
+        String nameItem = "MacBook";
+        String xpathForTextBoxQuantity = "//img[@title='" + nameItem
+                + "']/../../following-sibling::td//input[@type='text']";
+        String xpathForButtonUpdate = "//img[@title='" + nameItem
+                + "']/../../following-sibling::td//button[@data-original-title='Update']";
+        String xpathForButtonRemove = "//img[@title='" + nameItem
+                + "']/../../following-sibling::td//button[@data-original-title='Remove']";
+        String cssSelectorToAlert = "div[class*='alert']";
+
+        driver.findElement(
+                By.cssSelector("#top-links a[title*='Shopping Cart']")).click();
+        // finding field with quantity
+        driver.findElement(By.xpath(xpathForTextBoxQuantity)).clear();
+        driver.findElement(By.xpath(xpathForTextBoxQuantity)).sendKeys("15");
+        driver.findElement(By.xpath(xpathForButtonUpdate)).click();
+
+        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
+                .getText();
+        System.out.println("\t@ " + alert);
+        Assert.assertTrue(alert.contains("Success"));
+
+        int currentQuantity = Integer
+                .parseInt(driver.findElement(By.xpath(xpathForTextBoxQuantity))
+                        .getAttribute("value"));
+        Assert.assertEquals(15, currentQuantity);
+
+    }
+
+    /**
+     * Delete in shopping cart 'iPhone' position.
+     */
+    @Test
+    public void deleteIPhonePosition() {
+
+        System.out.println("---------------Remove iPhone from shoping cart--");
+        String nameItem = "iPhone";
+        String xpathForTextBoxQuantity = "//img[@title='" + nameItem
+                + "']/../../following-sibling::td//input[@type='text']";
+        String xpathForButtonUpdate = "//img[@title='" + nameItem
+                + "']/../../following-sibling::td//button[@data-original-title='Update']";
+        String xpathForButtonRemove = "//img[@title='" + nameItem
+                + "']/../../following-sibling::td//button[@data-original-title='Remove']";
+
+        driver.findElement(
+                By.cssSelector("#top-links a[title*='Shopping Cart']")).click();
+        wait.until(ExpectedConditions
+                .visibilityOfElementLocated(By.xpath(xpathForButtonRemove)));
+        // finding button 'remove' and clicking
+        driver.findElement(By.xpath(xpathForButtonRemove)).click();
+
+        boolean actual = driver
+                .findElement(By.xpath("//img[@title='" + nameItem + "']"))
+                .isDisplayed();
+        Assert.assertFalse(actual);
+    }
+
+    /**
+     * Use coupon (-15%) and check sum.
+     */
+    @Test
+    public void useCoupon() {
+
+        System.out.println("---------------Use coupon --");
+        String cssSelectorToAlert = "div[class*='alert']";
+        driver.findElement(
+                By.cssSelector("#top-links a[title*='Shopping Cart']")).click();
+
+        // Opened 'accordion' and entering a coupon's number in the textbox
+        driver.findElement(By.cssSelector("a[href*='coupon']")).click();
+        driver.findElement(By.cssSelector("input[name='coupon']")).clear();
+        driver.findElement(By.cssSelector("input[name='coupon']"))
+                .sendKeys(couponCode);
+        driver.findElement(By.cssSelector("input[value='Apply Coupon']"))
+                .click();
+        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
+                .getText();
+        System.out.println("--------------" + alert);
+        Assert.assertTrue(alert
+                .contains("Success: Your coupon discount has been applied!"));
+
+        // Check number of coupon and sum discount
+        String sumSubTotalString = driver.findElement(By.xpath(
+                "//strong[text()='Sub-Total:']/../following-sibling::td[1]"))
+                .getText();
+        float sumSubTotal = Float
+                .parseFloat(sumSubTotalString.replaceAll("[$,]", ""));
+        System.out.println("------------------sumSubTotal = " + sumSubTotal);
+
+        String couponString = driver
+                .findElement(By.xpath("//strong[text()='Coupon (" + couponCode
+                        + "):']/../following-sibling::td[1]"))
+                .getText();
+        float sumDiscountCoupon = Float
+                .parseFloat(couponString.replaceAll("[$-,]", ""));
+        System.out.println(
+                "------------------sumDiscountCoupon = " + sumDiscountCoupon);
+        float expected = (float) (-sumSubTotal * 0.15);
+        System.out.println("---------------expected = " + expected);
+
+        Assert.assertEquals(expected, sumDiscountCoupon, 0.01);
+
+    }
+
+    /**
+     * Use gift certificate (1000$) and check sum.
+     */
+    @Test
+    public void useCertificate() {
+
+        System.out.println("---------------Use gift certificate--");
+        String cssSelectorToAlert = "div[class*='alert']";
+        driver.findElement(
+                By.cssSelector("#top-links a[title*='Shopping Cart']")).click();
+
+        // Opened 'accordion' and entering a certificate's number in the textbox
+        driver.findElement(By.cssSelector("a[href*='voucher']")).click();
+        driver.findElement(By.cssSelector("input[name='voucher']")).clear();
+        driver.findElement(By.cssSelector("input[name='voucher']"))
+                .sendKeys(certificateCode);
+        driver.findElement(
+                By.cssSelector("input[value='Apply Gift Certificate']"))
+                .click();
+        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
+                .getText();
+        System.out.println("--------------" + alert);
+        Assert.assertTrue(alert.contains(
+                "Success: Your gift certificate discount has been applied!"));
+
+        // Check number of certificate and sum discount
+        String sumSubTotalString = driver.findElement(By.xpath(
+                "//strong[text()='Sub-Total:']/../following-sibling::td[1]"))
+                .getText();
+        float sumSubTotal = Float
+                .parseFloat(sumSubTotalString.replaceAll("[$,]", ""));
+        System.out.println("------------------sumSubTotal = " + sumSubTotal);
+
+        String certificateString = driver
+                .findElement(By.xpath("//strong[text()='Gift Certificate ("
+                        + certificateCode + "):']/../following-sibling::td[1]"))
+                .getText();
+        float sumDiscountCertificate = Float
+                .parseFloat(certificateString.replaceAll("[$-,]", ""));
+        System.out.println("------------------sumDiscountCertificate = "
+                + sumDiscountCertificate);
+        float expected = (float) (-1000.00);
+        System.out.println("---------------expected = " + expected);
+
+        Assert.assertEquals(expected, sumDiscountCertificate, 0.01);
+
+    }
+
+    // Fill Estimate Shipping & Taxes in shopping cart
+    @Test
+    public void fillEstimateShipping() {
+
+        System.out.println(
+                "---------------Fill Estimate Shipping & Taxes in shopping cart--");
+        String cssSelectorToAlert = "div[class*='alert']";
+
+        String selectedCountry = "Ukraine";
+        String xpathPrintCountry = "//select[@id='input-country']//option[text()='"
+                + selectedCountry + "']";
+
+        String selectedRegion = "Kyiv";
+        String xpathPrintRegion = "//select[@id='input-zone']//option[text()='"
+                + selectedRegion + "']";
+
+        String postCode = "12345";
+
+        driver.findElement(
+                By.cssSelector("#top-links a[title*='Shopping Cart']")).click();
+
+        // Opened 'accordion' and filled need values
+        try {
+            driver.findElement(By.cssSelector("a[href*='shipping']")).click();
+
+            // selected need country
+            driver.findElement(By.id("input-country")).click();
+            new Select(driver.findElement(By.id("input-country")))
+                    .selectByVisibleText(selectedCountry);
+            System.out.println("------Selected country is " + driver
+                    .findElement(By.xpath(xpathPrintCountry)).getText());
+
+            // selected need region
+            new Select(driver.findElement(By.id("input-zone")))
+                    .selectByVisibleText(selectedRegion);
+            System.out.println("------Selected Region/State is "
+                    + driver.findElement(By.xpath(xpathPrintRegion)).getText());
+
+            // filled the postcode
+            driver.findElement(By.name("postcode")).click();
+            driver.findElement(By.name("postcode")).clear();
+            driver.findElement(By.name("postcode")).sendKeys(postCode);
+            System.out.println("------Entered Post Code is " + driver
+                    .findElement(By.name("postcode")).getAttribute("value"));
+
+            driver.findElement(By.id("button-quote")).click();
+
+            // chose "shipping method" in alert
+            driver.findElement(By.name("shipping_method")).click();
+            driver.findElement(By.id("button-shipping")).click();
+            String alert = driver
+                    .findElement(By.cssSelector(cssSelectorToAlert)).getText();
+            System.out.println("\t@ " + alert);
+            Assert.assertTrue(alert.contains("Success"));
+
+        } catch (NoSuchElementException e) {
+            System.err
+                    .println("Field 'Estimate Shipping & Taxes' doesn't exist");
+        }
+    }
+
+    // Finishing fill order
+    @Test
+    public void finishOrder() throws Exception {
+        String firstName = "John";
+        String lastName = "Shepard";
+        String company = "freelancer";
+        String address1 = "USA";
+        String address2 = "England";
+        String city = "London";
+        String postcode = "123456";
+        String country = "United Kingdom";
+        String region = "Cambridgeshire";
+        String commentInOrder = "Comments About Your Order";
+
+        String productName1 = "iPhone";
+        String productName2 = "MacBook";
+
+        driver.findElement(By.cssSelector("a[href*='route=checkout/checkout']"))
+                .click();
+
+        // Step 2: Billing Details
+        // chose radiobutton 'I want to use a new address'
+        driver.findElement(
+                By.cssSelector("#collapse-payment-address input[value='new']"))
+                .click();
+        driver.findElement(By.id("input-payment-firstname"))
+                .sendKeys(firstName);
+        {
+            driver.findElement(By.id("input-payment-lastname")).clear();
+            driver.findElement(By.id("input-payment-company")).clear();
+            driver.findElement(By.id("input-payment-address-1")).clear();
+            driver.findElement(By.id("input-payment-address-2")).clear();
+            driver.findElement(By.id("input-payment-city")).clear();
+            driver.findElement(By.id("input-payment-postcode")).clear();
+        }
+        driver.findElement(By.id("input-payment-lastname")).sendKeys(lastName);
+        driver.findElement(By.id("input-payment-company")).sendKeys(company);
+        driver.findElement(By.id("input-payment-address-1")).sendKeys(address1);
+        driver.findElement(By.id("input-payment-address-2")).sendKeys(address2);
+        driver.findElement(By.id("input-payment-city")).sendKeys(city);
+        driver.findElement(By.id("input-payment-postcode")).sendKeys(postcode);
+
+        // selected need country
+        driver.findElement(By.id("input-payment-country")).click();
+        new Select(driver.findElement(By.id("input-payment-country")))
+                .selectByVisibleText(country);
+
+        // selected need region
+        new Select(driver.findElement(By.id("input-payment-zone")))
+                .selectByVisibleText(region);
+
+        // button 'Continue'
+        driver.findElement(By.id("button-payment-address")).click();
+
+        // Step 3: Delivery Details
+        // chose radiobutton 'I want to use a new address'
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By
+                .cssSelector("#collapse-shipping-address input[value='new']")));
+        driver.findElement(
+                By.cssSelector("#collapse-shipping-address input[value='new']"))
+                .click();
+        {
+            driver.findElement(By.id("input-shipping-firstname")).clear();
+            driver.findElement(By.id("input-shipping-lastname")).clear();
+            driver.findElement(By.id("input-shipping-company")).clear();
+            driver.findElement(By.id("input-shipping-address-1")).clear();
+            driver.findElement(By.id("input-shipping-address-2")).clear();
+            driver.findElement(By.id("input-shipping-city")).clear();
+            driver.findElement(By.id("input-shipping-postcode")).clear();
+        }
+        {
+            driver.findElement(By.id("input-shipping-firstname"))
+                    .sendKeys(firstName);
+            driver.findElement(By.id("input-shipping-lastname"))
+                    .sendKeys(lastName);
+            driver.findElement(By.id("input-shipping-company"))
+                    .sendKeys(company);
+            driver.findElement(By.id("input-shipping-address-1"))
+                    .sendKeys(address1);
+            driver.findElement(By.id("input-shipping-address-2"))
+                    .sendKeys(address2);
+            driver.findElement(By.id("input-shipping-city")).sendKeys(city);
+            driver.findElement(By.id("input-shipping-postcode"))
+                    .sendKeys(postcode);
+        }
+
+        // selected need country
+        driver.findElement(By.id("input-shipping-country")).click();
+        new Select(driver.findElement(By.id("input-shipping-country")))
+                .selectByVisibleText(country);
+
+        // selected need region
+        new Select(driver.findElement(By.id("input-shipping-zone")))
+                .selectByVisibleText(region);
+
+        // button 'Continue'
+        driver.findElement(By.id("button-shipping-address")).click();
+
+        // Step 4: Delivery Method. Add Comments
+        driver.findElement(
+                By.cssSelector("#collapse-shipping-method input[type='radio']"))
+                .click();
+        System.out.println("\tFlat Rate: " + driver
+                .findElement(By
+                        .xpath("//div[@id='collapse-shipping-method']//label"))
+                .getText());
+        driver.findElement(By.cssSelector(
+                "#collapse-shipping-method textarea[name='comment']")).click();
+        driver.findElement(By.cssSelector(
+                "#collapse-shipping-method textarea[name='comment']"))
+                .sendKeys(commentInOrder + " about Delivery Method");
+        // button 'Continue'
+        driver.findElement(By.id("button-shipping-method")).click();
+
+        // Step 5: Payment Method. Add Comments
+        driver.findElement(
+                By.cssSelector("#collapse-payment-method input[type='radio']"))
+                .click();
+        System.out.println("\tPayment method: " + driver
+                .findElement(
+                        By.xpath("//div[@id='collapse-payment-method']//label"))
+                .getText());
+        driver.findElement(By.cssSelector(
+                "#collapse-payment-method textarea[name='comment']")).click();
+        driver.findElement(By.cssSelector(
+                "#collapse-payment-method textarea[name='comment']"))
+                .sendKeys(commentInOrder + " about Payment Method");
+        // checkbox 'Terms & Conditions'
+        driver.findElement(By
+                .cssSelector("#collapse-payment-method input[type='checkbox']"))
+                .click();
+
+        // button 'Continue'
+        driver.findElement(By.id("button-payment-method")).click();
+
+        // Step 6: Confirm Order
+        {
+            // print position with 'iPhone'
+            String xpathProduct1 = "//div[@id='collapse-checkout-confirm']//a[text()='"
+                    + productName1 + "']/../../td";
+            List<WebElement> elementProduct1 = driver
+                    .findElements(By.xpath(xpathProduct1));
+            System.out
+                    .print("Product Name: " + elementProduct1.get(0).getText());
+            System.out.print("\tModel: " + elementProduct1.get(1).getText());
+            System.out.print("\tQuantity: " + elementProduct1.get(2).getText());
+            System.out
+                    .print("\tUnit Price: " + elementProduct1.get(3).getText());
+            System.out.println("\tTotal: " + elementProduct1.get(4).getText());
+        }
+        {
+            // print position with 'MacBook'
+            String xpathProduct2 = "//div[@id='collapse-checkout-confirm']//a[text()='"
+                    + productName2 + "']/../../td";
+            List<WebElement> elementProduct2 = driver
+                    .findElements(By.xpath(xpathProduct2));
+            System.out
+                    .print("Product Name: " + elementProduct2.get(0).getText());
+            System.out.print("\tModel: " + elementProduct2.get(1).getText());
+            System.out.print("\tQuantity: " + elementProduct2.get(2).getText());
+            System.out
+                    .print("\tUnit Price: " + elementProduct2.get(3).getText());
+            System.out.println("\tTotal: " + elementProduct2.get(4).getText());
+        }
+        {
+            // print Total Sums
+            String xpathTotalSums = "//strong[text()='Sub-Total:']/../../../tr";
+            List<WebElement> elementTotalSums = driver
+                    .findElements(By.xpath(xpathTotalSums));
+            for (WebElement webElement : elementTotalSums) {
+                int numElementDollar = webElement.getText().indexOf("$");
+                System.out.print(
+                        webElement.getText().substring(0, numElementDollar - 1)
+                                + " ");
+                System.out.println(Float.parseFloat(
+                        webElement.getText().substring(numElementDollar + 1)
+                                .replaceAll("[,]", "")));
+            }
+
+        }
+
+        // button 'Confirm Order'
+        driver.findElement(By.id("button-confirm")).click();
+
+        String text = driver.findElement(By.xpath("//div[@id='content']/p"))
+                .getText();
+        System.out.println(text);
+    }
 
     // isn'tworking
     // Add to shopping cart item Apple Cinema 30"
@@ -664,28 +665,28 @@ public class AppTest {
         Thread.sleep(3000);
     }
 
-//    // search item and add to cart
-//    @Test
-//    public void serachAndAddItem() {
-//        String nameItem = "Nikon D300";
-//
-//        driver.findElement(By.cssSelector("input[name='search']")).click();
-//        driver.findElement(By.cssSelector("input[name='search']"))
-//                .sendKeys(nameItem);
-//        driver.findElement(By.cssSelector("#search button[type='button']"))
-//                .click();
-//
-//        String xpathForAddToCart = "//a[text()='" + nameItem
-//                + "']/../../following-sibling::div/button[contains(@onclick, 'cart.add')]";
-//        String cssSelectorToAlert = "div[class*='alert']";
-//        driver.findElement(By.xpath(xpathForAddToCart)).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(
-//                By.cssSelector(cssSelectorToAlert)));
-//        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
-//                .getText();
-//        System.out.println("\t@ " + alert);
-//        AssertJUnit.assertTrue(alert.contains("Success"));
-//        AssertJUnit.assertTrue(alert.contains(nameItem));
-//        
-//    }
+    // search item and add to cart
+    @Test
+    public void serachAndAddItem() {
+        String nameItem = "Nikon D300";
+
+        driver.findElement(By.cssSelector("input[name='search']")).click();
+        driver.findElement(By.cssSelector("input[name='search']"))
+                .sendKeys(nameItem);
+        driver.findElement(By.cssSelector("#search button[type='button']"))
+                .click();
+
+        String xpathForAddToCart = "//a[text()='" + nameItem
+                + "']/../../following-sibling::div/button[contains(@onclick, 'cart.add')]";
+        String cssSelectorToAlert = "div[class*='alert']";
+        driver.findElement(By.xpath(xpathForAddToCart)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector(cssSelectorToAlert)));
+        String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
+                .getText();
+        System.out.println("\t@ " + alert);
+        Assert.assertTrue(alert.contains("Success"));
+        Assert.assertTrue(alert.contains(nameItem));
+        
+    }
 }
