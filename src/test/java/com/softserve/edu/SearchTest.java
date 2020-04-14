@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class SearchTest {
-	private static WebDriver driver;
+	private WebDriver driver;
 
 	@BeforeSuite
 	public void beforeSuite() {

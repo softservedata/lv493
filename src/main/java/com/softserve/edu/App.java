@@ -59,9 +59,13 @@ public class App {
 		String pattern = "^\\d+";
 		String text = " 1 item(s) - $602.00";
 		text = text.trim();
+		//
+		//String pattern = "(\\d{1,3},)*\\d{1,3}\\.\\d{2}";
+		//String text = " 2 item(s) - $1,204.00";
 		*/
-		String pattern = "(\\d{1,3},)*\\d{1,3}\\.\\d{2}";
-		String text = " 2 item(s) - $1,204.00";
+		String pattern = "^\\s*.?((\\d{1,3},)*\\d{1,3}\\.\\d{2})";
+		String text = "  $2,000.00  Ex Tax: $2,000.00";
+		//String text = "   1,569.20€   Ex Tax: 1,400.10€";
 		//
 		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(text);
@@ -74,6 +78,7 @@ public class App {
 		// List<String> list = new ArrayList<>();
 		while (m.find()) {
 			System.out.print(text.substring(m.start(), m.end()) + "*");
+			//System.out.print(text.substring(m.start(1), m.end(1)) + "*");
 			//
 			// String current = text.substring(m.start() + 1, m.end() -1).trim();
 			// list.add(current);
@@ -82,8 +87,8 @@ public class App {
 //			String s = text.substring(m.start() + count + 2, m.end() - count - 3);
 //			System.out.println(s);
 			//
-			double d = Double.valueOf(text.substring(m.start(), m.end()).replace(",", ""));
-			System.out.println("\nd + 0.01 = "+ (d + 0.01));
+//			double d = Double.valueOf(text.substring(m.start(), m.end()).replace(",", ""));
+//			System.out.println("\nd + 0.01 = "+ (d + 0.01));
 		}
 		// System.out.println("list: " + list);
 	}
