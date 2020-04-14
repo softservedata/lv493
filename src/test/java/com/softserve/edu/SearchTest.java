@@ -35,76 +35,32 @@ import org.testng.annotations.Test;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class SearchTest {
+public class SearchTest extends  SearchTestRunner {
 
-	private final static String TIME_TEMPLATE = "yyyy-MM-dd_HH-mm-ss";
-	private WebDriver driver;
 	By mainSearchInputField = By.xpath("//input[@name=\"search\"]");
 	By mainSearchButton = By.xpath("//div[@id=\"search\"]/span/button");
 	By findedElements = By.xpath("//div[@id=\"content\"]/div[@class=\"row\"]//h4/a");
 	By alertMessage = By.xpath("//input[@id=\"button-search\"]/following-sibling::p");
 	By advancedSearchButton = By.id("button-search");
 
-	private void takeScreenShot(WebDriver driver) throws IOException {
-
-		String currentTime = new SimpleDateFormat(TIME_TEMPLATE).format(new Date());
-		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(scrFile, new File("./" + currentTime + driver.getClass()  + "_.png"));
-	}
-
 	
-
 	@DataProvider(name = "search-with--description")
 	public String[] parameterIntTestProvider() {
-		return new String[] { "The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution.",
+		return new String[] { 
+				"The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution.",
 				"Offering accurate, brilliant color performance",
 				"The Cinema HD features a single cable design with elegant breakout for the USB 2.0, FireWire 400 and a pure digital connection using the industry standard Digital Video Interface (DVI) interface. The DVI connection allows for a direct pure-digital connection.",
 				"Housed in a new aluminum design, the display has a very thin bezel that enhances visual accuracy. Each display features two FireWire 400 ports and two USB 2.0 ports, making attachment of desktop peripherals, such as iSight, iPod, digital and still cameras, hard drives, printers and scanners, even more accessible and convenient. Taking advantage of the much thinner and lighter footprint of an LCD, the new displays support the VESA (Video Electronics Standards Association) mounting interface standard. Customers with the optional Cinema Display VESA Mount Adapter kit gain the flexibility to mount their display in locations most appropriate for their work environment" };
 	}
 
-	@BeforeClass
-	@Parameters("browser")
-	public void setUpBeforeClass(String browser) throws Exception {
-		if (browser.equalsIgnoreCase("firefox")) {
-			WebDriverManager.firefoxdriver().setup();
-			driver = new FirefoxDriver();
-		} else if (browser.equalsIgnoreCase("chrome")) {
-			WebDriverManager.chromedriver().setup();
-			driver = new ChromeDriver();
-		} else if (browser.equalsIgnoreCase("HtmlUnitDriver")) {
-			driver = new HtmlUnitDriver();
-			((HtmlUnitDriver) driver).setJavascriptEnabled(false);
-		} else if (browser.equalsIgnoreCase("opera")) {
-			WebDriverManager.operadriver().setup();
-			driver = new OperaDriver();
-		} else if (browser.equalsIgnoreCase("phantomjs")) {
-			WebDriverManager.phantomjs().setup();
-			driver = new PhantomJSDriver();
-		} else {
-			throw new Exception("Browser is not correct");
-		}
 
-		// WebDriverManager.chromedriver().setup();
-		// System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
-		// driver.System.setProperty("webdriver.chrome.driver",
-		// SearchTest.class.getResource("/chromedriver-windows-32bit.exe").getPath());
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-	}
-
-	@BeforeMethod
-	public void beforeMethod() {
-		driver.manage().window().maximize();
-		driver.get("http://34.65.1.160/opencart/upload/");
-		// driver.get("http://taqc-opencart.epizy.com/index.php?route=common/home");
-	}
 
 	@Test
-	public void simpleTest() throws IOException, InterruptedException {
+	public void simpleTest(String searchText) throws IOException, InterruptedException {
 
 		driver.findElement(mainSearchInputField).click();
 		driver.findElement(mainSearchInputField).clear();
-		driver.findElement(mainSearchInputField).sendKeys("mac");
+		driver.findElement(mainSearchInputField).sendKeys(searchText);
 		driver.findElement(mainSearchButton).click();
 		Thread.sleep(3000);
 		takeScreenShot(driver);
@@ -125,7 +81,7 @@ public class SearchTest {
 		driver.findElement(mainSearchInputField).sendKeys("mmm");
 		driver.findElement(mainSearchButton).click();
 		String expected = "There is no product that matches the search criteria.";
-		driver.findElement(findedElements).isEnabled();
+		driver.findElement(findedElements).isEnabled(); //TO Do
 		Assert.assertEquals(driver.findElement(alertMessage).getText(), expected);
 	}
 
@@ -292,29 +248,6 @@ public class SearchTest {
 		System.out.println("The lendth of search query is " + description.length());
 	}
 
-	@AfterMethod
-	public void afterMethod() {
-	}
-
-	@AfterClass
-	public void afterClass() {
-		driver.quit();
-	}
-
-	@BeforeTest
-	public void beforeTest() {
-	}
-
-	@AfterTest
-	public void afterTest() {
-	}
-
-	@BeforeSuite
-	public void beforeSuite() {
-	}
-
-	@AfterSuite
-	public void afterSuite() {
-	}
+	
 
 }

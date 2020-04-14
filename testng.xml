@@ -16,8 +16,8 @@
 		</classes>
 	</test>
 
-	<test name=" HtmlUnitDriverTest">
-		<parameter name="browser" value="HtmlUnitDriver" />
+	<test name=" HtmlUnitTest">
+		<parameter name="browser" value="HtmlUnit" />
 		<classes>
 			<class name="com.softserve.edu.SearchTest" />
 		</classes>
