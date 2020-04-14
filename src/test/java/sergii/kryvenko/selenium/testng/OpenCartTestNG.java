@@ -48,6 +48,9 @@ public class OpenCartTestNG {
     private WebDriver driver;
     private WebDriverWait wait;
 
+    /**
+     * Checking webdriver and download it if needed.
+     */
     @BeforeSuite
     public void beforeSuite() {
 
@@ -56,10 +59,15 @@ public class OpenCartTestNG {
 
     }
 
+    /**
+     * Instant ChromeDriver, activate BrowserStack/SauceLab capabilities, logging
+     * @param waitTime
+     * @throws MalformedURLException
+     */
     @BeforeClass
     @Parameters(value = "waitTime")
     public void beforeClass(int waitTime) throws MalformedURLException {
-        
+
         //
         // BrowserStack
 //        String browserStackUsername = System.getenv("BROWSERSTACK_USERNAME");
@@ -75,7 +83,7 @@ public class OpenCartTestNG {
 //        caps.setCapability("resolution", "1024x768");
 //        caps.setCapability("name", "Bstack-[Java] Open Cart Test_14.04.20");
 //        caps.setCapability("browserstack.local", "true");
-        
+
         // SauceLab
 //        String sauceUserName = System.getenv("SAUCE_USERNAME");
 //        String sauceAccessKey = System.getenv("SAUCE_ACCESS_KEY");
@@ -127,6 +135,10 @@ public class OpenCartTestNG {
 
     }
 
+    /**
+     * Logout and close webdriver.
+     * @param waitTime
+     */
     @AfterClass(alwaysRun = true)
     @Parameters(value = "waitTime")
     public void afterClass(int waitTime) {
@@ -148,6 +160,10 @@ public class OpenCartTestNG {
         driver.quit();
     }
 
+    /**
+     * Return to begin page.
+     * @param waitTime
+     */
     @BeforeMethod
     @Parameters(value = "waitTime")
     public void beforeMethod(int waitTime) {
@@ -161,6 +177,11 @@ public class OpenCartTestNG {
         System.out.println("@Open begins page");
     }
 
+    /**
+     * Return to begin page and activate script SauceLabs.
+     * @param result
+     * @param waitTime
+     */
     @AfterMethod
     @Parameters(value = "waitTime")
     public void afterMethod(ITestResult result, int waitTime) {
@@ -179,6 +200,10 @@ public class OpenCartTestNG {
 //                + (result.isSuccess() ? "passed" : "failed"));
     }
 
+    /**
+     * DataProvider.
+     * @return
+     */
     @DataProvider(name = "Data-Provider-Function")
     public Object[][] parameterIntTestProvider() {
         return new Object[][] { { new String("MacBook") },
@@ -188,7 +213,6 @@ public class OpenCartTestNG {
     /**
      * Add to shopping cart item from home page.
      * @param nameItem
-     * @param waitTime sec.
      */
     @Test(dataProvider = "Data-Provider-Function")
     public void addItem(String nameItem) {
@@ -199,8 +223,6 @@ public class OpenCartTestNG {
                 + "']/../../following-sibling::div/button[contains(@onclick, 'cart.add')]";
         String cssSelectorToAlert = "div[class*='alert']";
         driver.findElement(By.xpath(xpathForAddToCart)).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(
-//                By.cssSelector(cssSelectorToAlert)));
         String alert = driver.findElement(By.cssSelector(cssSelectorToAlert))
                 .getText();
         System.out.println("\t@ " + alert);
@@ -359,16 +381,19 @@ public class OpenCartTestNG {
                 "//strong[text()='Sub-Total:']/../following-sibling::td[1]"))
                 .getText();
 
-        BigDecimal sumSubTotal = new BigDecimal(sumSubTotalString.replaceAll("[$,]", ""));
+        BigDecimal sumSubTotal = new BigDecimal(
+                sumSubTotalString.replaceAll("[$,]", ""));
         System.out.println("------------------sumSubTotal = " + sumSubTotal);
 
         String couponString = driver
                 .findElement(By.xpath("//strong[text()='Coupon (" + couponCode
                         + "):']/../following-sibling::td[1]"))
                 .getText();
-        BigDecimal sumDiscountCoupon = new BigDecimal(couponString.replaceAll("[$-,]", ""));
+        BigDecimal sumDiscountCoupon = new BigDecimal(
+                couponString.replaceAll("[$-,]", ""));
         MathContext m = new MathContext(2);
-        BigDecimal expected = sumSubTotal.multiply(new BigDecimal(-0.15, m)).setScale(2);
+        BigDecimal expected = sumSubTotal.multiply(new BigDecimal(-0.15, m))
+                .setScale(2);
 
         System.out.println(
                 "------------------sumDiscountCoupon = " + sumDiscountCoupon);
@@ -423,18 +448,20 @@ public class OpenCartTestNG {
                 "//strong[text()='Sub-Total:']/../following-sibling::td[1]"))
                 .getText();
 
-        BigDecimal sumSubTotal = new BigDecimal(sumSubTotalString.replaceAll("[$,]", ""));
+        BigDecimal sumSubTotal = new BigDecimal(
+                sumSubTotalString.replaceAll("[$,]", ""));
         System.out.println("------------------sumSubTotal = " + sumSubTotal);
 
         String certificateString = driver
                 .findElement(By.xpath("//strong[text()='Gift Certificate ("
                         + certificateCode + "):']/../following-sibling::td[1]"))
                 .getText();
-        BigDecimal sumDiscountCertificate = new BigDecimal(certificateString.replaceAll("[$-,]", ""));
+        BigDecimal sumDiscountCertificate = new BigDecimal(
+                certificateString.replaceAll("[$-,]", ""));
         System.out.println("------------------sumDiscountCertificate = "
                 + sumDiscountCertificate);
         BigDecimal expected = new BigDecimal(-1000).setScale(2);
-        
+
         System.out.println("---------------expected = " + expected);
 
         Assert.assertEquals(expected, sumDiscountCertificate);
@@ -539,8 +566,6 @@ public class OpenCartTestNG {
     /**
      * Finishing fill order.
      * @param waitTime sec
-     * @throws Exception 
-     * @throws Exception
      */
     @Test
     @Parameters(value = "waitTime")
@@ -580,7 +605,7 @@ public class OpenCartTestNG {
             }
         }
 
-        // Step 1: Checkout Options 
+        // Step 1: Checkout Options
         // fail test because element 'Checkout Options' doesn't clickable
 //        if (listCheckoutAccordion.get("Checkout Options")) {
 //            
@@ -831,12 +856,11 @@ public class OpenCartTestNG {
                 System.out.print(
                         webElement.getText().substring(0, numElementDollar - 1)
                                 + " ");
-                System.out.println(
-                        webElement.getText().substring(numElementDollar + 1)
-                                .replaceAll("[,]", ""));
+                System.out.println(webElement.getText()
+                        .substring(numElementDollar + 1).replaceAll("[,]", ""));
 
             }
-            
+
 //            // button 'Confirm Order'
 //        driver.findElement(By.id("button-confirm")).click();
 //
