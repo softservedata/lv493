@@ -22,7 +22,7 @@ public class SearchInCategoriesRepository {
 	}
 	
 	public static SearchItem searchCategoryComponents() {
-		return new SearchItem("SyncMaster", Categories.COMPONENTS);
+		return new SearchItem("apple", Categories.COMPONENTS);
 	}
 	
 	public static SearchItem searchCategoryLaptops() {

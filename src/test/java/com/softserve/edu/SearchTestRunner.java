@@ -76,8 +76,9 @@ public abstract class SearchTestRunner {
 	public void beforeMethod() {
 		
 		driver.manage().window().maximize();
-		driver.get("http://34.65.1.160/opencart/upload/");
-		// driver.get("http://taqc-opencart.epizy.com/index.php?route=common/home");
+		//driver.get("http://34.65.1.160/opencart/upload/");
+		driver.get("http://192.168.171.129/opencart/upload/");
+		 //driver.get("http://taqc-opencart.epizy.com/index.php?route=common/home");
 	}
 	
 	@AfterClass(alwaysRun = true)

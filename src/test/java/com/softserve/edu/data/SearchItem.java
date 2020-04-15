@@ -10,7 +10,6 @@ public class SearchItem {
 		this.categories = categories;
 	}
 
-	
 	public Categories getCategories() {
 		return categories;
 	}

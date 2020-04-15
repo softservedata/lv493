@@ -33,6 +33,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.softserve.edu.data.InvalidValuesSearchCategoriesRepo;
 import com.softserve.edu.data.SearchInCategoriesRepository;
 import com.softserve.edu.data.SearchItem;
 
@@ -65,7 +66,7 @@ public class SearchTest extends  SearchTestRunner {
 		};
 	}
 	
-	@Test(dataProvider = "validDataProvider")
+	//@Test(dataProvider = "validDataProvider")
 	public void simpleTest(SearchItem searchItem) throws IOException, InterruptedException {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
@@ -82,25 +83,33 @@ public class SearchTest extends  SearchTestRunner {
 		}
 		takeScreenShot(driver);
 	}
-
-	// @Test(expectedExceptions = NoSuchElementException.class)
-	public void simpleTestNegative() {
+	
+	@DataProvider
+	public Object[][] inValidSearcValue() {
+		return new Object[][] {
+				{InvalidValuesSearchCategoriesRepo.searchAllCategories()} 
+		};
+	}
+	
+//	@Test(dataProvider = "inValidSearcValue", 
+//		  expectedExceptions = NoSuchElementException.class)
+	public void simpleTestNegative(SearchItem searchItem) {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
 		driver.findElement(By.xpath(mainSearchInputField)).clear();
-		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("mmm");
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys(searchItem.getSearchText());
 		driver.findElement(By.xpath(mainSearchButton)).click();
 		String expected = "There is no product that matches the search criteria.";
-		driver.findElement(By.xpath(findedElements)).isEnabled(); //TO Do
+		Assert.assertTrue(driver.findElement(By.xpath(findedElements)).isEnabled()); 
 		Assert.assertEquals(driver.findElement( By.xpath(alertMessage)).getText(), expected);
 	}
 
-	// @Test
-	public void verifySensCase() {
+	//@Test(dataProvider = "validDataProvider")
+	public void verifySensCase(SearchItem searchItem) {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
 		driver.findElement(By.xpath(mainSearchInputField)).clear();
-		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("MAC");
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys(searchItem.getSearchText().toLowerCase());
 		driver.findElement(By.xpath(mainSearchButton)).click();
 
 		List<WebElement> productLowCase = driver.findElements(By.xpath(findedElements));
@@ -108,11 +117,12 @@ public class SearchTest extends  SearchTestRunner {
 			System.out.println(elem.getText());
 		}
 		// driver.get("http://192.168.171.129/opencart/upload/");
-		driver.get("http://taqc-opencart.epizy.com/index.php?route=common/home");
+		//driver.get("http://taqc-opencart.epizy.com/index.php?route=common/home");
+		driver.get("http://34.65.1.160/opencart/upload/");
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
 		driver.findElement(By.xpath(mainSearchInputField)).clear();
-		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("mac");
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys(searchItem.getSearchText().toUpperCase());
 		driver.findElement(By.xpath(mainSearchButton)).click();
 
 		List<WebElement> productUpperCase = driver.findElements(By.xpath(findedElements));
@@ -124,30 +134,45 @@ public class SearchTest extends  SearchTestRunner {
 
 	}
 
-	// @Test
-	public void searchInCategories() {
+	@DataProvider
+	public Object[][] categories() {
+		return new Object[][] {
+				{ SearchInCategoriesRepository.searchCategoryCameras()},
+			    { SearchInCategoriesRepository.searchCategoryComponents()},
+				{ SearchInCategoriesRepository.searchCategoryDesctops()},
+				{ SearchInCategoriesRepository.searchCategoryLaptops()},
+				{ SearchInCategoriesRepository.searchCategoryMp3Players()},
+				{ SearchInCategoriesRepository.searchCategoryPhones()},
+				{ SearchInCategoriesRepository.searchCategoryTablets()}
+		};
+	}
+	
+	@Test(dataProvider = "categories")
+	public void searchInCategories(SearchItem searchItem) {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
 		driver.findElement(By.xpath(mainSearchInputField)).clear();
-		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("microsoft");
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys(searchItem.getSearchText());
 		driver.findElement(By.xpath(mainSearchButton)).click();
-
+		
 		Select select = new Select(driver.findElement(By.name("category_id")));
 		List<WebElement> options = select.getOptions();
 		for (WebElement elem : options) {
-			if (elem.getText().contains("Software")) {
+			if (elem.getText().contains(searchItem.getCategories().getCategorieseName())) {
 				System.out.println(elem.getText());
 				elem.click();
 			}
 		}
+		driver.findElement(By.name("sub_category")).click();
 		driver.findElement(By.id(advancedSearchButton)).click();
 		List<WebElement> product = driver.findElements(By.xpath(findedElements));
 		System.out.println("size " + product.size());
 		for (WebElement el : product) {
-			Assert.assertTrue(el.getText().toLowerCase().contains("microsoft"));
+			Assert.assertTrue(el.getText().toLowerCase().contains(searchItem.getSearchText()));
 			System.out.println(el.getText());
 		}
-
+		System.out.println(searchItem.getSearchText());
+		System.out.println(searchItem.getCategories().getCategorieseName());
 	}
 
 	//@Test(expectedExceptions = NoSuchElementException.class)
@@ -174,7 +199,7 @@ public class SearchTest extends  SearchTestRunner {
 		Assert.assertEquals(driver.findElement(By.xpath(alertMessage)).getText(), expected);
 	}
 
-	// @Test
+	@Test
 	public void searchInSubCategories() {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
