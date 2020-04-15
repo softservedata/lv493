@@ -12,4 +12,8 @@ public final class SearchItemRepository {
 	public static SearchItem getAllItem() {
 		return new SearchItem("%", "All Categories", false, false);
 	}
+	
+	public static SearchItem getMacItem() {
+		return new SearchItem("mac", "All Categories", false, false);
+	}
 }

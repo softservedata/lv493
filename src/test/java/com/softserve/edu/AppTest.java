@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -38,9 +39,50 @@ class StrPriceDescComparator implements Comparator<String> {
 
 public class AppTest {
 
-	// @Test
-	public void testApp() {
-		Assert.assertTrue(true);
+	@Test
+	public void testApp() throws Exception {
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		// driver.manage().window().maximize();
+		driver.get("http://taqc-opencart.epizy.com/");
+		//
+		// Steps
+		driver.findElement(By.cssSelector("#search > input")).click();
+		driver.findElement(By.cssSelector("#search > input")).clear();
+		driver.findElement(By.cssSelector("#search > input")).sendKeys("%");
+		Thread.sleep(1000); // For Presentation Only
+		//
+		driver.findElement(By.cssSelector("button.btn.btn-default.btn-lg")).click();
+		Thread.sleep(2000); // For Presentation Only
+		//
+		String taqc = driver.getWindowHandle();
+		//
+//		Robot robot = new Robot();
+//		robot.keyPress(KeyEvent.VK_CONTROL);
+//		robot.keyPress(KeyEvent.VK_T);
+//		robot.keyRelease(KeyEvent.VK_CONTROL);
+//		robot.keyRelease(KeyEvent.VK_T);
+		//
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.open();");
+		Thread.sleep(1000); // Do no use
+		js.executeScript("window.open('https://www.google.com','_blank');");
+		//
+		Thread.sleep(4000); // Do no use
+		//
+		driver.switchTo().window(taqc);
+		//
+//		for (String temp : driver.getWindowHandles()) {
+//			if (!taqc.equals(temp)) {
+//				driver.switchTo().window(temp);
+//				break;
+//			}
+//		}
+		//
+		//Assert.assertTrue(true);
+        Thread.sleep(4000); // For Presentation Only
+		driver.quit();
 	}
 
 	// @Test
@@ -75,7 +117,7 @@ public class AppTest {
 		return originLists.equals(checkedList);
 	}
 
-	@Test
+	//@Test
 	public void checkSort() throws Exception {
 		WebDriverManager.chromedriver().setup();
 		WebDriver driver = new ChromeDriver();

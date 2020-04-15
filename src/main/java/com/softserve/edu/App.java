@@ -62,10 +62,13 @@ public class App {
 		//
 		//String pattern = "(\\d{1,3},)*\\d{1,3}\\.\\d{2}";
 		//String text = " 2 item(s) - $1,204.00";
-		*/
+		//
 		String pattern = "^\\s*.?((\\d{1,3},)*\\d{1,3}\\.\\d{2})";
 		String text = "  $2,000.00  Ex Tax: $2,000.00";
 		//String text = "   1,569.20€   Ex Tax: 1,400.10€";
+		*/
+		String pattern = ": *.?((\\d{1,3},)*\\d{1,3}\\.\\d{2})";
+		String text = "  $2,000.00  Ex Tax: $2,000.00";
 		//
 		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(text);
