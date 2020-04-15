@@ -1,4 +1,4 @@
-package sergii.kryvenko.selenium;
+package sergii.kryvenko.selenium.data;
 
 public class Person {
 
