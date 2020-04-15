@@ -1,9 +1,10 @@
 package com.softserve.edu;
 
-import com.google.gson.Gson;
 import org.testng.annotations.DataProvider;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+
+import static com.softserve.edu.JsonUtils.deserializeJson;
 
 /**
  * Data provider class for testing categories
@@ -28,17 +29,12 @@ public class DataProviderClass {
         String parent = "";
     }
 
-
     /**
-     * Getting category data from json file
-     * @return - parameters for adding and deleting new category
-     * @throws FileNotFoundException - throw it if file is not exist
+     * Reshaping array to available format fo DataProvider
+     * @param data simple array for reshaping
+     * @return data in DataProvider format
      */
-    @DataProvider
-    public static Object[][] newCategories() throws FileNotFoundException {
-        Gson gson = new Gson();
-        Reader input = new FileReader(categoriesDataFilePath);
-        CategoryData[] data = gson.fromJson(input, CategoryData[].class);
+    public static Object[][] reshapeDataProvider(Object[] data) {
         Object[][] categories = new Object[data.length][1];
 
         for (int i = 0; i < data.length; i++) {
@@ -47,4 +43,17 @@ public class DataProviderClass {
 
         return categories;
     }
+
+    /**
+     * Getting category data from json file
+     * @return - parameters for adding and deleting new category
+     * @throws FileNotFoundException - throw it if file is not exist
+     */
+    @DataProvider
+    public static Object[][] newCategories() throws FileNotFoundException {
+
+        return reshapeDataProvider(deserializeJson(categoriesDataFilePath));
+    }
+
+
 }

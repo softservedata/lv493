@@ -29,11 +29,11 @@ public class CategoryTest {
 
     /**
      * Loading properties for testing from properties file
-     * @throws IOException
+     * @throws IOException if file is not available
      */
     @BeforeSuite
     public void loadTestProperties() throws IOException {
-        DataProviderClass.saveCategories();
+        //DataProviderClass.saveCategories();
         InputStream input = new FileInputStream(pathToPropertiesFile);
 
         properties = new Properties();
@@ -51,7 +51,6 @@ public class CategoryTest {
 
         ChromeOptions options = new ChromeOptions();
         //options.addArguments("headless");
-
 
         driver = new ChromeDriver(options);
 
@@ -97,19 +96,19 @@ public class CategoryTest {
     public void addNewCategory(DataProviderClass.CategoryData category) {
 
         openCategoriesPage();
-        /**
-         * counting categories before adding
+        /*
+          Counting categories before adding
          */
         int categoriesBeforeAdding = driver.findElements(By.xpath("//tbody/tr")).size();
 
-        /**
-         * Opening menu of creating category
+        /*
+          Opening menu of creating category
          */
         driver.findElement(By.className("btn-primary")).click();
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
-        /**
-         * Filling all fields of category parameters
+        /*
+          Filling all fields of category parameters
          */
         driver.findElement(By.id("input-name1")).sendKeys(category.categoryName);
         driver.findElement(By.className("note-editable")).sendKeys(category.description);
@@ -124,28 +123,25 @@ public class CategoryTest {
             driver.findElement(By.id("input-top")).click();
         }
 
-        /**
-         * Submitting creating category
+        /*
+          Submitting creating category
          */
         driver.findElement(By.className("btn-primary")).click();
-        /**
-         * Checking for adding is successful
+
+        /*
+          Checking for adding is successful
          */
         int categoriesAfterAdding = driver.findElements(By.xpath("//tbody/tr")).size();
         int countAddedCategory = driver.findElements(
                 By.xpath("//td[contains(text(),'" + category.categoryName +  "')]")).size();
 
         Assert.assertEquals(countAddedCategory, 1);
-        Assert.assertEquals(categoriesAfterAdding, categoriesBeforeAdding + 1,  "Category is not added");
-
-
     }
 
     /**
      * @return names of categories from horizontal menu
      */
     List<String> getCategoriesFromHorizontalMenu() {
-
         driver.get(properties.getProperty("url"));
 
         List<WebElement> verticalElements = driver.findElements(

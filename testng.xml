@@ -3,7 +3,6 @@
 
     <test name="catalog">
         <classes>
-            <class name="com.softserve.edu.CategoriesMenuEqualsTest" />
             <class name="com.softserve.edu.CategoryTest" />
         </classes>
     </test>
