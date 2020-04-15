@@ -21,6 +21,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -34,14 +35,15 @@ public abstract class SearchTestRunner {
 	protected WebDriver driver;
 	private final static String TIME_TEMPLATE = "yyyy-MM-dd_HH-mm-ss";
 	
-	public abstract class SortTestRunner {
-		protected WebDriver driver;
+	@BeforeSuite
+	public void beforeSuite() {
+		WebDriverManager.chromedriver().setup();
 	}
 	
 	@BeforeClass
-	@Parameters("browser")
-	public void setUpBeforeClass(String browser) throws Exception {
-		if (browser.equalsIgnoreCase("firefox")) {
+	//@Parameters("browser")
+	public void setUpBeforeClass() throws Exception {
+		/*-if (browser.equalsIgnoreCase("firefox")) {
 			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
 		} else if (browser.equalsIgnoreCase("chrome")) {
@@ -58,18 +60,21 @@ public abstract class SearchTestRunner {
 			driver = new PhantomJSDriver();
 		} else {
 			throw new Exception("Browser is not correct");
-		}
+		} */
 
-		// WebDriverManager.chromedriver().setup();
+		
+		driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		// System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
 		// driver.System.setProperty("webdriver.chrome.driver",
 		// SearchTest.class.getResource("/chromedriver-windows-32bit.exe").getPath());
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 	}
 
 	@BeforeMethod
 	public void beforeMethod() {
+		
 		driver.manage().window().maximize();
 		driver.get("http://34.65.1.160/opencart/upload/");
 		// driver.get("http://taqc-opencart.epizy.com/index.php?route=common/home");
@@ -77,7 +82,9 @@ public abstract class SearchTestRunner {
 	
 	@AfterClass(alwaysRun = true)
 	public void afterClass() {
-		driver.quit();
+		if (driver != null) {
+			driver.quit();
+			}
 	}
 	
 	protected void takeScreenShot(WebDriver driver) throws IOException {

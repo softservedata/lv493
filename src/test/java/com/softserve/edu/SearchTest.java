@@ -33,15 +33,19 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.softserve.edu.data.SearchInCategoriesRepository;
+import com.softserve.edu.data.SearchItem;
+
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class SearchTest extends  SearchTestRunner {
 
-	By mainSearchInputField = By.xpath("//input[@name=\"search\"]");
-	By mainSearchButton = By.xpath("//div[@id=\"search\"]/span/button");
-	By findedElements = By.xpath("//div[@id=\"content\"]/div[@class=\"row\"]//h4/a");
-	By alertMessage = By.xpath("//input[@id=\"button-search\"]/following-sibling::p");
-	By advancedSearchButton = By.id("button-search");
+	private final String mainSearchInputField = "//input[@name=\"search\"]";
+	private final String mainSearchButton = "//div[@id=\"search\"]/span/button";
+	private final String findedElements = "//div[@id=\"content\"]/div[@class=\"row\"]//h4/a";
+	private final String alertMessage ="//input[@id=\"button-search\"]/following-sibling::p";
+	private final String advancedSearchButton = "button-search";
 
 	
 	@DataProvider(name = "search-with--description")
@@ -54,21 +58,27 @@ public class SearchTest extends  SearchTestRunner {
 	}
 
 
+	@DataProvider
+	public Object[][] validDataProvider() {
+		return new Object[][] {
+				{ SearchInCategoriesRepository.searchAllCategories()} 
+		};
+	}
+	
+	@Test(dataProvider = "validDataProvider")
+	public void simpleTest(SearchItem searchItem) throws IOException, InterruptedException {
 
-	@Test
-	public void simpleTest(String searchText) throws IOException, InterruptedException {
-
-		driver.findElement(mainSearchInputField).click();
-		driver.findElement(mainSearchInputField).clear();
-		driver.findElement(mainSearchInputField).sendKeys(searchText);
-		driver.findElement(mainSearchButton).click();
-		Thread.sleep(3000);
+		driver.findElement(By.xpath(mainSearchInputField)).click();
+		driver.findElement(By.xpath(mainSearchInputField)).clear();
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys(searchItem.getSearchText());
+		driver.findElement(By.xpath(mainSearchButton)).click();
+		
 		takeScreenShot(driver);
-		List<WebElement> product = driver.findElements(findedElements);
+		List<WebElement> product = driver.findElements(By.xpath(findedElements));
 		System.out.println("size " + product.size());
 		for (WebElement elem : product) {
 			System.out.println(elem.getText());
-			Assert.assertTrue(elem.getText().toLowerCase().contains("mac"));
+			Assert.assertTrue(elem.getText().toLowerCase().contains(searchItem.getSearchText()));
 		}
 		takeScreenShot(driver);
 	}
@@ -76,36 +86,36 @@ public class SearchTest extends  SearchTestRunner {
 	// @Test(expectedExceptions = NoSuchElementException.class)
 	public void simpleTestNegative() {
 
-		driver.findElement(mainSearchInputField).click();
-		driver.findElement(mainSearchInputField).clear();
-		driver.findElement(mainSearchInputField).sendKeys("mmm");
-		driver.findElement(mainSearchButton).click();
+		driver.findElement(By.xpath(mainSearchInputField)).click();
+		driver.findElement(By.xpath(mainSearchInputField)).clear();
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("mmm");
+		driver.findElement(By.xpath(mainSearchButton)).click();
 		String expected = "There is no product that matches the search criteria.";
-		driver.findElement(findedElements).isEnabled(); //TO Do
-		Assert.assertEquals(driver.findElement(alertMessage).getText(), expected);
+		driver.findElement(By.xpath(findedElements)).isEnabled(); //TO Do
+		Assert.assertEquals(driver.findElement( By.xpath(alertMessage)).getText(), expected);
 	}
 
 	// @Test
 	public void verifySensCase() {
 
-		driver.findElement(mainSearchInputField).click();
-		driver.findElement(mainSearchInputField).clear();
-		driver.findElement(mainSearchInputField).sendKeys("MAC");
-		driver.findElement(mainSearchButton).click();
+		driver.findElement(By.xpath(mainSearchInputField)).click();
+		driver.findElement(By.xpath(mainSearchInputField)).clear();
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("MAC");
+		driver.findElement(By.xpath(mainSearchButton)).click();
 
-		List<WebElement> productLowCase = driver.findElements(findedElements);
+		List<WebElement> productLowCase = driver.findElements(By.xpath(findedElements));
 		for (WebElement elem : productLowCase) {
 			System.out.println(elem.getText());
 		}
 		// driver.get("http://192.168.171.129/opencart/upload/");
 		driver.get("http://taqc-opencart.epizy.com/index.php?route=common/home");
 
-		driver.findElement(mainSearchInputField).click();
-		driver.findElement(mainSearchInputField).clear();
-		driver.findElement(mainSearchInputField).sendKeys("mac");
-		driver.findElement(mainSearchButton).click();
+		driver.findElement(By.xpath(mainSearchInputField)).click();
+		driver.findElement(By.xpath(mainSearchInputField)).clear();
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("mac");
+		driver.findElement(By.xpath(mainSearchButton)).click();
 
-		List<WebElement> productUpperCase = driver.findElements(findedElements);
+		List<WebElement> productUpperCase = driver.findElements(By.xpath(findedElements));
 		for (WebElement elem : productUpperCase) {
 			System.out.println(elem.getText());
 		}
@@ -117,10 +127,10 @@ public class SearchTest extends  SearchTestRunner {
 	// @Test
 	public void searchInCategories() {
 
-		driver.findElement(mainSearchInputField).click();
-		driver.findElement(mainSearchInputField).clear();
-		driver.findElement(mainSearchInputField).sendKeys("microsoft");
-		driver.findElement(mainSearchButton).click();
+		driver.findElement(By.xpath(mainSearchInputField)).click();
+		driver.findElement(By.xpath(mainSearchInputField)).clear();
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("microsoft");
+		driver.findElement(By.xpath(mainSearchButton)).click();
 
 		Select select = new Select(driver.findElement(By.name("category_id")));
 		List<WebElement> options = select.getOptions();
@@ -130,8 +140,8 @@ public class SearchTest extends  SearchTestRunner {
 				elem.click();
 			}
 		}
-		driver.findElement(advancedSearchButton).click();
-		List<WebElement> product = driver.findElements(findedElements);
+		driver.findElement(By.id(advancedSearchButton)).click();
+		List<WebElement> product = driver.findElements(By.xpath(findedElements));
 		System.out.println("size " + product.size());
 		for (WebElement el : product) {
 			Assert.assertTrue(el.getText().toLowerCase().contains("microsoft"));
@@ -143,10 +153,10 @@ public class SearchTest extends  SearchTestRunner {
 	//@Test(expectedExceptions = NoSuchElementException.class)
 	public void searchInCategoriesNegative() throws IOException, InterruptedException {
 
-		driver.findElement(mainSearchInputField).click();
-		driver.findElement(mainSearchInputField).clear();
-		driver.findElement(mainSearchInputField).sendKeys("mac");
-		driver.findElement(mainSearchButton).click();
+		driver.findElement(By.xpath(mainSearchInputField)).click();
+		driver.findElement(By.xpath(mainSearchInputField)).clear();
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("mac");
+		driver.findElement(By.xpath(mainSearchButton)).click();
 
 		Select select = new Select(driver.findElement(By.name("category_id")));
 		List<WebElement> options = select.getOptions();
@@ -156,21 +166,21 @@ public class SearchTest extends  SearchTestRunner {
 				elem.click();
 			}
 		}
-		driver.findElement(advancedSearchButton).click();
+		driver.findElement(By.id(advancedSearchButton)).click();
 
 		String expected = "There is no product that matches the search criteria.";
-		driver.findElement(findedElements).isEnabled();
+		driver.findElement(By.xpath(findedElements)).isEnabled();
 
-		Assert.assertEquals(driver.findElement(alertMessage).getText(), expected);
+		Assert.assertEquals(driver.findElement(By.xpath(alertMessage)).getText(), expected);
 	}
 
 	// @Test
 	public void searchInSubCategories() {
 
-		driver.findElement(mainSearchInputField).click();
-		driver.findElement(mainSearchInputField).clear();
-		driver.findElement(mainSearchInputField).sendKeys("Classic");
-		driver.findElement(mainSearchButton).click();
+		driver.findElement(By.xpath(mainSearchInputField)).click();
+		driver.findElement(By.xpath(mainSearchInputField)).clear();
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("Classic");
+		driver.findElement(By.xpath(mainSearchButton)).click();
 
 		Select select = new Select(driver.findElement(By.name("category_id")));
 		List<WebElement> options = select.getOptions();
@@ -180,8 +190,8 @@ public class SearchTest extends  SearchTestRunner {
 				elem.click();
 			}
 		}
-		driver.findElement(advancedSearchButton);
-		List<WebElement> product = driver.findElements(findedElements);
+		driver.findElement(By.id(advancedSearchButton));
+		List<WebElement> product = driver.findElements(By.xpath(findedElements));
 		System.out.println("size " + product.size());
 		for (WebElement elem : product) {
 			System.out.println(elem.getText().toLowerCase());
@@ -192,10 +202,10 @@ public class SearchTest extends  SearchTestRunner {
 	// @Test(expectedExceptions = NoSuchElementException.class)
 	public void searchInSubCategoriesNedativ() {
 
-		driver.findElement(mainSearchInputField).click();
-		driver.findElement(mainSearchInputField).clear();
-		driver.findElement(mainSearchInputField).sendKeys("Classic");
-		driver.findElement(mainSearchButton).click();
+		driver.findElement(By.xpath(mainSearchInputField)).click();
+		driver.findElement(By.xpath(mainSearchInputField)).clear();
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("Classic");
+		driver.findElement(By.xpath(mainSearchButton)).click();
 
 		Select select = new Select(driver.findElement(By.name("category_id")));
 		List<WebElement> options = select.getOptions();
@@ -205,10 +215,10 @@ public class SearchTest extends  SearchTestRunner {
 				elem.click();
 			}
 		}
-		driver.findElement(advancedSearchButton);
+		driver.findElement(By.id(advancedSearchButton));
 
 		String expected = "There is no product that matches the search criteria.";
-		driver.findElement(findedElements).isEnabled();
+		driver.findElement(By.xpath(findedElements)).isEnabled();
 		Assert.assertEquals(
 				driver.findElement(By.xpath("//input[@id=\"button-search\"]/following-sibling::p")).getText(),
 				expected);
@@ -218,19 +228,19 @@ public class SearchTest extends  SearchTestRunner {
 	// @Test(dataProvider = "search-with--description")
 	public void searchInDescription(String description) {
 
-		driver.findElement(mainSearchInputField).click();
-		driver.findElement(mainSearchInputField).clear();
-		driver.findElement(mainSearchInputField).sendKeys("samsung");
-		driver.findElement(mainSearchButton).click();
+		driver.findElement(By.xpath(mainSearchInputField)).click();
+		driver.findElement(By.xpath(mainSearchInputField)).clear();
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("samsung");
+		driver.findElement(By.xpath(mainSearchButton)).click();
 
 		driver.findElement(By.id("description")).click();
 		driver.findElement(By.xpath("//input[@id=\"input-search\"]")).clear();
 		driver.findElement(By.xpath("//input[@id=\"input-search\"]")).sendKeys(description);
 		// "Offering accurate, brilliant color performance, the Cinema HD");
 
-		driver.findElement(advancedSearchButton).click();
+		driver.findElement(By.id(advancedSearchButton)).click();
 
-		List<WebElement> product = driver.findElements(findedElements); // "//div[@id=\"content\"]/div[@class=\"row\"]//h4/following-sibling::p"));
+		List<WebElement> product = driver.findElements(By.xpath(findedElements)); // "//div[@id=\"content\"]/div[@class=\"row\"]//h4/following-sibling::p"));
 		System.out.println("size " + product.size());
 		for (WebElement elem : product) {
 			System.out.println(elem.getText());

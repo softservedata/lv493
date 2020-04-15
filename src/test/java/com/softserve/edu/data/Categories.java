@@ -25,7 +25,7 @@ public enum Categories {
 		this.categoriesName = categoriesName;
 	}
 
-	public String getAttributeName() {
+	public String getCategorieseName() {
 		return categoriesName;
 	}
 
