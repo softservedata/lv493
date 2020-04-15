@@ -1,6 +1,7 @@
 package com.softserve.edu;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -33,7 +34,6 @@ public class CategoryTest {
      */
     @BeforeSuite
     public void loadTestProperties() throws IOException {
-        //DataProviderClass.saveCategories();
         InputStream input = new FileInputStream(pathToPropertiesFile);
 
         properties = new Properties();
@@ -55,6 +55,7 @@ public class CategoryTest {
         driver = new ChromeDriver(options);
 
         driver.manage().deleteAllCookies();
+
     }
 
     /**
@@ -63,6 +64,7 @@ public class CategoryTest {
     @BeforeClass
     public void openAdminPage() {
         driver.get(properties.getProperty("url") + "/admin");
+
     }
 
     /**
@@ -136,35 +138,46 @@ public class CategoryTest {
                 By.xpath("//td[contains(text(),'" + category.categoryName +  "')]")).size();
 
         Assert.assertEquals(countAddedCategory, 1);
+        if (category.isTop) {
+            Assert.assertTrue(getCategoriesFromHorizontalMenu().contains(category.categoryName));
+        }
+
+        Assert.assertTrue(getCategoriesFromVerticalMenu().contains(category.categoryName));
     }
 
     /**
      * @return names of categories from horizontal menu
      */
     List<String> getCategoriesFromHorizontalMenu() {
-        driver.get(properties.getProperty("url"));
+        WebDriver temp = new ChromeDriver();
+        temp.get(properties.getProperty("url"));
 
-        List<WebElement> verticalElements = driver.findElements(
+        List<WebElement> verticalElements = temp.findElements(
                 By.xpath("//ul[@class='nav navbar-nav']/li/a"));
 
-        return verticalElements.stream().map(
-                item -> item.getText().replaceAll("\\s\\(.*\\)", "")).collect(Collectors.toList()); //check
+        List<String> categories = verticalElements.stream().map(
+                item -> item.getText().replaceAll("\\s\\(.*\\)", "")).collect(Collectors.toList());
+        temp.quit();
 
+        return categories;
     }
 
     /**
      * @return names of categories from vertical menu
      */
     List<String> getCategoriesFromVerticalMenu() {
+        WebDriver temp = new ChromeDriver();
+        temp.get(properties.getProperty("url"));
 
-        driver.get(properties.getProperty("url"));
+        temp.findElement(By.xpath("//ul[@class='nav navbar-nav']/li[not(@class)]")).click();
 
-        driver.findElement(By.xpath("//ul[@class='nav navbar-nav']/li[not(@class)]")).click();
-        List<WebElement> verticalElements = driver.findElements(By.className("list-group-item"));
-
-        return verticalElements.stream().map(
+        List<WebElement> verticalElements = temp.findElements(By.className("list-group-item"));
+        List<String> categories = verticalElements.stream().map(
                 item -> item.getText().replaceAll("\\s\\(.*\\)", "")).collect(Collectors.toList()); //check
 
+
+        temp.quit();
+        return categories;
     }
 
     /**
