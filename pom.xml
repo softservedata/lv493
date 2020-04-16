@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>academy.softserve</groupId>
+	<artifactId>opencart</artifactId>
+	<version>0.0.1</version>
+
+	<properties>
+
+		<!-- - - - - - Encoding - - - - - -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
+
+		<!-- - - - - - Java - - - - - -->
+		<jdk.source.version>1.8</jdk.source.version>
+		<jdk.compiler.version>1.8</jdk.compiler.version>
+		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+
+		<!-- - - - - - Test - - - - - -->
+		<org.testng.version>6.14.3</org.testng.version>
+		<maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+
+		<!-- - - - - - Automation - - - - - -->
+		<org.seleniumhq.selenium.version>3.141.59</org.seleniumhq.selenium.version>
+		<io.github.bonigarcia.version>3.8.1</io.github.bonigarcia.version>
+		<maven.webdriverextensions-maven-plugin.version>3.2.0</maven.webdriverextensions-maven-plugin.version>
+
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>${org.testng.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>${org.seleniumhq.selenium.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>${io.github.bonigarcia.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven.resources.plugin.version}</version>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.plugin.version}</version>
+					<configuration>
+						<source>${jdk.source.version}</source>
+						<target>${jdk.compiler.version}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>com.github.webdriverextensions</groupId>
+					<artifactId>webdriverextensions-maven-plugin</artifactId>
+					<version>${maven.webdriverextensions-maven-plugin.version}</version>
+					<executions>
+						<execution>
+							<id>pre-test</id>
+							<goals>
+								<goal>install-drivers</goal>
+							</goals>
+							<phase>test-compile</phase>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven.surefire.plugin.version}</version>
+					<configuration>
+						<argLine>-Xms512m -Xmx1024m</argLine>
+						<skipTests>false</skipTests>
+						<suiteXmlFiles>
+							<suiteXmlFile>tax.xml</suiteXmlFile>
+							<suiteXmlFile>currency.xml</suiteXmlFile>
+						</suiteXmlFiles>
+					</configuration>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+		
+	</build>
+
+</project>

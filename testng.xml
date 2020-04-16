@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SuiteCurrency">
+
+	<test name="CheckPresenceTest">
+		<classes>
+			<class name="academy.softserve.opencart.AddCurrencyTest" />
+		</classes>
+	</test>
+
+	<test name="CheckInCartTest">
+		<groups>
+			<run>
+				<include name="currencyCompliance" />
+			</run>
+		</groups>
+		<classes>
+			<class name="academy.softserve.opencart.CheckCurrencyTest" />
+		</classes>
+	</test>
+	
+	<test name="CheckSymbolPositionTest">
+		<groups>
+			<run>
+				<include name="symbolPosition" />
+			</run>
+		</groups>
+		<classes>
+			<class name="academy.softserve.opencart.CheckCurrencyTest" />
+		</classes>
+	</test>
+	
+	<test name="CheckGiftCurrencyTest">
+		<groups>
+			<run>
+				<exclude name="symbolPosition" />
+			</run>
+		</groups>
+		<classes>
+			<class name="academy.softserve.opencart.CheckCurrencyTest">
+				<methods>
+					<include name="checkGiftCertificate" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="CheckTax">
+		<classes>
+			<class name="academy.softserve.opencart.TaxTest"></class>
+		</classes>
+	</test>
+
+</suite> <!-- Suite -->
