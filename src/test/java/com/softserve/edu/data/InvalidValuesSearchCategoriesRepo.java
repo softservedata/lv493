@@ -13,6 +13,14 @@ public class InvalidValuesSearchCategoriesRepo {
 		return new SearchItem("apple mac", Categories.ALL_CATEGORIES);
 	}
 	
+	public static SearchItem searchAllCategoriesBlSp() {
+		return new SearchItem(" ", Categories.ALL_CATEGORIES);
+	}
+	
+	public static SearchItem searchAllCategoriesP() {
+		return new SearchItem("%", Categories.ALL_CATEGORIES);
+	}
+	
 	public static SearchItem searchCategoryDesctops() {
 		return new SearchItem("canon", Categories.DESCTOPS);
 	}

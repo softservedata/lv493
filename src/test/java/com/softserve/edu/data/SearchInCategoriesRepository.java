@@ -45,6 +45,7 @@ public class SearchInCategoriesRepository {
 		return new SearchItem("samsung", Categories.TABLETS);
 	}
 	
+	//subcategory
 	public static SearchItem searchSubCategoryPC() {
 		return new SearchItem("hp", Categories.PC);
 	}

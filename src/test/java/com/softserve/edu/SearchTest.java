@@ -70,7 +70,7 @@ public class SearchTest extends  SearchTestRunner {
 	/*
 	 * Search product by its name
 	 */
-	//@Test(dataProvider = "validDataProvider")
+	@Test(dataProvider = "validDataProvider")
 	public void simpleTest(SearchItem searchItem) throws IOException, InterruptedException {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
@@ -91,7 +91,9 @@ public class SearchTest extends  SearchTestRunner {
 	@DataProvider
 	public Object[][] inValidSearcValue() {
 		return new Object[][] {
-				{InvalidValuesSearchCategoriesRepo.searchAllCategories()} 
+				{ InvalidValuesSearchCategoriesRepo.searchAllCategories()},
+				{ InvalidValuesSearchCategoriesRepo.searchAllCategoriesBlSp() },
+				{ InvalidValuesSearchCategoriesRepo.searchAllCategoriesP() }
 		};
 	}
 	
@@ -99,8 +101,8 @@ public class SearchTest extends  SearchTestRunner {
 	 * Search product by its name, if that product does not exist
 	 * 
 	 */
-//	@Test(dataProvider = "inValidSearcValue", 
-//		  expectedExceptions = NoSuchElementException.class)
+	@Test(dataProvider = "inValidSearcValue", 
+		  expectedExceptions = NoSuchElementException.class)
 	public void simpleTestNegative(SearchItem searchItem) {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
@@ -116,7 +118,7 @@ public class SearchTest extends  SearchTestRunner {
 	 * Checking input field is sensetiwe in case
 	 * 
 	 */
-	//@Test(dataProvider = "validDataProvider")
+	@Test(dataProvider = "validDataProvider")
 	public void verifySensCase(SearchItem searchItem) {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
@@ -128,9 +130,9 @@ public class SearchTest extends  SearchTestRunner {
 		for (WebElement elem : productLowCase) {
 			System.out.println(elem.getText());
 		}
-		// driver.get("http://192.168.171.129/opencart/upload/");
+		driver.get("http://192.168.171.129/opencart/upload/");
 		//driver.get("http://taqc-opencart.epizy.com/index.php?route=common/home");
-		driver.get("http://34.65.1.160/opencart/upload/");
+		//driver.get("http://34.65.1.160/opencart/upload/");
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
 		driver.findElement(By.xpath(mainSearchInputField)).clear();
@@ -151,11 +153,11 @@ public class SearchTest extends  SearchTestRunner {
 		return new Object[][] {
 				{ SearchInCategoriesRepository.searchCategoryCameras()},
 			    { SearchInCategoriesRepository.searchCategoryComponents()},
-				{ SearchInCategoriesRepository.searchCategoryDesctops()},
-				{ SearchInCategoriesRepository.searchCategoryLaptops()},
-				{ SearchInCategoriesRepository.searchCategoryMp3Players()},
-				{ SearchInCategoriesRepository.searchCategoryPhones()},
-				{ SearchInCategoriesRepository.searchCategoryTablets()}
+				//{ SearchInCategoriesRepository.searchCategoryDesctops()},
+				//{ SearchInCategoriesRepository.searchCategoryLaptops()},
+				//{ SearchInCategoriesRepository.searchCategoryMp3Players()},
+				//{ SearchInCategoriesRepository.searchCategoryPhones()},
+				//{ SearchInCategoriesRepository.searchCategoryTablets()}
 		};
 	}
 	
@@ -163,7 +165,7 @@ public class SearchTest extends  SearchTestRunner {
 	 * Search product by its name & category
 	 * 
 	 */
-	//@Test(dataProvider = "categories")
+	@Test(dataProvider = "categories")
 	public void searchInCategories(SearchItem searchItem) {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
@@ -206,8 +208,8 @@ public class SearchTest extends  SearchTestRunner {
 	 * Search product by its name & category, when invalid value is entered
 	 * 
 	 */
-	//@Test(expectedExceptions = NoSuchElementException.class,
-	//		dataProvider = "categoriesNegative")
+	@Test(expectedExceptions = NoSuchElementException.class,
+			dataProvider = "categoriesNegative")
 	public void searchInCategoriesNegative(SearchItem searchItem) throws IOException, InterruptedException {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
@@ -242,7 +244,7 @@ public class SearchTest extends  SearchTestRunner {
 	 * Search product by its name & subcategory
 	 * 
 	 */
-	//@Test(dataProvider = "subCategories")
+	@Test(dataProvider = "subCategories")
 	public void searchInSubCategories(SearchItem searchItem) {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
@@ -308,7 +310,7 @@ public class SearchTest extends  SearchTestRunner {
     /*
      * search product by its description
      */
-	// @Test(dataProvider = "search-with--description")
+	@Test(dataProvider = "search-with--description")
 	public void searchInDescription(String description) {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();

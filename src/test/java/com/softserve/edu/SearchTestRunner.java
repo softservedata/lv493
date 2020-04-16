@@ -43,6 +43,8 @@ public abstract class SearchTestRunner {
 	@BeforeClass
 	//@Parameters("browser")
 	public void setUpBeforeClass() throws Exception {
+		driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		/*-if (browser.equalsIgnoreCase("firefox")) {
 			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
@@ -61,10 +63,6 @@ public abstract class SearchTestRunner {
 		} else {
 			throw new Exception("Browser is not correct");
 		} */
-
-		
-		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
 	@BeforeMethod
