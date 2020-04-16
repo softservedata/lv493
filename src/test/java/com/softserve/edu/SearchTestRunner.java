@@ -65,11 +65,6 @@ public abstract class SearchTestRunner {
 		
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		// System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
-		// driver.System.setProperty("webdriver.chrome.driver",
-		// SearchTest.class.getResource("/chromedriver-windows-32bit.exe").getPath());
-		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
 	}
 
 	@BeforeMethod

@@ -9,6 +9,7 @@ package com.softserve.edu.data;
  */
 public enum Categories {
 	
+	//category
 	ALL_CATEGORIES( "All Categories"),
 	DESCTOPS ("Desktops"),
 	LAPTOPS_AND_NOTEBOOKS ("Laptops &amp; Notebooks"),
@@ -17,7 +18,19 @@ public enum Categories {
 	SOFTWARE("Software"),
 	PHONES("Phones &amp; PDAs"),
 	CAMERAS("Cameras"),
-	MP3_PLAYERS("MP3 Players");
+	MP3_PLAYERS("MP3 Players"),
+	
+	//subcategory
+	PC("PC"), 
+	MAC("Mac"), 
+	MACBOOK("Macbook"), 
+	WINDOWS("Windows"), 
+	MICE_AND_TRACKBALLS("Mice and Trackballs"),
+	MONITORS("Monitors"), 
+	PRINTERS("Printers"), 
+	SCANNERS("Scanners"), 
+	WEB_CAMERAS("Web Cameras");
+
                                                
 	private String categoriesName;
 

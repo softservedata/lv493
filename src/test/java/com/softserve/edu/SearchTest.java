@@ -67,6 +67,9 @@ public class SearchTest extends  SearchTestRunner {
 		};
 	}
 	
+	/*
+	 * Search product by its name
+	 */
 	//@Test(dataProvider = "validDataProvider")
 	public void simpleTest(SearchItem searchItem) throws IOException, InterruptedException {
 
@@ -92,6 +95,10 @@ public class SearchTest extends  SearchTestRunner {
 		};
 	}
 	
+	/*
+	 * Search product by its name, if that product does not exist
+	 * 
+	 */
 //	@Test(dataProvider = "inValidSearcValue", 
 //		  expectedExceptions = NoSuchElementException.class)
 	public void simpleTestNegative(SearchItem searchItem) {
@@ -104,7 +111,11 @@ public class SearchTest extends  SearchTestRunner {
 		Assert.assertTrue(driver.findElement(By.xpath(findedElements)).isEnabled()); 
 		Assert.assertEquals(driver.findElement( By.xpath(alertMessage)).getText(), ERROR_MESSAGE);
 	}
-
+	
+	/*
+	 * Checking input field is sensetiwe in case
+	 * 
+	 */
 	//@Test(dataProvider = "validDataProvider")
 	public void verifySensCase(SearchItem searchItem) {
 
@@ -148,6 +159,10 @@ public class SearchTest extends  SearchTestRunner {
 		};
 	}
 	
+	/*
+	 * Search product by its name & category
+	 * 
+	 */
 	//@Test(dataProvider = "categories")
 	public void searchInCategories(SearchItem searchItem) {
 
@@ -187,6 +202,10 @@ public class SearchTest extends  SearchTestRunner {
 		};
 	}
 	
+	/*
+	 * Search product by its name & category, when invalid value is entered
+	 * 
+	 */
 	//@Test(expectedExceptions = NoSuchElementException.class,
 	//		dataProvider = "categoriesNegative")
 	public void searchInCategoriesNegative(SearchItem searchItem) throws IOException, InterruptedException {
@@ -210,56 +229,85 @@ public class SearchTest extends  SearchTestRunner {
 		Assert.assertTrue(driver.findElement(By.xpath(findedElements)).isEnabled());
 		Assert.assertEquals(driver.findElement(By.xpath(alertMessage)).getText(), ERROR_MESSAGE);
 	}
-
-	//@Test
-	public void searchInSubCategories() {
+	
+	@DataProvider
+	public Object[][] subCategories() {
+		return new Object[][] {
+			{ SearchInCategoriesRepository.searchSubCategoryMac() },
+			{ SearchInCategoriesRepository.searchSubCategoryMacbook() },
+			{ SearchInCategoriesRepository.searchSubCategoryPC() },
+		};	
+	}
+	/*
+	 * Search product by its name & subcategory
+	 * 
+	 */
+	//@Test(dataProvider = "subCategories")
+	public void searchInSubCategories(SearchItem searchItem) {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
 		driver.findElement(By.xpath(mainSearchInputField)).clear();
-		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("Classic");
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys(searchItem.getSearchText());
 		driver.findElement(By.xpath(mainSearchButton)).click();
 
 		Select select = new Select(driver.findElement(By.name("category_id")));
 		List<WebElement> options = select.getOptions();
 		for (WebElement elem : options) {
-			if (elem.getText().contains("IPod")) {
+			if (elem.getText().contains(searchItem.getCategories().getCategorieseName())) {
 				System.out.println(elem.getText());
 				elem.click();
 			}
 		}
 		driver.findElement(By.id(advancedSearchButton));
 		List<WebElement> product = driver.findElements(By.xpath(findedElements));
-		System.out.println("size " + product.size());
+		System.out.println(product.size());
 		for (WebElement elem : product) {
-			System.out.println(elem.getText().toLowerCase());
-			Assert.assertTrue(elem.getText().toLowerCase().contains("ipod"));
+			Assert.assertTrue(elem.getText().toLowerCase().contains(searchItem.getSearchText()));
 		}
+		Assert.assertTrue(product.size() > 0);
 	}
-
-	// @Test(expectedExceptions = NoSuchElementException.class)
-	public void searchInSubCategoriesNedativ() {
+	
+	@DataProvider
+	public Object[][] subCategoriesNegative() {
+		return new Object[][] {
+			{ InvalidValuesSearchCategoriesRepo.searchSubCategoryMac() },
+			{ InvalidValuesSearchCategoriesRepo.searchSubCategoryMacbook() },
+			{ InvalidValuesSearchCategoriesRepo.searchSubCategoryPC() }
+		};	
+	}
+	
+	/*
+	 * Search product by its name & subcategory when invalid value is entered
+	 * 
+	 */
+	 @Test(expectedExceptions = NoSuchElementException.class,
+			 dataProvider = "subCategoriesNegative")
+	public void searchInSubCategoriesNedativ(SearchItem searchItem) {
 
 		driver.findElement(By.xpath(mainSearchInputField)).click();
 		driver.findElement(By.xpath(mainSearchInputField)).clear();
-		driver.findElement(By.xpath(mainSearchInputField)).sendKeys("Classic");
+		driver.findElement(By.xpath(mainSearchInputField)).sendKeys(searchItem.getSearchText());
 		driver.findElement(By.xpath(mainSearchButton)).click();
 
 		Select select = new Select(driver.findElement(By.name("category_id")));
 		List<WebElement> options = select.getOptions();
 		for (WebElement elem : options) {
-			if (elem.getText().contains("IPod")) {
+			if (elem.getText().contains(searchItem.getCategories().getCategorieseName())) {
 				System.out.println(elem.getText());
 				elem.click();
 			}
 		}
 		driver.findElement(By.id(advancedSearchButton));
-		driver.findElement(By.xpath(findedElements)).isEnabled();
+		Assert.assertTrue(driver.findElement(By.xpath(findedElements)).isEnabled());
 		Assert.assertEquals(
 				driver.findElement(By.xpath("//input[@id=\"button-search\"]/following-sibling::p")).getText(),
 				ERROR_MESSAGE);
 
 	}
-
+	
+    /*
+     * search product by its description
+     */
 	// @Test(dataProvider = "search-with--description")
 	public void searchInDescription(String description) {
 
@@ -288,7 +336,7 @@ public class SearchTest extends  SearchTestRunner {
 			}
 			Assert.assertTrue(s.toLowerCase().contains("ima"));
 			// ((JavascriptExecutor) driver).executeScript("window.history.go(-1)");
-			driver.navigate().back();
+			//driver.navigate().back();
 		}
 		System.out.println("The lendth of search query is " + description.length());
 	}

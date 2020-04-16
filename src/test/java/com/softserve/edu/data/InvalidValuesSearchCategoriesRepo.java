@@ -44,4 +44,17 @@ public class InvalidValuesSearchCategoriesRepo {
 	public static SearchItem searchCategoryTablets() {
 		return new SearchItem("mac", Categories.TABLETS);
 	}
+	
+	//subcategory
+	public static SearchItem searchSubCategoryPC() {
+		return new SearchItem("epson", Categories.PC);
+	}
+	
+	public static SearchItem searchSubCategoryMacbook() {
+		return new SearchItem("windows", Categories.MACBOOK);
+	}
+	
+	public static SearchItem searchSubCategoryMac() {
+		return new SearchItem("hp", Categories.MAC);
+	}
 }

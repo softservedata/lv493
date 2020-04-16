@@ -1,5 +1,8 @@
 package com.softserve.edu.data;
 
+/*
+ * class with paremeters of searching product
+ */
 public class SearchItem {
 	
 	private String searchText;

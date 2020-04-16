@@ -44,4 +44,20 @@ public class SearchInCategoriesRepository {
 	public static SearchItem searchCategoryTablets() {
 		return new SearchItem("samsung", Categories.TABLETS);
 	}
+	
+	public static SearchItem searchSubCategoryPC() {
+		return new SearchItem("hp", Categories.PC);
+	}
+	
+	public static SearchItem searchSubCategoryMac() {
+		return new SearchItem("imac", Categories.MAC);
+	}
+	
+	public static SearchItem searchSubCategoryMacbook() {
+		return new SearchItem("mac", Categories.MACBOOK);
+	}
+	
+	public static SearchItem searchSubCategoryScanners() {
+		return new SearchItem("epson", Categories.SCANNERS);
+	}
 }
