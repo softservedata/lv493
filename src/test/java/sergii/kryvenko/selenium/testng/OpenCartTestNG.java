@@ -273,7 +273,7 @@ public class OpenCartTestNG {
      */
     @Test
     @Parameters(value = { "itemToSearch", "waitTime" })
-    public void serachAndAddItem(String itemToSearch, int waitTime) {
+    public void searchAndAddItem(String itemToSearch, int waitTime) {
 
         System.out.println("---------------Search and add " + itemToSearch
                 + " to shoping cart--");

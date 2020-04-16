@@ -14,7 +14,7 @@
 				<methods>
 					<include name = "addItem" />
 					<include name = "changeQuantityItemInCart" />
-					<include name = "serachAndAddItem" />
+					<include name = "searchAndAddItem" />
 					<include name = "deleteItemPosition" />
 					<include name = "useCoupon" />
 					<include name = "useCertificate" />
