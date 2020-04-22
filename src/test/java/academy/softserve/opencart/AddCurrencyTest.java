@@ -1,6 +1,5 @@
 package academy.softserve.opencart;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -136,37 +135,5 @@ public class AddCurrencyTest {
         Assert.assertTrue(alert.getText().contains("Success"));
     }
 
-    @Test(dataProvider = "nameСurrencyDataProvider")
-    public void checkCurrencyPresence(final String symbol) {
 
-        String adminTab = driver.getWindowHandle();
-
-        // go to store
-        driver.findElement(By.xpath("//i[@class='fa fa-home fa-lg']/.."))
-                .click();
-        driver.findElement(By.xpath("//a[text()='Your Store']")).click();
-
-        // switch to new tab
-        for (String tab : driver.getWindowHandles()) {
-            if (!tab.equals(adminTab)) {
-                driver.switchTo().window(tab);
-                break;
-            }
-        }
-
-        // check presence
-        driver.findElement(
-                By.cssSelector("button.btn.btn-link.dropdown-toggle")).click();
-
-        List<WebElement> currencies = driver.findElements(By.cssSelector(
-                "button[class='currency-select btn btn-link btn-block']"));
-        WebElement currency = currencies.stream()
-                .filter(elem -> elem.getAttribute("name").contains(symbol))
-                .findAny().orElse(null);
-
-        driver.switchTo().window(adminTab);
-
-        Assert.assertNotNull(currency);
-
-    }
 }

@@ -248,6 +248,24 @@ public class CheckCurrencyTest  {
         Assert.assertFalse(prices.isEmpty());
     }
 
+    @DataProvider
+    public Object[][] nameСurrencyDataProvider() {
+        return new Object[][] { { "UAH" } };
+    }
 
+    @Test(dataProvider = "nameСurrencyDataProvider")
+    public void checkCurrencyPresence(final String symbol) {
+
+        // check presence
+        driver.findElement(
+                By.cssSelector("button.btn.btn-link.dropdown-toggle")).click();
+
+        List<WebElement> currencies = driver.findElements(By.cssSelector(
+                "button[class='currency-select btn btn-link btn-block']"));
+        WebElement currency = currencies.stream()
+                .filter(elem -> elem.getAttribute("name").contains(symbol))
+                .findAny().orElse(null);
+        Assert.assertNotNull(currency);
+    }
 
 }

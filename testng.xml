@@ -47,7 +47,10 @@
 	
 	<test name="CheckTax">
 		<classes>
-			<class name="academy.softserve.opencart.TaxTest"></class>
+			<class name="academy.softserve.opencart.AddGeoZoneTest"></class>
+			<class name="academy.softserve.opencart.AddTaxTest"></class>
+			<class name="academy.softserve.opencart.SetTaxTest"></class>
+			<class name="academy.softserve.opencart.CheckTaxTest"></class>
 		</classes>
 	</test>
 
