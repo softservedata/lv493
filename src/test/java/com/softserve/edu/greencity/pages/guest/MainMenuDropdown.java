@@ -11,6 +11,7 @@ public class MainMenuDropdown {
 	//
 	private WebElement naviconButton;
 	private WebElement menuHome;
+	private WebElement menuEcoNews;
 
 	public MainMenuDropdown(WebDriver driver) {
 		this.driver = driver;
@@ -20,12 +21,14 @@ public class MainMenuDropdown {
 	private void initElements() {
 		// init elements
 		naviconButton = driver.findElement(By.cssSelector("span.navicon"));
-		menuHome = driver.findElement(By.cssSelector("label.menu-icon + ul > li:first-child > a[href*='welcome']"));
+		menuHome = driver.findElement(By.cssSelector("label.menu-icon + ul > li:first-child > a[href*='/welcome']"));
+		menuEcoNews = driver.findElement(By.cssSelector("label.menu-icon + ul > li > a[href*='/news']"));
 	}
 
 	// Page Object
 	
 	// naviconButton
+	
 	public WebElement getNaviconButton() {
         return naviconButton;
     }
@@ -35,7 +38,9 @@ public class MainMenuDropdown {
     }
 
     public void clickNaviconButton() {
-        getNaviconButton().click();
+    	if (isDisplayedNaviconButton()) {
+    		getNaviconButton().click();
+    	}
     }
     
     public boolean isDisplayedNaviconButton() {
@@ -52,16 +57,30 @@ public class MainMenuDropdown {
         return getMenuHome().getText();
     }
 
-    public void clearMenuHome() {
-        getMenuHome().clear();
-    }
-
     public void clickMenuHome() {
     	getMenuHome().click();
     }
 
     public boolean isDisplayedMenuHome() {
         return getMenuHome().isDisplayed();
+    }
+    
+    // menuEcoNews
+    
+    public WebElement getMenuEcoNews() {
+        return menuEcoNews;
+    }
+
+    public String getMenuEcoNewsText() {
+        return getMenuEcoNews().getText();
+    }
+
+    public void clickMenuEcoNews() {
+    	getMenuEcoNews().click();
+    }
+
+    public boolean isDisplayedMenuEcoNews() {
+        return getMenuEcoNews().isDisplayed();
     }
     
 	// Functional

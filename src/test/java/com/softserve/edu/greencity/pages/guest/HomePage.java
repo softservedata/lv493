@@ -2,6 +2,8 @@ package com.softserve.edu.greencity.pages.guest;
 
 import org.openqa.selenium.WebDriver;
 
+import com.softserve.edu.greencity.data.Languages;
+
 public class HomePage extends TopPart {
 
 	public HomePage(WebDriver driver) {
@@ -18,4 +20,9 @@ public class HomePage extends TopPart {
 	// Functional
 
 	// Business Logic
+	
+	public HomePage switchLanguage(Languages language) {
+		chooseLanguage(language);
+		return new HomePage(driver);
+	}
 }
