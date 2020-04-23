@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,12 +17,16 @@ import org.openqa.selenium.support.ui.Wait;
 import com.softserve.edu.greencity.data.Languages;
 
 public abstract class TopPart {
-
+	private final int WINDOW_WIDTH_TO_SCROLL = 1024;
+	private final int WINDOW_HEIGHT_TO_CLICK_FOOTER = 480;
+	//
 	protected WebDriver driver;
 	//
 	private WebElement registerLink;
 	private WebElement signinLink;
 	private Select languageSwitcher;
+	//
+	private WebElement copyright;
 	//
 	private MainMenuDropdown mainMenuDropdown;
 	private LoginDropdown loginDropdown;
@@ -58,6 +63,7 @@ public abstract class TopPart {
 		signinLink = driver.findElement(By.cssSelector("span#text-within + span > a"));
 		languageSwitcher = new Select(driver.findElement(By.id("language-switcher")));
 		mainMenuDropdown = new MainMenuDropdown(driver);
+		copyright = driver.findElement(By.cssSelector("div.bottom-part"));
 	}
 
 	// Page Object
@@ -112,6 +118,20 @@ public abstract class TopPart {
 		getLanguageSwitcherWebElement().click();
 	}
 
+	// copyright
+
+	public WebElement getCopyright() {
+		return copyright;
+	}
+
+	public String getCopyrightText() {
+		return getCopyright().getText();
+	}
+
+	public void clickCopyright() {
+		getCopyright().click();
+	}
+	 
 	// mainMenuDropdown
 	
 	public MainMenuDropdown getMainMenuDropdown() {
@@ -125,15 +145,47 @@ public abstract class TopPart {
 		setLanguageSwitcher(language.toString());
 	}
 	
+	protected void scrollDown() {
+		//System.out.println("driver.manage().window().getSize()" + driver.manage().window().getSize());
+		if (driver.manage().window().getSize().width < WINDOW_WIDTH_TO_SCROLL) {
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+	        js.executeScript("arguments[0].scrollIntoView(true);", getCopyright());
+		}
+	}
+	
+	protected boolean isMenuClickable() {
+		return driver.manage().window().getSize().height > WINDOW_HEIGHT_TO_CLICK_FOOTER;
+	}
+	
 	// Business Logic
 	
-	public HomePage gotoHomePage() {
+	public HomePage navigateMenuHome() {
 		getMainMenuDropdown().clickMenuHome();
 		return new HomePage(driver);
 	}
 
-	public EconewsPage gotoEconewsPage() {
+	public EconewsPage navigateMenuEconews() {
 		getMainMenuDropdown().clickMenuEcoNews();
 		return new EconewsPage(driver);
+	}
+	
+	public HomePage navigateMenuTipsTricks() {
+		getMainMenuDropdown().clickMenuTipsTricks();
+		return new HomePage(driver);
+	}
+	
+	public MapPage navigateMenuMap() {
+		getMainMenuDropdown().clickMenuMap();
+		return new MapPage(driver);
+	}
+	
+	public MyCabinetPage navigateMenuMyCabinet() {
+		getMainMenuDropdown().clickMenuMyCabinet();
+		return new MyCabinetPage(driver);
+	}
+	
+	public AboutPage navigateMenuAbout() {
+		getMainMenuDropdown().clickMenuAbout();
+		return new AboutPage(driver);
 	}
 }

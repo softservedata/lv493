@@ -2,7 +2,7 @@ package com.softserve.edu.greencity.pages.guest;
 
 import org.openqa.selenium.WebDriver;
 
-public class AboutPage extends TopPart {
+public class AboutPage extends SmallHeightPart {
 
 	public AboutPage(WebDriver driver) {
 		super(driver);
@@ -18,4 +18,5 @@ public class AboutPage extends TopPart {
 	// Functional
 
 	// Business Logic
+
 }

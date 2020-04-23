@@ -2,9 +2,9 @@ package com.softserve.edu.greencity.pages.guest;
 
 import org.openqa.selenium.WebDriver;
 
-public class MapPage extends SmallHeightPart {
+public class MyCabinetPage extends SmallHeightPart {
 
-	public MapPage(WebDriver driver) {
+	public MyCabinetPage(WebDriver driver) {
 		super(driver);
 		initElements();
 	}
@@ -16,7 +16,6 @@ public class MapPage extends SmallHeightPart {
 	// Page Object
 
 	// Functional
-	
+
 	// Business Logic
-	
 }
