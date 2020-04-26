@@ -28,8 +28,8 @@ public class EconewsPage extends TopPart {
 	
 	private WebElement createNewsButton;
 	
-	private WebElement gridViev;
-	private WebElement listViev;
+	private WebElement gridView;
+	private WebElement listView;
 	
 	private ItemsContainer itemsContainer;
 
@@ -52,38 +52,38 @@ public class EconewsPage extends TopPart {
 		createNewsButton = driver.findElement(By.id("create-button"));
 		itemsContainer = new ItemsContainer(driver);
 		
-		gridViev = driver.findElement(By.xpath("//div[contains(@class, \"gallery-view\")]"));
-		listViev = driver.findElement(By.xpath("//div[contains(@class, \"list-view\")]"));;
+		gridView = driver.findElement(By.xpath("//div[contains(@class, \"gallery-view\")]"));
+		listView = driver.findElement(By.xpath("//div[contains(@class, \"list-view\")]"));;
 	}
 
 	// Page Object
 	
 	//gridViev
 	
-	public WebElement getGridViev() {
-        return gridViev;
+	public WebElement getGridView() {
+        return gridView;
     }
     
-    public void clickGridViev() {
-        getGridViev().click();
+    public void clickGridView() {
+        getGridView().click();
     }
     
-    public boolean gridVievIsActive() {
-    	 return getGridViev().getAttribute("class").contains("active");
+    public boolean gridViewIsActive() {
+    	 return getGridView().getAttribute("class").contains("active");
     }
     
   //listViev
 	
-  	public WebElement getListViev() {
-          return listViev;
+  	public WebElement getListView() {
+          return listView;
       }
       
-      public void clickListViev() {
-          getListViev().click();
+      public void clickListView() {
+          getListView().click();
       }
       
-      public boolean listVievIsActive() {
-        return getListViev().getAttribute("class").contains("active");
+      public boolean listViewIsActive() {
+        return getListView().getAttribute("class").contains("active");
       }
 
 	//createNewsButton
@@ -179,9 +179,29 @@ public class EconewsPage extends TopPart {
 	// Functional
 
 	// Business Logic
-
+ 	/**
+ 	 * Choose language
+ 	 * @param language
+ 	 * @return EconewsPage
+ 	 */
 	public EconewsPage switchLanguage(Languages language) {
 		chooseLanguage(language);
 		return new EconewsPage(driver);
 	}
+	
+	public EconewsPage switchToGridViev() {
+		if (! gridViewIsActive() ) {
+			clickGridView();
+		}
+		return new EconewsPage(driver);
+	}
+	
+	public EconewsPage switchToListViev() {
+		if (! listViewIsActive() ) {
+			clickListView();
+		}
+		return new EconewsPage(driver);
+	}
+	
+	
 }

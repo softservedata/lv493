@@ -12,12 +12,12 @@ public class EconewsPageTest extends GreencityTestRunner {
 		HomePage homepage = loadApplication();
 		homepage.navigateMenuEconews();
 		EconewsPage ecoNewsPage= new EconewsPage(driver);
-		System.out.println("is active first time" + ecoNewsPage.gridVievIsActive() );
+		System.out.println("is active first time" + ecoNewsPage.gridViewIsActive() );
 		
-		ecoNewsPage.clickListViev();
-		System.out.println("is active second time" + ecoNewsPage.gridVievIsActive() );
+		ecoNewsPage.clickListView();
+		System.out.println("is active second time" + ecoNewsPage.gridViewIsActive() );
 		
-		ecoNewsPage.clickGridViev();
-		System.out.println("is active third time" + ecoNewsPage.gridVievIsActive() );
+		ecoNewsPage.clickGridView();
+		System.out.println("is active third time" + ecoNewsPage.gridViewIsActive() );
   }
 }
