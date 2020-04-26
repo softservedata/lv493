@@ -30,6 +30,7 @@ public class RegisterPage extends TopPart {
     private String TAG_ATTRIBUTE_VALUE = "text";
     //
     LoginPage loginPage;
+    GoogleAccountPage googleAccountPage;
 
     public RegisterPage(WebDriver driver) {
         super(driver);
@@ -38,7 +39,8 @@ public class RegisterPage extends TopPart {
 
     private void initElements() {
         // init elements
-        titleField = driver.findElement(By.cssSelector("form[name='inputform'] h1"));
+        titleField = driver
+                .findElement(By.cssSelector("form[name='inputform'] h1"));
         firstNameField = driver.findElement(By.cssSelector("input#first-name"));
         lastNameField = driver.findElement(By.cssSelector("input#last-name"));
         emailField = driver.findElement(By.cssSelector("input#email"));
@@ -53,28 +55,35 @@ public class RegisterPage extends TopPart {
         signInLink = driver.findElement(By.cssSelector("a[href*='/auth']"));
         signInGoogleButton = driver
                 .findElement(By.cssSelector("button[class='google']"));
-        
+
         // init Validators
-        firstNameValidator  = driver.findElement(By.cssSelector("div[class='field-wrapper-left'] div[class='ng-star-inserted']"));
+        firstNameValidator = driver.findElement(By.cssSelector(
+                "div[class='field-wrapper-left'] div[class='ng-star-inserted']"));
 //        lastNameValidator = driver.findElement(By.cssSelector(""));
-        emailValidator = driver.findElement(By.xpath("//div[@id='validation-error']/div"));
-        passwordValidator = driver.findElement(By.xpath("//div[@class='password-wrapper']/following-sibling::div[1]"));    //FIXME selector
-        passwordConfirmValidator = driver.findElement(By.xpath("//div[@class='password-wrapper']/following-sibling::div[3]"));    //FIXME selector
+        emailValidator = driver
+                .findElement(By.xpath("//div[@id='validation-error']/div"));
+        passwordValidator = driver.findElement(By.xpath(
+                "//div[@class='password-wrapper']/following-sibling::div[1]")); // FIXME
+                                                                                // selector
+        passwordConfirmValidator = driver.findElement(By.xpath(
+                "//div[@class='password-wrapper']/following-sibling::div[3]")); // FIXME
+                                                                                // selector
     }
 
     // Page Object
     // titleField
     public WebElement getTitleField() {
         return titleField;
-        }
-    
+    }
+
     public String getTitleFieldText() {
-        return getTitleField().getText();  // Welcome back!
-        }
+        return getTitleField().getText(); // Welcome back!
+    }
+
     public boolean isDisplayedTitleField() {
         return getTitleField().isDisplayed();
     }
-    
+
 //  firstNameField
     public WebElement getFirstNameField() {
         return firstNameField;
@@ -285,16 +294,22 @@ public class RegisterPage extends TopPart {
         return getSignInGoogleButton().getText();
     }
 
-    public void clickSignInGoogleButton() {
+    public void clickSignInGoogleButton(String email, String password) {
         if (isDisplayedSignInGoogleButton()) {
             getSignInGoogleButton().click();
+            googleAccountPage = new GoogleAccountPage(driver, email);
+            googleAccountPage.clickChosenGoogleAccountField();
+            googleAccountPage.clickEnterPasswordGoogleAccountField();
+            googleAccountPage.setEnterPasswordGoogleAccountField(password);
+            googleAccountPage.clickShowPasswordGoogleAccountButton();
+            googleAccountPage.clickEnterPasswordGoogleAccountField();
         }
     }
 
     public boolean isDisplayedSignInGoogleButton() {
         return getSignInGoogleButton().isDisplayed();
     }
-    
+
 //    firstNameValidator
     public WebElement getFirstNameValidator() {
         return firstNameValidator;
@@ -304,11 +319,10 @@ public class RegisterPage extends TopPart {
         return getFirstNameValidator().getText();
     }
 
-   
     public boolean isDisplayedFirstNameValidator() {
         return getFirstNameValidator().isDisplayed();
     }
-    
+
 //    lastNameValidator
 //    public WebElement getLastNameValidator() {
 //        return lastNameValidator;
@@ -322,7 +336,7 @@ public class RegisterPage extends TopPart {
 //    public boolean isDisplayedLastNameValidator() {
 //        return getLastNameValidator().isDisplayed();
 //    }
-    
+
 //    emailValidator
     public WebElement getEmailValidator() {
         return emailValidator;
@@ -332,11 +346,10 @@ public class RegisterPage extends TopPart {
         return getEmailValidator().getText();
     }
 
-   
     public boolean isDisplayedEmailValidator() {
         return getEmailValidator().isDisplayed();
     }
-    
+
 //    passwordValidator
     public WebElement getPasswordValidator() {
         return passwordValidator;
@@ -346,11 +359,10 @@ public class RegisterPage extends TopPart {
         return getPasswordValidator().getText();
     }
 
-   
     public boolean isDisplayedPasswordValidator() {
         return getPasswordValidator().isDisplayed();
     }
-    
+
 //    passwordConfirmValidator
     public WebElement getPasswordConfirmValidator() {
         return passwordConfirmValidator;
@@ -360,13 +372,12 @@ public class RegisterPage extends TopPart {
         return getPasswordConfirmValidator().getText();
     }
 
-   
     public boolean isDisplayedPasswordConfirmValidator() {
         return getPasswordConfirmValidator().isDisplayed();
     }
 
     // Functional
- // LoginPage
+    // LoginPage
     public LoginPage getLoginPage() {
         return new LoginPage(driver);
     }
