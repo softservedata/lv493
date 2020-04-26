@@ -16,6 +16,13 @@ public class MyCabinetPage extends SmallHeightPart {
 	}
 
 	// Page Object
+	public LoginPage getLoginPage() {
+	    return new LoginPage(driver);
+	}
+	
+	public RegisterPage getRegisterPage() {
+	    return new RegisterPage(driver);
+	}
 
 	// Functional
 
