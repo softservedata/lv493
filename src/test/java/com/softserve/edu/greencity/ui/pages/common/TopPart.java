@@ -86,8 +86,9 @@ public abstract class TopPart {
         return getRegisterLink().getText();
     }
     
-    public void clickRegisterLink() {
+    public RegisterDropdown clickRegisterLink() {
         getRegisterLink().click();
+        return new RegisterDropdown(driver);
     }
     
 	// signinLink
@@ -100,8 +101,9 @@ public abstract class TopPart {
         return getSigninLink().getText();
     }
     
-    public void clickSigninLink() {
+    public LoginDropdown clickSigninLink() {
         getSigninLink().click();
+        return new LoginDropdown(driver);
     }
     
 	// languageSwitcher
