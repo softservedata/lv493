@@ -366,6 +366,10 @@ public class RegisterPage extends TopPart {
     }
 
     // Functional
+ // LoginPage
+    public LoginPage getLoginPage() {
+        return new LoginPage(driver);
+    }
 
     // Business Logic
 }
