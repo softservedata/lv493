@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountPage;
+
 public class RegisterDropdown {
     private WebDriver driver;
     //
@@ -26,6 +28,7 @@ public class RegisterDropdown {
     private String TAG_ATTRIBUTE_VALUE = "placeholder";
     //
     LoginDropdown loginDropdown;
+    GoogleAccountPage googleAccountPage;
 
     public RegisterDropdown(WebDriver driver) {
         this.driver = driver;
@@ -261,9 +264,15 @@ public class RegisterDropdown {
         return getSignUpGoogleButton().getText();
     }
 
-    public void clickSignUpGoogleButton() {
+    public void clickSignUpGoogleButton(String email, String password) {
         if (isDisplayedSignUpGoogleButton()) {
             getSignUpGoogleButton().click();
+            googleAccountPage = new GoogleAccountPage(driver, email);
+            googleAccountPage.clickChosenGoogleAccountField();
+            googleAccountPage.clickEnterPasswordGoogleAccountField();
+            googleAccountPage.setEnterPasswordGoogleAccountField(password);
+            googleAccountPage.clickShowPasswordGoogleAccountButton();
+            googleAccountPage.clickEnterPasswordGoogleAccountField();
         }
     }
 

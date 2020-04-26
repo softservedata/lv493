@@ -23,6 +23,7 @@ public class LoginPage extends TopPart {
     private String TAG_ATTRIBUTE_VALUE = "text";
     //
     RegisterPage registerPage;
+    GoogleAccountPage googleAccountPage;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -184,9 +185,15 @@ public class LoginPage extends TopPart {
                 return getSignInGoogleButton().getText();  //  Sign-in with Google 
             }
 
-            public void clickSignInGoogleButton() {
+            public void clickSignInGoogleButton(String email, String password) {
                 if (isDisplayedSignInGoogleButton()) {
                     getSignInGoogleButton().click();
+                    googleAccountPage = new GoogleAccountPage(driver, email);
+                    googleAccountPage.clickChosenGoogleAccountField();
+                    googleAccountPage.clickEnterPasswordGoogleAccountField();
+                    googleAccountPage.setEnterPasswordGoogleAccountField(password);
+                    googleAccountPage.clickShowPasswordGoogleAccountButton();
+                    googleAccountPage.clickEnterPasswordGoogleAccountField();
                 }
             }
 
