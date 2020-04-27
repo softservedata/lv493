@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountPage;
 
 public class RegisterDropdown {
+
     private WebDriver driver;
     //
     private WebElement titleField;
@@ -54,17 +55,17 @@ public class RegisterDropdown {
         signInLink = driver.findElement(By.cssSelector("div.exist-account a"));
         signUpGoogleButton = driver.findElement(By.cssSelector(
                 "div[class='form-content-container'] button[class*='button-google']"));
-
-        // init Validators
-        emailValidator = driver.findElement(By.xpath(
-                "//form[contains(@class,'ng-touched')]/div/input[@name='email']/following-sibling::div[contains(@class,'error-message')][1]")); // FIXME
-                                                                                                                                                // selector
-        passwordValidator = driver.findElement(By.xpath(
-                "//form[contains(@class,'ng-touched')]/div/input[@name='email']/following-sibling::div[contains(@class,'error-message')][2]")); // FIXME
-                                                                                                                                                // selector
-        passwordConfirmValidator = driver.findElement(By.xpath(
-                "//form[contains(@class,'ng-touched')]/div/input[@name='email']/following-sibling::div[contains(@class,'error-message')][3]")); // FIXME
-                                                                                                                                                // selector
+//
+//        // init Validators
+//        emailValidator = driver.findElement(By.xpath(
+//                "//form[contains(@class,'ng-touched')]/div/input[@name='email']/following-sibling::div[contains(@class,'error-message')][1]")); // FIXME
+//                                                                                                                                                // selector
+//        passwordValidator = driver.findElement(By.xpath(
+//                "//form[contains(@class,'ng-touched')]/div/input[@name='email']/following-sibling::div[contains(@class,'error-message')][2]")); // FIXME
+//                                                                                                                                                // selector
+//        passwordConfirmValidator = driver.findElement(By.xpath(
+//                "//form[contains(@class,'ng-touched')]/div/input[@name='email']/following-sibling::div[contains(@class,'error-message')][3]")); // FIXME
+//                                                                                                                                                // selector
     }
 
     // Page Object
@@ -264,15 +265,9 @@ public class RegisterDropdown {
         return getSignUpGoogleButton().getText();
     }
 
-    public void clickSignUpGoogleButton(String email, String password) {
+    public void clickSignUpGoogleButton() {
         if (isDisplayedSignUpGoogleButton()) {
             getSignUpGoogleButton().click();
-            googleAccountPage = new GoogleAccountPage(driver, email);
-            googleAccountPage.clickChosenGoogleAccountField();
-            googleAccountPage.clickEnterPasswordGoogleAccountField();
-            googleAccountPage.setEnterPasswordGoogleAccountField(password);
-            googleAccountPage.clickShowPasswordGoogleAccountButton();
-            googleAccountPage.clickEnterPasswordGoogleAccountField();
         }
     }
 
@@ -323,6 +318,33 @@ public class RegisterDropdown {
   }
 
     // Functional
+  public void clickEmailGoogleAccountField() {
+      googleAccountPage = new GoogleAccountPage(driver);
+      googleAccountPage.clickEmailField();
+  }
+  
+  public void enterEmailGoogleAccountField(String email) {
+      googleAccountPage.clickEmailField();
+      googleAccountPage.clearEmailField();
+      googleAccountPage.setEmailField(email);
+  }
+  
+  public void clickEmailNextGoogleAccountButton() {
+      googleAccountPage.clickEmailNextButton();
+  }
+  public void enterPasswordGoogleAccountField(String password) {
+      googleAccountPage.clickEnterPasswordGoogleAccountField();
+      googleAccountPage.clearEnterPasswordGoogleAccountField();
+      googleAccountPage.setEnterPasswordGoogleAccountField(password);
+  }
+  
+  public void clickShowPasswordGoogleAccountButton() {
+      googleAccountPage.clickShowPasswordGoogleAccountButton();
+  }
+  
+  public void clickNextGoogleAccountButton() {
+      googleAccountPage.clickNextButton();
+  }
 
     // Business Logic
 }

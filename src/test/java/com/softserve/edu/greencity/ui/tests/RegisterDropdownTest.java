@@ -15,7 +15,6 @@ import com.softserve.edu.greencity.ui.pages.home.HomePage;
  */
 public class RegisterDropdownTest extends GreencityTestRunner {
 
-
     @DataProvider
     public Object[][] validCredentialUser() {
         return new Object[][] {
@@ -26,25 +25,28 @@ public class RegisterDropdownTest extends GreencityTestRunner {
     public void checkLoginPage(UserData userLoginCredentials) {
         HomePage homepage = loadApplication();
         RegisterDropdown registerDropdown = homepage.clickRegisterLink();
-        System.out.println("registerDropdown.getTitleFieldText(): " + registerDropdown.getTitleFieldText());
-//      registerDropdown.clickPersonNameField();
-//      registerDropdown.clearPersonNameField();
-//      registerDropdown.setPersonNameField(userLoginCredentials.getFirstName());
-//      presentationSleep(2);
-//      registerDropdown.clickEmailField();
-//      registerDropdown.clearEmailField();
-//      registerDropdown.setEmailField(userLoginCredentials.getEmail());
-//      presentationSleep(2);
-//      registerDropdown.clickPasswordField();
-//      registerDropdown.clearPasswordField();
-//      registerDropdown.setPasswordField(userLoginCredentials.getPassword());
-//      registerDropdown.clickShowPasswordButton();
-//      presentationSleep(2);
-//      registerDropdown.clickPasswordConfirmField();
-//      registerDropdown.clearPasswordConfirmField();
-//      registerDropdown.setPasswordConfirmField(userLoginCredentials.getPassword());
-//      registerDropdown.clickShowPasswordConfirmButton();
-//      presentationSleep(2);
+        System.out.println("registerDropdown.getTitleFieldText(): "
+                + registerDropdown.getTitleFieldText());
+        registerDropdown.clickEmailField();
+        registerDropdown.clearEmailField();
+        registerDropdown.setEmailField(userLoginCredentials.getEmail());
+        presentationSleep(2);
+        registerDropdown.clickPersonNameField();
+        registerDropdown.clearPersonNameField();
+        registerDropdown
+        .setPersonNameField(userLoginCredentials.getFirstName());
+        presentationSleep(2);
+        registerDropdown.clickPasswordField();
+        registerDropdown.clearPasswordField();
+        registerDropdown.setPasswordField(userLoginCredentials.getPassword());
+        registerDropdown.clickShowPasswordButton();
+        presentationSleep(2);
+        registerDropdown.clickPasswordConfirmField();
+        registerDropdown.clearPasswordConfirmField();
+        registerDropdown
+                .setPasswordConfirmField(userLoginCredentials.getPassword());
+        registerDropdown.clickShowPasswordConfirmButton();
+        presentationSleep(2);
 //      registerDropdown.clickSubmitButton();
     }
 }

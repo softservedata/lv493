@@ -187,12 +187,6 @@ public class LoginDropdown {
     public void clickSignInGoogleButton(String email, String password) {
         if (isDisplayedSignInGoogleButton()) {
             getSignInGoogleButton().click();
-            googleAccountPage = new GoogleAccountPage(driver, email);
-            googleAccountPage.clickChosenGoogleAccountField();
-            googleAccountPage.clickEnterPasswordGoogleAccountField();
-            googleAccountPage.setEnterPasswordGoogleAccountField(password);
-            googleAccountPage.clickShowPasswordGoogleAccountButton();
-            googleAccountPage.clickEnterPasswordGoogleAccountField();
         }
     }
 
@@ -258,6 +252,33 @@ public class LoginDropdown {
     }
 
     // Functional
+    public void clickEmailGoogleAccountField() {
+        googleAccountPage = new GoogleAccountPage(driver);
+        googleAccountPage.clickEmailField();
+    }
+    
+    public void enterEmailGoogleAccountField(String email) {
+        googleAccountPage.clickEmailField();
+        googleAccountPage.clearEmailField();
+        googleAccountPage.setEmailField(email);
+    }
+    
+    public void clickEmailNextGoogleAccountButton() {
+        googleAccountPage.clickEmailNextButton();
+    }
+    public void enterPasswordGoogleAccountField(String password) {
+        googleAccountPage.clickEnterPasswordGoogleAccountField();
+        googleAccountPage.clearEnterPasswordGoogleAccountField();
+        googleAccountPage.setEnterPasswordGoogleAccountField(password);
+    }
+    
+    public void clickShowPasswordGoogleAccountButton() {
+        googleAccountPage.clickShowPasswordGoogleAccountButton();
+    }
+    
+    public void clickNextGoogleAccountButton() {
+        googleAccountPage.clickNextButton();
+    }
 
     // Business Logic
 }

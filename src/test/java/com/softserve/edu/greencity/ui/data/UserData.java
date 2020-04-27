@@ -1,4 +1,10 @@
 package com.softserve.edu.greencity.ui.data;
+
+/**
+ * UserData class.
+ * @author Serg
+ *
+ */
 public final class UserData {
 
     private String email;
@@ -10,6 +16,11 @@ public final class UserData {
         initUserLoginCredentials();
     }
 
+    public UserData(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+    
     public UserData(String firstName, String lastName, String email,
             String password) {
         this.firstName = firstName;
