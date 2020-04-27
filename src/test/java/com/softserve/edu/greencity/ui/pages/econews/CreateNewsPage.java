@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
+import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -176,8 +177,9 @@ public class CreateNewsPage extends TopPart {
         return selectedTagsButtons;
     }
 
-    //
+    // Functional
 
+    //
     public String getValue(String text) {
         //text = "Date: April 26, 2020";
         final Matcher matcher = Pattern.compile("[a-zA-Z]: ").matcher(text);
@@ -193,7 +195,12 @@ public class CreateNewsPage extends TopPart {
         return date.format(formatter);
     }
 
-    // Functional
+
 
     // Business Logic
+
+    public PreViewPage navigatePreViewPage() {
+        getPreviewButton().click();
+        return new PreViewPage(driver);
+    }
 }

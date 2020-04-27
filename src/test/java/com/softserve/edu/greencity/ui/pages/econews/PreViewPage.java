@@ -123,9 +123,13 @@ public class PreViewPage extends TopPart {
 
 	public void clickBackToEditingLink() {
 		getBackToEditingLink().click();
-	} // return type: CreateNewsPage or WebElement
+	}
 
 	// Functional
 
 	// Business Logic
+	public CreateNewsPage backToCreateNewsPage() {
+		getBackToEditingLink().click();
+		return new CreateNewsPage(driver);
+	}
 }
