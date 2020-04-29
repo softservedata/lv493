@@ -2,9 +2,9 @@ package com.softserve.edu.greencity.ui.pages.map;
 
 import org.openqa.selenium.WebDriver;
 
-import com.softserve.edu.greencity.ui.pages.common.SmallHeightPart;
+import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
-public class MapPage extends SmallHeightPart {
+public class MapPage extends TopPart {
 
 	public MapPage(WebDriver driver) {
 		super(driver);

@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/test/java/com/softserve/edu/greencity/ui/pages/home/HomePage.java
 package com.softserve.edu.greencity.ui.pages.home;
 
 import java.util.List;
@@ -120,3 +121,34 @@ public class HomePage extends TopPart {
     }
 
 }
+=======
+package com.softserve.edu.greencity.ui.pages.tipstricks;
+
+import org.openqa.selenium.WebDriver;
+
+import com.softserve.edu.greencity.ui.data.Languages;
+import com.softserve.edu.greencity.ui.pages.common.TopPart;
+
+public class TipsTricksPage extends TopPart {
+
+	public TipsTricksPage(WebDriver driver) {
+		super(driver);
+		initElements();
+	}
+
+	private void initElements() {
+		// init elements
+	}
+
+	// Page Object
+
+	// Functional
+
+	// Business Logic
+	
+	public TipsTricksPage switchLanguage(Languages language) {
+		chooseLanguage(language);
+		return new TipsTricksPage(driver);
+	}
+}
+>>>>>>> greencity:src/test/java/com/softserve/edu/greencity/ui/pages/tipstricks/TipsTricksPage.java

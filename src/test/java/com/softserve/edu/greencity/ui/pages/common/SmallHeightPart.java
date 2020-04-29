@@ -4,8 +4,8 @@ import org.openqa.selenium.WebDriver;
 
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.home.HomePage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 public class SmallHeightPart extends TopPart {
 
@@ -25,17 +25,6 @@ public class SmallHeightPart extends TopPart {
 	// Business Logic
 
 	@Override
-	public HomePage navigateMenuHome() {
-		scrollDown();
-		if (isMenuClickable()) {
-			return super.navigateMenuHome();
-		}
-		getMainMenuDropdown().closeNaviconButton();
-		getMainMenuDropdown().clickFooterHome();
-		return new HomePage(driver);
-	}
-
-	@Override
 	public EconewsPage navigateMenuEconews() {
 		scrollDown();
 		if (isMenuClickable()) {
@@ -47,14 +36,14 @@ public class SmallHeightPart extends TopPart {
 	}
 
 	@Override
-	public HomePage navigateMenuTipsTricks() {
+	public TipsTricksPage navigateMenuTipsTricks() {
 		scrollDown();
 		if (isMenuClickable()) {
 			return super.navigateMenuTipsTricks();
 		}
 		getMainMenuDropdown().closeNaviconButton();
 		getMainMenuDropdown().clickFooterTipsTricks();
-		return new HomePage(driver);
+		return new TipsTricksPage(driver);
 	}
 
 	@Override
@@ -64,7 +53,7 @@ public class SmallHeightPart extends TopPart {
 			return super.navigateMenuMap();
 		}
 		getMainMenuDropdown().closeNaviconButton();
-		getMainMenuDropdown().clickFooterMap();
+		getMainMenuDropdown().clickFooterPlaces();
 		return new MapPage(driver);
 	}
 
