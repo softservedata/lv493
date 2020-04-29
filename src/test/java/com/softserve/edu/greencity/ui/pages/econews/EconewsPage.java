@@ -37,7 +37,7 @@ public class EconewsPage extends TopPart {
 		createNewsButton = driver.findElement(By.id("create-button"));
 		itemsContainer = new ItemsContainer(driver);
 		gridView = driver.findElement(By.xpath("//div[contains(@class, \"gallery-view\")]"));
-		listView = driver.findElement(By.xpath("//div[contains(@class, \"list-view\")]"));;
+		listView = driver.findElement(By.xpath("//div[contains(@class, \"list-view\")]/div"));;
 	}
 
 	// Page Object
@@ -48,12 +48,14 @@ public class EconewsPage extends TopPart {
         return gridView;
     }
     
+	public boolean IsActiveGridView() {
+   	 return getGridView().getAttribute("class").contains("active");
+   }
+	
     public void clickGridView() {
+    	if(!IsActiveGridView()) {
         getGridView().click();
-    }
-    
-    public boolean gridViewIsActive() {
-    	 return getGridView().getAttribute("class").contains("active");
+    	}
     }
     
   //listViev
@@ -61,15 +63,17 @@ public class EconewsPage extends TopPart {
     protected WebElement getListView() {
           return listView;
       }
-      
-    public void clickListView() {
-          getListView().click();
-      }
-      
-    protected boolean listViewIsActive() {
+    
+    protected boolean IsActiveListView() { 
         return getListView().getAttribute("class").contains("active");
       }
-
+    
+    public void clickListView() {
+    	if(!IsActiveListView()) {
+    		 getListView().click();
+    	}
+      }
+ 
 	//createNewsButton
 	
 	protected WebElement getCreateNewsButton() {
@@ -158,13 +162,11 @@ public class EconewsPage extends TopPart {
 	}
 	
 	/**
-	 * News are displaeyd as grid
+	 * News are displayed as grid
 	 * @return  EconewsPage
 	 */
 	public EconewsPage switchToGridViev() {
-		if (! gridViewIsActive() ) {
 			clickGridView();
-		}
 		return new EconewsPage(driver);
 	}
 	
@@ -173,9 +175,7 @@ public class EconewsPage extends TopPart {
 	 * @return  EconewsPage
 	 */
 	public EconewsPage switchToListViev() {
-		if (! listViewIsActive() ) {
-			clickListView();
-		}
+		clickListView();
 		return new EconewsPage(driver);
 	}
 	

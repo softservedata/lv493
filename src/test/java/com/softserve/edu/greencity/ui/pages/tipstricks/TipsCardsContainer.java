@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.pages.home;
+package com.softserve.edu.greencity.ui.pages.tipstricks;
 
 import java.util.List;
 

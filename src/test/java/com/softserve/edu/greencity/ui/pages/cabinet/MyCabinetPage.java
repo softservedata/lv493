@@ -3,8 +3,9 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 import org.openqa.selenium.WebDriver;
 
 import com.softserve.edu.greencity.ui.pages.common.SmallHeightPart;
+import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
-public class MyCabinetPage extends SmallHeightPart {
+public class MyCabinetPage extends TopPart {
 
 	public MyCabinetPage(WebDriver driver) {
 		super(driver);
