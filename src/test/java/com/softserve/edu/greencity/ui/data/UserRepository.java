@@ -5,7 +5,7 @@ public final class UserRepository {
     }
 
     public static UserData getDefaultUserCredentials() {
-        return new UserData();
+        return new UserData("John", "Wilson", "rjjztqsiayuieydfuy@awdrt.org", "A475asd123*");
     }
     
     public static UserData getGoogleUserCredentials() {

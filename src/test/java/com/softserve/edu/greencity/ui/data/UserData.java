@@ -12,10 +12,6 @@ public final class UserData {
     private String firstName;
     private String lastName;
 
-    public UserData() {
-        initUserLoginCredentials();
-    }
-
     public UserData(String email, String password) {
         this.email = email;
         this.password = password;
@@ -27,13 +23,6 @@ public final class UserData {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-    }
-
-    private void initUserLoginCredentials() {
-        this.firstName = "John";
-        this.lastName = "Wilson";
-        this.email = "rjjztqsiayuieydfuy@awdrt.org";
-        this.password = "A475asd123*";
     }
 
     public String getEmail() {
