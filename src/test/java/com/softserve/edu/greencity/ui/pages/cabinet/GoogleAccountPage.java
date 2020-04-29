@@ -8,18 +8,18 @@ public class GoogleAccountPage {
 
     private WebDriver driver;
     //
-    private WebElement titleGoogleAccountField;
     private WebElement chosenGoogleAccountButton;
     private WebElement useAnotherAccountButton;
     private WebElement emailField;
     private WebElement emailNextButton;
     private WebElement forgotEmailLink;
-    private WebElement enterPasswordGoogleAccountField;
+    private WebElement passwordGoogleAccountField;
     private WebElement showPasswordGoogleAccountButton;
     private WebElement forgotPasswordGoogleAccountLink;
-    private WebElement nextButton;
+    private WebElement passwordNextButton;
 
-    private String emailGoogleAccount;
+    private String titleGoogleAccount;
+//    private String emailGoogleAccount;
     private String TAG_ATTRIBUTE_VALUE = "data-initial-value";
 
     public GoogleAccountPage(WebDriver driver) {
@@ -29,82 +29,19 @@ public class GoogleAccountPage {
 
     private void initElements() {
         // init elements
-        driver.switchTo().window(
-                "https://accounts.google.com/signin/oauth/identifier?redirect_uri=storagerelay%3A%2F%2Fhttps%2Fita-social-projects.github.io%3Fid%3Dauth57815&response_type=permission%20id_token&scope=email%20profile%20openid&openid.realm&client_id=129513550972-eu9ej46rviv1ac8q14at62t2k5qon1pu.apps.googleusercontent.com&ss_domain=https%3A%2F%2Fita-social-projects.github.io&fetch_basic_profile=true&gsiwebsdk=2&o2v=1&as=uCXnMRhBe9coP5_-ytb7Dg&flowName=GeneralOAuthFlow");
-//        titleGoogleAccountField = driver.findElement(By.id("#headingText"));
-//        chosenGoogleAccountButton = driver.findElement(
-//                By.cssSelector("div[data-email='" + emailGoogleAccount + "']"));
-//        useAnotherAccountButton = driver.findElement(
-//                By.xpath("//div[contains(text(), 'Use another account')]"));
-//        emailField = driver.findElement(By.id("#identifierId"));
-//        emailNextButton = driver.findElement(By.id("#identifierNext"));
-//        forgotEmailLink = driver.findElement(By.id(""));
-//        enterPasswordGoogleAccountField = driver
-//                .findElement(By.cssSelector("input[name='password']"));
-//        showPasswordGoogleAccountButton = driver
-//                .findElement(By.cssSelector("#password div[role='button']"));
-//        forgotPasswordGoogleAccountLink = driver
-//                .findElement(By.id("#forgotPassword"));
-//        nextButton = driver.findElement(By.id("#passwordNext"));
+        titleGoogleAccount = driver.getTitle();
+        emailField = driver.findElement(By.cssSelector("div[role='presentation'] #identifierId"));
+        emailNextButton = driver.findElement(By.cssSelector("div[role='presentation'] #identifierNext"));
     }
 
     // Page Object
     // titleGoogleAccountField
-    public WebElement getTitleGoogleAccountField() {
-//        titleGoogleAccountField = driver.findElement(By.id("#headingText"));
-        return titleGoogleAccountField;
-    }
-
-    public String getTitleFieldText() {
-        return getTitleGoogleAccountField().getText(); // Welcome back!
-    }
-
-    public boolean isDisplayedTitleField() {
-        return getTitleGoogleAccountField().isDisplayed();
-    }
-
-//           chosenGoogleAccountField
-    public WebElement getChosenGoogleAccountButton() {
-        return chosenGoogleAccountButton;
-    }
-
-    public String getChosenGoogleAccountButtonText() {
-        return getChosenGoogleAccountButton().getText();
-    }
-
-    public void clickChosenGoogleAccountButton() {
-        if (isDisplayedChosenGoogleAccountButton()) {
-            getChosenGoogleAccountButton().click();
-        }
-    }
-
-    public boolean isDisplayedChosenGoogleAccountButton() {
-        return getChosenGoogleAccountButton().isDisplayed();
-    }
-
-    // useAnotherAccountButton
-    public WebElement getUseAnotherAccountButton() {
-        return useAnotherAccountButton;
-    }
-
-    public String getUseAnotherAccountButtonText() {
-        return getUseAnotherAccountButton().getText();
-    }
-
-    public void clickUseAnotherAccountButton() {
-        if (isDisplayedUseAnotherAccountButton()) {
-            getUseAnotherAccountButton().click();
-        }
-    }
-
-    public boolean isDisplayedUseAnotherAccountButton() {
-        return getUseAnotherAccountButton().isDisplayed();
+    public String getTitleGoogleAccount() {
+        return titleGoogleAccount;
     }
 
     // emailField
     public WebElement getEmailField() {
-        emailField = driver
-                .findElement(By.id("#identifierId"));
         return emailField;
     }
 
@@ -127,10 +64,9 @@ public class GoogleAccountPage {
     public boolean isDisplayedEmailField() {
         return getEmailField().isDisplayed();
     }
-    
+
     // emailNextButton
     public WebElement getEmailNextButton() {
-        emailNextButton = driver.findElement(By.id("#identifierNext"));
         return emailNextButton;
     }
 
@@ -139,7 +75,7 @@ public class GoogleAccountPage {
     }
 
     public void clickEmailNextButton() {
-        if (isDisplayedUseAnotherAccountButton()) {
+        if (isDisplayedEmailNextButton()) {
             getEmailNextButton().click();
         }
     }
@@ -148,88 +84,52 @@ public class GoogleAccountPage {
         return getEmailNextButton().isDisplayed();
     }
 
-//           enterPasswordGoogleAccountField
-    public WebElement getEnterPasswordGoogleAccountField() {
-        enterPasswordGoogleAccountField = driver
-                .findElement(By.cssSelector("input[name='password']"));
-        return enterPasswordGoogleAccountField;
+//           passwordGoogleAccountField
+    public WebElement getPasswordGoogleAccountField() {
+        passwordGoogleAccountField = driver
+                .findElement(By.cssSelector("div#password input[name='password']"));
+        return passwordGoogleAccountField;
     }
 
-    public String getEnterPasswordGoogleAccountFieldText() {
-        return getEnterPasswordGoogleAccountField()
+    public String getPasswordGoogleAccountFieldText() {
+        return getPasswordGoogleAccountField()
                 .getAttribute(TAG_ATTRIBUTE_VALUE);
     }
 
-    public void clearEnterPasswordGoogleAccountField() {
-        getEnterPasswordGoogleAccountField().clear();
+    public void clearPasswordGoogleAccountField() {
+        getPasswordGoogleAccountField().clear();
     }
 
-    public void clickEnterPasswordGoogleAccountField() {
-        getEnterPasswordGoogleAccountField().click();
+    public void clickPasswordGoogleAccountField() {
+        getPasswordGoogleAccountField().click();
     }
 
-    public void setEnterPasswordGoogleAccountField(String text) {
-        getEnterPasswordGoogleAccountField().sendKeys(text);
+    public void setPasswordGoogleAccountField(String passwordGoogleAccount) {
+        getPasswordGoogleAccountField().sendKeys(passwordGoogleAccount);
     }
 
-    public boolean isDisplayedEnterPasswordGoogleAccountField() {
-        return getEnterPasswordGoogleAccountField().isDisplayed();
-    }
-
-//           showPasswordGoogleAccountButton
-    public WebElement getShowPasswordGoogleAccountButton() {
-        showPasswordGoogleAccountButton = driver
-                .findElement(By.cssSelector("#password div[role='button']"));
-        return showPasswordGoogleAccountButton;
-    }
-
-    public void clickShowPasswordGoogleAccountButton() {
-        getShowPasswordGoogleAccountButton().click();
-    }
-
-    public boolean isDisplayedShowPasswordGoogleAccountButton() {
-        return getShowPasswordGoogleAccountButton().isDisplayed();
-    }
-
-//           forgotPasswordGoogleAccountLink
-    public WebElement getForgotPasswordGoogleAccountLink() {
-        forgotPasswordGoogleAccountLink = driver
-                .findElement(By.id("#forgotPassword"));
-        return forgotPasswordGoogleAccountLink;
-    }
-
-    public String getForgotPasswordGoogleAccountLinkText() {
-        return getForgotPasswordGoogleAccountLink().getText();
-    }
-
-    public void clickForgotPasswordGoogleAccountLink() {
-        if (isDisplayedForgotPasswordGoogleAccountLink()) {
-            getForgotPasswordGoogleAccountLink().click();
-        }
-    }
-
-    public boolean isDisplayedForgotPasswordGoogleAccountLink() {
-        return getForgotPasswordGoogleAccountLink().isDisplayed();
+    public boolean isDisplayedPasswordGoogleAccountField() {
+        return getPasswordGoogleAccountField().isDisplayed();
     }
 
 //           nextButton
-    public WebElement getNextButton() {
-        nextButton = driver.findElement(By.id("#passwordNext"));
-        return nextButton;
+    public WebElement getPasswordNextButton() {
+        passwordNextButton = driver.findElement(By.cssSelector("div[role='presentation'] #passwordNext"));
+        return passwordNextButton;
     }
 
     public String getNextButtonText() {
-        return getNextButton().getText();
+        return getPasswordNextButton().getText();
     }
 
-    public void clickNextButton() {
+    public void clickPasswordNextButton() {
         if (isDisplayedNextButton()) {
-            getNextButton().click();
+            getPasswordNextButton().click();
         }
     }
 
     public boolean isDisplayedNextButton() {
-        return getNextButton().isDisplayed();
+        return getPasswordNextButton().isDisplayed();
     }
 
     // Functional
