@@ -1,5 +1,4 @@
-<<<<<<< HEAD:src/test/java/com/softserve/edu/greencity/ui/pages/home/HomePage.java
-package com.softserve.edu.greencity.ui.pages.home;
+package com.softserve.edu.greencity.ui.pages.tipstricks;
 
 import java.util.List;
 
@@ -10,9 +9,11 @@ import org.openqa.selenium.WebElement;
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
-public class HomePage extends TopPart {
+public class TipsTricksPage extends TopPart {
 
     private WebElement startHabitTop;
+    private WebElement startHabitCenter;
+    private WebElement startHabitBelow;
     private WebElement subscribeOnHome;
     private WebElement enterEmailHome;
     private WebElement leftPagination;
@@ -20,7 +21,7 @@ public class HomePage extends TopPart {
     private WebElement amountPeople;
     private List<WebElement> amountBagsCups;
 
-    public HomePage(WebDriver driver) {
+    public TipsTricksPage(WebDriver driver) {
         super(driver);
         initElements();
     }
@@ -29,6 +30,8 @@ public class HomePage extends TopPart {
         // init elements
         startHabitTop = driver
                 .findElement(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']"));
+        startHabitCenter = driver.findElement(By.xpath("('//div[@class='content-wrapper']//button')[0]"));
+        startHabitBelow = driver.findElement(By.xpath("('//div[@class='content-wrapper']//button')[1]"));
         subscribeOnHome = driver
                 .findElement(By.xpath("//div[@id='form-wrapper']/button[@class='primary-global-button']"));
         enterEmailHome = driver
@@ -38,17 +41,6 @@ public class HomePage extends TopPart {
         amountPeople = driver.findElement(By.xpath("//section[@id='stats']/h2"));
         amountBagsCups = driver.findElements(By.xpath("//div[@class='content-wrapper']/h3"));
 
-    }
-
-    // Page Object
-
-    // Functional
-
-    // Business Logic
-
-    public HomePage switchLanguage(Languages language) {
-        chooseLanguage(language);
-        return new HomePage(driver);
     }
 
     // Button 'Start forming a habit'
@@ -65,6 +57,31 @@ public class HomePage extends TopPart {
         return getStartHabitTop().isDisplayed();
     }
 
+    // ButtonCenter 'Start forming a habit'
+    public WebElement getStartHabitCenter() {
+        return startHabitCenter;
+    }
+
+    public void clickStartHabitCenter() {
+        getStartHabitCenter().click();
+    }
+
+    public boolean isDisplayedStartHabitCenter() {
+        return getStartHabitCenter().isDisplayed();
+    }
+
+    // ButtonBelow 'Start forming a habit'
+    public WebElement getStartHabitBelow() {
+        return startHabitBelow;
+    }
+
+    public void clickStartHabitBelow() {
+        getStartHabitBelow().click();
+    }
+
+    public boolean isDisplayedStartHabitBelow() {
+        return getStartHabitBelow().isDisplayed();
+    }
     // Button 'Subscribe'
 
     public WebElement getSubscribeOnHome() {
@@ -120,35 +137,10 @@ public class HomePage extends TopPart {
         return getAmountPeople().isDisplayed();
     }
 
+    // Business Logic
+
+    public TipsTricksPage switchLanguage(Languages language) {
+        chooseLanguage(language);
+        return new TipsTricksPage(driver);
+    }
 }
-=======
-package com.softserve.edu.greencity.ui.pages.tipstricks;
-
-import org.openqa.selenium.WebDriver;
-
-import com.softserve.edu.greencity.ui.data.Languages;
-import com.softserve.edu.greencity.ui.pages.common.TopPart;
-
-public class TipsTricksPage extends TopPart {
-
-	public TipsTricksPage(WebDriver driver) {
-		super(driver);
-		initElements();
-	}
-
-	private void initElements() {
-		// init elements
-	}
-
-	// Page Object
-
-	// Functional
-
-	// Business Logic
-	
-	public TipsTricksPage switchLanguage(Languages language) {
-		chooseLanguage(language);
-		return new TipsTricksPage(driver);
-	}
-}
->>>>>>> greencity:src/test/java/com/softserve/edu/greencity/ui/pages/tipstricks/TipsTricksPage.java
