@@ -19,7 +19,7 @@ public class RegisterPage extends TopPart {
     private WebElement showPasswordConfirmButton;
     private WebElement signUpButton;
     private WebElement signInLink;
-    private WebElement signInGoogleButton;
+    private WebElement signInGoogleButton; // class="wrapper-sign-up" !!!
     //
     private WebElement firstNameValidator;
 //    private WebElement lastNameValidator; !!!!!!! not exist
@@ -41,32 +41,32 @@ public class RegisterPage extends TopPart {
         // init elements
         titleField = driver
                 .findElement(By.cssSelector("form[name='inputform'] h1"));
-        firstNameField = driver.findElement(By.cssSelector("input#first-name"));
-        lastNameField = driver.findElement(By.cssSelector("input#last-name"));
-        emailField = driver.findElement(By.cssSelector("input#email"));
-        passwordField = driver.findElement(By.cssSelector("input#password"));
-        showPasswordButton = driver.findElement(By.cssSelector("input#img"));
+        firstNameField = driver.findElement(By.cssSelector("form label[for='first-name'] + input"));
+        lastNameField = driver.findElement(By.cssSelector("form label[for='last-name'] + input"));
+        emailField = driver.findElement(By.cssSelector("form label[for='email'] + input"));
+        passwordField = driver.findElement(By.cssSelector("div.password-wrapper input"));
+        showPasswordButton = driver.findElement(By.cssSelector("div.password-wrapper div"));
         passwordConfirmField = driver
-                .findElement(By.cssSelector("input#password-confirm"));
+                .findElement(By.cssSelector("form label[for='password'] + input#password-confirm"));
         showPasswordConfirmButton = driver
-                .findElement(By.cssSelector("input#img-confirm"));
+                .findElement(By.cssSelector("div.img-confirm"));
         signUpButton = driver.findElement(
                 By.xpath("//form[@name='inputform']/button[@type='submit']"));
         signInLink = driver.findElement(By.cssSelector("a[href*='/auth']"));
         signInGoogleButton = driver
                 .findElement(By.cssSelector("button[class='google']"));
 
-        // init Validators
-        firstNameValidator = driver.findElement(By.cssSelector(
-                "div[class='field-wrapper-left'] div[class='ng-star-inserted']"));
-//        lastNameValidator = driver.findElement(By.cssSelector(""));
-        emailValidator = driver
-                .findElement(By.xpath("//div[@id='validation-error']/div"));
-        passwordValidator = driver.findElement(By.xpath(
-                "//div[@class='password-wrapper']/following-sibling::div[1]")); // FIXME
-                                                                                // selector
-        passwordConfirmValidator = driver.findElement(By.xpath(
-                "//div[@class='password-wrapper']/following-sibling::div[3]")); // FIXME
+//        // init Validators
+//        firstNameValidator = driver.findElement(By.cssSelector(
+//                "div[class='field-wrapper-left'] div[class='ng-star-inserted']"));
+//        // lastNameValidator = driver.findElement(By.cssSelector(""));
+//        emailValidator = driver
+//                .findElement(By.xpath("//div[@id='validation-error']/div"));
+//        passwordValidator = driver.findElement(By.xpath(
+//                "//div[@class='password-wrapper']/following-sibling::div[1]")); // FIXME
+//                                                                                // selector
+//        passwordConfirmValidator = driver.findElement(By.xpath(
+//                "//div[@class='password-wrapper']/following-sibling::div[3]")); // FIXME
                                                                                 // selector
     }
 
@@ -110,38 +110,30 @@ public class RegisterPage extends TopPart {
     }
 
 //  lastNameField
-    public WebElement getLlastNameField() {
+    public WebElement getLastNameField() {
         return lastNameField;
     }
 
-//    public String getLlastNameFieldText() {
-//        return getLlastNameField().getAttribute(TAG_ATTRIBUTE_VALUE);
-//    }
-
-    public void clearLlastNameField() {
-        getLlastNameField().clear();
+    public void clearLastNameField() {
+        getLastNameField().clear();
     }
 
-    public void clickLlastNameField() {
-        getLlastNameField().click();
+    public void clickLastNameField() {
+        getLastNameField().click();
     }
 
-    public void setLlastNameField(String text) {
-        getLlastNameField().sendKeys(text);
+    public void setLastNameField(String text) {
+        getLastNameField().sendKeys(text);
     }
 
-    public boolean isDisplayedLlastNameField() {
-        return getLlastNameField().isDisplayed();
+    public boolean isDisplayedLastNameField() {
+        return getLastNameField().isDisplayed();
     }
 
 //  emailField
     public WebElement getEmailField() {
         return emailField;
     }
-
-//    public String getEmailFieldText() {
-//        return getEmailField().getAttribute(TAG_ATTRIBUTE_VALUE);
-//    }
 
     public void clearEmailField() {
         getEmailField().clear();
@@ -163,10 +155,6 @@ public class RegisterPage extends TopPart {
     public WebElement getPasswordField() {
         return passwordField;
     }
-
-//    public String getPasswordFieldText() {
-//        return getPasswordField().getAttribute(TAG_ATTRIBUTE_VALUE);
-//    }
 
     public void clearPasswordField() {
         getPasswordField().clear();
@@ -207,10 +195,6 @@ public class RegisterPage extends TopPart {
     public WebElement getPasswordConfirmField() {
         return passwordConfirmField;
     }
-
-//    public String getPasswordConfirmFieldText() {
-//        return getPasswordConfirmField().getAttribute(TAG_ATTRIBUTE_VALUE);
-//    }
 
     public void clearPasswordConfirmField() {
         getPasswordConfirmField().clear();
@@ -294,7 +278,7 @@ public class RegisterPage extends TopPart {
         return getSignInGoogleButton().getText();
     }
 
-    public void clickSignInGoogleButton(String email, String password) {
+    public void clickSignInGoogleButton() {
         if (isDisplayedSignInGoogleButton()) {
             getSignInGoogleButton().click();
         }
@@ -370,39 +354,26 @@ public class RegisterPage extends TopPart {
         return getPasswordConfirmValidator().isDisplayed();
     }
 
-    // Functional
     // LoginPage
     public LoginPage getLoginPage() {
         return new LoginPage(driver);
     }
-    
-    public void clickEmailGoogleAccountField() {
-        googleAccountPage = new GoogleAccountPage(driver);
-        googleAccountPage.clickEmailField();
-    }
-    
-    public void enterEmailGoogleAccountField(String email) {
-        googleAccountPage.clickEmailField();
-        googleAccountPage.clearEmailField();
-        googleAccountPage.setEmailField(email);
-    }
-    
-    public void clickEmailNextGoogleAccountButton() {
-        googleAccountPage.clickEmailNextButton();
-    }
-    public void enterPasswordGoogleAccountField(String password) {
-        googleAccountPage.clickEnterPasswordGoogleAccountField();
-        googleAccountPage.clearEnterPasswordGoogleAccountField();
-        googleAccountPage.setEnterPasswordGoogleAccountField(password);
-    }
-    
-    public void clickShowPasswordGoogleAccountButton() {
-        googleAccountPage.clickShowPasswordGoogleAccountButton();
-    }
-    
-    public void clickNextGoogleAccountButton() {
-        googleAccountPage.clickNextButton();
-    }
 
+    // Functional
+ // a Google window opens and switches to it
+    public GoogleAccountPage clickEmailGoogleAccountField() {
+        String currentTab = driver.getWindowHandle();
+        clickSignInGoogleButton();
+        for (String current : driver.getWindowHandles()) {
+            System.out.println("TAB: " + current);
+            if (!current.equals(currentTab)) {
+                driver.switchTo().window(current);
+                System.out.println("URL: " + driver.getCurrentUrl());
+                break;
+            }
+        }
+        return new GoogleAccountPage(driver);
+    }
+    
     // Business Logic
 }

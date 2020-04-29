@@ -164,17 +164,17 @@ public class RegisterDropdown {
     }
     
 //  showPasswordButton
-    public WebElement getShowPasswordButton() {
+    private WebElement getShowPasswordButton() {
         return showPasswordButton;
     }
 
-    public void clickShowPasswordButton() {
+    private void clickShowPasswordButton1() {
         if (isDisplayedShowPasswordButton()) {
             getShowPasswordButton().click();
         }
     }
 
-    public boolean isDisplayedShowPasswordButton() {
+    private boolean isDisplayedShowPasswordButton() {
         return getShowPasswordButton().isDisplayed();
     }
     
@@ -318,33 +318,24 @@ public class RegisterDropdown {
   }
 
     // Functional
-  public void clickEmailGoogleAccountField() {
-      googleAccountPage = new GoogleAccountPage(driver);
-      googleAccountPage.clickEmailField();
+  // a Google window opens and switches to it
+  public GoogleAccountPage clickEmailGoogleAccountField() {
+      String currentTab = driver.getWindowHandle();
+      clickSignUpGoogleButton();
+      for (String current : driver.getWindowHandles()) {
+          System.out.println("TAB: " + current);
+          if (!current.equals(currentTab)) {
+              driver.switchTo().window(current);
+              System.out.println("URL: " + driver.getCurrentUrl());
+              break;
+          }
+      }
+      return new GoogleAccountPage(driver);
   }
   
-  public void enterEmailGoogleAccountField(String email) {
-      googleAccountPage.clickEmailField();
-      googleAccountPage.clearEmailField();
-      googleAccountPage.setEmailField(email);
-  }
-  
-  public void clickEmailNextGoogleAccountButton() {
-      googleAccountPage.clickEmailNextButton();
-  }
-  public void enterPasswordGoogleAccountField(String password) {
-      googleAccountPage.clickEnterPasswordGoogleAccountField();
-      googleAccountPage.clearEnterPasswordGoogleAccountField();
-      googleAccountPage.setEnterPasswordGoogleAccountField(password);
-  }
-  
-  public void clickShowPasswordGoogleAccountButton() {
-      googleAccountPage.clickShowPasswordGoogleAccountButton();
-  }
-  
-  public void clickNextGoogleAccountButton() {
-      googleAccountPage.clickNextButton();
-  }
-
     // Business Logic
+  public void clickShowPasswordButton() {
+      clickShowPasswordButton1();
+  }
+  
 }
