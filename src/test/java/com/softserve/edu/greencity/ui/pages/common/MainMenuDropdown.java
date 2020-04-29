@@ -11,17 +11,16 @@ public class MainMenuDropdown {
 	//
 	private WebElement naviconButton;
 	//
-	private WebElement menuHome;
+	//private WebElement menuHome;
 	private WebElement menuEcoNews;
 	private WebElement menuTipsTricks;
 	private WebElement menuMap;
 	private WebElement menuMyCabinet;
 	private WebElement menuAbout;
 	//
-	private WebElement footerHome;
 	private WebElement footerEcoNews;
 	private WebElement footerTipsTricks;
-	private WebElement footerMap;
+	private WebElement footerPlaces;
 	private WebElement footerMyCabinet;
 	private WebElement footerAbout;
 	
@@ -33,20 +32,19 @@ public class MainMenuDropdown {
 
 	private void initElements() {
 		// init elements
-		naviconButton = driver.findElement(By.cssSelector("span.navicon"));
-		menuHome = driver.findElement(By.cssSelector("ul.menu > li:first-child > a[href*='/welcome']"));
-		menuEcoNews = driver.findElement(By.cssSelector("ul.menu > li > a[href*='/news']"));
-		menuTipsTricks = driver.findElement(By.xpath("//ul[@class='menu']/li/a[contains(@href, '/news')]/../following-sibling::li/a[contains(@href, '/welcome')]"));
-		menuMap = driver.findElement(By.cssSelector("ul.menu > li > a[href*='/map']"));
-		menuMyCabinet = driver.findElement(By.cssSelector("ul.menu > li > a[href*='/habits']"));
-		menuAbout = driver.findElement(By.cssSelector("ul.menu > li > a[href*='/about']"));
+		naviconButton = driver.findElement(By.cssSelector("div.menu-icon"));
+		//menuHome = driver.findElement(By.cssSelector("ul.menu > li:first-child > a[href*='/welcome']"));
+		menuEcoNews = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/news']"));
+		menuTipsTricks = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/welcome']"));
+		menuMap = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/map']"));
+		menuMyCabinet = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/habits']"));
+		menuAbout = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/about']"));
 		//
-		footerHome = driver.findElement(By.cssSelector("a.small-screen-size > img"));
-		footerEcoNews = driver.findElement(By.cssSelector("ul.list-of-site-links > li > a[href*='/news']"));
-		footerTipsTricks = driver.findElement(By.xpath("//ul[@class='list-of-site-links']/li/a[contains(@href, '/news')]/../following-sibling::li/a[@href='']"));
-		footerMap = driver.findElement(By.cssSelector("ul.list-of-site-links > li > a[href*='/map']"));
-		footerMyCabinet = driver.findElement(By.cssSelector("ul.list-of-site-links > li > a[href*='/habits']"));
-		footerAbout = driver.findElement(By.cssSelector("ul.list-of-site-links > li > a[href*='/about']"));
+		footerEcoNews = driver.findElement(By.cssSelector("div.app-footer a[href*='/news']"));
+		footerTipsTricks = driver.findElement(By.xpath("//div[@class='app-footer']//a[contains(@href, '/news')]/../following-sibling::li/a[@href='']"));
+		footerPlaces = driver.findElement(By.cssSelector("div.app-footer a[href*='/map']"));
+		footerMyCabinet = driver.findElement(By.cssSelector("div.app-footer a[href*='/habits']"));
+		footerAbout = driver.findElement(By.cssSelector("div.app-footer a[href*='/about']"));
 	}
 
 	// Page Object
@@ -71,6 +69,7 @@ public class MainMenuDropdown {
         return getNaviconButton().isDisplayed();
     }
     
+    /*-
     // menuHome
     
     public WebElement getMenuHome() {
@@ -92,11 +91,12 @@ public class MainMenuDropdown {
         //return getMenuHome().isDisplayed();
     	return menuHome.isDisplayed();
     }
+    */
     
     // menuEcoNews
     
     public WebElement getMenuEcoNews() {
-    	if (!isDisplayedMenuHome()) {
+    	if (!isDisplayedMenuEcoNews()) {
     		clickNaviconButton();
     	}
         return menuEcoNews;
@@ -206,20 +206,6 @@ public class MainMenuDropdown {
     	return menuAbout.isDisplayed();
     }
 
-	// footerHome
-
-	public WebElement getFooterHome() {
-		return footerHome;
-	}
-
-	public String getFooterHomeText() {
-		return getFooterHome().getText();
-	}
-
-	public void clickFooterHome() {
-		getFooterHome().click();
-	}
- 
     // footerEcoNews
 
 	public WebElement getFooterEcoNews() {
@@ -250,16 +236,16 @@ public class MainMenuDropdown {
          
     // footerMap
 
-	public WebElement getFooterMap() {
-		return footerMap;
+	public WebElement getFooterPlaces() {
+		return footerPlaces;
 	}
 
-	public String getFooterMapText() {
-		return getFooterMap().getText();
+	public String getFooterPlacesText() {
+		return getFooterPlaces().getText();
 	}
 
-	public void clickFooterMap() {
-		getFooterMap().click();
+	public void clickFooterPlaces() {
+		getFooterPlaces().click();
 	}
              
     // footerMyCabinet
@@ -294,7 +280,7 @@ public class MainMenuDropdown {
 	
 	public void closeNaviconButton() {
 		if (isDisplayedNaviconButton() 
-				&& (isDisplayedMenuHome() || isDisplayedMenuEcoNews())) {
+				&& (isDisplayedMenuEcoNews() || isDisplayedMenuTipsTricks())) {
 			clickNaviconButton();
 		}
 	}

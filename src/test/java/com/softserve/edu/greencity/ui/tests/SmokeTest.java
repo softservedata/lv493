@@ -4,7 +4,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.ui.data.Languages;
-import com.softserve.edu.greencity.ui.pages.home.HomePage;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 public class SmokeTest extends GreencityTestRunner {
 
@@ -19,7 +19,7 @@ public class SmokeTest extends GreencityTestRunner {
 	@Test(dataProvider = "validData")
 	public void checkElements(Languages languages) {
 		// Steps
-		HomePage homepage = loadApplication()
+		TipsTricksPage tipstrickspage = loadApplication()
 				.switchLanguage(languages);
 		presentationSleep();
 		//
@@ -35,15 +35,15 @@ public class SmokeTest extends GreencityTestRunner {
 				+ homepage.getMainMenuDropdown().isDisplayedNaviconButton());
 		*/
 		//
-		homepage = homepage
+		tipstrickspage = tipstrickspage
 				.navigateMenuEconews()
 				.navigateMenuTipsTricks()
 				.navigateMenuMap()
 				.navigateMenuMyCabinet()
 				.navigateMenuAbout()
-				.navigateMenuHome();
+				.navigateMenuTipsTricks();
 		//
-//		TopPart tp = homepage;
+//		TopPart tp = tipstrickspage;
 //		tp = tp.navigateMenuEconews();
 //		presentationSleep(2);
 //		tp = tp.navigateMenuTipsTricks();
@@ -53,7 +53,7 @@ public class SmokeTest extends GreencityTestRunner {
 //		tp = tp.navigateMenuMap();
 		//
 		// Check
-//		Assert.assertEquals(homepage.getLanguageSwitcherText(),
+//		Assert.assertEquals(tipstrickspage.getLanguageSwitcherText(),
 //				Languages.UKRAINIAN.toString());
 		//
 		// Return to Previous State

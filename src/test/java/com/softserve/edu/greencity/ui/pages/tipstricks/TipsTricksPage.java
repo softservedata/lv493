@@ -1,13 +1,13 @@
-package com.softserve.edu.greencity.ui.pages.home;
+package com.softserve.edu.greencity.ui.pages.tipstricks;
 
 import org.openqa.selenium.WebDriver;
 
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
-public class HomePage extends TopPart {
+public class TipsTricksPage extends TopPart {
 
-	public HomePage(WebDriver driver) {
+	public TipsTricksPage(WebDriver driver) {
 		super(driver);
 		initElements();
 	}
@@ -22,8 +22,8 @@ public class HomePage extends TopPart {
 
 	// Business Logic
 	
-	public HomePage switchLanguage(Languages language) {
+	public TipsTricksPage switchLanguage(Languages language) {
 		chooseLanguage(language);
-		return new HomePage(driver);
+		return new TipsTricksPage(driver);
 	}
 }

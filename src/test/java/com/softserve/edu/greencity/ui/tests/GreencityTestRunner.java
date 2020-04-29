@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestResult;
@@ -11,7 +12,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import com.softserve.edu.greencity.ui.pages.home.HomePage;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -60,9 +61,9 @@ public abstract class GreencityTestRunner {
 		// logout, get(urlLogout), delete cookie, delete cache
 	}
 
-	public HomePage loadApplication() {
-		return new HomePage(driver);
-		//return new HomePage(getDriver());
+	public TipsTricksPage loadApplication() {
+		return new TipsTricksPage(driver);
+		//return new TipsTricksPage(getDriver());
 	}
 	
 	protected void presentationSleep() {
