@@ -11,7 +11,6 @@ import com.softserve.edu.greencity.ui.pages.home.HomePage;
 /**
  * LoginDropdownTest class (doesn't working correctly!).
  * @author Serg
- *
  */
 public class LoginDropdownTest extends GreencityTestRunner {
 
@@ -25,16 +24,17 @@ public class LoginDropdownTest extends GreencityTestRunner {
     public void checkLoginPage(UserData userLoginCredentials) {
         HomePage homepage = loadApplication();
         LoginDropdown loginDropdown = homepage.clickSigninLink();
-        System.out.println("loginDropdown.getTitleFieldText(): " + loginDropdown.getTitleFieldText());
-//      loginDropdown.clickEmailField();
-//      loginDropdown.setEmailField(userLoginCredentials.getEmail());
-//      presentationSleep(2);
-//      loginDropdown.setPasswordField(userLoginCredentials.getPassword());
-//      presentationSleep(2);
-//      loginDropdown.clickShowPasswordButton();
-//      presentationSleep(2);
-//      loginDropdown.clickShowPasswordButton();
-//      presentationSleep(2);
+        System.out.println("loginDropdown.getTitleFieldText(): "
+                + loginDropdown.getTitleFieldText());
+        loginDropdown.clickEmailField();
+        loginDropdown.setEmailField(userLoginCredentials.getEmail());
+        presentationSleep(2);
+        loginDropdown.setPasswordField(userLoginCredentials.getPassword());
+        presentationSleep(2);
+        loginDropdown.clickShowPasswordButton();
+        presentationSleep(2);
+        loginDropdown.clickShowPasswordButton();
+        presentationSleep(2);
 //      loginDropdown.clickLoginButton();;
     }
 }
