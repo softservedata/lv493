@@ -12,11 +12,11 @@ import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
 public class OneNewsPage extends TopPart {
 	
 	//there will be also functionality follow us - is not implemented
-	private WebDriver driver;
-	private WebElement editNewsButton;  // isn't working yet tags
+	//private WebElement editNewsButton;  // isn't working yet tags
+	private WebElement  goToNews;
 	private List<WebElement> filtersList;
 	private WebElement title;
-	private WebElement date;
+	private WebElement data;
 	private WebElement author;
 	private WebElement picture;
 	private WebElement desciption;
@@ -28,15 +28,81 @@ public class OneNewsPage extends TopPart {
 	}
 
 	private void initElements() {
-		
-		editNewsButton = driver.findElement(By.cssSelector("div.button-text"));
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		goToNews = driver.findElement(By.cssSelector("div.back-button"));
 		filtersList = driver.findElements(By.cssSelector("div.tags > div"));
 		title = driver.findElement(By.cssSelector("div.news-content > div.news-text-container > div.news-title"));
-		date = driver.findElement(By.cssSelector("div.news-info > div.news-info-date"));
+		data = driver.findElement(By.cssSelector("div.news-info > div.news-info-date"));
 		author = driver.findElement(By.cssSelector("div.news-info > div.news-info-author"));
 		picture = driver.findElement(By.cssSelector("div.news-image > img.news-image-img"));
 		desciption = driver.findElement(By.cssSelector("div.news-text"));
 		itemsContainer  = new ItemsContainer(driver);
 	}
+	
+	//Page Object
+	
+	//goToNews 
+	
+	protected WebElement getGoToNews () {
+        return goToNews ;
+    }
 
+    protected String getGoToNewsText() {
+        return getGoToNews().getText();
+    }
+    
+    protected void clickGoToNewsButton() {
+        getGoToNews().click();
+    }
+    
+    //filtersList
+    
+	protected List<WebElement> getfiltersList() {
+        return filtersList;
+    }
+
+   //title
+    
+	protected WebElement getTitle() {
+        return title;
+    }
+
+    protected String getTitleText() {
+        return getTitle().getText().trim();   //should we use trim?
+    }
+    
+    //data
+    
+    protected WebElement getData() {
+        return data;
+    }
+
+    protected String getDataText() {
+        return getData().getText();
+    }
+    
+    //author
+    
+    protected WebElement getAuthor() {
+        return author;
+    }
+
+    protected String getAuthorText() {
+        return getAuthor().getText();
+    }
+    
+    //desciption
+    
+    protected WebElement getDesciption() {
+        return desciption;
+    }
+
+    protected String getDesciptionText() {
+        return getDesciption().getText();
+    }
 }

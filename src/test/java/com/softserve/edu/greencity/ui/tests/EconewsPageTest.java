@@ -12,14 +12,15 @@ public class EconewsPageTest extends GreencityTestRunner {
   public void f() {
 		
 		TipsTricksPage  homepage = loadApplication();
-		homepage.navigateMenuEconews();
-		EconewsPage ecoNewsPage= new EconewsPage(driver);
-		System.out.println("is active first time " + ecoNewsPage.IsActiveGridView() );
+		homepage.navigateMenuEconews()
+			.switchToOneNewsPagebyNumber(19);
+		//EconewsPage ecoNewsPage= new EconewsPage(driver);
+		//System.out.println("is active first time " + ecoNewsPage.IsActiveGridView() );
 		
-		ecoNewsPage.clickListView();
-		System.out.println("is active second time " + ecoNewsPage.IsActiveGridView() );
+		//ecoNewsPage.clickListView();
+		//System.out.println("is active second time " + ecoNewsPage.IsActiveGridView() );
 		
-		ecoNewsPage.clickGridView();
-		System.out.println("is active third time " + ecoNewsPage.IsActiveGridView() );
+		//ecoNewsPage.clickGridView();
+		//System.out.println("is active third time " + ecoNewsPage.IsActiveGridView() );
   }
 }

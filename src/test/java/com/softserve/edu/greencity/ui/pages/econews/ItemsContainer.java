@@ -10,9 +10,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class ItemsContainer {
-	//
+	
 	private WebDriver driver;
-	//
+	
 	private List<ItemComponent> itemComponents;
 	
 	public ItemsContainer(WebDriver driver) {
@@ -37,11 +37,19 @@ public class ItemsContainer {
     }
 
 	// Functional
-
+    
+    /**
+     * In this method we get how many ItemComponent is displayed
+     * @return int 
+     */
     public int getItemComponentsCount(){
         return getItemComponents().size();
     }
-
+    
+    /**
+     * We get list of all news headers 
+     * @return list itemComponentsHeader
+     */
     public List<String> getItemComponentsHeader() {  
         List<String> itemComponentsHeader = new ArrayList<>();
         for(ItemComponent cur : getItemComponents()) {
@@ -49,6 +57,15 @@ public class ItemsContainer {
         }
         return itemComponentsHeader;
     }
-
+    
+    /**
+     * this method return ItemComponent by its number
+     * @param number
+     * @return ItemComponent
+     */
+ 	public ItemComponent chooseNewsByNumber(int number) {
+ 		 return getItemComponents().get(number);
+	}
+    
 	// Business Logic
-}
+ 	}

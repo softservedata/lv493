@@ -18,6 +18,7 @@ import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.NewsFilter;
 import com.softserve.edu.greencity.ui.pages.common.MainMenuDropdown;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.tests.OneNewsPage;
 
 /**
  * 
@@ -50,6 +51,7 @@ public class EconewsPage extends TopPart {
 		}
 		int i = 0; 
 		List <WebElement> listElements = driver.findElements(By.cssSelector("div[id='list-gallery-content']"));
+		scrollToElement(getCopyright()); ///
 		while (i < listElements.size()) {
 			
 			//WebDriverWait wait = new WebDriverWait(driver, 5); 
@@ -60,8 +62,14 @@ public class EconewsPage extends TopPart {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//System.out.println("element " + listElements.get(i).getText() + "   i ="  + i);
+			System.out.println("element " + listElements.get(i).getText() + "   i ="  + i);
 			scrollToElement(listElements.get(i));
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			i++;
 			listElements = driver.findElements(By.cssSelector("div[id='list-gallery-content']"));	
 			}	
@@ -246,5 +254,17 @@ public class EconewsPage extends TopPart {
 		clickListView();
 		return new EconewsPage(driver);
 	}
+	
+	/**
+	 * Open OneNewsPage 
+	 * @param number
+	 * @return  OneNewsPage
+	 */
+	public OneNewsPage switchToOneNewsPagebyNumber(int number) {
+		scrollToElement(itemsContainer.chooseNewsByNumber(number).getHeader());
+		itemsContainer.chooseNewsByNumber(number).clickHeader();
+		return new OneNewsPage(driver);
+	}
+	
 	
 }
