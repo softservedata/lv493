@@ -17,8 +17,8 @@ import org.openqa.selenium.support.ui.Wait;
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.home.HomePage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 /**
  * Base Abstract Class of Header and Footer.
@@ -28,15 +28,18 @@ public abstract class TopPart {
 	private final int WINDOW_WIDTH_TO_SCROLL = 1024;
 	private final int WINDOW_HEIGHT_TO_CLICK_FOOTER = 480;
 	//
+    //protected final String TAG_ATTRIBUTE_VALUE = "value";
+    //protected final String TAG_ATTRIBUTE_SRC = "src";
+	//
 	protected WebDriver driver;
 	//
-	private WebElement registerLink;
-	private WebElement signinLink;
 	private Select languageSwitcher;
-	//
 	private WebElement copyright;
 	//
 	private MainMenuDropdown mainMenuDropdown;
+	private TopGuestComponent topGuestComponent;
+	private TopUserComponent topUserComponent;
+	//
 	private LoginDropdown loginDropdown;
 	private RegisterDropdown registerDropdown;
 	
@@ -67,43 +70,13 @@ public abstract class TopPart {
 	}
 	
 	private void initElements() {
-//		registerLink = driver.findElement(By.cssSelector("span#text-before + span > a"));
-//		signinLink = driver.findElement(By.cssSelector("span#text-within + span > a"));
-//		languageSwitcher = new Select(driver.findElement(By.id("language-switcher")));
-//		mainMenuDropdown = new MainMenuDropdown(driver);
-//		copyright = driver.findElement(By.cssSelector("div.bottom-part"));
+		languageSwitcher = new Select(driver.findElement(By.cssSelector("select.language-switcher")));
+		mainMenuDropdown = new MainMenuDropdown(driver);
+		copyright = driver.findElement(By.cssSelector("div.bottom-part"));
 	}
 
 	// Page Object
 	
-	// registerLink
-	
-	public WebElement getRegisterLink() {
-        return registerLink;
-    }
-
-    public String getRegisterLinkText() {
-        return getRegisterLink().getText();
-    }
-    
-    public void clickRegisterLink() {
-        getRegisterLink().click();
-    }
-    
-	// signinLink
-    
-	public WebElement getSigninLink() {
-        return signinLink;
-    }
-
-    public String getSigninLinkText() {
-        return getSigninLink().getText();
-    }
-    
-    public void clickSigninLink() {
-        getSigninLink().click();
-    }
-    
 	// languageSwitcher
     
     public Select getLanguageSwitcher() {
@@ -167,23 +140,14 @@ public abstract class TopPart {
 	
 	// Business Logic
 	
-	/**
-	 * Goto HomePage by Main Menu.
-	 * @return HomePage
-	 */
-	public HomePage navigateMenuHome() {
-		getMainMenuDropdown().clickMenuHome();
-		return new HomePage(driver);
-	}
-
 	public EconewsPage navigateMenuEconews() {
 		getMainMenuDropdown().clickMenuEcoNews();
 		return new EconewsPage(driver);
 	}
 	
-	public HomePage navigateMenuTipsTricks() {
+	public TipsTricksPage navigateMenuTipsTricks() {
 		getMainMenuDropdown().clickMenuTipsTricks();
-		return new HomePage(driver);
+		return new TipsTricksPage(driver);
 	}
 	
 	public MapPage navigateMenuMap() {
@@ -199,5 +163,17 @@ public abstract class TopPart {
 	public AboutPage navigateMenuAbout() {
 		getMainMenuDropdown().clickMenuAbout();
 		return new AboutPage(driver);
+	}
+
+	public LoginDropdown gotoLoginDropdown() {
+		topGuestComponent = new TopGuestComponent(driver);
+		topGuestComponent.clickSigninLink();
+		return new LoginDropdown(driver);
+	}
+	
+	public RegisterDropdown gotoRegisterDropdown() {
+		topGuestComponent = new TopGuestComponent(driver);
+		topGuestComponent.clickSignupLink();
+		return new RegisterDropdown(driver);
 	}
 }
