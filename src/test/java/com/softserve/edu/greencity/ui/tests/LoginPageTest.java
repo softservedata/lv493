@@ -26,18 +26,18 @@ public class LoginPageTest extends GreencityTestRunner {
         HomePage homepage = loadApplication();
         MyCabinetPage myCabinetPage = homepage.navigateMenuMyCabinet();
         presentationSleep(2);
-        LoginPage loginPage = myCabinetPage.getLoginPage();
+        LoginPage loginPage = myCabinetPage.gotoLoginPage();
         System.out.println("loginPage.getTitleFieldText(): "
                 + loginPage.getTitleFieldText());
-//        loginPage.clickEmailField();
-//        loginPage.setEmailField(userLoginCredentials.getEmail());
-//        presentationSleep(2);
-//        loginPage.setPasswordField(userLoginCredentials.getPassword());
-//        presentationSleep(2);
-//        loginPage.clickShowPasswordButton();
-//        presentationSleep(2);
-//        loginPage.clickShowPasswordButton();
-//        presentationSleep(2);
+        loginPage.clickEmailField();
+        loginPage.setEmailField(userLoginCredentials.getEmail());
+        presentationSleep(2);
+        loginPage.setPasswordField(userLoginCredentials.getPassword());
+        presentationSleep(2);
+        loginPage.clickShowPasswordButton();
+        presentationSleep(2);
+        loginPage.clickShowPasswordButton();
+        presentationSleep(2);
 //        loginPage.clickSignInButton();
     }
 }

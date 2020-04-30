@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
 public class LoginPage extends TopPart {
+
     //
     private WebElement titleField;
     private WebElement emailField;
@@ -32,226 +33,219 @@ public class LoginPage extends TopPart {
 
     private void initElements() {
         // init elements
-        titleField = driver.findElement(By.cssSelector("div[class='sign-in'] h1"));
-//      emailField = driver.findElement(By.id("#email"));
-        emailField = driver.findElement(By.cssSelector("form[class*='ng-touched'] input[type='email']"));
-        passwordField = driver.findElement(By.id("#password"));
-        showPasswordButton = driver.findElement(By.id("#img"));
+        titleField = driver
+                .findElement(By.cssSelector("div[class='sign-in'] h1"));
+        emailField = driver.findElement(By.cssSelector("div.sign-in form label[for='email'] + input"));
+        passwordField = driver.findElement(By.cssSelector("div.password-wrapper input"));
+        showPasswordButton = driver.findElement(By.cssSelector("div.password-wrapper div"));
         forgotPasswordLink = driver.findElement(By.cssSelector("a[class*='forgot-password']"));
-        signInButton = driver.findElement(By.cssSelector("form[class*='ng-touched'] button[type='submit']"));
-        signUpLink = driver.findElement(By.cssSelector("a[href*='auth/sign-up']"));
-        signInGoogleButton = driver.findElement(By.cssSelector("button[class*='google']"));
-        emailValidator = driver.findElement(By.xpath("//div[contains(@class,'validation-error')][1]"));    //FIXME selector
-        passwordValidator = driver.findElement(By.xpath("//div[contains(@class,'validation-error')][2]")); //FIXME selector
+        signInButton = driver.findElement(By.cssSelector(
+                "button[class*='primary-global-button']"));
+        signUpLink = driver
+                .findElement(By.cssSelector("a[href*='auth/sign-up']"));
+        signInGoogleButton = driver
+                .findElement(By.cssSelector("button[class*='google']"));
+//      emailValidator = driver.findElement(By.xpath("//div[contains(@class,'validation-error')][1]"));    //FIXME selector
+//      passwordValidator = driver.findElement(By.xpath("//div[contains(@class,'validation-error')][2]")); //FIXME selector
     }
 
     // Page Object
 //  titleField
     public WebElement getTitleField() {
         return titleField;
-        }
-    
+    }
+
     public void clickTitleField() {
         getTitleField().click();
-        }
-    
+    }
+
     public String getTitleFieldText() {
-        return getTitleField().getText();  // Welcome back!
-        }
+        return getTitleField().getText(); // Welcome back!
+    }
+
     public boolean isDisplayedTitleField() {
         return getTitleField().isDisplayed();
     }
-    
+
 //  emailField
     public WebElement getEmailField() {
         return emailField;
-        }
+    }
 
-        public void clearEmailField() {
+    public void clearEmailField() {
         getEmailField().clear();
-        }
+    }
 
-        public void clickEmailField() {
+    public void clickEmailField() {
         getEmailField().click();
-        }
+    }
 
-        public void setEmailField(String text) {
+    public void setEmailField(String text) {
         getEmailField().sendKeys(text);
-        }
+    }
 
-        public boolean isDisplayedEmailField() {
+    public boolean isDisplayedEmailField() {
         return getEmailField().isDisplayed();
-        }
-        
+    }
+
 //    passwordField
-        public WebElement getPasswordField() {
-            return passwordField;
-            }
+    public WebElement getPasswordField() {
+        return passwordField;
+    }
 
-            public void clearPasswordField() {
-            getPasswordField().clear();
-            }
+    public void clearPasswordField() {
+        getPasswordField().clear();
+    }
 
-            public void clickPasswordField() {
-            getPasswordField().click();
-            }
+    public void clickPasswordField() {
+        getPasswordField().click();
+    }
 
-            public void setPasswordField(String text) {
-            getPasswordField().sendKeys(text);
-            }
+    public void setPasswordField(String text) {
+        getPasswordField().sendKeys(text);
+    }
 
-            public boolean isDisplayedPasswordField() {
-            return getPasswordField().isDisplayed();
-            }
-            
+    public boolean isDisplayedPasswordField() {
+        return getPasswordField().isDisplayed();
+    }
+
 //    showPasswordButton
-            public WebElement getShowPasswordButton() {
-                return showPasswordButton;
-            }
+    public WebElement getShowPasswordButton() {
+        return showPasswordButton;
+    }
 
-            public void clickShowPasswordButton() {
-                if (isDisplayedShowPasswordButton()) {
-                    getShowPasswordButton().click();
-                }
-            }
+    public void clickShowPasswordButton() {
+        if (isDisplayedShowPasswordButton()) {
+            getShowPasswordButton().click();
+        }
+    }
 
-            public boolean isDisplayedShowPasswordButton() {
-                return getShowPasswordButton().isDisplayed();
-            }
-            
+    public boolean isDisplayedShowPasswordButton() {
+        return getShowPasswordButton().isDisplayed();
+    }
+
 //    forgotPasswordLink
-            public WebElement getForgotPasswordLink() {
-                return forgotPasswordLink;
-            }
+    public WebElement getForgotPasswordLink() {
+        return forgotPasswordLink;
+    }
 
-            public String getForgotPasswordLinkText() {
-                return getForgotPasswordLink().getText();  //  Forgot password?
-            }
+    public String getForgotPasswordLinkText() {
+        return getForgotPasswordLink().getText(); // Forgot password?
+    }
 
-            public void clickForgotPasswordLink() {
-                if (isDisplayedForgotPasswordLink()) {
-                    getForgotPasswordLink().click();
-                }
-            }
+    public void clickForgotPasswordLink() {
+        if (isDisplayedForgotPasswordLink()) {
+            getForgotPasswordLink().click();
+        }
+    }
 
-            public boolean isDisplayedForgotPasswordLink() {
-                return getForgotPasswordLink().isDisplayed();
-            }
-            
+    public boolean isDisplayedForgotPasswordLink() {
+        return getForgotPasswordLink().isDisplayed();
+    }
+
 //    signInButton
-            public WebElement getSignInButton() {
-                return signInButton;
-            }
+    public WebElement getSignInButton() {
+        return signInButton;
+    }
 
-            public String getSignInButtonText() {
-                return getSignInButton().getText();    //  Sign-in 
-            }
+    public String getSignInButtonText() {
+        return getSignInButton().getText(); // Sign-in
+    }
 
-            public void clickSignInButton() {
-                if (isDisplayedSignInButton()) {
-                    getSignInButton().click();
-                }
-            }
+    public void clickSignInButton() {
+        if (isDisplayedSignInButton()) {
+            getSignInButton().click();
+        }
+    }
 
-            public boolean isDisplayedSignInButton() {
-                return getSignInButton().isDisplayed();
-            }
-            
+    public boolean isDisplayedSignInButton() {
+        return getSignInButton().isDisplayed();
+    }
+
 //    signUpLink
-            public WebElement getSignUpLink() {
-                return signUpLink;
-            }
+    public WebElement getSignUpLink() {
+        return signUpLink;
+    }
 
-            public String getSignUpLinkText() {
-                return getSignUpLink().getText();  //  Sign-up 
-            }
+    public String getSignUpLinkText() {
+        return getSignUpLink().getText(); // Sign-up
+    }
 
-            public void clickSignUpLink() {
-                if (isDisplayedSignUpLink()) {
-                    getSignUpLink().click();
-                }
-            }
+    public void clickSignUpLink() {
+        if (isDisplayedSignUpLink()) {
+            getSignUpLink().click();
+        }
+    }
 
-            public boolean isDisplayedSignUpLink() {
-                return getSignUpLink().isDisplayed();
-            }
-            
+    public boolean isDisplayedSignUpLink() {
+        return getSignUpLink().isDisplayed();
+    }
+
 //    signInGoogleButton
-            public WebElement getSignInGoogleButton() {
-                return signInGoogleButton;
-            }
+    public WebElement getSignInGoogleButton() {
+        return signInGoogleButton;
+    }
 
-            public String getSignInGoogleButtonText() {
-                return getSignInGoogleButton().getText();  //  Sign-in with Google 
-            }
+    public String getSignInGoogleButtonText() {
+        return getSignInGoogleButton().getText(); // Sign-in with Google
+    }
 
-            public void clickSignInGoogleButton(String email, String password) {
-                if (isDisplayedSignInGoogleButton()) {
-                    getSignInGoogleButton().click();
-                }
-            }
+    public void clickSignInGoogleButton() {
+        if (isDisplayedSignInGoogleButton()) {
+            getSignInGoogleButton().click();
+        }
+    }
 
-            public boolean isDisplayedSignInGoogleButton() {
-                return getSignInGoogleButton().isDisplayed();
-            }
-            
+    public boolean isDisplayedSignInGoogleButton() {
+        return getSignInGoogleButton().isDisplayed();
+    }
+
 //  emailValidator
-            public WebElement getEmailValidator() {
-                return emailValidator;
-                }
-            
-            public String getEmailValidatorText() {
-                return getEmailValidator().getText();  //  Email is required 
-                }
-            public boolean isDisplayedEmailValidator() {
-                return getEmailValidator().isDisplayed();
-            }
-            
+    public WebElement getEmailValidator() {
+        return emailValidator;
+    }
+
+    public String getEmailValidatorText() {
+        return getEmailValidator().getText(); // Email is required
+    }
+
+    public boolean isDisplayedEmailValidator() {
+        return getEmailValidator().isDisplayed();
+    }
+
 //  passwordValidator
-            public WebElement getPasswordValidator() {
-                return passwordValidator;
-                }
-            
-            public String getPasswordValidatorText() {
-                return getPasswordValidator().getText();   //  Password is required 
-                }
-            public boolean isDisplayedPasswordValidator() {
-                return getPasswordValidator().isDisplayed();
-            }
+    public WebElement getPasswordValidator() {
+        return passwordValidator;
+    }
+
+    public String getPasswordValidatorText() {
+        return getPasswordValidator().getText(); // Password is required
+    }
+
+    public boolean isDisplayedPasswordValidator() {
+        return getPasswordValidator().isDisplayed();
+    }
+
+// RegisterPage
+    public RegisterPage getRegisterPage() {
+        return new RegisterPage(driver);
+    }
 
     // Functional
-         // RegisterPage
-            public RegisterPage getRegisterPage() {
-                return new RegisterPage(driver);
+ // a Google window opens and switches to it
+    public GoogleAccountPage clickEmailGoogleAccountField() {
+        String currentTab = driver.getWindowHandle();
+        clickSignInGoogleButton();
+        for (String current : driver.getWindowHandles()) {
+            System.out.println("TAB: " + current);
+            if (!current.equals(currentTab)) {
+                driver.switchTo().window(current);
+                System.out.println("URL: " + driver.getCurrentUrl());
+                break;
             }
-            
-            public void clickEmailGoogleAccountField() {
-                googleAccountPage = new GoogleAccountPage(driver);
-                googleAccountPage.clickEmailField();
-            }
-            
-            public void enterEmailGoogleAccountField(String email) {
-                googleAccountPage.clickEmailField();
-                googleAccountPage.clearEmailField();
-                googleAccountPage.setEmailField(email);
-            }
-            
-            public void clickEmailNextGoogleAccountButton() {
-                googleAccountPage.clickEmailNextButton();
-            }
-            public void enterPasswordGoogleAccountField(String password) {
-                googleAccountPage.clickEnterPasswordGoogleAccountField();
-                googleAccountPage.clearEnterPasswordGoogleAccountField();
-                googleAccountPage.setEnterPasswordGoogleAccountField(password);
-            }
-            
-            public void clickShowPasswordGoogleAccountButton() {
-                googleAccountPage.clickShowPasswordGoogleAccountButton();
-            }
-            
-            public void clickNextGoogleAccountButton() {
-                googleAccountPage.clickNextButton();
-            }
+        }
+        return new GoogleAccountPage(driver);
+    }
 
     // Business Logic
 }
