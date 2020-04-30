@@ -14,7 +14,6 @@ public class ItemsContainer {
 	private WebDriver driver;
 	//
 	private List<ItemComponent> itemComponents;
-	private WebElement foundItems;
 	
 	public ItemsContainer(WebDriver driver) {
 		this.driver = driver;
@@ -23,7 +22,6 @@ public class ItemsContainer {
 
 	private void initElements() {
 		
-		foundItems = driver.findElement(By.xpath("//p[@class=\"ng-star-inserted\"]"));
 		itemComponents = new ArrayList<>();
 		 for (WebElement current : driver
 				 .findElements(By.xpath("//div[@class=\"container\"]//ul[contains(@class, \"list\")]/li"))) {
@@ -33,16 +31,6 @@ public class ItemsContainer {
 	
 	// Page Object
 	
-	//foundItems
-	
-	protected WebElement getFoundItems() {
-        return foundItems;
-    }
-
-    protected String getFoundItemsText() {
-        return getFoundItems().getText();
-    }
-
     //itemComponents
     public List<ItemComponent> getItemComponents() {
     	return itemComponents;
@@ -60,19 +48,6 @@ public class ItemsContainer {
         	itemComponentsHeader.add(cur.getHeaderText());
         }
         return itemComponentsHeader;
-    }
-
-    public int getNumberOfItemComponent() {
-    
-    	String pattern = "\\d+";
-    	String text = getFoundItemsText();
-    	Pattern p = Pattern.compile(pattern);	
-    	Matcher m = p.matcher(text);
-    	
-    	if(m.find()) {
-    		return Integer.valueOf(text.substring(m.start(), m.end()));
-    	}
-    	return -1;
     }
 
 	// Business Logic

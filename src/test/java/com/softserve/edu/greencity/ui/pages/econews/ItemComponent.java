@@ -29,31 +29,20 @@ public final class ItemComponent {
 		initElements();
 	}
 	
-	protected void scrollDown() {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.cssSelector("div.bottom-part")));
-		}
 	
 	private void initElements() {
-		scrollDown();
-		WebDriverWait wait = new WebDriverWait(driver, 60); 
-	    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[contains(@class, \"list\")]/li[20]"))) ;
-		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.bottom-part")));
-		//typeOfNews = container.findElements(By.xpath(".div[@id=\"list-gallery-content\"]//div[@class=\"filter-tag\"]/div"));
+		
 		typeOfNews = newsItem.findElements(By.cssSelector("div.filter-tag div"));
-		//header = container.findElement(By.xpath(".div[@id=\"list-gallery-content\"]//div[@class=\"title-list\"]/p"));
 		header = newsItem.findElement(By.cssSelector("div.title-list p"));
-		//description = container.findElement(By.xpath(".div[@id=\"list-gallery-content\"]//div[@class=\"list-text\"]/p"));
 		description = newsItem.findElement(By.cssSelector("div.list-text p"));
-		//dateOfCreation = container.findElement(By.xpath(".img[@alt=\"calendar icon\"]/.."));
 		dateOfCreation = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(1)"));
 		author = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(2)"));
-		//author = container.findElement(By.xpath(".img[@alt=\"user icon\"]/.."));
 	}
 
 	// Page Object
 	
 	//typeOfNews
+	
 	public List<WebElement> getTypeOfNews() {
 		return typeOfNews;
 	}
@@ -68,11 +57,13 @@ public final class ItemComponent {
 	}
 
 	//container
+	
 	public WebElement getNewsItem() {
 		return newsItem;
 	}
 
 	//header
+	
 	public WebElement getHeader() {
 		return header;
 	}
@@ -86,6 +77,7 @@ public final class ItemComponent {
 	}
 
 	// description
+	
 	public WebElement getDescription() {
 		return description;
 	}

@@ -10,6 +10,7 @@ public class EconewsPageTest extends GreencityTestRunner {
   
 	@Test
   public void f() {
+		
 		TipsTricksPage  homepage = loadApplication();
 		homepage.navigateMenuEconews();
 		EconewsPage ecoNewsPage= new EconewsPage(driver);

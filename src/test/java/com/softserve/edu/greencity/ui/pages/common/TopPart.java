@@ -135,6 +135,11 @@ public abstract class TopPart {
 		}
 	}
 	
+	protected void scrollToElement(WebElement el) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", el);
+	}
+	
 	protected boolean isMenuClickable() {
 		return driver.manage().window().getSize().height > WINDOW_HEIGHT_TO_CLICK_FOOTER;
 	}

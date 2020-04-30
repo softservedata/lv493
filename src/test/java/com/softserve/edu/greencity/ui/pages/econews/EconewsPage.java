@@ -2,10 +2,17 @@ package com.softserve.edu.greencity.ui.pages.econews;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.NewsFilter;
@@ -25,23 +32,62 @@ public class EconewsPage extends TopPart {
 	private WebElement gridView;
 	private WebElement listView;
 	private ItemsContainer itemsContainer;
+	private WebElement foundItems; //move from ItemsContainer
 
 	public EconewsPage(WebDriver driver) {
 		super(driver);
+		visualiseElements();
 		initElements();
+		
 	}
-
+	
+	private void visualiseElements() {
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int i = 0; 
+		List <WebElement> listElements = driver.findElements(By.cssSelector("div[id='list-gallery-content']"));
+		while (i < listElements.size()) {
+			
+			//WebDriverWait wait = new WebDriverWait(driver, 5); 
+		    //wait.until(ExpectedConditions.elementToBeClickable(listElements.get(i)));
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//System.out.println("element " + listElements.get(i).getText() + "   i ="  + i);
+			scrollToElement(listElements.get(i));
+			i++;
+			listElements = driver.findElements(By.cssSelector("div[id='list-gallery-content']"));	
+			}	
+	}
+	
 	private void initElements() {
 		
 		filtersList = driver.findElements(By.xpath("//ul[@class=\"ul-eco-buttons\"]/a/li"));
 		createNewsButton = driver.findElement(By.id("create-button"));
 		itemsContainer = new ItemsContainer(driver);
-		gridView = driver.findElement(By.xpath("//div[contains(@class, \"gallery-view\")]"));
-		listView = driver.findElement(By.xpath("//div[contains(@class, \"list-view\")]/div"));;
+		gridView = driver.findElement(By.cssSelector("div[class*='gallery-view']"));
+		listView = driver.findElement(By.cssSelector("div[class*='list-view']"));
+		foundItems = driver.findElement(By.xpath("//p[@class=\"ng-star-inserted\"]"));
 	}
 
 	// Page Object
 	
+	//foundItems
+	protected WebElement getFoundItems() {
+        return foundItems;
+    }
+
+    protected String getFoundItemsText() {
+        return getFoundItems().getText();
+    }
+
 	//gridViev
 	
 	protected WebElement getGridView() {
@@ -54,13 +100,14 @@ public class EconewsPage extends TopPart {
 	
     public void clickGridView() {
     	if(!IsActiveGridView()) {
+    		scrollToElement(getGridView());
         getGridView().click();
     	}
     }
     
   //listViev
-	
-    protected WebElement getListView() {
+    
+	  protected WebElement getListView() {
           return listView;
       }
     
@@ -70,6 +117,7 @@ public class EconewsPage extends TopPart {
     
     public void clickListView() {
     	if(!IsActiveListView()) {
+    		scrollToElement(getListView());
     		 getListView().click();
     	}
       }
@@ -101,6 +149,26 @@ public class EconewsPage extends TopPart {
  		return filtersList;
  	}
 	// Functional
+ 	
+ 	protected void scrollToElement(WebElement el) {
+	//	JavascriptExecutor js = (JavascriptExecutor) driver;
+    //    js.executeScript("arguments[0].scrollIntoView(true);", el);
+ 		Actions action = new Actions(driver);
+ 		action.moveToElement(el).perform();
+	}
+ 	
+ 	 public int getNumberOfItemComponent() {
+ 	    
+     	String pattern = "\\d+";
+     	String text = getFoundItemsText();
+     	Pattern p = Pattern.compile(pattern);	
+     	Matcher m = p.matcher(text);
+     	
+     	if(m.find()) {
+     		return Integer.valueOf(text.substring(m.start(), m.end()));
+     	}
+     	return -1;
+     }
  	
  	//TODO  deselect filters; 
  	
