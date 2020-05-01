@@ -67,11 +67,11 @@ public abstract class TopPart {
 	}
 	
 	private void initElements() {
-		registerLink = driver.findElement(By.cssSelector("span#text-before + span > a"));
-		signinLink = driver.findElement(By.cssSelector("span#text-within + span > a"));
-		languageSwitcher = new Select(driver.findElement(By.id("language-switcher")));
-		mainMenuDropdown = new MainMenuDropdown(driver);
-		copyright = driver.findElement(By.cssSelector("div.bottom-part"));
+        registerLink = driver.findElement(By.cssSelector("li[class*='sign-up-link'] div[class*='secondary-global-button']"));
+        signinLink = driver.findElement(By.cssSelector("li[class*='sign-in-link'] a"));
+        languageSwitcher = new Select(driver.findElement(By.cssSelector("select[class*='language-switcher']")));
+        mainMenuDropdown = new MainMenuDropdown(driver);
+        copyright = driver.findElement(By.cssSelector("div.bottom-part"));
 	}
 
 	// Page Object

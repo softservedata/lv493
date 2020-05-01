@@ -33,20 +33,19 @@ public class MainMenuDropdown {
 
 	private void initElements() {
 		// init elements
-		naviconButton = driver.findElement(By.cssSelector("span.navicon"));
-		menuHome = driver.findElement(By.cssSelector("ul.menu > li:first-child > a[href*='/welcome']"));
-		menuEcoNews = driver.findElement(By.cssSelector("ul.menu > li > a[href*='/news']"));
-		menuTipsTricks = driver.findElement(By.xpath("//ul[@class='menu']/li/a[contains(@href, '/news')]/../following-sibling::li/a[contains(@href, '/welcome')]"));
-		menuMap = driver.findElement(By.cssSelector("ul.menu > li > a[href*='/map']"));
-		menuMyCabinet = driver.findElement(By.cssSelector("ul.menu > li > a[href*='/habits']"));
-		menuAbout = driver.findElement(By.cssSelector("ul.menu > li > a[href*='/about']"));
-		//
-		footerHome = driver.findElement(By.cssSelector("a.small-screen-size > img"));
-		footerEcoNews = driver.findElement(By.cssSelector("ul.list-of-site-links > li > a[href*='/news']"));
-		footerTipsTricks = driver.findElement(By.xpath("//ul[@class='list-of-site-links']/li/a[contains(@href, '/news')]/../following-sibling::li/a[@href='']"));
-		footerMap = driver.findElement(By.cssSelector("ul.list-of-site-links > li > a[href*='/map']"));
-		footerMyCabinet = driver.findElement(By.cssSelector("ul.list-of-site-links > li > a[href*='/habits']"));
-		footerAbout = driver.findElement(By.cssSelector("ul.list-of-site-links > li > a[href*='/about']"));
+//      menuHome = driver.findElement(By.cssSelector("ul.menu > li:first-child > a[href*='/welcome']"));
+//      menuEcoNews = driver.findElement(By.cssSelector("ul.menu > li > a[href*='/news']"));
+//      menuTipsTricks = driver.findElement(By.xpath("//ul[@class='menu']/li/a[contains(@href, '/news')]/../following-sibling::li/a[contains(@href, '/welcome')]"));
+//      menuMap = driver.findElement(By.cssSelector("ul.menu > li > a[href*='/map']"));
+        menuMyCabinet = driver.findElement(By.cssSelector("div.navigation-menu ul > li > a[href*='/habits']"));
+//      menuAbout = driver.findElement(By.cssSelector("ul.menu > li > a[href*='/about']"));
+        //
+//      footerHome = driver.findElement(By.cssSelector("a.small-screen-size > img"));
+//      footerEcoNews = driver.findElement(By.cssSelector("ul.list-of-site-links > li > a[href*='/news']"));
+//      footerTipsTricks = driver.findElement(By.xpath("//ul[@class='list-of-site-links']/li/a[contains(@href, '/news')]/../following-sibling::li/a[@href='']"));
+//      footerMap = driver.findElement(By.cssSelector("ul.list-of-site-links > li > a[href*='/map']"));
+        footerMyCabinet = driver.findElement(By.cssSelector("div.app-footer ul > li > a[href*='/habits']"));
+//      footerAbout = driver.findElement(By.cssSelector("ul.list-of-site-links > li > a[href*='/about']"));
 	}
 
 	// Page Object
