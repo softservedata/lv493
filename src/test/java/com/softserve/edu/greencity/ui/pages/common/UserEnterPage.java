@@ -16,14 +16,14 @@ public abstract class UserEnterPage extends TopPart {
     //
     protected WebDriver driver;
     //
-    protected WebElement titleField;
-    protected WebElement emailField;
-    protected WebElement passwordField;
-    protected WebElement showPasswordButton;
-    protected WebElement signWithGoogleButton;
+    private WebElement titleField;
+    private WebElement emailField;
+    private WebElement passwordField;
+    private WebElement showPasswordButton;
+    private WebElement signWithGoogleButton;
     //
-    protected WebElement emailValidator;
-    protected WebElement passwordValidator;
+    private WebElement emailValidator;
+    private WebElement passwordValidator;
     //
     GoogleAccountPage googleAccountPage;
 
@@ -32,7 +32,7 @@ public abstract class UserEnterPage extends TopPart {
         initElements();
     }
 
-    protected void initElements() {
+    private void initElements() {
         titleField = null;
         emailField = null;
         passwordField = null;
