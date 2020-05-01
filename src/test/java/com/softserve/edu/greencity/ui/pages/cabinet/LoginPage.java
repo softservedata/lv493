@@ -1,14 +1,12 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import com.softserve.edu.greencity.ui.tools.LoginPart;
 import org.openqa.selenium.WebDriver;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import org.openqa.selenium.WebElement;
 
 public class LoginPage extends TopPart{
 
-	LoginCabinet loginCabinet;
+	private LoginComponent loginComponent;
 
 	public LoginPage(WebDriver driver) {
 		super(driver);
@@ -16,8 +14,33 @@ public class LoginPage extends TopPart{
 	}
 
 	private void initElements() {
-		// init elements
-		loginCabinet = new LoginCabinet();
+		loginComponent = new LoginComponent(driver);
+	}
+
+	public LoginComponent getLoginComponent() {
+		return loginComponent;
+	}
+
+	// proxy methods
+
+	public LoginPage inputEmail(String email) {
+		this.getLoginComponent().getEmailField().sendKeys(email);
+		return this;
+	}
+
+	public LoginPage inputPassword(String password) {
+		this.getLoginComponent().getPasswordField().sendKeys(password);
+		return this;
+	}
+
+	public LoginPage clickLoginButton() {
+		this.getLoginComponent().getSignInButton().click();
+		return this;
+	}
+
+	public LoginPage clickGoogleLoginButton() {
+		this.getLoginComponent().getGoogleSigningButton().click();
+		return this;
 	}
 
 }

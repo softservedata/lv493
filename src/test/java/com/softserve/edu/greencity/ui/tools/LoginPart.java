@@ -6,10 +6,9 @@ public abstract class LoginPart {
 
     protected WebElement emailField;
     protected WebElement passwordField;
-    protected WebElement loginButton;
-    protected WebElement googleLoginButton;
+    protected WebElement signInButton;
+    protected WebElement googleSigningButton;
     protected WebElement forgotPasswordLink;
-    protected WebElement registerLink;
 
     public LoginPart inputEmail(String email) {
         this.getEmailField().sendKeys(email);
@@ -22,27 +21,28 @@ public abstract class LoginPart {
     }
 
     public LoginPart clickLoginButton() {
-        this.getLoginButton().click();
+        this.getSignInButton().click();
         return this;
     }
 
     public LoginPart clickGoogleLoginButton() {
-        this.getGoogleLoginButton().click();
+        this.getGoogleSigningButton().click();
         return this;
     }
 
-    public LoginPart loginByEmail(String email, String password){
-        inputEmail(email);
-        inputPassword(password);
-        clickLoginButton();
-        return this;
-    }
+    public abstract ForgotPasswordPart gotoForgotPassword();
+//    public RegisterDropdown gotoRegister(WebDriver driver) { //fix
+//        this.getRegisterLink().click();
+//        return new RegisterDropdown(driver);
+//    }
 
-    public LoginPart loginByGoogleAccount() {
-        clickGoogleLoginButton();
-        // TODO
-        return this;
-    }
+    public abstract RegisterPart gotoRegister();
+
+//    public LoginPart loginByGoogleAccount() {
+//        clickGoogleLoginButton();
+//        // TODO
+//        return this;
+//    }
 
     public WebElement getEmailField() {
         return emailField;
@@ -52,20 +52,16 @@ public abstract class LoginPart {
         return passwordField;
     }
 
-    public WebElement getLoginButton() {
-        return loginButton;
+    public WebElement getSignInButton() {
+        return signInButton;
     }
 
-    public WebElement getGoogleLoginButton() {
-        return googleLoginButton;
+    public WebElement getGoogleSigningButton() {
+        return googleSigningButton;
     }
 
     public WebElement getForgotPasswordLink() {
         return forgotPasswordLink;
-    }
-
-    public WebElement getRegisterLink() {
-        return registerLink;
     }
 
     public LoginPart setEmailField(WebElement emailField) {
@@ -78,13 +74,13 @@ public abstract class LoginPart {
         return this;
     }
 
-    public LoginPart setLoginButton(WebElement loginButton) {
-        this.loginButton = loginButton;
+    public LoginPart setSignInButton(WebElement signInButton) {
+        this.signInButton = signInButton;
         return this;
     }
 
-    public LoginPart setGoogleLoginButton(WebElement googleLoginButton) {
-        this.googleLoginButton = googleLoginButton;
+    public LoginPart setGoogleSignInButton(WebElement googleSigningButton) {
+        this.googleSigningButton = googleSigningButton;
         return this;
     }
 
@@ -93,9 +89,6 @@ public abstract class LoginPart {
         return this;
     }
 
-    public LoginPart setRegisterLink(WebElement registerLink) {
-        this.registerLink = registerLink;
-        return this;
-    }
+
 }
 
