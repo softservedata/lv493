@@ -20,6 +20,8 @@ import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+
 /**
  * Base Abstract Class of Header and Footer.
  * @author Lv-493.Taqc/Java
@@ -59,7 +61,7 @@ public abstract class TopPart {
 	            .ignoring(TimeoutException.class);
 		Alert alert = null;
 		try {
-			alert = wait.until(ExpectedConditions.alertIsPresent());
+			alert = wait.until(alertIsPresent());
 		} catch(TimeoutException e) {
 		}
 		if(alert != null) {
