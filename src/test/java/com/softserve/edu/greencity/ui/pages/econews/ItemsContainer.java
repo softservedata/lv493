@@ -9,6 +9,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.greencity.ui.data.OneNewsData;
+
 public class ItemsContainer {
 	
 	private WebDriver driver;
@@ -53,9 +55,62 @@ public class ItemsContainer {
     public List<String> getItemComponentsHeader() {  
         List<String> itemComponentsHeader = new ArrayList<>();
         for(ItemComponent cur : getItemComponents()) {
-        	itemComponentsHeader.add(cur.getHeaderText());
+        	itemComponentsHeader.add(cur.getIitleText());
         }
         return itemComponentsHeader;
+    }
+    
+    /**
+     * Find news by header
+     * @param  String headerName
+     * @return ItemComponent
+     */
+    public ItemComponent getItemComponentByHeader(String headerName){
+    	ItemComponent result = null;
+        for (ItemComponent cur : getItemComponents()) {
+            if (cur.getIitleText().toLowerCase()
+                    .contains(headerName.toLowerCase())) {
+                result = cur;
+                break;
+            }
+        }
+        if (result == null) {
+        	System.err.format(headerName, null);
+            //throw new RuntimeException("HeaderName " + headerName + " not found");
+        }
+        return result;
+    }
+    
+    /**
+     * Open new page with news given by title, tags, content
+     * @param OneNewsData one
+     */
+    public void clickItemComponentOpenPage(OneNewsData one) {
+//    	getItemComponentByHeader(one.getTitle()).clickHeader();
+    	findItemComponentByParameters(one).getIitle().click();
+    	
+    }
+    
+    
+    /**
+     * Find appropriate news by its parameters: title, list tags & content
+     * @param  OneNewsData one
+     * @return ItemComponent
+     */
+    public ItemComponent findItemComponentByParameters(OneNewsData one) {
+    	ItemComponent result = null;
+    	for(ItemComponent cur : getItemComponents() ) {
+    		if(cur.getIitleText().toLowerCase().equals(one.getTitle().toLowerCase())
+    				&& cur.getTagsText().equals(one.getTags())
+    				&& one.getContent().toLowerCase().contains(cur.getContentText().toLowerCase())) {
+    					result = cur;
+    		}
+    	}
+    	if (result == null) {
+         	System.err.format("no matches with ", one.toString());
+             //throw new RuntimeException("ItemComponent with parameters " + one.toString() + " not found");
+         }
+		return result;	
     }
     
     /**
@@ -64,7 +119,7 @@ public class ItemsContainer {
      * @return ItemComponent
      */
  	public ItemComponent chooseNewsByNumber(int number) {
- 		 return getItemComponents().get(number);
+ 				return getItemComponents().get(number - 1);
 	}
     
 	// Business Logic

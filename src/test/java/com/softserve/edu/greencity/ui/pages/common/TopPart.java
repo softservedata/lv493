@@ -110,10 +110,6 @@ public abstract class TopPart {
 		return getCopyright().getText();
 	}
 
-	public void clickCopyright() {
-		getCopyright().click();
-	}
-	 
 	// mainMenuDropdown
 	
 	public MainMenuDropdown getMainMenuDropdown() {

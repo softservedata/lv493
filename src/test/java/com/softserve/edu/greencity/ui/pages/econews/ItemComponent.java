@@ -14,9 +14,9 @@ public final class ItemComponent {
 	
 	private WebDriver driver;
 	private WebElement newsItem;
-	private List<WebElement> typeOfNews;
-	private WebElement header;
-	private WebElement description;
+	private List<WebElement> tags;
+	private WebElement title;
+	private WebElement content;
 	private WebElement dateOfCreation;
 	private WebElement author;
 	
@@ -32,9 +32,9 @@ public final class ItemComponent {
 	
 	private void initElements() {
 		
-		typeOfNews = newsItem.findElements(By.cssSelector("div.filter-tag div"));
-		header = newsItem.findElement(By.cssSelector("div.title-list p"));
-		description = newsItem.findElement(By.cssSelector("div.list-text p"));
+		tags = newsItem.findElements(By.cssSelector("div.filter-tag div"));
+		title = newsItem.findElement(By.cssSelector("div.title-list p"));
+		content = newsItem.findElement(By.cssSelector("div.list-text p"));
 		dateOfCreation = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(1)"));
 		author = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(2)"));
 	}
@@ -43,14 +43,13 @@ public final class ItemComponent {
 	
 	//typeOfNews
 	
-	public List<WebElement> getTypeOfNews() {
-		return typeOfNews;
+	public List<WebElement> getTags() {
+		return tags;
 	}
 	
-	public List<String> getTypeOfNewsText() {
-		List<WebElement> ls = getTypeOfNews();
+	public List<String> getTagsText() {
 		List<String> str = new ArrayList<String>();
-		for(WebElement elem : ls ) {
+		for(WebElement elem : getTags() ) {
 			str.add(elem.getText());
 		}
 		return  str;
@@ -64,30 +63,30 @@ public final class ItemComponent {
 
 	//header
 	
-	public WebElement getHeader() {
-		return header;
+	public WebElement getIitle() {
+		return title;
 	}
 
-	public String getHeaderText() {
-		return getHeader().getText();
+	public String getIitleText() {
+		return getIitle().getText();
 	}
 
-	public void clickHeader() {
-		getHeader().click();
+	public void clickIitle() {
+		getIitle().click();
 	}
 
-	// description
+	// content
 	
-	public WebElement getDescription() {
-		return description;
+	public WebElement getContent() {
+		return content;
 	}
 
-	public String getDescriptionText() {
-		return getDescription().getText();
+	public String getContentText() {
+		return getContent().getText();
 	}
 	
-	public void clickDescription() {
-		getDescription().click();
+	public void clickContent() {
+		getContent().click();
 	}
 	
 	// dateOfCreation

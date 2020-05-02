@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
 
 public class OneNewsPage extends TopPart {
@@ -19,7 +20,7 @@ public class OneNewsPage extends TopPart {
 	private WebElement data;
 	private WebElement author;
 	private WebElement picture;
-	private WebElement desciption;
+	private WebElement content;
 	private ItemsContainer itemsContainer;
 
 	public OneNewsPage(WebDriver driver) {
@@ -28,19 +29,14 @@ public class OneNewsPage extends TopPart {
 	}
 
 	private void initElements() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		goToNews = driver.findElement(By.cssSelector("div.back-button"));
 		filtersList = driver.findElements(By.cssSelector("div.tags > div"));
 		title = driver.findElement(By.cssSelector("div.news-content > div.news-text-container > div.news-title"));
 		data = driver.findElement(By.cssSelector("div.news-info > div.news-info-date"));
 		author = driver.findElement(By.cssSelector("div.news-info > div.news-info-author"));
 		picture = driver.findElement(By.cssSelector("div.news-image > img.news-image-img"));
-		desciption = driver.findElement(By.cssSelector("div.news-text"));
+		content = driver.findElement(By.cssSelector("div.news-text"));
 		itemsContainer  = new ItemsContainer(driver);
 	}
 	
@@ -96,13 +92,34 @@ public class OneNewsPage extends TopPart {
         return getAuthor().getText();
     }
     
-    //desciption
+    //content
     
-    protected WebElement getDesciption() {
-        return desciption;
+    protected WebElement getContent() {
+        return content;
     }
 
-    protected String getDesciptionText() {
-        return getDesciption().getText();
+    protected String getContentText() {
+        return getContent().getText();
+    }
+    
+    //Business logic
+    
+    /**
+     * Go to next OneNewsPage
+     * @param number
+     * @return OneNewsPage
+     */
+    public OneNewsPage switchToNextOneNewsPagebyNumber(int number) {
+		itemsContainer.chooseNewsByNumber(number).clickIitle();
+		return new OneNewsPage(driver);
+    }
+    
+    /**
+     * Return to EconewsPage
+     * @return EconewsPage
+     */
+    public EconewsPage switchToEconewsPageBack() {
+    	clickGoToNewsButton();
+		return new EconewsPage(driver);
     }
 }

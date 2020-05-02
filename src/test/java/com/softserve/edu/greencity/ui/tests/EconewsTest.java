@@ -6,7 +6,7 @@ import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 
-public class EconewsPageTest extends GreencityTestRunner {
+public class EconewsTest extends GreencityTestRunner {
   
 	@Test
   public void f() {

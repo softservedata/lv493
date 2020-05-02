@@ -15,7 +15,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.softserve.edu.greencity.ui.data.Languages;
-import com.softserve.edu.greencity.ui.data.NewsFilter;
+import com.softserve.edu.greencity.ui.data.OneNewsData;
+import com.softserve.edu.greencity.ui.data.Tag;
 import com.softserve.edu.greencity.ui.pages.common.MainMenuDropdown;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tests.OneNewsPage;
@@ -194,23 +195,23 @@ public class EconewsPage extends TopPart {
  		return activeFilters;
  	}
  	
- 	public WebElement getWebElementByFilterName(NewsFilter newsfilter) {
+ 	public WebElement getWebElementByTagName(Tag newsfilter) {
 		return driver.findElement(By.xpath("//li[contains(text(),\"" + newsfilter.toString() + "\")]"));
 	}
  	
- 	public boolean filterIsActive(NewsFilter newsfilter) {
- 		return getWebElementByFilterName(newsfilter).getAttribute("class").contains("clicked-filter-button");
+ 	public boolean isActiveTag(Tag newsfilter) {
+ 		return getWebElementByTagName(newsfilter).getAttribute("class").contains("clicked-filter-button");
  	}
  	
- 	public void chooseOneFilter(NewsFilter newsfilter)  {
- 		if(!filterIsActive(newsfilter)) {
- 			getWebElementByFilterName(newsfilter).click();
+ 	public void chooseOneTag(Tag newsfilter)  {
+ 		if(!isActiveTag(newsfilter)) {
+ 			getWebElementByTagName(newsfilter).click();
  		}
  	}
  	
- 	public void chooseFilters(NewsFilter...newsfilters) {
- 		for(NewsFilter cur : newsfilters) {
- 			chooseOneFilter(cur);
+ 	public void chooseTags(Tag...newsfilters) {
+ 		for(Tag cur : newsfilters) {
+ 			chooseOneTag(cur);
  		}			
  	}
  	
@@ -221,15 +222,15 @@ public class EconewsPage extends TopPart {
  	 * @param list of NewsFilter's
  	 * @return EconewsPage
  	 */
- 	public EconewsPage selectFilters(NewsFilter...newsfilters) {
- 		chooseFilters(newsfilters);
+ 	public EconewsPage selectFilters(Tag...newsfilters) {
+ 		chooseTags(newsfilters);
 		return new EconewsPage(driver);
 	}
  	
 	
  	/**
  	 * Choose language
- 	 * @param language
+ 	 * @param Languages
  	 * @return EconewsPage
  	 */
 	public EconewsPage switchLanguage(Languages language) {
@@ -257,14 +258,25 @@ public class EconewsPage extends TopPart {
 	
 	/**
 	 * Open OneNewsPage 
-	 * @param number
+	 * @param int
 	 * @return  OneNewsPage
 	 */
 	public OneNewsPage switchToOneNewsPagebyNumber(int number) {
-		scrollToElement(itemsContainer.chooseNewsByNumber(number).getHeader());
-		itemsContainer.chooseNewsByNumber(number).clickHeader();
+		scrollToElement(itemsContainer.chooseNewsByNumber(number).getIitle());
+		itemsContainer.chooseNewsByNumber(number).clickIitle();
 		return new OneNewsPage(driver);
 	}
 	
+	/**
+	 * Open OneNewsPage
+	 * @param OneNewsData 
+	 * @return OneNewsPage
+	 */
+	public OneNewsPage switchToOneNewsPagebyParameters(OneNewsData news) {
+		scrollToElement(itemsContainer.findItemComponentByParameters(news).getIitle());
+		itemsContainer.clickItemComponentOpenPage(news);
+		return new OneNewsPage(driver);
 	
+	//TODO methods for authorization 
+	}
 }

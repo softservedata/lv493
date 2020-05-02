@@ -2,7 +2,7 @@ package com.softserve.edu.greencity.ui.data;
 
 import org.openqa.selenium.WebElement;
 
-public enum NewsFilter {
+public enum Tag {
 	
 	NEWS("news"), 
 	EVENTS("events"), 
@@ -10,15 +10,15 @@ public enum NewsFilter {
 	INITIATIVES("initiatives"), 
 	ADS("ads");
 	
-	private String nameOfFilter;
+	private String nameOfTag;
 	
-	private NewsFilter(String nameOfFilter) {
-		this.nameOfFilter = nameOfFilter;
+	private Tag(String nameOfTag) {
+		this.nameOfTag = nameOfTag;
 	}
 	
 	@Override
 	public String toString() {
-		return nameOfFilter;
+		return nameOfTag;
 	}
 	
 	
