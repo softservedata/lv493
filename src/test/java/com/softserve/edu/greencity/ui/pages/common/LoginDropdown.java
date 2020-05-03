@@ -67,8 +67,9 @@ public class LoginDropdown extends LoginPart {
 		return new ForgotPasswordDropdown(driver);
 	}
 
-	@Override
-	public RegisterPart gotoRegister() {
-		return new RegisterDropdown(driver);
+
+	public RegisterDropdown gotoRegisterDropdown() {
+		getSignUpLink().click();
+	    return new RegisterDropdown(driver);
 	}
 }

@@ -36,7 +36,7 @@ public abstract class LoginPart {
 //        return new RegisterDropdown(driver);
 //    }
 
-    public abstract RegisterPart gotoRegister();
+//public abstract RegisterPart gotoRegister();
 
 //    public LoginPart loginByGoogleAccount() {
 //        clickGoogleLoginButton();
