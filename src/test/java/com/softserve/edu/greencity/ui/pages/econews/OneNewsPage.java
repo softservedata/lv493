@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tests;
+package com.softserve.edu.greencity.ui.pages.econews;
 
 import java.util.List;
 
@@ -7,12 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
 
 public class OneNewsPage extends TopPart {
 	
-	//there will be also functionality follow us - is not implemented
+	//there will be also functionality follow us & search - is not implemented
 	//private WebElement editNewsButton;  // isn't working yet tags
 	private WebElement  goToNews;
 	private List<WebElement> filtersList;
@@ -68,7 +66,7 @@ public class OneNewsPage extends TopPart {
         return title;
     }
 
-    protected String getTitleText() {
+    public String getTitleText() {
         return getTitle().getText().trim();   //should we use trim?
     }
     

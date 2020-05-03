@@ -8,15 +8,15 @@ public class NewsRepository {
     private NewsRepository() {
     }
 
-    public static OneNewsData getDefault() {
+    public static NewsData getDefault() {
         return getAllFildsNews();
     }
 
-    public static OneNewsData getAllFildsNews() {
+    public static NewsData getAllFildsNews() {
         List<String> tags = new ArrayList<>();
         tags.add("News");
-        tags.add("Events");
-        return new OneNewsData( tags,  "Green Day", "Content = description");
+        tags.add("Ads");
+        return new NewsData( tags,  "title", "text");
     }
 }
 

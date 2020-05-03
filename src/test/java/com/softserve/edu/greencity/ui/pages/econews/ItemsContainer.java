@@ -9,7 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.softserve.edu.greencity.ui.data.OneNewsData;
+import com.softserve.edu.greencity.ui.data.NewsData;
 
 public class ItemsContainer {
 	
@@ -85,9 +85,9 @@ public class ItemsContainer {
      * Open new page with news given by title, tags, content
      * @param OneNewsData one
      */
-    public void clickItemComponentOpenPage(OneNewsData one) {
+    public void clickItemComponentOpenPage(NewsData news) {
 //    	getItemComponentByHeader(one.getTitle()).clickHeader();
-    	findItemComponentByParameters(one).getIitle().click();
+    	findItemComponentByParameters(news).getIitle().click();
     	
     }
     
@@ -97,17 +97,17 @@ public class ItemsContainer {
      * @param  OneNewsData one
      * @return ItemComponent
      */
-    public ItemComponent findItemComponentByParameters(OneNewsData one) {
+    public ItemComponent findItemComponentByParameters(NewsData news) {
     	ItemComponent result = null;
     	for(ItemComponent cur : getItemComponents() ) {
-    		if(cur.getIitleText().toLowerCase().equals(one.getTitle().toLowerCase())
-    				&& cur.getTagsText().equals(one.getTags())
-    				&& one.getContent().toLowerCase().contains(cur.getContentText().toLowerCase())) {
+    		if(cur.getIitleText().toLowerCase().equals(news.getTitle().toLowerCase())
+    				&& cur.getTagsText().equals(news.getTags())
+    				&& news.getContent().toLowerCase().contains(cur.getContentText().toLowerCase())) {
     					result = cur;
     		}
     	}
     	if (result == null) {
-         	System.err.format("no matches with ", one.toString());
+         	System.err.format("no matches with ", news.toString());
              //throw new RuntimeException("ItemComponent with parameters " + one.toString() + " not found");
          }
 		return result;	

@@ -6,20 +6,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.softserve.edu.greencity.ui.data.Languages;
-import com.softserve.edu.greencity.ui.data.OneNewsData;
+import com.softserve.edu.greencity.ui.data.NewsData;
 import com.softserve.edu.greencity.ui.data.Tag;
-import com.softserve.edu.greencity.ui.pages.common.MainMenuDropdown;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.tests.OneNewsPage;
+
 
 /**
  * 
@@ -29,7 +24,7 @@ import com.softserve.edu.greencity.ui.tests.OneNewsPage;
 public class EconewsPage extends TopPart {
 	
 	
-	private List<WebElement> filtersList;
+	private List<WebElement> tagsList;
 	private WebElement createNewsButton;
 	private WebElement gridView;
 	private WebElement listView;
@@ -63,7 +58,7 @@ public class EconewsPage extends TopPart {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("element " + listElements.get(i).getText() + "   i ="  + i);
+			//System.out.println("element " + listElements.get(i).getText() + "   i ="  + i);
 			scrollToElement(listElements.get(i));
 			try {
 				Thread.sleep(1000);
@@ -78,7 +73,7 @@ public class EconewsPage extends TopPart {
 	
 	private void initElements() {
 		
-		filtersList = driver.findElements(By.xpath("//ul[@class=\"ul-eco-buttons\"]/a/li"));
+		tagsList = driver.findElements(By.xpath("//ul[@class=\"ul-eco-buttons\"]/a/li"));
 		createNewsButton = driver.findElement(By.id("create-button"));
 		itemsContainer = new ItemsContainer(driver);
 		gridView = driver.findElement(By.cssSelector("div[class*='gallery-view']"));
@@ -152,10 +147,10 @@ public class EconewsPage extends TopPart {
  		return itemsContainer;
  	}
  	
- 	//filtersList
+ 	//tagsList
  	
- 	public List<WebElement> getFiltersList() {
- 		return filtersList;
+ 	public List<WebElement> getTagsList() {
+ 		return tagsList;
  	}
 	// Functional
  	
@@ -187,7 +182,7 @@ public class EconewsPage extends TopPart {
  	 */
  	public List<WebElement> checkActiveFilters() {
  		List<WebElement> activeFilters = new ArrayList<>();
- 		for(WebElement curr : getFiltersList()) {
+ 		for(WebElement curr : getTagsList()) {
  			if(curr.getAttribute("class").contains("clicked-filter-button")) {
  			activeFilters.add(curr);
  			}
@@ -223,6 +218,7 @@ public class EconewsPage extends TopPart {
  	 * @return EconewsPage
  	 */
  	public EconewsPage selectFilters(Tag...newsfilters) {
+ 		scrollToElement(getTagsList().get(1));
  		chooseTags(newsfilters);
 		return new EconewsPage(driver);
 	}
@@ -272,11 +268,17 @@ public class EconewsPage extends TopPart {
 	 * @param OneNewsData 
 	 * @return OneNewsPage
 	 */
-	public OneNewsPage switchToOneNewsPagebyParameters(OneNewsData news) {
+	public OneNewsPage switchToOneNewsPagebyParameters(NewsData news) {
 		scrollToElement(itemsContainer.findItemComponentByParameters(news).getIitle());
 		itemsContainer.clickItemComponentOpenPage(news);
 		return new OneNewsPage(driver);
 	
-	//TODO methods for authorization 
+	//TODO method for authorization 
 	}
+	
+	 public CreateNewsPage gotoCreateNewsPage(){
+		 	scrollToElement(getCreateNewsButton());
+		 	clickCreateNewsButton(); 
+		    return new CreateNewsPage(driver);
+		  }
 }
