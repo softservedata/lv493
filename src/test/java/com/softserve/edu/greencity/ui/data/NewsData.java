@@ -4,12 +4,12 @@ import java.util.List;
 
 public class NewsData {
     private String title;
-    private List<NewsFilter> tags;
+    private List<Tag> tags;
     private String source;
     private String content;
     private String filePath;
 
-    public NewsData(String title, List<NewsFilter> tags, String source, String content, String filePath) {
+    public NewsData(String title, List<Tag> tags, String source, String content, String filePath) {
         this.title = title;
         this.tags = tags;
         this.source = source;
@@ -25,7 +25,7 @@ public class NewsData {
         return title;
     }
 
-    public List<NewsFilter> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 

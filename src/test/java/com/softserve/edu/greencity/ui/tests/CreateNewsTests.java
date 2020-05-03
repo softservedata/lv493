@@ -51,7 +51,7 @@ public class CreateNewsTests extends GreencityTestRunner {
                 .navigateMenuEconews()
                 .gotoCreateNewsPage()
                 .fillAllNewsFields(newsData)
-                .openPreViewPage()
+                .goToPreViewPage()
                 .backToCreateNewsPage();
                 //.publishNews();
         presentationSleep(10);

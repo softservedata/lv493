@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.data;
 
-public enum NewsFilter {
+public enum Tag {
 	
 	NEWS("News"),
 	EVENTS("Events"),
@@ -10,7 +10,7 @@ public enum NewsFilter {
 	
 	private String nameOfFilter;
 	
-	private NewsFilter(String nameOfFilter) {
+	private Tag(String nameOfFilter) {
 		this.nameOfFilter = nameOfFilter;
 	}
 	

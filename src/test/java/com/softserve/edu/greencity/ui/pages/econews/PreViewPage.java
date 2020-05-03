@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
-import com.softserve.edu.greencity.ui.data.NewsFilter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -17,7 +16,7 @@ import java.util.Set;
 public class PreViewPage extends TopPart {
 
 	// news fields
-	private List<WebElement> tagsFields; // convert > List<String> > HashSet (or sort)
+	private List<WebElement> tagsFields;
 	private WebElement titleField;
 	private WebElement dateField;
 	private WebElement authorField;
@@ -139,21 +138,22 @@ public class PreViewPage extends TopPart {
 
 	// Functional
 
-	public Set<String> getTagsNames(List <WebElement> tagsFields ){
-		Set<String> hashSet = new HashSet<>();
-		for (WebElement current : tagsFields) {
-			hashSet.add(current.getText());
-		}
-		System.out.println(hashSet);
-		return hashSet;
-	}
 
 	// Business Logic
+
+	/**
+	 * Method to
+	 * @return CreateNewsPage
+	 */
 	public CreateNewsPage backToCreateNewsPage() {
 		clickBackToEditingLink();
 		return new CreateNewsPage(driver);
 	}
 
+	/**
+	 * Method to
+	 * @return EconewsPage
+	 */
 	public EconewsPage publishNews() {
 		clickPublishButton();  // Button doesn't work
 		return new EconewsPage(driver);
