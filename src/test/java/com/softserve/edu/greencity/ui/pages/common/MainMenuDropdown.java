@@ -78,12 +78,15 @@ public class MainMenuDropdown {
     	}
         return menuHome;
     }
+
     public String getMenuHomeText() {
         return getMenuHome().getText();
     }
+
     public void clickMenuHome() {
     	getMenuHome().click();
     }
+
     public boolean isDisplayedMenuHome() {
         //return getMenuHome().isDisplayed();
     	return menuHome.isDisplayed();

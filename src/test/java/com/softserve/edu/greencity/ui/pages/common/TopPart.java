@@ -17,7 +17,6 @@ import org.openqa.selenium.support.ui.Wait;
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
@@ -110,6 +109,10 @@ public abstract class TopPart {
 		return getCopyright().getText();
 	}
 
+	public void clickCopyright() {
+		getCopyright().click();
+	}
+	 
 	// mainMenuDropdown
 	
 	public MainMenuDropdown getMainMenuDropdown() {
@@ -129,11 +132,6 @@ public abstract class TopPart {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 	        js.executeScript("arguments[0].scrollIntoView(true);", getCopyright());
 		}
-	}
-	
-	protected void scrollToElement(WebElement el) {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", el);
 	}
 	
 	protected boolean isMenuClickable() {

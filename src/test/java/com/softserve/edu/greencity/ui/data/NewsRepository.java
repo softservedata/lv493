@@ -13,9 +13,9 @@ public class NewsRepository {
     }
 
     public static NewsData getAllFildsNews() {
-        List<String> tags = new ArrayList<>();
-        tags.add("News");
-        tags.add("Ads");
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.NEWS);
+        tags.add(Tag.EVENTS);
         return new NewsData( tags,  "title", "text");
     }
 }

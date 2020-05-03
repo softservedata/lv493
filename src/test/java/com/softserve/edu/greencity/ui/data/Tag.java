@@ -1,14 +1,12 @@
 package com.softserve.edu.greencity.ui.data;
 
-import org.openqa.selenium.WebElement;
-
 public enum Tag {
-	
-	NEWS("news"), 
-	EVENTS("events"), 
-	COURCES("courses"), 
-	INITIATIVES("initiatives"), 
-	ADS("ads");
+
+	NEWS("News"),
+	EVENTS("Events"),
+	COURCES("Courses"),
+	INITIATIVES("Initiatives"),
+	ADS("Ads");
 	
 	private String nameOfTag;
 	
@@ -20,6 +18,5 @@ public enum Tag {
 	public String toString() {
 		return nameOfTag;
 	}
-	
-	
+
 }
