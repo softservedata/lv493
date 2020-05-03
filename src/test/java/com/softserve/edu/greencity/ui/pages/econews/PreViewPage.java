@@ -1,19 +1,20 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
+import com.softserve.edu.greencity.ui.data.NewsFilter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.openqa.selenium.WebElement;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author lv-493 Taqc/Java
  */
 public class PreViewPage extends TopPart {
-
-	private WebDriver driver;
 
 	// news fields
 	private List<WebElement> tagsFields; // convert > List<String> > HashSet (or sort)
@@ -28,6 +29,7 @@ public class PreViewPage extends TopPart {
 	private WebElement imgFacebookLink;
 
 	private WebElement backToEditingLink;
+	private WebElement publishButton;
 
 	public PreViewPage(WebDriver driver) {
 		super(driver);
@@ -44,6 +46,7 @@ public class PreViewPage extends TopPart {
 		imgLinkedinLink = driver.findElement(By.xpath("//img[contains(@src,'linkedin.svg')]"));
 		imgTwitterLink = driver.findElement(By.xpath("//img[contains(@src,'twitter.svg')]"));
 		backToEditingLink = driver.findElement(By.cssSelector("div.button-text"));
+		//publishButton = driver.findElement(By.cssSelector("button[type='submit']"));
 }
 
 	// Page Object
@@ -51,7 +54,7 @@ public class PreViewPage extends TopPart {
 	// tagsFields;
 	public List<WebElement> getTagsFields() {
 		return tagsFields;
-	} //todo
+	}
 
 	//titleField;
 	public WebElement getTitleField() {
@@ -125,11 +128,34 @@ public class PreViewPage extends TopPart {
 		getBackToEditingLink().click();
 	}
 
+	//publishButton
+	public WebElement getPublishButton() {
+		return publishButton;
+	}
+
+	public void clickPublishButton() {
+		getPublishButton().click();
+	}
+
 	// Functional
+
+	public Set<String> getTagsNames(List <WebElement> tagsFields ){
+		Set<String> hashSet = new HashSet<>();
+		for (WebElement current : tagsFields) {
+			hashSet.add(current.getText());
+		}
+		System.out.println(hashSet);
+		return hashSet;
+	}
 
 	// Business Logic
 	public CreateNewsPage backToCreateNewsPage() {
 		clickBackToEditingLink();
 		return new CreateNewsPage(driver);
+	}
+
+	public EconewsPage publishNews() {
+		clickPublishButton();  // Button doesn't work
+		return new EconewsPage(driver);
 	}
 }

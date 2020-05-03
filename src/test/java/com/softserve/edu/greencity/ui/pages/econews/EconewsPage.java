@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.softserve.edu.greencity.ui.data.Languages;
@@ -25,5 +26,10 @@ public class EconewsPage extends TopPart {
 	public EconewsPage switchLanguage(Languages language) {
 		chooseLanguage(language);
 		return new EconewsPage(driver);
+	}
+
+	public CreateNewsPage gotoCreateNewsPage(){
+		driver.findElement(By.id("create-button-text")).click();
+		return new CreateNewsPage(driver);
 	}
 }

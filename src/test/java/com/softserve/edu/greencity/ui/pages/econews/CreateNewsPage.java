@@ -1,27 +1,23 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
-import org.openqa.selenium.*;
-
+import com.softserve.edu.greencity.ui.data.NewsData;
+import com.softserve.edu.greencity.ui.data.NewsFilter;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import org.openqa.selenium.remote.RemoteWebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import com.softserve.edu.greencity.ui.tools.UploadFileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.io.File;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
+import java.util.HashSet;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Set;
 
 /**
  * @author lv-493 Taqc/Java
  */
 public class CreateNewsPage extends TopPart {
 
-    private WebDriver driver;
-    //
     private WebElement titleField;
     private List<WebElement> tagsButtons;
     private List<WebElement> selectedTagsButtons;
@@ -33,28 +29,52 @@ public class CreateNewsPage extends TopPart {
     private WebElement previewButton;
     private WebElement publishButton;
     private WebElement dropArea;
-    //private WebElement pictureField;
+    private WebElement continueEditingButton;
+    private WebElement cancelEditingButton;
 
+    //description fields
+    private WebElement titleDescription;
+    private WebElement tagsDescription;
+    private WebElement sourceDescription;
+    private WebElement contentDescription;
+    private WebElement pictureDescription;
+
+    /**
+     * @param driver
+     */
     public CreateNewsPage(WebDriver driver) {
         super(driver);
         initElements();
     }
 
+
     private void initElements() {
-        // init elements
+        // init main elements
         dropArea = driver.findElement(By.cssSelector("div.text-wrapper"));
-//        titleField = driver.findElement(By.cssSelector("label > input:first"));
-//        sourceField = driver.findElement(By.cssSelector("div[formarrayname='tags']+label > input"));
-//        tagsButtons = driver.findElements(By.cssSelector("div.tags > button"));
-//        contentField = driver.findElement(By.xpath("//div[@class = 'textarea-wrapper']/textarea"));
-//        dateField = driver.findElement(By.cssSelector("div.date:first-child"));
-//        authorField = driver.findElement(By.cssSelector("div.date:last-child"));
-//        cancelButton = driver.findElement(By.cssSelector("div.submit-buttons > :first-child"));
-//        // driver.findElement(By.cssSelector("div.submit-buttons > :first-child+button")); //to choose
-//        previewButton = driver.findElement(By.cssSelector("div.submit-buttons > :nth-child(2n)"));
-//        publishButton = driver.findElement(By.cssSelector("div.submit-buttons > button[type='submit']"));
+        titleField = driver.findElement(By.cssSelector("input[formcontrolname='title']"));
+        sourceField = driver.findElement(By.cssSelector("div[formarrayname='tags']+label > input"));
+        tagsButtons = driver.findElements(By.cssSelector("div.tags > button"));
+        //contentField = driver.findElement(By.xpath("//div[@class = 'textarea-wrapper']/textarea")); //to choose
+        contentField = driver.findElement(By.cssSelector("div.textarea-wrapper > textarea"));
+        dateField = driver.findElement(By.cssSelector("div.date > p:first-child > span"));
+        authorField = driver.findElement(By.cssSelector("div.date > :nth-child(2n) > span"));
+        cancelButton = driver.findElement(By.cssSelector("div.submit-buttons > :first-child"));
+        // driver.findElement(By.cssSelector("div.submit-buttons > :first-child+button")); //to choose
+        previewButton = driver.findElement(By.cssSelector("div.submit-buttons > :nth-child(2n)"));
+        publishButton = driver.findElement(By.cssSelector("div.submit-buttons > button[type='submit']"));
+
+        // init description fields
+        titleDescription = driver.findElement(By.cssSelector("input[formcontrolname='title'] + span"));
+        tagsDescription = driver.findElement(By.cssSelector("div.tags > button + p"));
+        sourceDescription = driver.findElement(By.cssSelector("div[formarrayname='tags']+label > input + span"));
+        contentDescription = driver.findElement(By.cssSelector("p.textarea-description"));
+        pictureDescription = driver.findElement(By.xpath("//div[@class = 'text-wrapper']/../../div/../span"));
     }
 
+    private void initIFrameElements() {
+        continueEditingButton = driver.findElement(By.cssSelector("div.continue-btn > button"));
+        cancelEditingButton = driver.findElement(By.cssSelector("button.primary-global-button"));
+    }
     // Page Object
 
     //titleField
@@ -176,85 +196,142 @@ public class CreateNewsPage extends TopPart {
     //selectedTagsButtons
 
     public List<WebElement> getSelectedTagsButtons() {
-        selectedTagsButtons = driver.findElements(By.cssSelector("div.tags > button[class='ng-star-inserted filters-color']"));
+        selectedTagsButtons = driver.findElements(By.cssSelector("div.tags > button.filters-color"));
         return selectedTagsButtons;
     }
 
+    // titleDescription and warning
+    public WebElement getTitleDescription() {
+        return titleDescription;
+    }
+
+    public boolean isTitleDescriptionWarning() {
+        return getTitleField().getAttribute("class").contains("invalid");
+    }
+
+    // tagsDescription and warning
+    public WebElement getTagsDescription() {
+        return tagsDescription;
+    }
+
+    public boolean isTagsDescriptionWarning() {
+        return getTagsDescription().getAttribute("class").contains("warning");
+    }
+
+    // sourceDescription and warning
+    public WebElement getSourceDescription() {
+        return sourceDescription;
+    }
+
+    public boolean isSourceDescriptionWarning() {
+        return getSourceDescription().getAttribute("class").contains("warning");
+    }
+
+    // contentDescription and warning
+    public WebElement getContentDescription() {
+        return contentDescription;
+    }
+
+    public boolean isContentDescriptionWarning() {
+        return getContentField().getAttribute("class").contains("invalid");
+    }
+
+    // pictureDescription and warning
+    public WebElement getPictureDescription() {
+        return pictureDescription;
+    }
+
+    public boolean isPictureDescriptionWarning() {
+        return getPictureDescription().getAttribute("class").contains("warning-color");
+    }
+
     // Functional
-
-    //
-    public String getValue(String text) { // tools > RegexUtils
-        //text = "Date: April 26, 2020";
-        final Matcher matcher = Pattern.compile("[a-zA-Z]: ").matcher(text);
-        if (matcher.find()) {
-            System.out.println(text.substring(matcher.end()).trim());
+    public Set<String> getTagsNames(List<WebElement> selectedTagsButtons) {
+        Set<String> hashSet = new HashSet<>();
+        for (WebElement current : selectedTagsButtons) {
+            hashSet.add(current.getText());
         }
-        return text.substring(matcher.end()).trim();
+        System.out.println(hashSet);
+        return hashSet;
     }
 
-    public String getCurrentDate() { //tools > DateUtil > static
-        LocalDate date = LocalDate.now();
-        DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern("MMMM dd, yyyy").toFormatter();
-        return date.format(formatter);
+    public WebElement getWebElementByTagName(NewsFilter newsfilter) {
+        WebElement tag = getTagsButtons().stream()
+                .filter((element) -> element.getText().contains(newsfilter.toString()))
+                .findFirst().get();
+        return tag;
     }
 
-    public void uploadFile() {
-// drop the file
-        DropFile(new File("C:\\Users\\mJana\\Pictures\\1.jpg"), dropArea, 0, 0);
+    public boolean isTagActive(NewsFilter newsfilter) {
+        return getWebElementByTagName(newsfilter).getAttribute("class").contains("clicked-filter-button");
     }
 
-    public static void DropFile(File filePath, WebElement target, int offsetX, int offsetY) {
-        if (!filePath.exists())
-            throw new WebDriverException("File not found: " + filePath.toString());
+    public void selectTag(NewsFilter newsfilter) {
+        if (!isTagActive(newsfilter)) {
+            getWebElementByTagName(newsfilter).click();
+        }
+    }
 
-        WebDriver driver = ((RemoteWebElement) target).getWrappedDriver();
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-
-        String JS_DROP_FILE =
-                "var target = arguments[0]," +
-                        "    offsetX = arguments[1]," +
-                        "    offsetY = arguments[2]," +
-                        "    document = target.ownerDocument || document," +
-                        "    window = document.defaultView || window;" +
-                        "" +
-                        "var input = document.createElement('INPUT');" +
-                        "input.type = 'file';" +
-                        "input.style.display = 'none';" +
-                        "input.onchange = function () {" +
-                        "  var rect = target.getBoundingClientRect()," +
-                        "      x = rect.left + (offsetX || (rect.width >> 1))," +
-                        "      y = rect.top + (offsetY || (rect.height >> 1))," +
-                        "      dataTransfer = { files: this.files };" +
-                        "" +
-                        "  ['dragenter', 'dragover', 'drop'].forEach(function (name) {" +
-                        "    var evt = document.createEvent('MouseEvent');" +
-                        "    evt.initMouseEvent(name, !0, !0, window, 0, 0, 0, x, y, !1, !1, !1, !1, 0, null);" +
-                        "    evt.dataTransfer = dataTransfer;" +
-                        "    target.dispatchEvent(evt);" +
-                        "  });" +
-                        "" +
-                        "  setTimeout(function () { document.body.removeChild(input); }, 25);" +
-                        "};" +
-                        "document.body.appendChild(input);" +
-                        "return input;";
-
-        WebElement input = (WebElement) jse.executeScript(JS_DROP_FILE, target, offsetX, offsetY);
-        input.sendKeys(filePath.getAbsoluteFile().toString());
-        wait.until(ExpectedConditions.stalenessOf(input));
+    public void selectTags(List<NewsFilter> tags) {
+        if (tags.size() > 0) {
+            for (NewsFilter current : tags) {
+                selectTag(current);
+            }
+        }
     }
 
     // Business Logic
 
+    // Drop and upload file
+    public void uploadFile(WebElement dropArea, String path) { // Business Logic or Functional or PageObject
+        UploadFileUtils.DropFile(new File(path), dropArea, 0, 0);
+    }
 
-    //
-    public CreateNewsPage chooseTags() {
-        // clickPreviewButton();
+    public CreateNewsPage fillAllNewsFields(NewsData newsData) {
+        selectTags(newsData.getTags());
+        System.out.println("isTagsDescriptionWarning " + isTagsDescriptionWarning());
+
+        clearTitleField();
+        setTitleField(newsData.getTitle());
+        clearContentField();
+        setContentField(newsData.getContent());
+        System.out.println(newsData.getTags());
+        clearSourceField();
+        setSourceField(newsData.getSource());
+        uploadFile(dropArea, newsData.getFilePath());
+
+        System.out.println(getTagsNames(getSelectedTagsButtons()));
+        System.out.println("isTitleDescriptionWarning " + isTitleDescriptionWarning());
+        System.out.println("isContentDescriptionWarning " + isContentDescriptionWarning());
+        System.out.println("isSourceDescriptionWarning " + isSourceDescriptionWarning());
+        System.out.println("isContentDescriptionWarning " + isContentDescriptionWarning());
+        System.out.println("isTagsDescriptionWarning " + isTagsDescriptionWarning());
+        System.out.println("isPictureDescriptionWarning" + isPictureDescriptionWarning());
+
         return this;
     }
 
     public PreViewPage openPreViewPage() {
         clickPreviewButton();
         return new PreViewPage(driver);
+    }
+
+    public EconewsPage publishNews() {
+        clickPublishButton(); // Button doesn't work
+        return new EconewsPage(driver);
+    }
+
+    public EconewsPage cancelNewsCreating() {
+        clickCancelButton();
+        initIFrameElements();
+        cancelEditingButton.click();
+        return new EconewsPage(driver);
+    }
+
+    public CreateNewsPage continueNewsCreating() {
+        clickCancelButton();
+        initIFrameElements();
+        continueEditingButton.click();
+        return this;
     }
 }
