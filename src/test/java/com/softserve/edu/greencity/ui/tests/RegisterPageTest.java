@@ -9,11 +9,11 @@ import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterPage;
 import com.softserve.edu.greencity.ui.pages.home.HomePage;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 /**
  * RegisterPageTest class (doesn't working correctly!).
  * @author Serg
- *
  */
 public class RegisterPageTest extends GreencityTestRunner {
 
@@ -23,36 +23,44 @@ public class RegisterPageTest extends GreencityTestRunner {
                 { UserRepository.getDefaultUserCredentials() }, };
     }
 
+    @DataProvider
+    public Object[][] invalidCredentialUser() {
+        return new Object[][] { { UserRepository.getWrongUserCredentials1() },
+                { UserRepository.getWrongUserCredentials2() }, };
+    }
+
     @Test(dataProvider = "validCredentialUser")
-    public void checkLoginPage(UserData userLoginCredentials) {
-        HomePage homepage = loadApplication();
+    public void checkRegisterPage1(UserData userLoginCredentials) {
+        System.out.println("-----validCredentialUser--------");
+        TipsTricksPage homepage = loadApplication();
         MyCabinetPage myCabinetPage = homepage.navigateMenuMyCabinet();
-        presentationSleep(2);
         LoginPage loginPage = myCabinetPage.gotoLoginPage();
-        loginPage.clickSignUpLink();;
-        RegisterPage registerPage = loginPage.getRegisterPage();
-        System.out.println("registerPage.getTitleFieldText(): " + registerPage.getTitleFieldText());
-        registerPage.clickFirstNameField();
-        registerPage.clearFirstNameField();
-        registerPage.setFirstNameField(userLoginCredentials.getFirstName());
+        RegisterPage registerPage = loginPage.clickSignUpButton();
+        System.out.println("registerPage.getTitleFieldText(): "
+                + registerPage.getTitleFieldText());
+        registerPage.enterEmail(userLoginCredentials.getEmail())
+                .enterFirstName(userLoginCredentials.getFirstName())
+                .enterLastName(userLoginCredentials.getLastName())
+                .enterPassword(userLoginCredentials.getPassword())
+                .enterPasswordConfirm(userLoginCredentials.getPassword());
         presentationSleep(2);
-        registerPage.clickLastNameField();
-        registerPage.clearLastNameField();
-        registerPage.setLastNameField(userLoginCredentials.getLastName());
-        presentationSleep(2);
-        registerPage.clickEmailField();
-        registerPage.clearEmailField();
-        registerPage.setEmailField(userLoginCredentials.getEmail());
-        presentationSleep(2);
-        registerPage.clickPasswordField();
-        registerPage.clearPasswordField();
-        registerPage.setPasswordField(userLoginCredentials.getPassword());
-        registerPage.clickShowPasswordButton();
-        presentationSleep(2);
-        registerPage.clickPasswordConfirmField();
-        registerPage.clearPasswordConfirmField();
-        registerPage.setPasswordConfirmField(userLoginCredentials.getPassword());
-        registerPage.clickShowPasswordConfirmButton();
+//        registerPage.clickSignUpButton();
+    }
+    
+    @Test(dataProvider = "invalidCredentialUser")
+    public void checkRegisterPage2(UserData userLoginCredentials) {
+        System.out.println("-----invalidCredentialUser--------");
+        TipsTricksPage homepage = loadApplication();
+        MyCabinetPage myCabinetPage = homepage.navigateMenuMyCabinet();
+        LoginPage loginPage = myCabinetPage.gotoLoginPage();
+        RegisterPage registerPage = loginPage.clickSignUpButton();
+        System.out.println("registerPage.getTitleFieldText(): "
+                + registerPage.getTitleFieldText());
+        registerPage.enterEmail(userLoginCredentials.getEmail())
+                .enterFirstName(userLoginCredentials.getFirstName())
+                .enterLastName(userLoginCredentials.getLastName())
+                .enterPassword(userLoginCredentials.getPassword())
+                .enterPasswordConfirm(userLoginCredentials.getPassword());
         presentationSleep(2);
 //        registerPage.clickSignUpButton();
     }

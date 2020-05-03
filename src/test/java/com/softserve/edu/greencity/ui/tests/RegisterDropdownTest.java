@@ -11,7 +11,6 @@ import com.softserve.edu.greencity.ui.pages.home.HomePage;
 /**
  * RegisterDropdownTest class (doesn't working correctly!).
  * @author Serg
- *
  */
 public class RegisterDropdownTest extends GreencityTestRunner {
 
@@ -21,32 +20,48 @@ public class RegisterDropdownTest extends GreencityTestRunner {
                 { UserRepository.getDefaultUserCredentials() }, };
     }
 
+    @DataProvider
+    public Object[][] invalidCredentialUser() {
+        return new Object[][] { { UserRepository.getWrongUserCredentials1() },
+                { UserRepository.getWrongUserCredentials2() }, };
+    }
+
     @Test(dataProvider = "validCredentialUser")
     public void checkLoginPage(UserData userLoginCredentials) {
-        HomePage homepage = loadApplication();
-        RegisterDropdown registerDropdown = homepage.clickRegisterLink();
+        System.out.println("-----------validCredentialUser------------");
+        RegisterDropdown registerDropdown = loadApplication()
+                .gotoRegisterDropdown();
         System.out.println("registerDropdown.getTitleFieldText(): "
                 + registerDropdown.getTitleFieldText());
-        registerDropdown.clickEmailField();
-        registerDropdown.clearEmailField();
-        registerDropdown.setEmailField(userLoginCredentials.getEmail());
+        registerDropdown.enterEmail(userLoginCredentials.getEmail())
+                .enterFirstName(userLoginCredentials.getFirstName())
+                .enterPassword(userLoginCredentials.getPassword())
+                .enterPasswordConfirm(userLoginCredentials.getPassword());
+        registerDropdown.clickSignIn();
+//        registerDropdown.clickSignUpButton();
         presentationSleep(2);
-        registerDropdown.clickPersonNameField();
-        registerDropdown.clearPersonNameField();
-        registerDropdown
-        .setPersonNameField(userLoginCredentials.getFirstName());
+//        registerDropdown.closeRegisterDropdown();
+    }
+
+    @Test(dataProvider = "invalidCredentialUser")
+    public void checkLoginPage2(UserData userLoginCredentials) {
+        System.out.println("-----------invalidCredentialUser------------");
+        RegisterDropdown registerDropdown = loadApplication()
+                .gotoRegisterDropdown();
+        System.out.println("registerDropdown.getTitleFieldText(): "
+                + registerDropdown.getTitleFieldText());
+        registerDropdown.enterEmail(userLoginCredentials.getEmail())
+                .enterFirstName(userLoginCredentials.getFirstName())
+                .enterPassword(userLoginCredentials.getPassword())
+                .enterPasswordConfirm(userLoginCredentials.getPassword());
+        System.out.println("registerDropdown.getEmailErrorText(): "
+                + registerDropdown.getEmailErrorText());
+        System.out.println("registerDropdown.getPasswordErrorText(): "
+                + registerDropdown.getPasswordErrorText());
+        System.out.println("registerDropdown.getPasswordConfirmErrorText(): "
+                + registerDropdown.getPasswordConfirmErrorText());
+//        registerDropdown.clickSignUpButton();
         presentationSleep(2);
-        registerDropdown.clickPasswordField();
-        registerDropdown.clearPasswordField();
-        registerDropdown.setPasswordField(userLoginCredentials.getPassword());
-        registerDropdown.clickShowPasswordButton();
-        presentationSleep(2);
-        registerDropdown.clickPasswordConfirmField();
-        registerDropdown.clearPasswordConfirmField();
-        registerDropdown
-                .setPasswordConfirmField(userLoginCredentials.getPassword());
-        registerDropdown.clickShowPasswordConfirmButton();
-        presentationSleep(2);
-//      registerDropdown.clickSubmitButton();
+        registerDropdown.closeRegisterDropdown();
     }
 }

@@ -3,44 +3,47 @@ package com.softserve.edu.greencity.ui.pages.common;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountPage;
+import com.softserve.edu.greencity.ui.tools.LoginPart;
+import com.softserve.edu.greencity.ui.tools.RegisterPart;
 
-public class RegisterDropdown {
+/**
+ * RegisterDropdown class.
+ * @author Serg
+ */
+public class RegisterDropdown extends RegisterPart {
 
     private WebDriver driver;
+    private WebDriverWait wait;
     //
-    private WebElement titleField;
-    private WebElement emailField;
-    private WebElement personNameField;
-    private WebElement passwordField;
-    private WebElement showPasswordButton;
-    private WebElement passwordConfirmField;
-    private WebElement showPasswordConfirmButton;
-    private WebElement submitButton;
-    private WebElement signInLink;
-    private WebElement signUpGoogleButton;
+    private WebElement closeRegisterDropdownButton;
     //
-//    private WebElement personNameValidator;
-    private WebElement emailValidator;
-    private WebElement passwordValidator;
-    private WebElement passwordConfirmValidator;
+    private final String EMAIL_VALIDATOR_SELECTOR = "app-new-sign-up input[name='email'] + div div";
+//    private final String FIRST_NAME_VALIDATOR_SELECTOR = ""; // not exist
+    private final String PASSWORD_VALIDATOR_SELECTOR = "app-new-sign-up input[name='fistName'] + label.content-label + div + div div";
+    private final String PASSWORD_CONFIRM_VALIDATOR_SELECTOR = "app-new-sign-up label.content-label.under-error + div + div div";
     //
-    private String TAG_ATTRIBUTE_VALUE = "placeholder";
-    //
-    LoginDropdown loginDropdown;
-    GoogleAccountPage googleAccountPage;
 
+    /**
+     * RegisterDropdown constructor
+     * @param driver WebDriver
+     */
     public RegisterDropdown(WebDriver driver) {
         this.driver = driver;
         initElements();
     }
 
+    /**
+     * Initialize web elements
+     */
     private void initElements() {
         // init elements
         titleField = driver.findElement(By.cssSelector("h1[title-text]"));
         emailField = driver.findElement(By.cssSelector("input[name='email']"));
-        personNameField = driver
+        firstNameField = driver
                 .findElement(By.cssSelector("input[name='fistName']"));
         passwordField = driver.findElement(
                 By.cssSelector("input[name='form-control password']"));
@@ -50,292 +53,213 @@ public class RegisterDropdown {
                 By.cssSelector("input[name='form-control password-confirm']"));
         showPasswordConfirmButton = driver.findElement(By.xpath(
                 "//input[@name='form-control password-confirm']/../span/img"));
-        submitButton = driver.findElement(By.cssSelector(
+        signUpButton = driver.findElement(By.cssSelector(
                 "div[class='form-content-container'] button[class*='global-button']"));
         signInLink = driver.findElement(By.cssSelector("div.exist-account a"));
-        signUpGoogleButton = driver.findElement(By.cssSelector(
+        googleSignUpButton = driver.findElement(By.cssSelector(
                 "div[class='form-content-container'] button[class*='button-google']"));
-//
-//        // init Validators
-//        emailValidator = driver.findElement(By.xpath(
-//                "//form[contains(@class,'ng-touched')]/div/input[@name='email']/following-sibling::div[contains(@class,'error-message')][1]")); // FIXME
-//                                                                                                                                                // selector
-//        passwordValidator = driver.findElement(By.xpath(
-//                "//form[contains(@class,'ng-touched')]/div/input[@name='email']/following-sibling::div[contains(@class,'error-message')][2]")); // FIXME
-//                                                                                                                                                // selector
-//        passwordConfirmValidator = driver.findElement(By.xpath(
-//                "//form[contains(@class,'ng-touched')]/div/input[@name='email']/following-sibling::div[contains(@class,'error-message')][3]")); // FIXME
-//                                                                                                                                                // selector
+        closeRegisterDropdownButton = driver.findElement(
+                By.cssSelector("app-new-sign-up div.close-btn-img a"));
+        wait = new WebDriverWait(driver, 2);
     }
 
     // Page Object
-//  titleField
-    public WebElement getTitleField() {
-        return titleField;
-    }
 
-    public String getTitleFieldText() {
-        return getTitleField().getText();
-    }
-
-    public void clickTitleField() {
-        if (isDisplayedTitleField()) {
-            getTitleField().click();
-        }
-    }
-
-    public boolean isDisplayedTitleField() {
-        return getTitleField().isDisplayed();
-    }
-    
-//  emailField
-    public WebElement getEmailField() {
-        return emailField;
-    }
-
-    public String getEmailFieldText() {
-        return getEmailField().getAttribute(TAG_ATTRIBUTE_VALUE);
-    }
-
-    public void clearEmailField() {
-        getEmailField().clear();
-    }
-
-    public void clickEmailField() {
-        getEmailField().click();
-    }
-
-    public void setEmailField(String text) {
-        getEmailField().sendKeys(text);
-    }
-
-    public boolean isDisplayedEmailField() {
-        return getEmailField().isDisplayed();
-    }
-    
-//  personNameField
-    public WebElement getPersonNameField() {
-        return personNameField;
-    }
-
-    public String getPersonNameFieldText() {
-        return getPersonNameField().getAttribute(TAG_ATTRIBUTE_VALUE);
-    }
-
-    public void clearPersonNameField() {
-        getPersonNameField().clear();
-    }
-
-    public void clickPersonNameField() {
-        getPersonNameField().click();
-    }
-
-    public void setPersonNameField(String text) {
-        getPersonNameField().sendKeys(text);
-    }
-
-    public boolean isDisplayedPersonNameField() {
-        return getPersonNameField().isDisplayed();
-    }
-    
-//  passwordField
-    public WebElement getPasswordField() {
-        return passwordField;
-    }
-
-    public String getPasswordFieldText() {
-        return getPasswordField().getAttribute(TAG_ATTRIBUTE_VALUE);
-    }
-
-    public void clearPasswordField() {
-        getPasswordField().clear();
-    }
-
-    public void clickPasswordField() {
-        getPasswordField().click();
-    }
-
-    public void setPasswordField(String text) {
-        getPasswordField().sendKeys(text);
-    }
-
-    public boolean isDisplayedPasswordField() {
-        return getPasswordField().isDisplayed();
-    }
-    
-//  showPasswordButton
-    private WebElement getShowPasswordButton() {
-        return showPasswordButton;
-    }
-
-    private void clickShowPasswordButton1() {
-        if (isDisplayedShowPasswordButton()) {
-            getShowPasswordButton().click();
-        }
-    }
-
-    private boolean isDisplayedShowPasswordButton() {
-        return getShowPasswordButton().isDisplayed();
-    }
-    
-//  passwordConfirmField
-    public WebElement getPasswordConfirmField() {
-        return passwordConfirmField;
-    }
-
-    public String getPasswordConfirmFieldText() {
-        return getPasswordConfirmField().getAttribute(TAG_ATTRIBUTE_VALUE);
-    }
-
-    public void clearPasswordConfirmField() {
-        getPasswordConfirmField().clear();
-    }
-
-    public void clickPasswordConfirmField() {
-        getPasswordConfirmField().click();
-    }
-
-    public void setPasswordConfirmField(String text) {
-        getPasswordConfirmField().sendKeys(text);
-    }
-
-    public boolean isDisplayedPasswordConfirmField() {
-        return getPasswordConfirmField().isDisplayed();
-    }
-    
-//  showPasswordConfirmButton
-    public WebElement getShowPasswordConfirmButton() {
-        return showPasswordConfirmButton;
-    }
-
-    public void clickShowPasswordConfirmButton() {
-        if (isDisplayedShowPasswordConfirmButton()) {
-            getShowPasswordConfirmButton().click();
-        }
-    }
-
-    public boolean isDisplayedShowPasswordConfirmButton() {
-        return getShowPasswordConfirmButton().isDisplayed();
-    }
-    
-//  submitButton
-    public WebElement getSubmitButton() {
-        return submitButton;
-    }
-
-    public String getSubmitButtonText() {
-        return getSubmitButton().getText();
-    }
-
-    public void clickSubmitButton() {
-        if (isDisplayedSubmitButton()) {
-            getSubmitButton().click();
-        }
-    }
-
-    public boolean isDisplayedSubmitButton() {
-        return getSubmitButton().isDisplayed();
-    }
-    
 //  signInLink
-    public WebElement getSignInLink() {
-        return signInLink;
+    @Override
+    public LoginPart gotoLogin() {
+        return new LoginDropdown(driver);
     }
 
-    public String getSignInLinkText() {
-        return getSignInLink().getText();
+    // closeRegisterDropdownButton
+    private WebElement getCloseRegisterDropdownButton() {
+        return closeRegisterDropdownButton;
     }
 
-    public void clickSignInLink() {
-        if (isDisplayedSignInLink()) {
-            getSignInLink().click();
+    private void clickCloseRegisterDropdownButton() {
+        if (isDisplayedCloseRegisterDropdownButton()) {
+            getCloseRegisterDropdownButton().click();
         }
     }
 
-    public boolean isDisplayedSignInLink() {
-        return getSignInLink().isDisplayed();
-    }
-    
-//  signUpGoogleButton
-    public WebElement getSignUpGoogleButton() {
-        return signUpGoogleButton;
+    private boolean isDisplayedCloseRegisterDropdownButton() {
+        return getCloseRegisterDropdownButton().isDisplayed();
     }
 
-    public String getSignUpGoogleButtonText() {
-        return getSignUpGoogleButton().getText();
-    }
-
-    public void clickSignUpGoogleButton() {
-        if (isDisplayedSignUpGoogleButton()) {
-            getSignUpGoogleButton().click();
-        }
-    }
-
-    public boolean isDisplayedSignUpGoogleButton() {
-        return getSignUpGoogleButton().isDisplayed();
-    }
-    
 //  emailValidator
-  public WebElement getEmailValidator() {
-      return emailValidator;
-  }
+    @Override
+    protected WebElement getEmailValidator() {
+        emailValidator = driver
+                .findElement(By.cssSelector(EMAIL_VALIDATOR_SELECTOR));
+        return emailValidator;
+    }
 
-  public String getEmailValidatorText() {
-      return getEmailValidator().getText();
-  }
+    @Override
+    protected boolean sizeEmailValidator() {
+        return driver.findElements(By.cssSelector(EMAIL_VALIDATOR_SELECTOR))
+                .size() != 0;
+    }
 
- 
-  public boolean isDisplayedEmailValidator() {
-      return getEmailValidator().isDisplayed();
-  }
-  
 //  passwordValidator
-  public WebElement getPasswordValidator() {
-      return passwordValidator;
-  }
+    @Override
+    protected WebElement getPasswordValidator() {
+        passwordValidator = driver
+                .findElement(By.cssSelector(PASSWORD_VALIDATOR_SELECTOR));
+        return passwordValidator;
+    }
 
-  public String getPasswordValidatorText() {
-      return getPasswordValidator().getText();
-  }
+    @Override
+    protected boolean sizePasswordValidator() {
+        return driver.findElements(By.cssSelector(PASSWORD_VALIDATOR_SELECTOR))
+                .size() != 0;
+    }
 
- 
-  public boolean isDisplayedPasswordValidator() {
-      return getPasswordValidator().isDisplayed();
-  }
-  
 //  passwordConfirmValidator
-  public WebElement getPasswordConfirmValidator() {
-      return passwordConfirmValidator;
-  }
+    @Override
+    protected WebElement getPasswordConfirmValidator() {
+        passwordConfirmValidator = driver.findElement(
+                By.cssSelector(PASSWORD_CONFIRM_VALIDATOR_SELECTOR));
+        return passwordConfirmValidator;
+    }
 
-  public String getPasswordConfirmValidatorText() {
-      return getPasswordConfirmValidator().getText();
-  }
-
- 
-  public boolean isDisplayedPasswordConfirmValidator() {
-      return getPasswordConfirmValidator().isDisplayed();
-  }
+    @Override
+    protected boolean sizePasswordConfirmValidator() {
+        return driver
+                .findElements(
+                        By.cssSelector(PASSWORD_CONFIRM_VALIDATOR_SELECTOR))
+                .size() != 0;
+    }
 
     // Functional
-  // a Google window opens and switches to it
-  public GoogleAccountPage clickEmailGoogleAccountField() {
-      String currentTab = driver.getWindowHandle();
-      clickSignUpGoogleButton();
-      for (String current : driver.getWindowHandles()) {
-          System.out.println("TAB: " + current);
-          if (!current.equals(currentTab)) {
-              driver.switchTo().window(current);
-              System.out.println("URL: " + driver.getCurrentUrl());
-              break;
-          }
-      }
-      return new GoogleAccountPage(driver);
-  }
-  
+    // a Google window opens and switches to it
+    @Override
+    public GoogleAccountPage clickSignUpGoogleAccountButton() {
+        String currentTab = driver.getWindowHandle();
+        clickGoogleLoginButton();
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+        for (String current : driver.getWindowHandles()) {
+            System.out.println("TAB: " + current);
+            if (!current.equals(currentTab)) {
+                driver.switchTo().window(current);
+                System.out.println("URL: " + driver.getCurrentUrl());
+                break;
+            }
+        }
+        return new GoogleAccountPage(driver);
+    }
+
     // Business Logic
-  public void clickShowPasswordButton() {
-      clickShowPasswordButton1();
-  }
-  
+
+    /**
+     * enterEmail
+     * @param email String
+     * @return RegisterDropdown
+     */
+    public RegisterDropdown enterEmail(String email) {
+        this.clickEmail(driver).clearEmail().setEmailField(emailField)
+                .inputEmail(email);
+        return this;
+    }
+
+    /**
+     * enterFirstName
+     * @param firstName String
+     * @return RegisterDropdown
+     */
+    public RegisterDropdown enterFirstName(String firstName) {
+        this.clickFirstName(driver).clearFirstName()
+                .setFirstNameField(firstNameField).inputFirstName(firstName);
+        return this;
+    }
+
+    /**
+     * enterPassword
+     * @param password String
+     * @return RegisterDropdown
+     */
+    public RegisterDropdown enterPassword(String password) {
+        this.clickPasswordField(driver).clearPasswordField()
+                .setPasswordField(passwordField).inputPassword(password)
+                .clickShowPasswordButton();
+        return this;
+    }
+
+    /**
+     * enterPasswordConfirm
+     * @param passwordConfirm String
+     * @return RegisterDropdown
+     */
+    public RegisterDropdown enterPasswordConfirm(String passwordConfirm) {
+        this.clickPasswordConfirmField(driver).clearPasswordConfirmField()
+                .setPasswordConfirmField(passwordConfirmField)
+                .inputPasswordConfirm(passwordConfirm)
+                .clickShowPasswordConfirmButton();
+        return this;
+    }
+
+    /**
+     * clickSignUpButton
+     * @return RegisterDropdown
+     */
+    public RegisterDropdown clickSignUpButton() {
+        this.clickRegisterButton();
+        return this;
+    }
+
+    /**
+     * clickSignIn
+     * @return LoginPart
+     */
+    public LoginPart clickSignIn() {
+        return this.clickSignInLink().gotoLogin();
+    }
+
+//    public void clickSignUpGoogle() {
+//        clickSignUpGoogleAccountButton();
+//    }
+
+//  emailError
+    /**
+     * getEmailErrorText
+     * @return String
+     */
+    public String getEmailErrorText() {
+        if (sizeEmailValidator() && isDisplayedEmailValidator()) {
+            return getEmailValidatorText();
+        }
+        return "email error text not found";
+    }
+
+//  passwordError
+    /**
+     * getPasswordErrorText
+     * @return String
+     */
+    public String getPasswordErrorText() {
+        if (sizePasswordValidator() && isDisplayedPasswordValidator()) {
+            return getPasswordValidatorText();
+        }
+        return "password error text not found";
+    }
+
+//  passwordConfirmError
+    /**
+     * getPasswordConfirmErrorText
+     * @return String
+     */
+    public String getPasswordConfirmErrorText() {
+        if (sizePasswordConfirmValidator()
+                && isDisplayedPasswordConfirmValidator()) {
+            return getPasswordConfirmValidatorText();
+        }
+        return "password confirm error text not found";
+    }
+
+    // close register dropdown
+    /**
+     * closeRegisterDropdown
+     */
+    public void closeRegisterDropdown() {
+        clickCloseRegisterDropdownButton();
+    }
 }

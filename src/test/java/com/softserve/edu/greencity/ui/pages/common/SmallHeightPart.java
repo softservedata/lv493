@@ -6,89 +6,79 @@ import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.home.HomePage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 public class SmallHeightPart extends TopPart {
 
-	public SmallHeightPart(WebDriver driver) {
-		super(driver);
-		initElements();
-	}
+    public SmallHeightPart(WebDriver driver) {
+        super(driver);
+        initElements();
+    }
 
-	private void initElements() {
-		// init elements
-	}
+    private void initElements() {
+        // init elements
+    }
 
-	// Page Object
+    // Page Object
 
-	// Functional
+    // Functional
 
-	// Business Logic
+    // Business Logic
 
-	@Override
-	public HomePage navigateMenuHome() {
-		scrollDown();
-		if (isMenuClickable()) {
-			return super.navigateMenuHome();
-		}
-		getMainMenuDropdown().closeNaviconButton();
-		getMainMenuDropdown().clickFooterHome();
-		return new HomePage(driver);
-	}
+    @Override
+    public EconewsPage navigateMenuEconews() {
+        scrollDown();
+        if (isMenuClickable()) {
+            return super.navigateMenuEconews();
+        }
+        getMainMenuDropdown().closeNaviconButton();
+        getMainMenuDropdown().clickFooterEcoNews();
+        return new EconewsPage(driver);
+    }
 
-	@Override
-	public EconewsPage navigateMenuEconews() {
-		scrollDown();
-		if (isMenuClickable()) {
-			return super.navigateMenuEconews();
-		}
-		getMainMenuDropdown().closeNaviconButton();
-		getMainMenuDropdown().clickFooterEcoNews();
-		return new EconewsPage(driver);
-	}
+    @Override
+    public TipsTricksPage navigateMenuTipsTricks() {
+        scrollDown();
+        if (isMenuClickable()) {
+            return super.navigateMenuTipsTricks();
+        }
+        getMainMenuDropdown().closeNaviconButton();
+        getMainMenuDropdown().clickFooterTipsTricks();
+        return new TipsTricksPage(driver);
+    }
 
-	@Override
-	public HomePage navigateMenuTipsTricks() {
-		scrollDown();
-		if (isMenuClickable()) {
-			return super.navigateMenuTipsTricks();
-		}
-		getMainMenuDropdown().closeNaviconButton();
-		getMainMenuDropdown().clickFooterTipsTricks();
-		return new HomePage(driver);
-	}
+    @Override
+    public MapPage navigateMenuMap() {
+        scrollDown();
+        if (isMenuClickable()) {
+            return super.navigateMenuMap();
+        }
+        getMainMenuDropdown().closeNaviconButton();
+        getMainMenuDropdown().clickFooterPlaces();
+        return new MapPage(driver);
+    }
 
-	@Override
-	public MapPage navigateMenuMap() {
-		scrollDown();
-		if (isMenuClickable()) {
-			return super.navigateMenuMap();
-		}
-		getMainMenuDropdown().closeNaviconButton();
-		getMainMenuDropdown().clickFooterMap();
-		return new MapPage(driver);
-	}
+    @Override
+    public MyCabinetPage navigateMenuMyCabinet() {
+        scrollDown();
+        if (isMenuClickable()) {
+            return super.navigateMenuMyCabinet();
+        }
+        getMainMenuDropdown().closeNaviconButton();
+        // getMainMenuDropdown().clickFooterMyCabinet();
+        // TODO delete
+        driver.get("https://ita-social-projects.github.io/GreenCityClient/#/auth");
+        return new MyCabinetPage(driver);
+    }
 
-	@Override
-	public MyCabinetPage navigateMenuMyCabinet() {
-		scrollDown();
-		if (isMenuClickable()) {
-			return super.navigateMenuMyCabinet();
-		}
-		getMainMenuDropdown().closeNaviconButton();
-		// getMainMenuDropdown().clickFooterMyCabinet();
-		// TODO delete
-		driver.get("https://ita-social-projects.github.io/GreenCityClient/#/auth");
-		return new MyCabinetPage(driver);
-	}
-
-	@Override
-	public AboutPage navigateMenuAbout() {
-		scrollDown();
-		if (isMenuClickable()) {
-			return super.navigateMenuAbout();
-		}
-		getMainMenuDropdown().closeNaviconButton();
-		getMainMenuDropdown().clickFooterAbout();
-		return new AboutPage(driver);
-	}
+    @Override
+    public AboutPage navigateMenuAbout() {
+        scrollDown();
+        if (isMenuClickable()) {
+            return super.navigateMenuAbout();
+        }
+        getMainMenuDropdown().closeNaviconButton();
+        getMainMenuDropdown().clickFooterAbout();
+        return new AboutPage(driver);
+    }
 }

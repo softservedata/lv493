@@ -5,267 +5,72 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountPage;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+import com.softserve.edu.greencity.ui.tools.ForgotPasswordPart;
+import com.softserve.edu.greencity.ui.tools.LoginPart;
+import com.softserve.edu.greencity.ui.tools.RegisterPart;
 
-public class LoginDropdown {
+public class LoginDropdown extends LoginPart {
+
+    private final String EMAIL_ID = "email";
+    private final String PASSWORD_ID = "password";
+    private final String LOGIN_BUTTON_XPATH = "//button[@type='submit' and @class='primary-global-button']";
+    private final String GOOGLE_LOGIN_BUTTON_CLASS = "google-sign-in";
+    private final String FORGOT_PASSWORD_LINK_CLASS = "forgot-password";
+    private final String REGISTRATION_LINK_CLASS = "sign-up-link";
+    private final String CLOSE_BUTTON_CLASS = "cross-btn";
+
+    private WebElement closeButton;
+    private WebElement signUpLink;
 
     private WebDriver driver;
-    //
-    private WebElement titleField;
-    private WebElement emailField;
-    private WebElement passwordField;
-    private WebElement showPasswordButton;
-    private WebElement forgotPasswordLink;
-    private WebElement loginButton;
-    private WebElement signInGoogleButton;
-    private WebElement signUpLink;
-    //
-    private WebElement emailValidator;
-    private WebElement passwordValidator;
-    //
-    private String TAG_ATTRIBUTE_VALUE = "placeholder";
-    //
-    RegisterDropdown registerDropdown;
-    GoogleAccountPage googleAccountPage;
 
     public LoginDropdown(WebDriver driver) {
         this.driver = driver;
         initElements();
     }
 
-    private void initElements() {
-        // init elements
-        titleField = driver.findElement(By.cssSelector("div[class='right-side'] h1"));
-        emailField = driver.findElement(By.cssSelector("app-sign-in-new form label[for='email'] + input"));
-        passwordField = driver.findElement(By.cssSelector("app-sign-in-new form div[class*='password-input'] input"));
-        showPasswordButton = driver.findElement(By.cssSelector("img[class*='show-hide-password']"));
-        forgotPasswordLink = driver.findElement(By.cssSelector("a[class='forgot-password']"));
-        loginButton = driver.findElement(By.cssSelector("button[class='primary-global-button']"));
-        signInGoogleButton = driver.findElement(By.cssSelector("button[class='google-sign-in']"));
-        signUpLink = driver.findElement(By.cssSelector("a[class='sign-up-link']"));
-
-        // init Validators
-//        emailValidator = driver.findElement(By.xpath("//form[contains(@class,'ng-touched')]/div[contains(@class,'email-error')]/div"));
-//        passwordValidator = driver.findElement(By.xpath("//form[contains(@class,'ng-touched')]/div[contains(@class,'password-error')]/div"));
+    public LoginDropdown setCloseButton(WebElement closeButton) {
+        this.closeButton = closeButton;
+        return this;
     }
 
-    // Page Object
-//  titleField
-    public WebElement getTitleField() {
-        return titleField;
+    public LoginDropdown setSignUpLink(WebElement signUpLink) {
+        this.signUpLink = signUpLink;
+        return this;
     }
 
-    public String getTitleFieldText() {
-        return getTitleField().getText();
+    public WebElement getCloseButton() {
+        return closeButton;
     }
 
-    public void clickTitleField() {
-        if (isDisplayedTitleField()) {
-            getTitleField().click();
-        }
-    }
-
-    public boolean isDisplayedTitleField() {
-        return getTitleField().isDisplayed();
-    }
-
-//  emailField
-    public WebElement getEmailField() {
-        return emailField;
-    }
-
-    public String getEmailFieldText() {
-        return getEmailField().getAttribute(TAG_ATTRIBUTE_VALUE);
-    }
-
-    public void clearEmailField() {
-        getEmailField().clear();
-    }
-
-    public void clickEmailField() {
-        getEmailField().click();
-    }
-
-    public void setEmailField(String text) {
-        getEmailField().sendKeys(text);
-    }
-
-    public boolean isDisplayedEmailField() {
-        return getEmailField().isDisplayed();
-    }
-
-//  passwordField
-    public WebElement getPasswordField() {
-        return passwordField;
-    }
-
-    public String getPasswordFieldText() {
-        return getPasswordField().getAttribute(TAG_ATTRIBUTE_VALUE);
-    }
-
-    public void clearPasswordField() {
-        getPasswordField().clear();
-    }
-
-    public void clickPasswordField() {
-        getPasswordField().click();
-    }
-
-    public void setPasswordField(String text) {
-        getPasswordField().sendKeys(text);
-    }
-
-    public boolean isDisplayedPasswordField() {
-        return getPasswordField().isDisplayed();
-    }
-
-//  showPasswordButton
-    public WebElement getShowPasswordButton() {
-        return showPasswordButton;
-    }
-
-    public String getShowPasswordButtonText() {
-        return getShowPasswordButton().getText();
-    }
-
-    public void clickShowPasswordButton() {
-        if (isDisplayedShowPasswordButton()) {
-            getShowPasswordButton().click();
-        }
-    }
-
-    public boolean isDisplayedShowPasswordButton() {
-        return getShowPasswordButton().isDisplayed();
-    }
-
-//  forgotPasswordLink
-    public WebElement getForgotPasswordLink() {
-        return forgotPasswordLink;
-    }
-
-    public String getForgotPasswordLinkText() {
-        return getForgotPasswordLink().getText();
-    }
-
-    public void clickForgotPasswordLink() {
-        if (isDisplayedForgotPasswordLink()) {
-            getForgotPasswordLink().click();
-        }
-    }
-
-    public boolean isDisplayedForgotPasswordLink() {
-        return getForgotPasswordLink().isDisplayed();
-    }
-
-//  loginButton
-    public WebElement getLoginButton() {
-        return loginButton;
-    }
-
-    public String getLoginButtonText() {
-        return getLoginButton().getText();
-    }
-
-    public void clickLoginButton() {
-        if (isDisplayedLoginButton()) {
-            getLoginButton().click();
-        }
-    }
-
-    public boolean isDisplayedLoginButton() {
-        return getLoginButton().isDisplayed();
-    }
-
-//  signInGoogleButton
-    public WebElement getSignInGoogleButton() {
-        return signInGoogleButton;
-    }
-
-    public String getSignInGoogleButtonText() {
-        return getSignInGoogleButton().getText();
-    }
-
-    public void clickSignInGoogleButton() {
-        if (isDisplayedSignInGoogleButton()) {
-            getSignInGoogleButton().click();
-        }
-    }
-
-    public boolean isDisplayedSignInGoogleButton() {
-        return getSignInGoogleButton().isDisplayed();
-    }
-
-//  signUpLink
     public WebElement getSignUpLink() {
         return signUpLink;
     }
 
-    public String getSignUpLinkText() {
-        return getSignUpLink().getText();
+    private void initElements() {
+        this.setCloseButton(driver.findElement(By.className(CLOSE_BUTTON_CLASS)))
+                .setSignUpLink(driver.findElement(By.className(REGISTRATION_LINK_CLASS)))
+                .setEmailField(driver.findElement(By.id(EMAIL_ID)))
+                .setPasswordField(driver.findElement(By.id(PASSWORD_ID)))
+                .setSignInButton(driver.findElement(By.xpath(LOGIN_BUTTON_XPATH)))
+                .setGoogleSignInButton(driver.findElement(By.className(GOOGLE_LOGIN_BUTTON_CLASS)))
+                .setForgotPasswordLink(driver.findElement(By.className(FORGOT_PASSWORD_LINK_CLASS)));
     }
 
-    public void clickSignUpLink() {
-        if (isDisplayedSignUpLink()) {
-            getSignUpLink().click();
-        }
+    public TipsTricksPage closeDropdown(){
+        getCloseButton().click();
+        return new TipsTricksPage(driver);
     }
 
-    public boolean isDisplayedSignUpLink() {
-        return getSignUpLink().isDisplayed();
+    @Override
+    public ForgotPasswordPart gotoForgotPassword() {
+        forgotPasswordLink.click();
+        return new ForgotPasswordDropdown(driver);
     }
 
-//  emailValidator
-    public WebElement getEmailValidator() {
-        return emailValidator;
+    @Override
+    public RegisterPart gotoRegister() {
+        return new RegisterDropdown(driver);
     }
-
-    public String getEmailValidatorText() {
-        return getEmailValidator().getText();
-    }
-
-    public void clickEmailValidator() {
-        if (isDisplayedEmailValidator()) {
-            getEmailValidator().click();
-        }
-    }
-
-    public boolean isDisplayedEmailValidator() {
-        return getEmailValidator().isDisplayed();
-    }
-
-//  passwordValidator
-    public WebElement getPasswordValidator() {
-        return passwordValidator;
-    }
-
-    public String getPasswordValidatorText() {
-        return getPasswordValidator().getText();
-    }
-
-    public void clickPasswordValidator() {
-        if (isDisplayedPasswordValidator()) {
-            getPasswordValidator().click();
-        }
-    }
-
-    public boolean isDisplayedPasswordValidator() {
-        return getPasswordValidator().isDisplayed();
-    }
-
-    // Functional
- // a Google window opens and switches to it
-    public GoogleAccountPage clickEmailGoogleAccountField() {
-        String currentTab = driver.getWindowHandle();
-        clickSignInGoogleButton();
-        for (String current : driver.getWindowHandles()) {
-            System.out.println("TAB: " + current);
-            if (!current.equals(currentTab)) {
-                driver.switchTo().window(current);
-                System.out.println("URL: " + driver.getCurrentUrl());
-                break;
-            }
-        }
-        return new GoogleAccountPage(driver);
-    }
-
-    // Business Logic
 }

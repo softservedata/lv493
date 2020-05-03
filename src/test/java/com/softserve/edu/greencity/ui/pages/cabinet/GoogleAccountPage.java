@@ -1,27 +1,36 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
+/**
+ * GoogleAccountPage class.
+ * @author Serg
+ */
 public class GoogleAccountPage {
 
     private WebDriver driver;
     //
-    private WebElement chosenGoogleAccountButton;
-    private WebElement useAnotherAccountButton;
+//    private WebElement chosenGoogleAccountButton;
+//    private WebElement useAnotherAccountButton;
     private WebElement emailField;
     private WebElement emailNextButton;
-    private WebElement forgotEmailLink;
-    private WebElement passwordGoogleAccountField;
-    private WebElement showPasswordGoogleAccountButton;
-    private WebElement forgotPasswordGoogleAccountLink;
+//    private WebElement forgotEmailLink;
+    private WebElement passwordField;
+//    private WebElement showPasswordGoogleAccountButton;
+//    private WebElement forgotPasswordGoogleAccountLink;
     private WebElement passwordNextButton;
 
     private String titleGoogleAccount;
 //    private String emailGoogleAccount;
-    private String TAG_ATTRIBUTE_VALUE = "data-initial-value";
 
+    /**
+     * GoogleAccountPage constructor.
+     * @param driver
+     */
     public GoogleAccountPage(WebDriver driver) {
         this.driver = driver;
         initElements();
@@ -30,108 +39,169 @@ public class GoogleAccountPage {
     private void initElements() {
         // init elements
         titleGoogleAccount = driver.getTitle();
-        emailField = driver.findElement(By.cssSelector("div[role='presentation'] #identifierId"));
-        emailNextButton = driver.findElement(By.cssSelector("div[role='presentation'] #identifierNext"));
+        emailField = driver.findElement(
+                By.cssSelector("div[role='presentation'] #identifierId"));
+//        emailField = driver.findElement(By.cssSelector("input[type='email']"));
+        emailNextButton = driver.findElement(
+                By.cssSelector("div[role='presentation'] #identifierNext"));
     }
 
     // Page Object
-    // titleGoogleAccountField
+    /**
+     * Get title Google Account page.
+     * @return String
+     */
     public String getTitleGoogleAccount() {
         return titleGoogleAccount;
     }
 
     // emailField
-    public WebElement getEmailField() {
+    private WebElement getEmailField() {
         return emailField;
     }
 
-    public String getEmailFieldText() {
-        return getEmailField().getText();
-    }
-
-    public void clearEmailField() {
+    private void clearEmailField() {
         getEmailField().clear();
     }
 
-    public void clickEmailField() {
-        getEmailField().click();
+    private void clickEmailField() {
+        if (isDisplayedEmailField()) {
+            Actions action = new Actions(driver);
+            action.contextClick(getEmailField()).sendKeys(Keys.LEFT)
+                    .sendKeys(Keys.RIGHT);
+            getEmailField().click();
+        }
     }
 
-    public void setEmailField(String emailGoogleAccount) {
+    private void setEmailField(String emailGoogleAccount) {
         getEmailField().sendKeys(emailGoogleAccount);
     }
 
-    public boolean isDisplayedEmailField() {
+    private boolean isDisplayedEmailField() {
         return getEmailField().isDisplayed();
     }
 
     // emailNextButton
-    public WebElement getEmailNextButton() {
+    private WebElement getEmailNextButton() {
         return emailNextButton;
     }
 
-    public String getEmailNextButtonText() {
+    private String getEmailNextButtonText() {
         return getEmailNextButton().getText();
     }
 
-    public void clickEmailNextButton() {
+    private void clickEmailNextButton() {
         if (isDisplayedEmailNextButton()) {
             getEmailNextButton().click();
         }
     }
 
-    public boolean isDisplayedEmailNextButton() {
+    private boolean isDisplayedEmailNextButton() {
         return getEmailNextButton().isDisplayed();
     }
 
 //           passwordGoogleAccountField
-    public WebElement getPasswordGoogleAccountField() {
-        passwordGoogleAccountField = driver
-                .findElement(By.cssSelector("div#password input[name='password']"));
-        return passwordGoogleAccountField;
+    private WebElement getPasswordField() {
+        passwordField = driver.findElement(
+                By.cssSelector("div#password input[name='password']"));
+        return passwordField;
     }
 
-    public String getPasswordGoogleAccountFieldText() {
-        return getPasswordGoogleAccountField()
-                .getAttribute(TAG_ATTRIBUTE_VALUE);
+    private void clearPasswordField() {
+        getPasswordField().clear();
     }
 
-    public void clearPasswordGoogleAccountField() {
-        getPasswordGoogleAccountField().clear();
+    private void clickPasswordField() {
+        getPasswordField().click();
     }
 
-    public void clickPasswordGoogleAccountField() {
-        getPasswordGoogleAccountField().click();
+    private void setPasswordField(String passwordGoogleAccount) {
+        getPasswordField().sendKeys(passwordGoogleAccount);
     }
 
-    public void setPasswordGoogleAccountField(String passwordGoogleAccount) {
-        getPasswordGoogleAccountField().sendKeys(passwordGoogleAccount);
-    }
-
-    public boolean isDisplayedPasswordGoogleAccountField() {
-        return getPasswordGoogleAccountField().isDisplayed();
+    private boolean isDisplayedPasswordField() {
+        return getPasswordField().isDisplayed();
     }
 
 //           nextButton
-    public WebElement getPasswordNextButton() {
-        passwordNextButton = driver.findElement(By.cssSelector("div[role='presentation'] #passwordNext"));
+    private WebElement getPasswordNextButton() {
+        passwordNextButton = driver.findElement(
+                By.cssSelector("div[role='presentation'] #passwordNext"));
         return passwordNextButton;
     }
 
-    public String getNextButtonText() {
+    private String getPasswordNextButtonText() {
         return getPasswordNextButton().getText();
     }
 
-    public void clickPasswordNextButton() {
-        if (isDisplayedNextButton()) {
+    private void clickPasswordNextButton() {
+        if (isDisplayedPasswordNextButton()) {
             getPasswordNextButton().click();
         }
     }
 
-    public boolean isDisplayedNextButton() {
+    private boolean isDisplayedPasswordNextButton() {
         return getPasswordNextButton().isDisplayed();
     }
 
     // Functional
 
+    // Business Logic
+
+    /**
+     * Enter an email.
+     * @param email
+     * @return GoogleAccountPage
+     */
+    public GoogleAccountPage enterEmail(String email) {
+        if (isDisplayedEmailField()) {
+            clickEmailField();
+            clearEmailField();
+            System.out.println("----Email page. Entered email: " + email);
+            setEmailField(email);
+        }
+        return this;
+    }
+
+    /**
+     * Click on "Next" button on the email page.
+     * @return GoogleAccountPage
+     */
+    public GoogleAccountPage clickEmailNext() {
+        if (isDisplayedEmailNextButton()) {
+            System.out.println("----Email page. Click on "
+                    + getEmailNextButtonText() + " button");
+            clickEmailNextButton();
+        }
+        return this;
+    }
+
+    /**
+     * Enter a password.
+     * @param password
+     * @return GoogleAccountPage
+     */
+    public GoogleAccountPage enterPassword(String password) {
+        if (isDisplayedPasswordField()) {
+            clickPasswordField();
+            clearPasswordField();
+            System.out.println(
+                    "----Password page. Entered a password: " + password);
+            setPasswordField(password);
+        }
+        return this;
+    }
+
+    /**
+     * Click on "Next" button on the password page.
+     * @return GoogleAccountPage
+     */
+    public GoogleAccountPage clickPasswordNext() {
+        if (isDisplayedPasswordNextButton()) {
+            System.out.println("----Password page. Click on "
+                    + getPasswordNextButtonText() + " button");
+            clickPasswordNextButton();
+        }
+        return this;
+    }
 }
