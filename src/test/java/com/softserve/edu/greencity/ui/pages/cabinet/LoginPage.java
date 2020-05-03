@@ -55,7 +55,7 @@ public class LoginPage extends TopPart{
      * clickSignUp
      * @return LoginPart
      */
-    public RegisterPage clickSignUpButton() {
+    public RegisterPage clickSignUpLink() {
         this.getLoginComponent().clickSignUpLink().gotoRegister();
         return new MyCabinetPage(driver).gotoRegisterPage();
     }

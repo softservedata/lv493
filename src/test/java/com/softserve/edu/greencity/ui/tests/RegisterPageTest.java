@@ -35,7 +35,7 @@ public class RegisterPageTest extends GreencityTestRunner {
         TipsTricksPage homepage = loadApplication();
         MyCabinetPage myCabinetPage = homepage.navigateMenuMyCabinet();
         LoginPage loginPage = myCabinetPage.gotoLoginPage();
-        RegisterPage registerPage = loginPage.clickSignUpButton();
+        RegisterPage registerPage = loginPage.clickSignUpLink();
         System.out.println("registerPage.getTitleFieldText(): "
                 + registerPage.getTitleFieldText());
         registerPage.enterEmail(userLoginCredentials.getEmail())
@@ -43,8 +43,11 @@ public class RegisterPageTest extends GreencityTestRunner {
                 .enterLastName(userLoginCredentials.getLastName())
                 .enterPassword(userLoginCredentials.getPassword())
                 .enterPasswordConfirm(userLoginCredentials.getPassword());
-        presentationSleep(2);
 //        registerPage.clickSignUpButton();
+        loginPage = registerPage.clickSignInLink();
+        presentationSleep(2);
+        loginPage.clickSignUpLink();
+        presentationSleep(2);
     }
     
     @Test(dataProvider = "invalidCredentialUser")
@@ -53,7 +56,7 @@ public class RegisterPageTest extends GreencityTestRunner {
         TipsTricksPage homepage = loadApplication();
         MyCabinetPage myCabinetPage = homepage.navigateMenuMyCabinet();
         LoginPage loginPage = myCabinetPage.gotoLoginPage();
-        RegisterPage registerPage = loginPage.clickSignUpButton();
+        RegisterPage registerPage = loginPage.clickSignUpLink();
         System.out.println("registerPage.getTitleFieldText(): "
                 + registerPage.getTitleFieldText());
         registerPage.enterEmail(userLoginCredentials.getEmail())

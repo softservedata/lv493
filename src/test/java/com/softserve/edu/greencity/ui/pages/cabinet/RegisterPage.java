@@ -123,7 +123,7 @@ public class RegisterPage extends TopPart {
      * clickSignIn
      * @return LoginPart
      */
-    public LoginPage clickSignIn() {
+    public LoginPage clickSignInLink() {
         this.getRegisterComponent().clickSignInLink().gotoLogin();
         return new MyCabinetPage(driver).gotoLoginPage();
     }
