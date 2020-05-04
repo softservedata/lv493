@@ -16,7 +16,6 @@ public class LoginDropdown extends LoginPart {
 	private final String CLOSE_BUTTON_CLASS = "cross-btn";
 
 	private WebElement closeButton;
-	private WebElement signUpLink;
 
 	private WebDriver driver;
 
@@ -29,10 +28,6 @@ public class LoginDropdown extends LoginPart {
 		return closeButton;
 	}
 
-	public WebElement getSignUpLink() {
-		return signUpLink;
-	}
-
 	private void initElements() {
 		this.setCloseButton(driver.findElement(By.className(CLOSE_BUTTON_CLASS)))
 				.setSignUpLink(driver.findElement(By.className(REGISTRATION_LINK_CLASS)))
@@ -41,6 +36,11 @@ public class LoginDropdown extends LoginPart {
 				.setSignInButton(driver.findElement(By.xpath(LOGIN_BUTTON_XPATH)))
 				.setGoogleSignInButton(driver.findElement(By.className(GOOGLE_LOGIN_BUTTON_CLASS)))
 				.setForgotPasswordLink(driver.findElement(By.className(FORGOT_PASSWORD_LINK_CLASS)));
+	}
+
+	private LoginDropdown setCloseButton(WebElement element) {
+		this.closeButton = element;
+		return this;
 	}
 
 	public TipsTricksPage closeDropdown(){

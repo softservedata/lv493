@@ -20,8 +20,8 @@ public class LoginTest extends GreencityTestRunner {
     public void checkPage() { // for debugging
         loadApplication().navigateMenuMyCabinet();
         LoginPage page = new LoginPage(driver);
-        page.inputEmail("xoboj58975@2go-mail.com")
-                .inputPassword("werty42?")
+        page.inputEmail("***")
+                .inputPassword("***")
                 .clickLoginButton();
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }

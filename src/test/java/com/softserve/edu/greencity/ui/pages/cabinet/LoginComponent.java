@@ -25,7 +25,7 @@ public class LoginComponent extends LoginPart {
     }
 
     private void initElements() {
-        this.setSingUpLink(driver.findElement(By.className(REGISTRATION_LINK_CLASS)))
+        this.setSignUpLink(driver.findElement(By.className(REGISTRATION_LINK_CLASS)))
                 .setEmailField(driver.findElement(By.id(EMAIL_ID)))
                 .setPasswordField(driver.findElement(By.id(PASSWORD_ID)))
                 .setForgotPasswordLink(driver.findElement(By.className(FORGOT_PASSWORD_LINK_CLASS)))
@@ -39,9 +39,8 @@ public class LoginComponent extends LoginPart {
     }
 
     public RegisterPage gotoRegisterPage() {
-        getSingUpLink().click();
+        getSignUpLink().click();
         return new RegisterPage(driver);
     }
-
 
 }

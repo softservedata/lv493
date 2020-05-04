@@ -55,6 +55,7 @@ public class LoginPage extends TopPart{
 		return new TopPart(driver) {};
 	}
 
+
 	public RegisterPage gotoRegisterPage(){
 		return getLoginComponent().gotoRegisterPage();
 	}

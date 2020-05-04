@@ -10,7 +10,7 @@ public abstract class LoginPart {
     protected WebElement signInButton;
     protected WebElement googleSigningButton;
     protected WebElement forgotPasswordLink;
-    private WebElement singUpLink;
+    protected WebElement singUpLink;
 
     public LoginPart inputEmail(String email) {
         this.getEmailField().sendKeys(email);
@@ -54,11 +54,11 @@ public abstract class LoginPart {
         return forgotPasswordLink;
     }
 
-    public WebElement getSingUpLink() {
+    public WebElement getSignUpLink() {
         return singUpLink;
     }
 
-    public LoginPart setSingUpLink(WebElement singUpLink) {
+    public LoginPart setSignUpLink(WebElement singUpLink) {
         this.singUpLink = singUpLink;
         return this;
     }
@@ -87,7 +87,6 @@ public abstract class LoginPart {
         this.forgotPasswordLink = forgotPasswordLink;
         return this;
     }
-
 
 }
 
