@@ -10,8 +10,8 @@ public class LoginTest extends GreencityTestRunner {
     @Test
     public void checkDropdown() { // for debugging
         LoginDropdown dropdown = loadApplication().gotoLoginDropdown();
-        dropdown.inputEmail("xoboj58975@2go-mail.com")
-                .inputPassword("werty42?")
+        dropdown.inputEmail("***")
+                .inputPassword("***")
                 .gotoForgotPassword();
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
