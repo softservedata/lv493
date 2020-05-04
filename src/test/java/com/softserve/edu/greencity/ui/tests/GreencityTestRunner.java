@@ -2,7 +2,6 @@ package com.softserve.edu.greencity.ui.tests;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestResult;
@@ -65,11 +64,11 @@ public abstract class GreencityTestRunner {
 		return new TipsTricksPage(driver);
 		//return new TipsTricksPage(getDriver());
 	}
-	
+
 	protected void presentationSleep() {
 		presentationSleep(1);
 	}
-	
+
 	protected void presentationSleep(int seconds) {
 		try {
 			Thread.sleep(seconds * ONE_SECOND_DELAY); // For Presentation ONLY
