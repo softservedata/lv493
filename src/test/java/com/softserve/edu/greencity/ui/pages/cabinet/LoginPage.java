@@ -24,23 +24,35 @@ public class LoginPage extends TopPart{
 	// proxy methods
 
 	public LoginPage inputEmail(String email) {
-		this.getLoginComponent().getEmailField().sendKeys(email);
+		this.getLoginComponent().inputEmail(email);
 		return this;
 	}
 
 	public LoginPage inputPassword(String password) {
-		this.getLoginComponent().getPasswordField().sendKeys(password);
+		this.getLoginComponent().inputPassword(password);
 		return this;
 	}
 
 	public LoginPage clickLoginButton() {
-		this.getLoginComponent().getSignInButton().click();
+		this.getLoginComponent().clickLoginButton();
 		return this;
 	}
 
 	public LoginPage clickGoogleLoginButton() {
-		this.getLoginComponent().getGoogleSigningButton().click();
+		this.getLoginComponent().clickGoogleLoginButton();
 		return this;
+	}
+
+	 public GoogleAccountPage loginByGoogle(){
+		this.clickGoogleLoginButton();
+		return new GoogleAccountPage(driver);
+	 }
+
+	public TopPart login(String email, String password) {
+		this.inputEmail(email)
+				.inputPassword(password)
+				.clickLoginButton();
+		return new TopPart(driver) {};
 	}
 
 }

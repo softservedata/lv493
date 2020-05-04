@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.softserve.edu.greencity.ui.tools.ForgotPasswordPart;
 import org.openqa.selenium.WebDriver;
 
 public class ForgotPasswordDropdown extends ForgotPasswordPart {

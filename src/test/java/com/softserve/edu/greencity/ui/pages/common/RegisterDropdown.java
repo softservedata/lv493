@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.softserve.edu.greencity.ui.tools.RegisterPart;
 import org.openqa.selenium.WebDriver;
 
 public class RegisterDropdown extends RegisterPart {

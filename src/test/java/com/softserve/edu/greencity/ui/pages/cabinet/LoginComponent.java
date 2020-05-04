@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import com.softserve.edu.greencity.ui.tools.ForgotPasswordPart;
-import com.softserve.edu.greencity.ui.tools.LoginPart;
+import com.softserve.edu.greencity.ui.pages.common.ForgotPasswordPart;
+import com.softserve.edu.greencity.ui.pages.common.LoginPart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -43,12 +43,5 @@ public class LoginComponent extends LoginPart {
         return new RegisterPage(driver);
     }
 
-    public WebElement getSingUpLink() {
-        return singUpLink;
-    }
 
-    public LoginComponent setSingUpLink(WebElement singUpLink) {
-        this.singUpLink = singUpLink;
-        return this;
-    }
 }

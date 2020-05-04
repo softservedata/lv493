@@ -1,9 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-import com.softserve.edu.greencity.ui.tools.ForgotPasswordPart;
-import com.softserve.edu.greencity.ui.tools.LoginPart;
-import com.softserve.edu.greencity.ui.tools.RegisterPart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,16 +23,6 @@ public class LoginDropdown extends LoginPart {
 	public LoginDropdown(WebDriver driver) {
 		this.driver = driver;
 		initElements();
-	}
-
-	public LoginDropdown setCloseButton(WebElement closeButton) {
-		this.closeButton = closeButton;
-		return this;
-	}
-
-	public LoginDropdown setSignUpLink(WebElement signUpLink) {
-		this.signUpLink = signUpLink;
-		return this;
 	}
 
 	public WebElement getCloseButton() {

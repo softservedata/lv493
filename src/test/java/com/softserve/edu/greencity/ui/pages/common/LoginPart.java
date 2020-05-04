@@ -1,5 +1,6 @@
-package com.softserve.edu.greencity.ui.tools;
+package com.softserve.edu.greencity.ui.pages.common;
 
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import org.openqa.selenium.WebElement;
 
 public abstract class LoginPart {
@@ -9,6 +10,7 @@ public abstract class LoginPart {
     protected WebElement signInButton;
     protected WebElement googleSigningButton;
     protected WebElement forgotPasswordLink;
+    private WebElement singUpLink;
 
     public LoginPart inputEmail(String email) {
         this.getEmailField().sendKeys(email);
@@ -31,18 +33,7 @@ public abstract class LoginPart {
     }
 
     public abstract ForgotPasswordPart gotoForgotPassword();
-//    public RegisterDropdown gotoRegister(WebDriver driver) { //fix
-//        this.getRegisterLink().click();
-//        return new RegisterDropdown(driver);
-//    }
-
-//public abstract RegisterPart gotoRegister();
-
-//    public LoginPart loginByGoogleAccount() {
-//        clickGoogleLoginButton();
-//        // TODO
-//        return this;
-//    }
+ts
 
     public WebElement getEmailField() {
         return emailField;
@@ -62,6 +53,15 @@ public abstract class LoginPart {
 
     public WebElement getForgotPasswordLink() {
         return forgotPasswordLink;
+    }
+
+    public WebElement getSingUpLink() {
+        return singUpLink;
+    }
+
+    public LoginPart setSingUpLink(WebElement singUpLink) {
+        this.singUpLink = singUpLink;
+        return this;
     }
 
     public LoginPart setEmailField(WebElement emailField) {
