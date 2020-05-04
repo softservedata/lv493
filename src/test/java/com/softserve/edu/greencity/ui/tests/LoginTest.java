@@ -10,8 +10,8 @@ public class LoginTest extends GreencityTestRunner {
     @Test
     public void checkDropdown() { // for debugging
         LoginDropdown dropdown = loadApplication().gotoLoginDropdown();
-        dropdown.inputEmail("***")
-                .inputPassword("***")
+        dropdown.inputEmail("xoboj58975@2go-mail.com")
+                .inputPassword("Qwerty42?")
                 .gotoForgotPassword();
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
@@ -20,8 +20,8 @@ public class LoginTest extends GreencityTestRunner {
     public void checkPage() { // for debugging
         loadApplication().navigateMenuMyCabinet();
         LoginPage page = new LoginPage(driver);
-        page.inputEmail("***")
-                .inputPassword("***")
+        page.inputEmail("xoboj58975@2go-mail.com")
+                .inputPassword("Qwerty42?")
                 .clickLoginButton();
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
