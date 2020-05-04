@@ -23,6 +23,7 @@ public class RegisterComponent extends RegisterPart {
 //    private WebElement lastNameValidator; // not exist
     //
     private final String EMAIL_VALIDATOR_SELECTOR = "//div[@id='validation-error']/div";
+    private final String REGISTRATION_VALIDATOR_SELECTOR = "app-sign-up input#email + div";
     private final String FIRST_NAME_VALIDATOR_SELECTOR = "div[class='field-wrapper-left'] div[class='ng-star-inserted']";
 //    private final String LAST_NAME_VALIDATOR_SELECTOR = ""; // not exist
     private final String PASSWORD_VALIDATOR_SELECTOR = "div.password-wrapper + div div";
@@ -186,6 +187,19 @@ public class RegisterComponent extends RegisterPart {
 
 //  lastNameValidator
 
+//  registrationValidator
+    @Override
+    protected WebElement getRegistrationValidator() {
+        registrationValidator = driver.findElement(By.cssSelector(REGISTRATION_VALIDATOR_SELECTOR));
+        return registrationValidator;
+    }
+
+    @Override
+    protected boolean sizeRegistrationValidator() {
+        return driver.findElements(By.cssSelector(REGISTRATION_VALIDATOR_SELECTOR))
+                .size() != 0;
+    }
+    
 //  emailValidator
     @Override
     protected WebElement getEmailValidator() {

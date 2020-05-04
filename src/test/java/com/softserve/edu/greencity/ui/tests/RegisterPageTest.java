@@ -32,25 +32,18 @@ public class RegisterPageTest extends GreencityTestRunner {
     @Test(dataProvider = "validCredentialUser")
     public void checkRegisterPage1(UserData userLoginCredentials) {
         System.out.println("-----validCredentialUser--------");
-        TipsTricksPage homepage = loadApplication();
-        MyCabinetPage myCabinetPage = homepage.navigateMenuMyCabinet();
-        LoginPage loginPage = myCabinetPage.gotoLoginPage();
-        RegisterPage registerPage = loginPage.clickSignUpLink();
+        RegisterPage registerPage = loadApplication().navigateMenuMyCabinet().gotoLoginPage().clickSignUpLink();
         System.out.println("registerPage.getTitleFieldText(): "
                 + registerPage.getTitleFieldText());
-        registerPage.enterEmail(userLoginCredentials.getEmail())
-                .enterFirstName(userLoginCredentials.getFirstName())
-                .enterLastName(userLoginCredentials.getLastName())
-                .enterPassword(userLoginCredentials.getPassword())
-                .enterPasswordConfirm(userLoginCredentials.getPassword());
-//        registerPage.clickSignUpButton();
-        loginPage = registerPage.clickSignInLink();
+        registerPage.fillFieldsWithoutRegistration(userLoginCredentials);
         presentationSleep(2);
+        LoginPage loginPage = registerPage.clickSignInLink();
         loginPage.clickSignUpLink();
+//        registerPage.clickSignUpButton();
         presentationSleep(2);
     }
     
-    @Test(dataProvider = "invalidCredentialUser")
+//    @Test(dataProvider = "invalidCredentialUser")
     public void checkRegisterPage2(UserData userLoginCredentials) {
         System.out.println("-----invalidCredentialUser--------");
         TipsTricksPage homepage = loadApplication();

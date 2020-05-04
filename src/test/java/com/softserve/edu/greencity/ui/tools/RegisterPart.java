@@ -25,9 +25,11 @@ public abstract class RegisterPart {
     protected WebElement signInLink;
     //
     protected WebElement emailValidator;
+    protected WebElement registrationValidator;
     protected WebElement passwordValidator;
     protected WebElement passwordConfirmValidator;
     //
+//    ValidatorMessages validatorMessages;
 
     // titleField
     /**
@@ -571,6 +573,45 @@ public abstract class RegisterPart {
      * @return boolean
      */
     protected abstract boolean sizeEmailValidator();
+
+//  registrationValidator
+    /**
+     * setRegistrationValidator
+     * @param registrationValidator WebElement
+     * @return RegisterPart
+     */
+    protected RegisterPart setRegistrationValidator(WebElement registrationValidator) {
+        this.registrationValidator = registrationValidator;
+        return this;
+    }
+
+    /**
+     * getEmailValidator
+     * @return WebElement
+     */
+    protected abstract WebElement getRegistrationValidator();
+
+    /**
+     * getEmailValidatorText
+     * @return String
+     */
+    public String getRegistrationValidatorText() {
+        return getRegistrationValidator().getText();
+    }
+
+    /**
+     * isDisplayedEmailValidator
+     * @return boolean
+     */
+    public boolean isDisplayedRegistrationValidator() {
+        return getRegistrationValidator().isDisplayed();
+    }
+
+    /**
+     * sizeEmailValidator
+     * @return boolean
+     */
+    protected abstract boolean sizeRegistrationValidator();
 
 //  passwordValidator
     /**

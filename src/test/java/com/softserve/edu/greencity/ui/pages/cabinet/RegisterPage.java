@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.greencity.ui.data.UserData;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
 /**
@@ -32,7 +33,7 @@ public class RegisterPage extends TopPart {
         return registerComponent;
     }
 
-    // Business Logic
+    // Functional
     
     /**
      * getTitleFieldText
@@ -120,7 +121,7 @@ public class RegisterPage extends TopPart {
     }
 
     /**
-     * clickSignIn
+     * clickSignInLink
      * @return LoginPart
      */
     public LoginPage clickSignInLink() {
@@ -131,10 +132,23 @@ public class RegisterPage extends TopPart {
     /**
      * clickSignUpGoogle
      */
-    public void clickSignUpGoogle() {
+    public void clickSignUpGoogleButton() {
         this.getRegisterComponent().clickSignUpGoogleAccountButton();
     }
 
+//RegistrationError
+    /**
+     * getRegistrationErrorText
+     * @return String
+     */
+    public String getRegistrationErrorText() {
+        if (getRegisterComponent().sizeRegistrationValidator() 
+                && getRegisterComponent().isDisplayedRegistrationValidator()) {
+            return getRegisterComponent().getRegistrationValidatorText();
+        }
+        return "Registration error text not found";
+    }
+    
 //FirstNameError
     /**
      * getFirstNameErrorText
@@ -186,5 +200,44 @@ public class RegisterPage extends TopPart {
         }
         return "password confirm error text not found";
     }
+    
+    // Business Logic
 
+    // completion of user registration
+    /**
+     * Filling all fields on Register page and click on SingUp button.
+     * @param userData object with user's credentials
+     * @return RegisterPage page
+     */
+    public RegisterPage registrationNewUser(UserData userData) {
+        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterPassword(userData.getPassword())
+                .enterPasswordConfirm(userData.getPassword());
+        return clickSignUpButton();
+    }
+
+    /**
+     * Filling all fields on Register page without registration (without
+     * click on SingUp button).
+     * @param userData object with user's credentials
+     * @return RegisterPage page
+     */
+    public void fillFieldsWithoutRegistration(UserData userData) {
+        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterPassword(userData.getPassword())
+                .enterPasswordConfirm(userData.getPassword());
+    }
+
+    /**
+     * Filling all fields on Register page without registration, click
+     * on SingIn link and go to Login page.
+     * @param userData object with user's credentials
+     * @return LoginPart page
+     */
+    public LoginPage fillFieldsAndGotoLoginPage(UserData userData) {
+        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterPassword(userData.getPassword())
+                .enterPasswordConfirm(userData.getPassword());
+        return clickSignInLink();
+    }
 }

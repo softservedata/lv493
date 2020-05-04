@@ -36,7 +36,7 @@ public abstract class GreencityTestRunner {
 //      options.addArguments("profile-directory=" + chromeChooseProfile);
 //    driver = new ChromeDriver(options);
 		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		//driver.manage().window().setSize(new Dimension(640, 480));
 		//driver.manage().window().setSize(new Dimension(480, 640));
@@ -46,7 +46,7 @@ public abstract class GreencityTestRunner {
     public void tearDownAfterClass() throws Exception {
         Thread.sleep(1000); // For Presentation Only
         if (driver != null) {
-//            driver.quit();
+            driver.quit();
         }
     }
 

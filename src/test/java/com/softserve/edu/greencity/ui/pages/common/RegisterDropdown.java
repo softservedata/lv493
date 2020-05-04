@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.softserve.edu.greencity.ui.data.UserData;
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountPage;
 import com.softserve.edu.greencity.ui.tools.LoginPart;
 import com.softserve.edu.greencity.ui.tools.RegisterPart;
@@ -22,6 +23,7 @@ public class RegisterDropdown extends RegisterPart {
     private WebElement closeRegisterDropdownButton;
     //
     private final String EMAIL_VALIDATOR_SELECTOR = "app-new-sign-up input[name='email'] + div div";
+    private final String REGISTRATION_VALIDATOR_SELECTOR = "app-new-sign-up input[name='email'] + div div";
 //    private final String FIRST_NAME_VALIDATOR_SELECTOR = ""; // not exist
     private final String PASSWORD_VALIDATOR_SELECTOR = "app-new-sign-up input[name='fistName'] + label.content-label + div + div div";
     private final String PASSWORD_CONFIRM_VALIDATOR_SELECTOR = "app-new-sign-up label.content-label.under-error + div + div div";
@@ -86,6 +88,21 @@ public class RegisterDropdown extends RegisterPart {
         return getCloseRegisterDropdownButton().isDisplayed();
     }
 
+//  registrationValidator
+    @Override
+    protected WebElement getRegistrationValidator() {
+        registrationValidator = driver
+                .findElement(By.cssSelector(REGISTRATION_VALIDATOR_SELECTOR));
+        return registrationValidator;
+    }
+
+    @Override
+    protected boolean sizeRegistrationValidator() {
+        return driver
+                .findElements(By.cssSelector(REGISTRATION_VALIDATOR_SELECTOR))
+                .size() != 0;
+    }
+
 //  emailValidator
     @Override
     protected WebElement getEmailValidator() {
@@ -148,14 +165,12 @@ public class RegisterDropdown extends RegisterPart {
         return new GoogleAccountPage(driver);
     }
 
-    // Business Logic
-
     /**
      * enterEmail
      * @param email String
      * @return RegisterDropdown
      */
-    public RegisterDropdown enterEmail(String email) {
+    private RegisterDropdown enterEmail(String email) {
         this.clickEmail(driver).clearEmail().setEmailField(emailField)
                 .inputEmail(email);
         return this;
@@ -166,7 +181,7 @@ public class RegisterDropdown extends RegisterPart {
      * @param firstName String
      * @return RegisterDropdown
      */
-    public RegisterDropdown enterFirstName(String firstName) {
+    private RegisterDropdown enterFirstName(String firstName) {
         this.clickFirstName(driver).clearFirstName()
                 .setFirstNameField(firstNameField).inputFirstName(firstName);
         return this;
@@ -177,7 +192,7 @@ public class RegisterDropdown extends RegisterPart {
      * @param password String
      * @return RegisterDropdown
      */
-    public RegisterDropdown enterPassword(String password) {
+    private RegisterDropdown enterPassword(String password) {
         this.clickPasswordField(driver).clearPasswordField()
                 .setPasswordField(passwordField).inputPassword(password)
                 .clickShowPasswordButton();
@@ -189,7 +204,7 @@ public class RegisterDropdown extends RegisterPart {
      * @param passwordConfirm String
      * @return RegisterDropdown
      */
-    public RegisterDropdown enterPasswordConfirm(String passwordConfirm) {
+    private RegisterDropdown enterPasswordConfirm(String passwordConfirm) {
         this.clickPasswordConfirmField(driver).clearPasswordConfirmField()
                 .setPasswordConfirmField(passwordConfirmField)
                 .inputPasswordConfirm(passwordConfirm)
@@ -197,26 +212,28 @@ public class RegisterDropdown extends RegisterPart {
         return this;
     }
 
+    // FIXME
     /**
      * clickSignUpButton
      * @return RegisterDropdown
      */
-    public RegisterDropdown clickSignUpButton() {
+    private TopPart clickSignUpButton() {
         this.clickRegisterButton();
-        return this;
+        return new TopPart(driver) {
+        };
     }
 
+//  registrationError
     /**
-     * clickSignIn
-     * @return LoginPart
+     * getRegistrationErrorText
+     * @return String
      */
-    public LoginPart clickSignIn() {
-        return this.clickSignInLink().gotoLogin();
+    public String getRegistrationErrorText() {
+        if (sizeRegistrationValidator() && isDisplayedRegistrationValidator()) {
+            return getRegistrationValidatorText();
+        }
+        return "registration error text not found";
     }
-
-//    public void clickSignUpGoogle() {
-//        clickSignUpGoogleAccountButton();
-//    }
 
 //  emailError
     /**
@@ -242,7 +259,7 @@ public class RegisterDropdown extends RegisterPart {
         return "password error text not found";
     }
 
-//  passwordConfirmError
+    // passwordConfirmError
     /**
      * getPasswordConfirmErrorText
      * @return String
@@ -255,11 +272,80 @@ public class RegisterDropdown extends RegisterPart {
         return "password confirm error text not found";
     }
 
+    private void setValidatorMessages() {
+//        new ValidatorMessages(getEmailErrorText(), getPasswordErrorText(),
+//                getPasswordConfirmErrorText(), getRegistrationErrorText());
+    }
+
+//    public ValidatorMessages getErrorMessages(){
+//        return ValidatorMessages();
+//    }
+
+    // ---!!!! (generic)
     // close register dropdown
     /**
      * closeRegisterDropdown
      */
-    public void closeRegisterDropdown() {
+    private TopPart closeRegisterDropdown() {
         clickCloseRegisterDropdownButton();
+        return new TopPart(driver) {
+        };
     }
+
+// Business Logic
+
+    /**
+     * click on SignIn link and go to the login page
+     * @return LoginPart
+     */
+    public LoginPart gotoLoginPageUsingLink() {
+        return this.clickSignInLink().gotoLogin();
+    }
+
+    // completion of user registration
+    /**
+     * Filling all fields on RegisterDropdown page and click on SingUp button.
+     * @param userData object with user's credentials
+     * @return TopPart page
+     */
+    public TopPart registrationNewUser(UserData userData) {
+        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterPassword(userData.getPassword())
+                .enterPasswordConfirm(userData.getPassword());
+        setValidatorMessages();
+        return clickSignUpButton();
+    }
+
+    /**
+     * Filling all fields on RegisterDropdown page without registration (without
+     * click on SingUp button) and close RegisterDropdown page.
+     * @param userData object with user's credentials
+     * @return TopPart page
+     */
+    public TopPart fillFieldsWithoutRegistration(UserData userData) {
+        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterPassword(userData.getPassword())
+                .enterPasswordConfirm(userData.getPassword());
+        setValidatorMessages();
+        return closeRegisterDropdown();
+    }
+
+    /**
+     * Filling all fields on RegisterDropdown page without registration, click
+     * on SingIn link and go to Login page.
+     * @param userData object with user's credentials
+     * @return LoginPart page
+     */
+    public LoginPart fillFieldsAndGotoLoginPage(UserData userData) {
+        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterPassword(userData.getPassword())
+                .enterPasswordConfirm(userData.getPassword());
+        setValidatorMessages();
+        return gotoLoginPageUsingLink();
+    }
+
+//    public void clickSignUpGoogle() {
+//        clickSignUpGoogleAccountButton();
+//    }
+
 }

@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import com.softserve.edu.greencity.ui.data.UserData;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.RegisterDropdown;
+import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.home.HomePage;
 
 /**
@@ -33,27 +34,22 @@ public class RegisterDropdownTest extends GreencityTestRunner {
                 .gotoRegisterDropdown();
         System.out.println("registerDropdown.getTitleFieldText(): "
                 + registerDropdown.getTitleFieldText());
-        registerDropdown.enterEmail(userLoginCredentials.getEmail())
-                .enterFirstName(userLoginCredentials.getFirstName())
-                .enterPassword(userLoginCredentials.getPassword())
-                .enterPasswordConfirm(userLoginCredentials.getPassword());
-        registerDropdown.clickSignIn();
-//        registerDropdown.clickSignUpButton();
+//        TopPart page = registerDropdown.fillFieldsWithoutRegistration(userLoginCredentials);
+        TopPart page = registerDropdown.registrationNewUser(userLoginCredentials);
+//        Assert.assertEquals(page.getUserComponent().getName(), userLoginCredentials.getFirstName());
+//        page.logout();
         presentationSleep(2);
 //        registerDropdown.closeRegisterDropdown();
     }
 
-    @Test(dataProvider = "invalidCredentialUser")
+//    @Test(dataProvider = "invalidCredentialUser")
     public void checkLoginPage2(UserData userLoginCredentials) {
         System.out.println("-----------invalidCredentialUser------------");
         RegisterDropdown registerDropdown = loadApplication()
                 .gotoRegisterDropdown();
         System.out.println("registerDropdown.getTitleFieldText(): "
                 + registerDropdown.getTitleFieldText());
-        registerDropdown.enterEmail(userLoginCredentials.getEmail())
-                .enterFirstName(userLoginCredentials.getFirstName())
-                .enterPassword(userLoginCredentials.getPassword())
-                .enterPasswordConfirm(userLoginCredentials.getPassword());
+        registerDropdown.fillFieldsAndGotoLoginPage(userLoginCredentials);
         System.out.println("registerDropdown.getEmailErrorText(): "
                 + registerDropdown.getEmailErrorText());
         System.out.println("registerDropdown.getPasswordErrorText(): "
@@ -62,6 +58,6 @@ public class RegisterDropdownTest extends GreencityTestRunner {
                 + registerDropdown.getPasswordConfirmErrorText());
 //        registerDropdown.clickSignUpButton();
         presentationSleep(2);
-        registerDropdown.closeRegisterDropdown();
+//        registerDropdown.closeRegisterDropdown();
     }
 }
