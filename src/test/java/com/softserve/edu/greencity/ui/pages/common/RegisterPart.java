@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tools;
+package com.softserve.edu.greencity.ui.pages.common;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
 
 /**
  * RegisterPart class.
@@ -25,7 +26,6 @@ public abstract class RegisterPart {
     protected WebElement signInLink;
     //
     protected WebElement emailValidator;
-    protected WebElement registrationValidator;
     protected WebElement passwordValidator;
     protected WebElement passwordConfirmValidator;
     //
@@ -483,13 +483,6 @@ public abstract class RegisterPart {
         return getGoogleSignUpButton().getText();
     }
 
-    // Sign In link
-    /**
-     * gotoLogin
-     * @return LoginPart class
-     */
-    public abstract LoginPart gotoLogin();
-
     /**
      * getSignInLink
      * @return WebElement
@@ -573,45 +566,6 @@ public abstract class RegisterPart {
      * @return boolean
      */
     protected abstract boolean sizeEmailValidator();
-
-//  registrationValidator
-    /**
-     * setRegistrationValidator
-     * @param registrationValidator WebElement
-     * @return RegisterPart
-     */
-    protected RegisterPart setRegistrationValidator(WebElement registrationValidator) {
-        this.registrationValidator = registrationValidator;
-        return this;
-    }
-
-    /**
-     * getEmailValidator
-     * @return WebElement
-     */
-    protected abstract WebElement getRegistrationValidator();
-
-    /**
-     * getEmailValidatorText
-     * @return String
-     */
-    public String getRegistrationValidatorText() {
-        return getRegistrationValidator().getText();
-    }
-
-    /**
-     * isDisplayedEmailValidator
-     * @return boolean
-     */
-    public boolean isDisplayedRegistrationValidator() {
-        return getRegistrationValidator().isDisplayed();
-    }
-
-    /**
-     * sizeEmailValidator
-     * @return boolean
-     */
-    protected abstract boolean sizeRegistrationValidator();
 
 //  passwordValidator
     /**

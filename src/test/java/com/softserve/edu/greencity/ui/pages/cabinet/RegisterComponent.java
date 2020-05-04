@@ -6,8 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import com.softserve.edu.greencity.ui.tools.LoginPart;
-import com.softserve.edu.greencity.ui.tools.RegisterPart;
+import com.softserve.edu.greencity.ui.pages.common.RegisterPart;
 
 /**
  * RegisterComponent class
@@ -18,6 +17,7 @@ public class RegisterComponent extends RegisterPart {
     //
     private WebDriver driver;
     //
+    protected WebElement registrationValidator;
     private WebElement lastNameField;
     private WebElement firstNameValidator;
 //    private WebElement lastNameValidator; // not exist
@@ -26,7 +26,7 @@ public class RegisterComponent extends RegisterPart {
     private final String REGISTRATION_VALIDATOR_SELECTOR = "app-sign-up input#email + div";
     private final String FIRST_NAME_VALIDATOR_SELECTOR = "div[class='field-wrapper-left'] div[class='ng-star-inserted']";
 //    private final String LAST_NAME_VALIDATOR_SELECTOR = ""; // not exist
-    private final String PASSWORD_VALIDATOR_SELECTOR = "div.password-wrapper + div div";
+    private final String PASSWORD_VALIDATOR_SELECTOR = "div.password-wrapper + div";
     private final String PASSWORD_CONFIRM_VALIDATOR_SELECTOR = "app-sign-up form div#img-confirm + div[class*='validation-error'] div";
 
     /**
@@ -188,13 +188,45 @@ public class RegisterComponent extends RegisterPart {
 //  lastNameValidator
 
 //  registrationValidator
-    @Override
+    /**
+     * setRegistrationValidator
+     * @param registrationValidator WebElement
+     * @return RegisterPart
+     */
+    protected RegisterPart setRegistrationValidator(WebElement registrationValidator) {
+        this.registrationValidator = registrationValidator;
+        return this;
+    }
+
+    /**
+     * getEmailValidator
+     * @return WebElement
+     */
     protected WebElement getRegistrationValidator() {
         registrationValidator = driver.findElement(By.cssSelector(REGISTRATION_VALIDATOR_SELECTOR));
         return registrationValidator;
     }
 
-    @Override
+    /**
+     * getEmailValidatorText
+     * @return String
+     */
+    public String getRegistrationValidatorText() {
+        return getRegistrationValidator().getText();
+    }
+
+    /**
+     * isDisplayedEmailValidator
+     * @return boolean
+     */
+    public boolean isDisplayedRegistrationValidator() {
+        return getRegistrationValidator().isDisplayed();
+    }
+
+    /**
+     * sizeEmailValidator
+     * @return boolean
+     */
     protected boolean sizeRegistrationValidator() {
         return driver.findElements(By.cssSelector(REGISTRATION_VALIDATOR_SELECTOR))
                 .size() != 0;
@@ -259,8 +291,7 @@ public class RegisterComponent extends RegisterPart {
         return new GoogleAccountPage(driver);
     }
 
-    @Override
-    public LoginPart gotoLogin() {
-        return new LoginComponent(driver);
+    public LoginPage gotoLoginPage() {
+        return new LoginPage(driver);
     }
 }

@@ -23,8 +23,10 @@ public class RegisterDropdownTest extends GreencityTestRunner {
 
     @DataProvider
     public Object[][] invalidCredentialUser() {
-        return new Object[][] { { UserRepository.getWrongUserCredentials1() },
-                { UserRepository.getWrongUserCredentials2() }, };
+        return new Object[][] { 
+            { UserRepository.getWrongUserCredentials1() },
+            { UserRepository.getWrongUserCredentials2() }, 
+            };
     }
 
     @Test(dataProvider = "validCredentialUser")
@@ -34,22 +36,22 @@ public class RegisterDropdownTest extends GreencityTestRunner {
                 .gotoRegisterDropdown();
         System.out.println("registerDropdown.getTitleFieldText(): "
                 + registerDropdown.getTitleFieldText());
-//        TopPart page = registerDropdown.fillFieldsWithoutRegistration(userLoginCredentials);
-        TopPart page = registerDropdown.registrationNewUser(userLoginCredentials);
+        TopPart page = registerDropdown.fillFieldsWithoutRegistration(userLoginCredentials);
+//        TopPart page = registerDropdown.registrationNewUser(userLoginCredentials);
 //        Assert.assertEquals(page.getUserComponent().getName(), userLoginCredentials.getFirstName());
 //        page.logout();
-        presentationSleep(2);
+        presentationSleep(3);
 //        registerDropdown.closeRegisterDropdown();
     }
 
-//    @Test(dataProvider = "invalidCredentialUser")
+    @Test(dataProvider = "invalidCredentialUser")
     public void checkLoginPage2(UserData userLoginCredentials) {
         System.out.println("-----------invalidCredentialUser------------");
         RegisterDropdown registerDropdown = loadApplication()
                 .gotoRegisterDropdown();
         System.out.println("registerDropdown.getTitleFieldText(): "
                 + registerDropdown.getTitleFieldText());
-        registerDropdown.fillFieldsAndGotoLoginPage(userLoginCredentials);
+        registerDropdown.registrationNewUser(userLoginCredentials);
         System.out.println("registerDropdown.getEmailErrorText(): "
                 + registerDropdown.getEmailErrorText());
         System.out.println("registerDropdown.getPasswordErrorText(): "
@@ -57,7 +59,7 @@ public class RegisterDropdownTest extends GreencityTestRunner {
         System.out.println("registerDropdown.getPasswordConfirmErrorText(): "
                 + registerDropdown.getPasswordConfirmErrorText());
 //        registerDropdown.clickSignUpButton();
-        presentationSleep(2);
+        presentationSleep(3);
 //        registerDropdown.closeRegisterDropdown();
     }
 }

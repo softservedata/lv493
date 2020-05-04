@@ -1,8 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.data.UserData;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
@@ -110,6 +108,7 @@ public class RegisterPage extends TopPart {
         return this;
     }
 
+    // FIXME
     /**
      * clickSignUpButton
      * @return RegisterPage
@@ -125,8 +124,8 @@ public class RegisterPage extends TopPart {
      * @return LoginPart
      */
     public LoginPage clickSignInLink() {
-        this.getRegisterComponent().clickSignInLink().gotoLogin();
-        return new MyCabinetPage(driver).gotoLoginPage();
+        this.getRegisterComponent().clickSignInLink();
+        return new LoginPage(driver);
     }
 
     /**

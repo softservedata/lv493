@@ -32,9 +32,9 @@ public class RegisterDropdownGoogleAccountTest extends GreencityTestRunner {
         System.out.println("googleAccountPage.getTitleGoogleAccount(): " + googleAccountPage.getTitleGoogleAccount());
         googleAccountPage.enterEmail(userGoogleLoginCredentials.getEmail());
         presentationSleep(2);
-//        googleAccountPage.clickEmailNext();
+        googleAccountPage.clickEmailNext();
 //        googleAccountPage.enterPassword(userGoogleLoginCredentials.getPassword());
-//        presentationSleep(2);
+        presentationSleep(2);
 //        googleAccountPage.clickPasswordNext();
     }
 }

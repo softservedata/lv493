@@ -1,15 +1,8 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.pages.common.UserEnterPage;
-import com.softserve.edu.greencity.ui.tools.LoginPart;
-import com.softserve.edu.greencity.ui.tools.RegisterPart;
 
 public class LoginPage extends TopPart{
 
@@ -31,34 +24,39 @@ public class LoginPage extends TopPart{
     // proxy methods
 
     public LoginPage inputEmail(String email) {
-        this.getLoginComponent().getEmailField().sendKeys(email);
+        this.getLoginComponent().inputEmail(email);
         return this;
     }
 
     public LoginPage inputPassword(String password) {
-        this.getLoginComponent().getPasswordField().sendKeys(password);
+        this.getLoginComponent().inputPassword(password);
         return this;
     }
 
     public LoginPage clickLoginButton() {
-        this.getLoginComponent().getSignInButton().click();
+        this.getLoginComponent().clickLoginButton();
         return this;
     }
 
     public LoginPage clickGoogleLoginButton() {
-        this.getLoginComponent().getGoogleSigningButton().click();
+        this.getLoginComponent().clickGoogleLoginButton();
         return this;
     }
-    
- // Business Logic author Serge
-    /**
-     * clickSignUp
-     * @return LoginPart
-     */
-    public RegisterPage clickSignUpLink() {
-        this.getLoginComponent().clickSignUpLink().gotoRegister();
-        return new MyCabinetPage(driver).gotoRegisterPage();
-    }
-    
 
+     public GoogleAccountPage loginByGoogle(){
+        this.clickGoogleLoginButton();
+        return new GoogleAccountPage(driver);
+     }
+
+    public TopPart login(String email, String password) {
+        this.inputEmail(email)
+                .inputPassword(password)
+                .clickLoginButton();
+        return new TopPart(driver) {};
+    }
+
+
+    public RegisterPage gotoRegisterPage(){
+        return getLoginComponent().gotoRegisterPage();
+    }
 }

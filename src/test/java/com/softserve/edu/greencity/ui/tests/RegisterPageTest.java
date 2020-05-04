@@ -1,5 +1,7 @@
 package com.softserve.edu.greencity.ui.tests;
 
+import java.util.concurrent.TimeUnit;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -26,38 +28,39 @@ public class RegisterPageTest extends GreencityTestRunner {
     @DataProvider
     public Object[][] invalidCredentialUser() {
         return new Object[][] { { UserRepository.getWrongUserCredentials1() },
-                { UserRepository.getWrongUserCredentials2() }, };
+                { UserRepository.getWrongUserCredentials2() }, 
+                };
     }
 
     @Test(dataProvider = "validCredentialUser")
     public void checkRegisterPage1(UserData userLoginCredentials) {
         System.out.println("-----validCredentialUser--------");
-        RegisterPage registerPage = loadApplication().navigateMenuMyCabinet().gotoLoginPage().clickSignUpLink();
+        loadApplication().navigateMenuMyCabinet();
+        RegisterPage registerPage = new LoginPage(driver).gotoRegisterPage();
         System.out.println("registerPage.getTitleFieldText(): "
                 + registerPage.getTitleFieldText());
         registerPage.fillFieldsWithoutRegistration(userLoginCredentials);
         presentationSleep(2);
         LoginPage loginPage = registerPage.clickSignInLink();
-        loginPage.clickSignUpLink();
+        loginPage.gotoRegisterPage();
 //        registerPage.clickSignUpButton();
         presentationSleep(2);
     }
     
-//    @Test(dataProvider = "invalidCredentialUser")
+    @Test(dataProvider = "invalidCredentialUser")
     public void checkRegisterPage2(UserData userLoginCredentials) {
         System.out.println("-----invalidCredentialUser--------");
-        TipsTricksPage homepage = loadApplication();
-        MyCabinetPage myCabinetPage = homepage.navigateMenuMyCabinet();
-        LoginPage loginPage = myCabinetPage.gotoLoginPage();
-        RegisterPage registerPage = loginPage.clickSignUpLink();
+        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        loadApplication().navigateMenuMyCabinet();
+        RegisterPage registerPage = new LoginPage(driver).gotoRegisterPage();
         System.out.println("registerPage.getTitleFieldText(): "
                 + registerPage.getTitleFieldText());
-        registerPage.enterEmail(userLoginCredentials.getEmail())
-                .enterFirstName(userLoginCredentials.getFirstName())
-                .enterLastName(userLoginCredentials.getLastName())
-                .enterPassword(userLoginCredentials.getPassword())
-                .enterPasswordConfirm(userLoginCredentials.getPassword());
+        registerPage.registrationNewUser(userLoginCredentials);
+        System.out.println("registerPage.getFirstNameErrorText(): " + registerPage.getFirstNameErrorText());
+        System.out.println("registerPage.getEmailErrorText(): " + registerPage.getEmailErrorText());
+        System.out.println("registerPage.getPasswordErrorText(): " + registerPage.getPasswordErrorText());
+        System.out.println("registerPage.getPasswordConfirmErrorText(): " + registerPage.getPasswordConfirmErrorText());
+        System.out.println("registerPage.getRegistrationErrorText(): " + registerPage.getRegistrationErrorText());
         presentationSleep(2);
-//        registerPage.clickSignUpButton();
     }
 }

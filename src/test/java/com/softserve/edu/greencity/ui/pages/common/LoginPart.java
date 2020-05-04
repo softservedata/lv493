@@ -1,9 +1,6 @@
-package com.softserve.edu.greencity.ui.tools;
+package com.softserve.edu.greencity.ui.pages.common;
 
 import org.openqa.selenium.WebElement;
-
-import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.RegisterPage;
 
 public abstract class LoginPart {
 
@@ -12,7 +9,7 @@ public abstract class LoginPart {
     protected WebElement signInButton;
     protected WebElement googleSigningButton;
     protected WebElement forgotPasswordLink;
-    protected WebElement signUpLink; // author Serge
+    protected WebElement singUpLink;
 
     public LoginPart inputEmail(String email) {
         this.getEmailField().sendKeys(email);
@@ -35,17 +32,6 @@ public abstract class LoginPart {
     }
 
     public abstract ForgotPasswordPart gotoForgotPassword();
-//    public RegisterDropdown gotoRegister(WebDriver driver) { //fix
-//        this.getRegisterLink().click();
-//        return new RegisterDropdown(driver);
-//    }
-
-
-//    public LoginPart loginByGoogleAccount() {
-//        clickGoogleLoginButton();
-//        // TODO
-//        return this;
-//    }
 
     public WebElement getEmailField() {
         return emailField;
@@ -65,6 +51,15 @@ public abstract class LoginPart {
 
     public WebElement getForgotPasswordLink() {
         return forgotPasswordLink;
+    }
+
+    public WebElement getSignUpLink() {
+        return singUpLink;
+    }
+
+    public LoginPart setSignUpLink(WebElement singUpLink) {
+        this.singUpLink = singUpLink;
+        return this;
     }
 
     public LoginPart setEmailField(WebElement emailField) {
@@ -92,52 +87,4 @@ public abstract class LoginPart {
         return this;
     }
 
- // Sign Up link
-    public abstract RegisterPart gotoRegister();
-
-    // ------author Serge
-    /**
-     * getSignUoLink
-     * @return WebElement
-     */
-    protected WebElement getSignUpLink() {
-        return signUpLink;
-    }
-
-    /**
-     * getSignInLinkText
-     * @return String
-     */
-    protected String getSignUpLinkText() {
-        return getSignUpLink().getText();
-    }
-
-    /**
-     * clickSignInLink
-     * @return LoginPart
-     */
-    public LoginPart clickSignUpLink() {
-        if (isDisplayedSignUpLink()) {
-            this.getSignUpLink().click();
-        }
-        return this;
-    }
-
-    /**
-     * setSignUpLink
-     * @param signUpLink WebElement
-     * @return LoginPart class
-     */
-    public LoginPart setSignUpLink(WebElement signUpLink) {
-        this.signUpLink = signUpLink;
-        return this;
-    }
-
-    /**
-     * isDisplayedSignUpLink
-     * @return boolean
-     */
-    protected boolean isDisplayedSignUpLink() {
-        return getSignUpLink().isDisplayed();
-    }
 }

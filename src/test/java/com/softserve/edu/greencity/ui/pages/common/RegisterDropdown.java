@@ -8,8 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.softserve.edu.greencity.ui.data.UserData;
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountPage;
-import com.softserve.edu.greencity.ui.tools.LoginPart;
-import com.softserve.edu.greencity.ui.tools.RegisterPart;
 
 /**
  * RegisterDropdown class.
@@ -23,7 +21,6 @@ public class RegisterDropdown extends RegisterPart {
     private WebElement closeRegisterDropdownButton;
     //
     private final String EMAIL_VALIDATOR_SELECTOR = "app-new-sign-up input[name='email'] + div div";
-    private final String REGISTRATION_VALIDATOR_SELECTOR = "app-new-sign-up input[name='email'] + div div";
 //    private final String FIRST_NAME_VALIDATOR_SELECTOR = ""; // not exist
     private final String PASSWORD_VALIDATOR_SELECTOR = "app-new-sign-up input[name='fistName'] + label.content-label + div + div div";
     private final String PASSWORD_CONFIRM_VALIDATOR_SELECTOR = "app-new-sign-up label.content-label.under-error + div + div div";
@@ -68,8 +65,7 @@ public class RegisterDropdown extends RegisterPart {
     // Page Object
 
 //  signInLink
-    @Override
-    public LoginPart gotoLogin() {
+    private LoginDropdown gotoLoginDropdown() {
         return new LoginDropdown(driver);
     }
 
@@ -86,21 +82,6 @@ public class RegisterDropdown extends RegisterPart {
 
     private boolean isDisplayedCloseRegisterDropdownButton() {
         return getCloseRegisterDropdownButton().isDisplayed();
-    }
-
-//  registrationValidator
-    @Override
-    protected WebElement getRegistrationValidator() {
-        registrationValidator = driver
-                .findElement(By.cssSelector(REGISTRATION_VALIDATOR_SELECTOR));
-        return registrationValidator;
-    }
-
-    @Override
-    protected boolean sizeRegistrationValidator() {
-        return driver
-                .findElements(By.cssSelector(REGISTRATION_VALIDATOR_SELECTOR))
-                .size() != 0;
     }
 
 //  emailValidator
@@ -223,18 +204,6 @@ public class RegisterDropdown extends RegisterPart {
         };
     }
 
-//  registrationError
-    /**
-     * getRegistrationErrorText
-     * @return String
-     */
-    public String getRegistrationErrorText() {
-        if (sizeRegistrationValidator() && isDisplayedRegistrationValidator()) {
-            return getRegistrationValidatorText();
-        }
-        return "registration error text not found";
-    }
-
 //  emailError
     /**
      * getEmailErrorText
@@ -295,11 +264,12 @@ public class RegisterDropdown extends RegisterPart {
 // Business Logic
 
     /**
-     * click on SignIn link and go to the login page
-     * @return LoginPart
+     * click on SignIn link and go to the login Dropdown
+     * @return LoginDropdown
      */
-    public LoginPart gotoLoginPageUsingLink() {
-        return this.clickSignInLink().gotoLogin();
+    public LoginDropdown gotoLoginDropdownUsingLink() {
+        this.clickSignInLink();
+        return gotoLoginDropdown();
     }
 
     // completion of user registration
@@ -341,7 +311,7 @@ public class RegisterDropdown extends RegisterPart {
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getPassword());
         setValidatorMessages();
-        return gotoLoginPageUsingLink();
+        return gotoLoginDropdownUsingLink();
     }
 
 //    public void clickSignUpGoogle() {

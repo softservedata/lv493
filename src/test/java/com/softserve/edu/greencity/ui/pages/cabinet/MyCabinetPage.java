@@ -18,21 +18,6 @@ public class MyCabinetPage extends SmallHeightPart {
 	// Page Object
 
 	// Functional
-	/**
-	 * gotoLoginPage
-	 * @return LoginPage
-	 */
-	public LoginPage gotoLoginPage() {
-	    return new LoginPage(driver);
-	}
-	
-	/**
-	 * gotoRegisterPage
-	 * @return RegisterPage
-	 */
-	public RegisterPage gotoRegisterPage() {
-	    return new RegisterPage(driver);
-	}
 
 	// Business Logic
 }
