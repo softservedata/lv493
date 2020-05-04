@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.pages.map.MapPage;
 
 public class TipsTricksPage extends TopPart {
 
@@ -27,6 +28,10 @@ public class TipsTricksPage extends TopPart {
     private WebElement amountPeople;
     private WebElement amountBags;
     private WebElement amountCups;
+    // private WebElement qrCode;
+    // link to MapPage
+    private WebElement linkBags;
+    private WebElement linkCups;
 
     public TipsTricksPage(WebDriver driver) {
         super(driver);
@@ -47,6 +52,16 @@ public class TipsTricksPage extends TopPart {
         amountPeople = driver.findElement(By.cssSelector("#stats>h2"));
         amountBags = driver.findElement(By.xpath("//app-stat-row/div/div[2]/div/h3"));
         amountCups = driver.findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >h3"));
+        // qrCode =
+        // driver.findElement(By.xpath("//div[@id='qr-code-wrapper']/img"));
+        // linkBags =
+        // driver.findElement(By.cssSelector("app-stat-row:nth-child(1) > div >
+        // div.stat-row-content.ng-star-inserted > div > div > a"));
+
+        linkBags = driver.findElement(
+                By.xpath(".//div[@class='stat-row-image ng-star-inserted']//following-sibling::div/div/div/a"));
+        linkCups = driver.findElement(By.xpath(
+                ".//div[@class='stat-row-image ng-star-inserted']//preceding-sibling::div[@class='stat-row-content ng-star-inserted']/div/div/a"));
     }
 
     // Page Object
@@ -116,7 +131,7 @@ public class TipsTricksPage extends TopPart {
     public void clickEnterEmailHome() {
         getEnterEmailHome().click();
     }
-    
+
     public void writeEnterEmailHome(String email) {
         getEnterEmailHome().sendKeys(email);
     }
@@ -167,6 +182,25 @@ public class TipsTricksPage extends TopPart {
         return digits(textAmountCups());
     }
 
+    // link bellow Bags to MapPage
+
+    public WebElement getLinkBags() {
+        return linkBags;
+    }
+
+    public void clickLinkBags() {
+        getLinkBags().click();
+    }
+
+    // link bellow Bags to MapPage
+
+    public WebElement getLinkCups() {
+        return linkCups;
+    }
+
+    public void clickLinkCups() {
+        getLinkCups().click();
+    }
     // Functional
 
     private int digits(String text) {
@@ -174,9 +208,9 @@ public class TipsTricksPage extends TopPart {
         Pattern pattern = null;
         Matcher matcher = null;
         try {
-      pattern = Pattern.compile(regex);
-      matcher = pattern.matcher(text);
-        } catch (PatternSyntaxException e){
+            pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(text);
+        } catch (PatternSyntaxException e) {
             e.getMessage();
         }
         if (matcher.find()) {
@@ -207,5 +241,14 @@ public class TipsTricksPage extends TopPart {
     // clickStartHabitBelow();
     // return new MyCabinetPage(driver);
     // }
+    public MapPage moveBagsToMap() {
+        clickLinkBags();
+        return new MapPage(driver);
+    }
 
+    public MapPage moveCupsToMap() {
+        clickLinkCups();
+        return new MapPage(driver);
+
+    }
 }
