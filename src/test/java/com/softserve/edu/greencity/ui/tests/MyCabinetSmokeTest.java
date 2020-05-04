@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -22,12 +21,7 @@ public class MyCabinetSmokeTest extends GreencityTestRunner {
 	@Test(dataProvider = "habitDataProvider")
 	public void checkElements(HabitItem habit, HabitCard card) {
 
-        driver.get("https://ita-social-projects.github.io/GreenCityClient/#/auth");
-        driver.findElement(By.id("email")).click();
-        driver.findElement(By.id("email")).sendKeys("soyorer682@hubopss.com");
-        driver.findElement(By.id("password")).click();
-        driver.findElement(By.id("password")).sendKeys("1!Aaaaaa");
-        driver.findElement(By.id("password")).submit();
+
 
        (new MyCabinetPage(driver))
            .addTodaysHabitInfo(habit)
