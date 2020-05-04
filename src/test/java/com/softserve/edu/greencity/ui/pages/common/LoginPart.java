@@ -33,7 +33,6 @@ public abstract class LoginPart {
     }
 
     public abstract ForgotPasswordPart gotoForgotPassword();
-ts
 
     public WebElement getEmailField() {
         return emailField;

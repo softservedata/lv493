@@ -38,7 +38,7 @@ public class LoginComponent extends LoginPart {
         return null;
     }
 
-    public RegisterPage gotoSignUpPage() {
+    public RegisterPage gotoRegisterPage() {
         getSingUpLink().click();
         return new RegisterPage(driver);
     }
