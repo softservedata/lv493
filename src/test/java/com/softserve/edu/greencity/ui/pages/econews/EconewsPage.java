@@ -24,7 +24,8 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 public class EconewsPage extends TopPart {
 	
 	
-	private List<WebElement> tagsList;
+	//private List<WebElement> tagsList;
+	private TagsComponent tagsComponent;
 	private WebElement createNewsButton;
 	private WebElement gridView;
 	private WebElement listView;
@@ -73,7 +74,8 @@ public class EconewsPage extends TopPart {
 	
 	private void initElements() {
 		
-		tagsList = driver.findElements(By.xpath("//ul[@class=\"ul-eco-buttons\"]/a/li"));
+		tagsComponent = new TagsComponent(driver);
+		//tagsList = driver.findElements(By.xpath("//ul[@class=\"ul-eco-buttons\"]/a/li"));
 		createNewsButton = driver.findElement(By.id("create-button"));
 		itemsContainer = new ItemsContainer(driver);
 		gridView = driver.findElement(By.cssSelector("div[class*='gallery-view']"));
@@ -149,9 +151,10 @@ public class EconewsPage extends TopPart {
  	
  	//tagsList
  	
- 	public List<WebElement> getTagsList() {
- 		return tagsList;
- 	}
+//	public List<WebElement> getTagsList() {
+// 		return tagsList;
+// 	}
+ 	
 	// Functional
  	
  	protected void scrollToElement(WebElement el) {
@@ -176,19 +179,19 @@ public class EconewsPage extends TopPart {
  	
  	//TODO  deselect filters; 
  	
- 	/**
- 	 * method allows to check which filters are choosen
- 	 * @return activeFilters
- 	 */
- 	public List<WebElement> checkActiveFilters() {
- 		List<WebElement> activeFilters = new ArrayList<>();
- 		for(WebElement curr : getTagsList()) {
- 			if(curr.getAttribute("class").contains("clicked-filter-button")) {
- 			activeFilters.add(curr);
- 			}
- 		}
- 		return activeFilters;
- 	}
+// 	/**
+// 	 * method allows to check which filters are choosen
+// 	 * @return activeFilters
+// 	 */
+// 	public List<WebElement> checkActiveFilters() {
+// 		List<WebElement> activeFilters = new ArrayList<>();
+ //		for(WebElement curr : getTagsButtons()) {
+ //			if(curr.getAttribute("class").contains("clicked-filter-button")) {
+// 			activeFilters.add(curr);
+ //			}
+// 		}
+ //		return activeFilters;
+ //	}
  	
  	public WebElement getWebElementByTagName(Tag newsfilter) {
 		return driver.findElement(By.xpath("//li[contains(text(),\"" + newsfilter.toString() + "\")]"));
@@ -212,16 +215,16 @@ public class EconewsPage extends TopPart {
  	
  	// Business Logic
  	
- 	/**
- 	 * Method allows to choose type of news, which will be displayed on the EcoNews Page
- 	 * @param list of NewsFilter's
- 	 * @return EconewsPage
- 	 */
- 	public EconewsPage selectFilters(Tag...newsfilters) {
- 		scrollToElement(getTagsList().get(1));
- 		chooseTags(newsfilters);
-		return new EconewsPage(driver);
-	}
+ //	/**
+ //	 * Method allows to choose type of news, which will be displayed on the EcoNews Page
+ //	 * @param list of NewsFilter's
+ //	 * @return EconewsPage
+ //	 */
+ //	public EconewsPage selectFilters(Tag...newsfilters) {
+ //		scrollToElement(getTagsList().get(1));
+ //		chooseTags(newsfilters);
+//		return new EconewsPage(driver);
+//	}
  	
 	
  	/**
