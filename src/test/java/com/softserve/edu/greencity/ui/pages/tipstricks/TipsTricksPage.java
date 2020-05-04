@@ -1,25 +1,32 @@
 package com.softserve.edu.greencity.ui.pages.tipstricks;
 
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.data.Languages;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
 public class TipsTricksPage extends TopPart {
 
+    // Buttons on the TipsTricksPage
     private WebElement startHabitTop;
     private WebElement startHabitCenter;
     private WebElement startHabitBelow;
     private WebElement subscribeOnHome;
+
+    // field for email for subscribe
     private WebElement enterEmailHome;
-    private WebElement leftPagination;
-    private WebElement rightPagination;
+
+    // Text about amountPeople, quantityBags, quantityCups
     private WebElement amountPeople;
-    private List<WebElement> amountBagsCups;
+    private WebElement amountBags;
+    private WebElement amountCups;
 
     public TipsTricksPage(WebDriver driver) {
         super(driver);
@@ -30,19 +37,19 @@ public class TipsTricksPage extends TopPart {
         // init elements
         startHabitTop = driver
                 .findElement(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']"));
-        startHabitCenter = driver.findElement(By.xpath("('//div[@class='content-wrapper']//button')[0]"));
-        startHabitBelow = driver.findElement(By.xpath("('//div[@class='content-wrapper']//button')[1]"));
+        startHabitCenter = driver
+                .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(2)> div> button"));
+        startHabitBelow = driver
+                .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >button"));
         subscribeOnHome = driver
                 .findElement(By.xpath("//div[@id='form-wrapper']/button[@class='primary-global-button']"));
-        enterEmailHome = driver
-                .findElement(By.xpath("//div[@id='form-wrapper']/input[@class='ng-pristine ng-valid ng-touched']"));
-        leftPagination = driver.findElement(By.xpath("//i[@class='arrow fas fa-chevron-left']/.."));
-        rightPagination = driver.findElement(By.xpath("//i[@class='arrow fas fa-chevron-right']/.."));
-        amountPeople = driver.findElement(By.xpath("//section[@id='stats']/h2"));
-        amountBagsCups = driver.findElements(By.xpath("//div[@class='content-wrapper']/h3"));
-
+        enterEmailHome = driver.findElement(By.xpath("//input[@type='email']"));
+        amountPeople = driver.findElement(By.cssSelector("#stats>h2"));
+        amountBags = driver.findElement(By.xpath("//app-stat-row/div/div[2]/div/h3"));
+        amountCups = driver.findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >h3"));
     }
 
+    // Page Object
     // Button 'Start forming a habit'
 
     public WebElement getStartHabitTop() {
@@ -58,6 +65,7 @@ public class TipsTricksPage extends TopPart {
     }
 
     // ButtonCenter 'Start forming a habit'
+
     public WebElement getStartHabitCenter() {
         return startHabitCenter;
     }
@@ -71,6 +79,7 @@ public class TipsTricksPage extends TopPart {
     }
 
     // ButtonBelow 'Start forming a habit'
+
     public WebElement getStartHabitBelow() {
         return startHabitBelow;
     }
@@ -82,6 +91,7 @@ public class TipsTricksPage extends TopPart {
     public boolean isDisplayedStartHabitBelow() {
         return getStartHabitBelow().isDisplayed();
     }
+
     // Button 'Subscribe'
 
     public WebElement getSubscribeOnHome() {
@@ -106,35 +116,74 @@ public class TipsTricksPage extends TopPart {
     public void clickEnterEmailHome() {
         getEnterEmailHome().click();
     }
-
-    // leftPagination
-
-    public WebElement getleftPagination() {
-        return leftPagination;
+    
+    public void writeEnterEmailHome(String email) {
+        getEnterEmailHome().sendKeys(email);
     }
 
-    public void clickleftPagination() {
-        getleftPagination().click();
-    }
-
-    // rightPagination
-
-    public WebElement getRightPagination() {
-        return rightPagination;
-    }
-
-    public void clickRightPagination() {
-        getRightPagination().click();
-    }
-
-    // amountPeople
+    // amount People
 
     public WebElement getAmountPeople() {
         return amountPeople;
     }
 
+    public String textAmountPeople() {
+        return getAmountPeople().getText();
+    }
+
+    public int getNumberAmountPeople() {
+        return digits(textAmountPeople());
+    }
+
     public boolean isDesplayedAmountPeople() {
         return getAmountPeople().isDisplayed();
+    }
+
+    // amount Bags
+
+    public WebElement getAmountBags() {
+        return amountBags;
+    }
+
+    public String textAmountBags() {
+        return amountBags.getText();
+    }
+
+    public int getNumberAmountBags() {
+        return digits(textAmountBags());
+    }
+
+    // amount Cups
+
+    public WebElement getAmountCups() {
+        return amountCups;
+    }
+
+    public String textAmountCups() {
+        return amountCups.getText();
+    }
+
+    public int getNumberAmountCups() {
+        return digits(textAmountCups());
+    }
+
+    // Functional
+
+    private int digits(String text) {
+        String regex = "\\d+";
+        Pattern pattern = null;
+        Matcher matcher = null;
+        try {
+      pattern = Pattern.compile(regex);
+      matcher = pattern.matcher(text);
+        } catch (PatternSyntaxException e){
+            e.getMessage();
+        }
+        if (matcher.find()) {
+            text.substring(matcher.start(), matcher.end());
+        }
+
+        return Integer.valueOf(text.substring(matcher.start(), matcher.end()));
     }
 
     // Business Logic
@@ -143,4 +192,20 @@ public class TipsTricksPage extends TopPart {
         chooseLanguage(language);
         return new TipsTricksPage(driver);
     }
+
+    public MyCabinetPage createHabitToMyCabinet() {
+        clickStartHabitTop();
+        return new MyCabinetPage(driver);
+    }
+
+    // public MyCabinetPage createHabitCenterToMyCabinet() {
+    // clickStartHabitCenter();
+    // return new MyCabinetPage(driver);
+    // }
+
+    // public MyCabinetPage createHabitBellowToMyCabinet() {
+    // clickStartHabitBelow();
+    // return new MyCabinetPage(driver);
+    // }
+
 }

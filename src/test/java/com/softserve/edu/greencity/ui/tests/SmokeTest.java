@@ -8,7 +8,7 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 public class SmokeTest extends GreencityTestRunner {
 
-	@DataProvider
+	//@DataProvider
 	public Object[][] validData() {
 		return new Object[][] {
 			//{ SearchItemRepository.getMacItem(), SearchRefineRepository.getPriceDescUsd() },
@@ -16,7 +16,7 @@ public class SmokeTest extends GreencityTestRunner {
 			};
 	}
 
-	@Test(dataProvider = "validData")
+	//@Test(dataProvider = "validData")
 	public void checkElements(Languages languages) {
 		// Steps
 		TipsTricksPage tipstrickspage = loadApplication()
