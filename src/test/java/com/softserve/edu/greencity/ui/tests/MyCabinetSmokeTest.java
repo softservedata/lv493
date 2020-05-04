@@ -21,8 +21,6 @@ public class MyCabinetSmokeTest extends GreencityTestRunner {
 	@Test(dataProvider = "habitDataProvider")
 	public void checkElements(HabitItem habit, HabitCard card) {
 
-
-
        (new MyCabinetPage(driver))
            .addTodaysHabitInfo(habit)
            .navigateMenuMyCabinet()
@@ -36,8 +34,6 @@ public class MyCabinetSmokeTest extends GreencityTestRunner {
            .showLessGoals()
            .gotoManageGoalsDropdown()
            .closeManageGoalsDropdown();
-
-
 
         presentationSleep();
 	}
