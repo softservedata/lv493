@@ -194,7 +194,7 @@ public class EconewsPage extends TopPart {
  //	}
  	
  	public WebElement getWebElementByTagName(Tag newsfilter) {
-		return driver.findElement(By.xpath("//li[contains(text(),\"" + newsfilter.toString() + "\")]"));
+		return driver.findElement(By.xpath("//app-eco-news//div[@class='wrapper']//li[contains(text(),'" + newsfilter.toString() + "')]"));
 	}
  	
  	public boolean isActiveTag(Tag newsfilter) {

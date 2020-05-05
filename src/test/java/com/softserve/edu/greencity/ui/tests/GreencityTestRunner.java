@@ -28,8 +28,16 @@ public abstract class GreencityTestRunner {
 
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
+//      ChromeOptions options = new ChromeOptions();
+//     String chromeProfilePath = System.getenv("USERPROFILE")
+//             + "\\AppData\\Local\\Google\\Chrome\\User Data";
+//     System.out.println("chromeProfilePath: " + chromeProfilePath);
+//     String chromeChooseProfile = "Profile 1";
+//     options.addArguments("user-data-dir=" + chromeProfilePath);
+//     options.addArguments("profile-directory=" + chromeChooseProfile);
+//   driver = new ChromeDriver(options);
 		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		//driver.manage().window().setSize(new Dimension(640, 480));
 		//driver.manage().window().setSize(new Dimension(480, 640));

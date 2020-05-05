@@ -4,20 +4,59 @@ import org.openqa.selenium.WebDriver;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
-public class LoginPage extends TopPart {
+public class LoginPage extends TopPart{
 
-	public LoginPage(WebDriver driver) {
-		super(driver);
-		initElements();
-	}
+    private LoginComponent loginComponent;
 
-	private void initElements() {
-		// init elements
-	}
+    public LoginPage(WebDriver driver) {
+        super(driver);
+        initElements();
+    }
 
-	// Page Object
+    private void initElements() {
+        loginComponent = new LoginComponent(driver);
+    }
 
-	// Functional
+    public LoginComponent getLoginComponent() {
+        return loginComponent;
+    }
 
-	// Business Logic
+    // proxy methods
+
+    public LoginPage inputEmail(String email) {
+        this.getLoginComponent().inputEmail(email);
+        return this;
+    }
+
+    public LoginPage inputPassword(String password) {
+        this.getLoginComponent().inputPassword(password);
+        return this;
+    }
+
+    public LoginPage clickLoginButton() {
+        this.getLoginComponent().clickLoginButton();
+        return this;
+    }
+
+    public LoginPage clickGoogleLoginButton() {
+        this.getLoginComponent().clickGoogleLoginButton();
+        return this;
+    }
+
+     public GoogleAccountPage loginByGoogle(){
+        this.clickGoogleLoginButton();
+        return new GoogleAccountPage(driver);
+     }
+
+    public TopPart login(String email, String password) {
+        this.inputEmail(email)
+                .inputPassword(password)
+                .clickLoginButton();
+        return new TopPart(driver) {};
+    }
+
+
+    public RegisterPage gotoRegisterPage(){
+        return getLoginComponent().gotoRegisterPage();
+    }
 }
