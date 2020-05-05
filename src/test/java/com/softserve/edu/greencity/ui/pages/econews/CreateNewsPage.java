@@ -65,7 +65,7 @@ public class CreateNewsPage extends TopPart {
     }
 
     // init IFrame elements which are available after clicking by Cancel button
-    private void initIFrameElements() {
+    private void initIFrameElements() { //fixme > add inner class
         continueEditingButton = driver.findElement(By.cssSelector("div.continue-btn > button"));
         cancelEditingButton = driver.findElement(By.cssSelector("button.primary-global-button"));
     }
@@ -221,11 +221,10 @@ public class CreateNewsPage extends TopPart {
 
     // Functional
 
-    // Business Logic
-
     // Drop and upload file
-    private void uploadFile(WebElement dropArea, String path) {
+    private CreateNewsPage uploadFile(WebElement dropArea, String path) {
         UploadFileUtils.DropFile(new File(path), dropArea, 0, 0);
+        return this;
     }
 
     /**
@@ -244,6 +243,7 @@ public class CreateNewsPage extends TopPart {
         return this;
     }
 
+    // Business Logic
     /**
      * Method to open PreViewPage
      * @return PreViewPage

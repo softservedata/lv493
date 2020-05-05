@@ -45,7 +45,7 @@ public class PreViewPage extends TopPart {
 		imgLinkedinLink = driver.findElement(By.xpath("//img[contains(@src,'linkedin.svg')]"));
 		imgTwitterLink = driver.findElement(By.xpath("//img[contains(@src,'twitter.svg')]"));
 		backToEditingLink = driver.findElement(By.cssSelector("div.button-text"));
-		//publishButton = driver.findElement(By.cssSelector("button[type='submit']"));
+		publishButton = driver.findElement(By.cssSelector("button[type='submit']"));
 }
 
 	// Page Object
