@@ -23,7 +23,7 @@ public class TagsComponent {
     private void initElements() {
         // init elements
         tagsButtons = driver.findElements(By.cssSelector("div.tags > button"));
-        tagsDescription = driver.findElement(By.cssSelector("div.tags > button + p"));
+       // tagsDescription = driver.findElement(By.cssSelector("div.tags > button + p"));
     }
 
     // Page Object
