@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import com.softserve.edu.greencity.ui.data.Habit;
 import com.softserve.edu.greencity.ui.data.HabitItem;
 
 public class HabitsContainer {
@@ -21,8 +22,7 @@ public class HabitsContainer {
 
     private void initElements() {
         habitComponent = new ArrayList<HabitComponent>();
-        driver.findElements(By.cssSelector("app-habit-tracker")).stream()
-            .forEach(habit -> habitComponent.add(new HabitComponent(habit)));
+        driver.findElements(By.cssSelector("app-habit-tracker")).forEach(habit -> habitComponent.add(new HabitComponent(habit)));
     }
 
     // Page Object
@@ -40,13 +40,12 @@ public class HabitsContainer {
         return getHabitComponents().size();
     }
 
-    public  HabitComponent getHabitByTitle(String title) {
+    public HabitComponent findHabitComponent(Habit habit) {
         return getHabitComponents().stream()
-                .filter(habit -> habit.getHabitTitle().contains(title))
+                .filter(item -> item.getHabitTitle().contains(habit.toString()))
                 .findAny()
                 .orElse(null);
     }
-
 
     // Business Logic
 
@@ -56,7 +55,7 @@ public class HabitsContainer {
      * @return HabitsContainer
      */
     public HabitsContainer addHabitInfo(HabitItem habit) {
-        getHabitByTitle(habit.getHabit().toString())
+        findHabitComponent(habit.getHabit())
             .selectItemsNumber(habit.getItemsCount())
             .selectEstimation(habit.getEstimation());
         return new HabitsContainer(driver);

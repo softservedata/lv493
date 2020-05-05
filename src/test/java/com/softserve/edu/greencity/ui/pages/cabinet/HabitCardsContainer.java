@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+import com.softserve.edu.greencity.ui.data.Habit;
 import com.softserve.edu.greencity.ui.data.HabitCard;
 
 
@@ -17,8 +18,6 @@ public class HabitCardsContainer {
 
     private List<HabitCardComponent> availableHabitCardComponents;
     private List<HabitCardComponent> chosenHabitCardComponents;
-
-    private final String CANNOT_DELETE_MESSAGE = "You can't delete your last habit";
 
     public HabitCardsContainer(WebDriver driver) {
         this.driver = driver;
@@ -50,14 +49,23 @@ public class HabitCardsContainer {
         return chosenHabitCardComponents;
     }
 
+    // deleteWarning
+
+    public WebElement getDeleteWarning() {
+        return driver.findElement(By.cssSelector(".deletion-hint"));
+    }
+
+    public boolean isVisibleDeleteMessageWarning() {
+        return getDeleteWarning().isDisplayed();
+    }
 
     // Functional
 
-    public long getAvailableHabitCardCount() {
+    public int getAvailableHabitCardCount() {
         return getAvailableHabitCardComponents().size();
     }
 
-    public long getChosenHabitCardCount() {
+    public int getChosenHabitCardCount() {
         return getChosenHabitCardComponents().size();
     }
 
@@ -75,6 +83,13 @@ public class HabitCardsContainer {
                  .orElse(null);
      }
 
+    public  HabitCardComponent findChosenHabitCard(Habit habit) {
+        return getChosenHabitCardComponents().stream()
+                 .filter(card -> card.getHabitCardTitle().contains(habit.toString()))
+                 .findAny()
+                 .orElse(null);
+     }
+
     public void moveHabitCard(HabitCardComponent habit, WebElement destination) {
         Actions action = new Actions(driver);
         action.clickAndHold(habit.getHabitCardLayout())
@@ -84,6 +99,8 @@ public class HabitCardsContainer {
                 .build().perform();
 
     }
+
+
 
     // Business Logic
 
@@ -95,7 +112,7 @@ public class HabitCardsContainer {
     public HabitCardsContainer deleteAndConfirmHabitCard(HabitCard card) {
         HabitCardComponent habit = findChosenHabitCardByTitle(card.getHabit().toString());
         if(habit !=null) {
-            habit.confirmDeleting();
+            habit.delete().confirm();
         }
         return new HabitCardsContainer(driver);
     }
@@ -108,7 +125,7 @@ public class HabitCardsContainer {
     public HabitCardsContainer deleteAndCancelHabitCard(HabitCard card) {
         HabitCardComponent habit = findChosenHabitCardByTitle(card.getHabit().toString());
         if (habit != null) {
-            habit.cancelDeleting();
+            habit.delete().cancel();
         }
         return this;
     }

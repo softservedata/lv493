@@ -10,8 +10,6 @@ import com.softserve.edu.greencity.ui.data.Goal;
 
 public class MyGoalsContainer extends GoalsContainerPart{
 
-    private final String GOAL_COMPONENTS = "app-goal-item";
-
     private final int MY_GOALS_MAX_COUNT_WITHOUT_SHOW_MORE = 3;
 
     private WebElement viewAllGoalsButton;
@@ -23,9 +21,7 @@ public class MyGoalsContainer extends GoalsContainerPart{
 
     private void initElements() {
         goalComponents = new ArrayList<GoalComponent>();
-        for (WebElement current : driver.findElements(By.cssSelector(GOAL_COMPONENTS))) {
-            goalComponents.add(new GoalComponent(current));
-        }
+        driver.findElements(By.cssSelector("app-goal-item")).forEach(goal -> goalComponents.add(new GoalComponent(goal)));
     }
 
     // Page Object

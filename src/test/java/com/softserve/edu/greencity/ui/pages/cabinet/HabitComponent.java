@@ -16,7 +16,6 @@ public class HabitComponent {
     private WebElement habitLayout;
 
     private String habitTitle;
-    private String habitTrackerDate;
 
     private WebElement habitChart;
 
@@ -33,7 +32,6 @@ public class HabitComponent {
 
     private void initElements() {
         habitTitle = habitLayout.findElement(By.cssSelector("app-habit-title h4")).getText();
-        habitTrackerDate = habitLayout.findElement(By.cssSelector("app-habit-tracker-date span")).getText();
 
         habitChart = habitLayout.findElement(By.cssSelector("app-habit-chart"));
 
@@ -58,12 +56,6 @@ public class HabitComponent {
 
     public String getHabitTitle() {
         return habitTitle;
-    }
-
-    // habitTitle
-
-    public String getHabitTrackerDate() {
-        return habitTrackerDate;
     }
 
     // habitChart
@@ -120,6 +112,10 @@ public class HabitComponent {
         }
     }
 
+    // do not work select estimation / do not know how to identify active button
+    public Estimation getSelectedEstimation() {
+         return null;
+    }
 
 
 

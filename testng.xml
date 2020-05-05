@@ -5,7 +5,14 @@
 
 	<test name="MyCabinetSmokeTest">
 		<classes>
-			<class name="com.softserve.edu.greencity.ui.tests.MyCabinetSmokeTest" />
+			<class name="com.softserve.edu.greencity.ui.tests.MyCabinetTests">
+				<methods>
+					<include name="deleteAloneHabitCardTest" />
+					<include name="addHabitCardTest" />
+					<include name="deleteAndCancelHabitCardTest" />
+					<include name="deleteAndConfirmHabitCardTest" />					
+					<include name="addHabitInfoTest" />
+				</methods>
 			</class>
 		</classes>
 	</test> <!-- Test -->

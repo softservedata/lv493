@@ -10,8 +10,6 @@ public class HabitCardComponent {
     private String habitCardTitle;
     private String habitCardDescription;
     private WebElement deleteButton;
-    private WebElement cancelButton;
-    private WebElement confirmButton;
 
     public HabitCardComponent(WebElement habitCardLayout) {
         this.habitCardLayout = habitCardLayout;
@@ -59,55 +57,79 @@ public class HabitCardComponent {
         return getDeleteButton().isDisplayed();
     }
 
-    // cancelButton
-
-    public WebElement getCancelButton() {
-        return habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-cancel"));
-    }
-
-    public void clickCancelButton() {
-        getCancelButton().click();
-    }
-
-    public boolean isDisplayedCancelButton() {
-        return getCancelButton().isDisplayed();
-    }
-
-    // confirmButton
-
-    public WebElement getConfirmButton() {
-        return habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-save"));
-    }
-
-    public void clickConfirmButton() {
-        getConfirmButton().click();
-    }
-
-    public boolean isDisplayedConfirmButton() {
-        return getConfirmButton().isDisplayed();
-    }
-
 
     // Functional
 
+    public DeleteCard delete() {
+        clickDeleteButton();
+       return new DeleteCard();
+    }
+
+
     // Business Logic
 
-    public void confirmDeleting() {
-        clickDeleteButton();
-        if (isDisplayedConfirmButton()) {
-            clickConfirmButton();
+
+    // Inner class
+
+    class DeleteCard {
+        private WebElement cancelButton;
+        private WebElement confirmButton;
+
+        public DeleteCard() {
+            initElements();
         }
-    }
 
-
-    public HabitCardComponent cancelDeleting() {
-        clickDeleteButton();
-        if (isDisplayedCancelButton()) {
-            clickCancelButton();
+        private void initElements() {
+            cancelButton = habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-cancel"));;
+            confirmButton =  habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-save")); ;
         }
-        return this;
+
+        // Page Object
+
+        // cancelButton
+
+        public WebElement getCancelButton() {
+            return cancelButton;
+            //return habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-cancel"));
+        }
+
+        public void clickCancelButton() {
+            getCancelButton().click();
+        }
+
+        public boolean isDisplayedCancelButton() {
+            return getCancelButton().isDisplayed();
+        }
+
+        // confirmButton
+
+        public WebElement getConfirmButton() {
+            return confirmButton;
+            //return habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-save"));
+        }
+
+        public void clickConfirmButton() {
+            getConfirmButton().click();
+        }
+
+        public boolean isDisplayedConfirmButton() {
+            return getConfirmButton().isDisplayed();
+        }
+
+
+        // Functional
+
+        public void confirm() {
+            if (isDisplayedConfirmButton()) {
+                clickConfirmButton();
+            }
+        }
+
+        public void cancel() {
+            if (isDisplayedCancelButton()) {
+                clickCancelButton();
+            }
+        }
+
     }
-
-
-
 }

@@ -81,6 +81,13 @@ public class CreateHabitDropdown {
 
     // Functional
 
+    public boolean isChosenHabitCard(HabitCard card) {
+        return getHabitsContainer().findChosenHabitCard(card.getHabit()) != null ? true : false;
+    }
+
+    public boolean isVisibleWarning() {
+        return getHabitsContainer().isVisibleDeleteMessageWarning();
+    }
 
     // Business Logic
 
@@ -104,6 +111,8 @@ public class CreateHabitDropdown {
         if(isDisplayedSaveButton()) {
             clickSaveButton();
         }
+        // !!!! Temporary
+        clickCloseButton();
         return new MyCabinetPage(driver);
     }
 

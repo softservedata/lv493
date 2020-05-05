@@ -8,4 +8,7 @@ public class HabitCardRepository {
         return new HabitCard(Habit.SAVE_BAGS);
     }
 
+    public static HabitCard getDiscardDisposableCups() {
+        return new HabitCard(Habit.DISCARD_DISPOSABLE_CUPS);
+    }
 }

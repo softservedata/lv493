@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.data.Goal;
+import com.softserve.edu.greencity.ui.data.Habit;
 import com.softserve.edu.greencity.ui.data.HabitItem;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
@@ -34,6 +35,9 @@ public class MyCabinetPage extends TopPart {
 
         manageGoalsButton = driver.findElement(By.cssSelector("div.add-goal-button-container button.add-goal-button"));
         addNewHabitButton = driver.findElement(By.cssSelector("button.btn.btn-success"));
+
+        habitsContainer = new HabitsContainer(driver);
+        goalsContainer = new MyGoalsContainer(driver);
     }
 
 
@@ -41,41 +45,43 @@ public class MyCabinetPage extends TopPart {
 
     // packagesCount
 
-    private String getPackagesCount() {
+    public String getPackagesCount() {
         return packagesCount;
     }
 
     // glassesCount
 
-    private String getGlassesCount() {
+    public String getGlassesCount() {
         return glassesCount;
     }
 
     // manageGoalsButton
 
-    private WebElement getManageGoalsButton() {
+    public WebElement getManageGoalsButton() {
         return manageGoalsButton;
     }
 
-    private void clickManageGoalsButton() {
+    public void clickManageGoalsButton() {
         getManageGoalsButton().click();
     }
 
-    //habitsContainer
+    // habitsContainer
 
-    private HabitsContainer getHabitsContainer() {
-        return new HabitsContainer(driver);
+    public HabitsContainer getHabitsContainer() {
+       // return new HabitsContainer(driver);
+        return habitsContainer;
     }
 
-    //goalsContainer
+    // goalsContainer
 
-    private MyGoalsContainer getGoalsContainer() {
-        return new MyGoalsContainer(driver);
+    public MyGoalsContainer getGoalsContainer() {
+        //return new MyGoalsContainer(driver);
+        return goalsContainer;
     }
 
     // addNewHabitButton
 
-    private WebElement getAddNewHabitButton() {
+    public WebElement getAddNewHabitButton() {
         return addNewHabitButton;
     }
 
@@ -85,6 +91,14 @@ public class MyCabinetPage extends TopPart {
 
 
     // Functional
+
+    public boolean isAvailableHabit(Habit habit) {
+        return getHabitsContainer().findHabitComponent(habit) != null ? true : false;
+    }
+
+    public HabitComponent getHabitComponent(Habit habit) {
+        return getHabitsContainer().findHabitComponent(habit);
+    }
 
 
     // Business Logic
@@ -103,6 +117,7 @@ public class MyCabinetPage extends TopPart {
      * @return NewHabitDropdown
      */
     public CreateHabitDropdown gotoCreateHabitDropdown() {
+       // System.out.println("dfvvdf");
         clickAddNewHabitButton();
         return new CreateHabitDropdown(driver);
     }

@@ -5,11 +5,11 @@ public class HabitItemRepository {
     }
 
     public static HabitItem getSaveBagsHabit() {
-        return new HabitItem(Habit.SAVE_BAGS, 9, Estimation.SUPER);
+        return new HabitItem(Habit.SAVE_BAGS, 2, Estimation.SUPER);
     }
 
     public static HabitItem getDiscardCupsHabit() {
-        return new HabitItem(Habit.DISCARD_DISPOSABLE_CUPS, 2, Estimation.NORMAL);
+        return new HabitItem(Habit.DISCARD_DISPOSABLE_CUPS, 9, Estimation.NORMAL);
     }
 
 }

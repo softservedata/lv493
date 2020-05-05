@@ -29,7 +29,7 @@ public abstract class GoalsContainerPart {
 
     // Functional
 
-    public long getGoalsCount() {
+    public int getGoalsCount() {
         return getGoalComponents().size();
     }
 
