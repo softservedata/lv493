@@ -50,7 +50,6 @@ public class RegisterPageTest extends GreencityTestRunner {
     @Test(dataProvider = "invalidCredentialUser")
     public void checkRegisterPage2(UserData userLoginCredentials) {
         System.out.println("-----invalidCredentialUser--------");
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         loadApplication().navigateMenuMyCabinet();
         RegisterPage registerPage = new LoginPage(driver).gotoRegisterPage();
         System.out.println("registerPage.getTitleFieldText(): "
