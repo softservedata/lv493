@@ -68,14 +68,12 @@ public class MyCabinetPage extends TopPart {
     // habitsContainer
 
     public HabitsContainer getHabitsContainer() {
-       // return new HabitsContainer(driver);
         return habitsContainer;
     }
 
     // goalsContainer
 
     public MyGoalsContainer getGoalsContainer() {
-        //return new MyGoalsContainer(driver);
         return goalsContainer;
     }
 

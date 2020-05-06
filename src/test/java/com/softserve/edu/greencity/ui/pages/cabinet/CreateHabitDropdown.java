@@ -7,9 +7,10 @@ import org.openqa.selenium.WebElement;
 import com.softserve.edu.greencity.ui.data.HabitCard;
 
 public class CreateHabitDropdown {
+
     private WebDriver driver;
 
-    HabitCardsContainer   habitsContainer;
+    private HabitCardsContainer habitsContainer;
 
     private WebElement saveButton;
     private WebElement  cancelButton;

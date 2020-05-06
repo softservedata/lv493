@@ -29,24 +29,24 @@ public abstract class GoalsContainerPart {
 
     // Functional
 
-    public int getGoalsCount() {
+    protected int getGoalsCount() {
         return getGoalComponents().size();
     }
 
-    public  GoalComponent findGoalByTitle(String title) {
+    protected  GoalComponent findGoalByTitle(String title) {
         return getGoalComponents().stream()
                 .filter(goal -> goal.getGoalTitle().contains(title))
                 .findAny()
                 .orElse(null);
     }
 
-    public   List<String> getGoalsTitle() {
+    protected   List<String> getGoalsTitle() {
         return getGoalComponents().stream()
                 .flatMap(goal -> Stream.of(goal.getGoalTitle()))
                 .collect(Collectors.toList());
     }
 
-    public  GoalComponent getLastGoal() {
+    protected  GoalComponent getLastGoal() {
         return  Streams.findLast(getGoalComponents().stream()).get();
 
     }

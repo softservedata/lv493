@@ -66,12 +66,10 @@ public class HabitCardComponent {
     }
 
 
-    // Business Logic
-
-
     // Inner class for Confirmation Deleting
 
     class DeleteCard {
+
         private WebElement cancelButton;
         private WebElement confirmButton;
 
@@ -90,7 +88,6 @@ public class HabitCardComponent {
 
         public WebElement getCancelButton() {
             return cancelButton;
-            //return habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-cancel"));
         }
 
         public void clickCancelButton() {
@@ -105,7 +102,6 @@ public class HabitCardComponent {
 
         public WebElement getConfirmButton() {
             return confirmButton;
-            //return habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-save"));
         }
 
         public void clickConfirmButton() {
@@ -132,4 +128,6 @@ public class HabitCardComponent {
         }
 
     }
+
+    // Business Logic
 }

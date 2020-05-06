@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class GoalComponent {
+    private final String CHECKBOX_STATUS_SELECTOR = "input";
 
     private WebElement goalLayout;
 
@@ -114,8 +115,8 @@ public class GoalComponent {
 
     // Functional
 
-    public boolean isSelectedCheckMarkCheckbox() {
-        return goalLayout.findElement(By.cssSelector("input")).isSelected();
+    private boolean isSelectedCheckMarkCheckbox() {
+        return goalLayout.findElement(By.cssSelector(CHECKBOX_STATUS_SELECTOR)).isSelected();
     }
 
 

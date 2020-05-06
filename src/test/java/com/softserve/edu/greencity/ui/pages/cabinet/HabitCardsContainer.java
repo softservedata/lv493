@@ -14,10 +14,10 @@ import com.softserve.edu.greencity.ui.data.HabitCard;
 
 public class HabitCardsContainer {
 
-    private WebDriver driver;
-
     private final String AVAILABLE_HABIT_CARD_CONTAINER_SELECTOR = "div.available-to-choose-list";
     private final String CHOSEN_HABIT_CARD_CONTAINER_SELECTOR = "div.already-chosen-list";
+
+    private WebDriver driver;
 
     private List<HabitCardComponent> availableHabitCardComponents;
     private List<HabitCardComponent> chosenHabitCardComponents;
@@ -62,6 +62,7 @@ public class HabitCardsContainer {
         return getDeleteWarning().isDisplayed();
     }
 
+
     // Functional
 
     public int getAvailableHabitCardCount() {
@@ -75,15 +76,13 @@ public class HabitCardsContainer {
     public  HabitCardComponent findChosenHabitCardByHabit(Habit habit) {
         return getChosenHabitCardComponents().stream()
                  .filter(card -> card.getHabitCardTitle().contains(habit.toString()))
-                 .findAny()
-                 .orElse(null);
+                 .findAny().orElse(null);
      }
 
     public  HabitCardComponent findAvailableHabitCardByHabit(Habit habit) {
         return getAvailableHabitCardComponents().stream()
                  .filter(card -> card.getHabitCardTitle().contains(habit.toString()))
-                 .findAny()
-                 .orElse(null);
+                 .findAny().orElse(null);
      }
 
     public  HabitCardComponent getAloneHabitCard() {
