@@ -14,20 +14,20 @@ import com.softserve.edu.greencity.ui.pages.cabinet.RegisterPage;
  */
 public class RegisterPageTest extends GreencityTestRunner {
 
-    @DataProvider
-    public Object[][] validCredentialUser() {
-        return new Object[][] {
-                { UserRepository.getDefaultUserCredentials() }, };
-    }
+//    @DataProvider
+//    public Object[][] validCredentialUser() {
+//        return new Object[][] {
+//                { UserRepository.getDefaultUserCredentials() }, };
+//    }
 
-    @DataProvider
-    public Object[][] invalidCredentialUser() {
-        return new Object[][] { { UserRepository.getWrongUserCredentials1() },
-                { UserRepository.getWrongUserCredentials2() }, 
-                };
-    }
+//    @DataProvider
+//    public Object[][] invalidCredentialUser() {
+//        return new Object[][] { { UserRepository.getWrongUserCredentials1() },
+//                { UserRepository.getWrongUserCredentials2() },
+//                };
+//    }
 
-    @Test(dataProvider = "validCredentialUser")
+    //@Test(dataProvider = "validCredentialUser")
     public void checkRegisterPage1(UserData userLoginCredentials) {
         System.out.println("-----validCredentialUser--------");
         loadApplication().navigateMenuMyCabinet();
@@ -42,7 +42,7 @@ public class RegisterPageTest extends GreencityTestRunner {
         presentationSleep(2);
     }
     
-    @Test(dataProvider = "invalidCredentialUser")
+    //@Test(dataProvider = "invalidCredentialUser")
     public void checkRegisterPage2(UserData userLoginCredentials) {
         System.out.println("-----invalidCredentialUser--------");
         loadApplication().navigateMenuMyCabinet();

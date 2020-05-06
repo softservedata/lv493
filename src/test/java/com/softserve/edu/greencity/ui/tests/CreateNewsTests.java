@@ -12,7 +12,7 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 public class CreateNewsTests extends GreencityTestRunner {
 
-    @DataProvider
+    //@DataProvider
     public Object[] newsDataProvider() {
         return new Object[]{
                 NewsDataRepository.getAllFieldsNews()
@@ -20,7 +20,7 @@ public class CreateNewsTests extends GreencityTestRunner {
         };
     }
 
-    @Test
+    //@Test
     public void CancelNewsCreatingTest() {
         NewsData newsData = NewsDataRepository.getDefault();
         TipsTricksPage tipstrickspage = loadApplication();
@@ -33,7 +33,7 @@ public class CreateNewsTests extends GreencityTestRunner {
         presentationSleep(2);
     }
 
-    @Test(dataProvider = "newsDataProvider")
+    //@Test(dataProvider = "newsDataProvider")
     public void CancelContinueNewsCreatingTest(NewsData newsData) {
         CreateNewsPage createNewsPage = loadApplication()
                 .navigateMenuEconews()
@@ -50,7 +50,7 @@ public class CreateNewsTests extends GreencityTestRunner {
         createNewsPage.publishNews();
     }
 
-    @Test(dataProvider = "newsDataProvider")
+    //@Test(dataProvider = "newsDataProvider")
     public void createNewsTest(NewsData newsData) {
         PreViewPage preViewPage = loadApplication()
                 .navigateMenuEconews()

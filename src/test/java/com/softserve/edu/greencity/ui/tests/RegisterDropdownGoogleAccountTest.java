@@ -15,26 +15,26 @@ import com.softserve.edu.greencity.ui.pages.common.RegisterDropdown;
  */
 public class RegisterDropdownGoogleAccountTest extends GreencityTestRunner {
 
-    @DataProvider
-    public Object[][] validCredentialGoogleUser() {
-        return new Object[][] {
-                { UserRepository.getGoogleUserCredentials() }, };
-    }
+//    @DataProvider
+//    public Object[][] validCredentialGoogleUser() {
+//        return new Object[][] {
+//                { UserRepository.getGoogleUserCredentials() }, };
+//    }
 
-    @Test(dataProvider = "validCredentialGoogleUser")
-    public void checkGoogleSignUpPage(UserData userGoogleLoginCredentials) {
-        System.out.println("-----------validCredentialUser------------");
-        RegisterDropdown registerDropdown = loadApplication()
-                .gotoRegisterDropdown();
-        System.out.println("registerDropdown.getTitleFieldText(): "
-                + registerDropdown.getTitleFieldText());
-        GoogleAccountPage googleAccountPage = registerDropdown.clickSignUpGoogleAccountButton();
-        System.out.println("googleAccountPage.getTitleGoogleAccount(): " + googleAccountPage.getTitleGoogleAccount());
-        googleAccountPage.enterEmail(userGoogleLoginCredentials.getEmail());
-        presentationSleep(2);
-        googleAccountPage.clickEmailNext();
-//        googleAccountPage.enterPassword(userGoogleLoginCredentials.getPassword());
-        presentationSleep(2);
-//        googleAccountPage.clickPasswordNext();
-    }
+//    @Test(dataProvider = "validCredentialGoogleUser")
+//    public void checkGoogleSignUpPage(UserData userGoogleLoginCredentials) {
+//        System.out.println("-----------validCredentialUser------------");
+//        RegisterDropdown registerDropdown = loadApplication()
+//                .gotoRegisterDropdown();
+//        System.out.println("registerDropdown.getTitleFieldText(): "
+//                + registerDropdown.getTitleFieldText());
+//        GoogleAccountPage googleAccountPage = registerDropdown.clickSignUpGoogleAccountButton();
+//        System.out.println("googleAccountPage.getTitleGoogleAccount(): " + googleAccountPage.getTitleGoogleAccount());
+//        googleAccountPage.enterEmail(userGoogleLoginCredentials.getEmail());
+//        presentationSleep(2);
+//        googleAccountPage.clickEmailNext();
+////        googleAccountPage.enterPassword(userGoogleLoginCredentials.getPassword());
+//        presentationSleep(2);
+////        googleAccountPage.clickPasswordNext();
+//    }
 }

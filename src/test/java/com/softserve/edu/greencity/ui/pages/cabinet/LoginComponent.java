@@ -34,10 +34,10 @@ public class LoginComponent extends LoginPart {
                 .setSignInButton(driver.findElement(By.xpath(LOGIN_BUTTON_XPATH)));
     }
 
-    @Override
-    public ForgotPasswordPart gotoForgotPassword() {
-        return null;
-    }
+//    @Override
+//    public ForgotPasswordPart gotoForgotPassword() {
+//        return null;
+//    }
 
     public RegisterPage gotoRegisterPage() {
         getSignUpLink().click();
