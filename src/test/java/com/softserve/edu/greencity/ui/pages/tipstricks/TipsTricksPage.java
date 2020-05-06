@@ -1,9 +1,5 @@
 package com.softserve.edu.greencity.ui.pages.tipstricks;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
+import com.softserve.edu.greencity.ui.tools.QuantityItems;
 
 public class TipsTricksPage extends TopPart {
 
@@ -19,19 +17,26 @@ public class TipsTricksPage extends TopPart {
     private WebElement startHabitTop;
     private WebElement startHabitCenter;
     private WebElement startHabitBelow;
-    private WebElement subscribeOnHome;
+    private WebElement subscribeOnTipsTricks;
 
     // field for email for subscribe
-    private WebElement enterEmailHome;
+    private WebElement enterEmailTipsTricks;
 
     // Text about amountPeople, quantityBags, quantityCups
     private WebElement amountPeople;
     private WebElement amountBags;
     private WebElement amountCups;
     // private WebElement qrCode;
+
     // link to MapPage
     private WebElement linkBags;
     private WebElement linkCups;
+
+    // link to EcoNews
+    private WebElement mainEcoNewsLink;
+    private WebElement other1EcoNewsLink;
+    private WebElement other2EcoNewsLink;
+    private WebElement allNewsLink;
 
     public TipsTricksPage(WebDriver driver) {
         super(driver);
@@ -46,25 +51,26 @@ public class TipsTricksPage extends TopPart {
                 .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(2)> div> button"));
         startHabitBelow = driver
                 .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >button"));
-        subscribeOnHome = driver
+        subscribeOnTipsTricks = driver
                 .findElement(By.xpath("//div[@id='form-wrapper']/button[@class='primary-global-button']"));
-        enterEmailHome = driver.findElement(By.xpath("//input[@type='email']"));
+        enterEmailTipsTricks = driver.findElement(By.xpath("//input[@type='email']"));
         amountPeople = driver.findElement(By.cssSelector("#stats>h2"));
         amountBags = driver.findElement(By.xpath("//app-stat-row/div/div[2]/div/h3"));
         amountCups = driver.findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >h3"));
         // qrCode =
         // driver.findElement(By.xpath("//div[@id='qr-code-wrapper']/img"));
-        // linkBags =
-        // driver.findElement(By.cssSelector("app-stat-row:nth-child(1) > div >
-        // div.stat-row-content.ng-star-inserted > div > div > a"));
-
         linkBags = driver.findElement(
                 By.xpath(".//div[@class='stat-row-image ng-star-inserted']//following-sibling::div/div/div/a"));
         linkCups = driver.findElement(By.xpath(
                 ".//div[@class='stat-row-image ng-star-inserted']//preceding-sibling::div[@class='stat-row-content ng-star-inserted']/div/div/a"));
+        mainEcoNewsLink = driver.findElement(By.cssSelector("div#main-event-content > a"));
+        other1EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(1) > a"));
+        other2EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(3) > a"));
+        allNewsLink = driver.findElement(By.cssSelector("div#eco-events > a"));
     }
 
     // Page Object
+
     // Button 'Start forming a habit'
 
     public WebElement getStartHabitTop() {
@@ -109,31 +115,39 @@ public class TipsTricksPage extends TopPart {
 
     // Button 'Subscribe'
 
-    public WebElement getSubscribeOnHome() {
-        return subscribeOnHome;
+    public WebElement getSubscribeOnTipsTricks() {
+        return subscribeOnTipsTricks;
     }
 
-    public void clickSubscribeOnHome() {
-        getSubscribeOnHome().click();
+    public void clickSubscribeOnTipsTricks() {
+        getSubscribeOnTipsTricks().click();
 
     }
 
-    public boolean isDisplayedSubscribeOnHome() {
-        return getSubscribeOnHome().isDisplayed();
+    public boolean isDisplayedSubscribeOnTipsTricks() {
+        return getSubscribeOnTipsTricks().isDisplayed();
     }
 
     // Enter email for Subscribe
 
-    public WebElement getEnterEmailHome() {
-        return enterEmailHome;
+    public WebElement getEmailTipsTricks() {
+        return enterEmailTipsTricks;
     }
 
-    public void clickEnterEmailHome() {
-        getEnterEmailHome().click();
+    public String getEmailTipsTricksText() {
+        return getEmailTipsTricks().getText();
     }
 
-    public void writeEnterEmailHome(String email) {
-        getEnterEmailHome().sendKeys(email);
+    public void clickEmailTipsTricks() {
+        getEmailTipsTricks().click();
+    }
+
+    public void setEmailTipsTricks(String email) {
+        getEmailTipsTricks().sendKeys(email);
+    }
+
+    public void clearEmailTipsTricks() {
+        getEmailTipsTricks().clear();
     }
 
     // amount People
@@ -142,12 +156,8 @@ public class TipsTricksPage extends TopPart {
         return amountPeople;
     }
 
-    public String textAmountPeople() {
+    public String getAmountPeopleText() {
         return getAmountPeople().getText();
-    }
-
-    public int getNumberAmountPeople() {
-        return digits(textAmountPeople());
     }
 
     public boolean isDesplayedAmountPeople() {
@@ -160,12 +170,8 @@ public class TipsTricksPage extends TopPart {
         return amountBags;
     }
 
-    public String textAmountBags() {
+    public String getAmountBagsText() {
         return amountBags.getText();
-    }
-
-    public int getNumberAmountBags() {
-        return digits(textAmountBags());
     }
 
     // amount Cups
@@ -174,50 +180,89 @@ public class TipsTricksPage extends TopPart {
         return amountCups;
     }
 
-    public String textAmountCups() {
+    public String getAmountCupsText() {
         return amountCups.getText();
     }
 
-    public int getNumberAmountCups() {
-        return digits(textAmountCups());
-    }
-
     // link bellow Bags to MapPage
 
-    public WebElement getLinkBags() {
+    public WebElement getBagsLink() {
         return linkBags;
     }
 
-    public void clickLinkBags() {
-        getLinkBags().click();
+    public void clickBagsLink() {
+        getBagsLink().click();
     }
 
-    // link bellow Bags to MapPage
+    // link bellow Cups to MapPage
 
-    public WebElement getLinkCups() {
+    public WebElement getCupsLink() {
         return linkCups;
     }
 
-    public void clickLinkCups() {
-        getLinkCups().click();
+    public void clickCupsLink() {
+        getCupsLink().click();
+    }
+
+    // link mainEcoNewsLink
+
+    public WebElement getMainEcoNewsLink() {
+        return mainEcoNewsLink;
+    }
+
+    public void clickMainEcoNewsLink() {
+        getMainEcoNewsLink().click();
+    }
+
+    // link other1EcoNewsLink
+    public WebElement getOther1EcoNewsLink(){
+        return other1EcoNewsLink;
+    }
+
+    public void clickOther1EcoNewsLink() {
+        getOther1EcoNewsLink().click();
+    }
+    
+    // link other2EcoNewsLink
+    public WebElement getOther2EcoNewsLink() {
+        return other2EcoNewsLink;
+    }
+    public void clickOther2EcoNewsLink() {
+        getOther2EcoNewsLink().click();
+    }
+
+    // link to allNewsLink
+    public WebElement getAllNewsLink() {
+        return allNewsLink;
+    }
+    public void clickAllNewsLink() {
+        getAllNewsLink().click();
     }
     // Functional
 
-    private int digits(String text) {
-        String regex = "\\d+";
-        Pattern pattern = null;
-        Matcher matcher = null;
-        try {
-            pattern = Pattern.compile(regex);
-            matcher = pattern.matcher(text);
-        } catch (PatternSyntaxException e) {
-            e.getMessage();
-        }
-        if (matcher.find()) {
-            text.substring(matcher.start(), matcher.end());
-        }
+    /**
+     * quantityPeople() - reads the text that contains about the number of
+     * people
+     * 
+     * @return number People, who signed to GreenCity
+     */
+    public int quantityPeople() {
+        return new QuantityItems().quantityItems(getAmountPeopleText());
+    }
 
-        return Integer.valueOf(text.substring(matcher.start(), matcher.end()));
+    /**
+     * @return quantity Bags, which we used
+     */
+    public int quantityBags() {
+        return new QuantityItems().quantityItems(getAmountBagsText());
+    }
+
+    /**
+     * @return quantity Cups, which we used
+     */
+
+    public int quantityCups() {
+        return new QuantityItems().quantityItems(getAmountCupsText());
     }
 
     // Business Logic
@@ -227,28 +272,48 @@ public class TipsTricksPage extends TopPart {
         return new TipsTricksPage(driver);
     }
 
-    public MyCabinetPage createHabitToMyCabinet() {
+    /**
+     * Create habit on page GreenCity using button on top "Start forming a
+     * habit"
+     * 
+     * @return open My cabinet
+     */
+    public MyCabinetPage navigateMyCabinet() {
         clickStartHabitTop();
         return new MyCabinetPage(driver);
     }
 
-    // public MyCabinetPage createHabitCenterToMyCabinet() {
+    // public MyCabinetPage navigateCenterMyCabinet() {
     // clickStartHabitCenter();
     // return new MyCabinetPage(driver);
     // }
 
-    // public MyCabinetPage createHabitBellowToMyCabinet() {
+    // public MyCabinetPage navigateHabitBellowMyCabinet() {
     // clickStartHabitBelow();
     // return new MyCabinetPage(driver);
     // }
+
+    /**
+     * @return on page Map using link bellow Bags
+     */
     public MapPage moveBagsToMap() {
-        clickLinkBags();
+        clickBagsLink();
         return new MapPage(driver);
     }
 
+    /**
+     * @return on page Map using link bellow Cups
+     */
     public MapPage moveCupsToMap() {
-        clickLinkCups();
+        clickCupsLink();
         return new MapPage(driver);
 
     }
+    
+    public EconewsPage moveMainEcoNewsLink() {
+        clickMainEcoNewsLink();
+        return new EconewsPage(driver);
+    }
+    
+
 }
