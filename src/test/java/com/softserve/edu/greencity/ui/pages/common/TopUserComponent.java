@@ -5,12 +5,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class TopUserComponent {
+    protected final String PROFILE_DROPDOWN_NULL_MESSAGE = "ProfileDropdown is null";
+    //
 	private final String TAG_ATTRIBUTE_CLASS = "class";
 	//
 	private WebDriver driver;
 	//
 	private WebElement profileButton;
 	private WebElement userNameButton;
+	//
+	private ProfileDropdown profileDropdown;
 
 	public TopUserComponent(WebDriver driver) {
 		this.driver = driver;
@@ -38,7 +42,7 @@ public class TopUserComponent {
 	}
 
 	public String getUserNameButtonText() {
-		return getUserNameButton().getText();
+		return getUserNameButton().getText().trim();
 	}
 
 	public void clickUserNameButton() {
@@ -52,11 +56,53 @@ public class TopUserComponent {
 	// Functional
 
 	public boolean isExpanded() {
-		return getProfileButton().getAttribute(TAG_ATTRIBUTE_CLASS)
+		return getProfileButton()
+				.getAttribute(TAG_ATTRIBUTE_CLASS)
 				.equals("add-shadow");
 	}
 	
-	//public void openProfile
+	// profileDropdown
+	
+	protected ProfileDropdown getProfileDropdown() {
+    	if (profileDropdown == null)
+        {
+            // TODO Develop Custom Exception 
+            throw new RuntimeException(PROFILE_DROPDOWN_NULL_MESSAGE);
+        }
+        return profileDropdown;
+    }
+	
+	protected void openProfileDropdown() {
+		if (!isExpanded()) {
+			clickUserNameButton();
+		}
+	}
+	
+	protected ProfileDropdown createProfileDropdown() {
+		openProfileDropdown();
+		profileDropdown = new ProfileDropdown(driver);
+		return getProfileDropdown();
+	}
+	
+	protected void clickProfileDropdownFavoritePlaces() {
+		createProfileDropdown().clickFavoritePlaces();
+		closeProfileDropdown();
+	}
+	
+	protected void clickProfileDropdownUserSettings() {
+		createProfileDropdown().clickUserSettings();
+		closeProfileDropdown();
+	}
+	
+	protected void clickProfileDropdownSignout() {
+		createProfileDropdown().clickSignout();
+		closeProfileDropdown();
+	}
+	
+	protected void closeProfileDropdown() {
+		profileDropdown = null;
+	}
 	
 	// Business Logic
+	
 }

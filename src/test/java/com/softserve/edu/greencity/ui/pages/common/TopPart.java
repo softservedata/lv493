@@ -25,12 +25,19 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
  * @author Lv-493.Taqc/Java
  */
 public abstract class TopPart {
+	// TODO to delete
+    public static final String PROFILE_NAME = "Nadiia Steblivets";
+	//
 	private final int WINDOW_WIDTH_TO_SCROLL = 1024;
 	private final int WINDOW_HEIGHT_TO_CLICK_FOOTER = 480;
 	//
+    protected final String OPTION_NULL_MESSAGE = "DropdownComponent is null";
+    //protected final String OPTION_NOT_FOUND_MESSAGE = "Option %s not found in %s";
+    //protected final String PAGE_DO_NOT_EXIST="Page do not exist!!!";
+    //
     //protected final String TAG_ATTRIBUTE_VALUE = "value";
     //protected final String TAG_ATTRIBUTE_SRC = "src";
-	//
+    //
 	protected WebDriver driver;
 	//
 	private Select languageSwitcher;
@@ -40,13 +47,14 @@ public abstract class TopPart {
 	private TopGuestComponent topGuestComponent;
 	private TopUserComponent topUserComponent;
 	//
-	private LoginDropdown loginDropdown;
-	private RegisterDropdown registerDropdown;
+	//private LoginDropdown loginDropdown;
+	//private RegisterDropdown registerDropdown;
 	
 	public TopPart(WebDriver driver) {
 		this.driver = driver;
 		closeAlertIfPresent();
 		initElements();
+		//initComponents();
 	}
 	
 	private void closeAlertIfPresent() {
@@ -75,6 +83,11 @@ public abstract class TopPart {
 		copyright = driver.findElement(By.cssSelector("div.bottom-part"));
 	}
 
+//	private void initComponents() {
+		// TODO Develop Application Status Class (Singleton)
+//		createTopGuestComponent();
+//	}
+	
 	// Page Object
 	
 	// languageSwitcher
@@ -120,7 +133,82 @@ public abstract class TopPart {
 	}
 	
 	// Functional
+	
+	// topGuestComponent;
+	
+	protected TopGuestComponent getTopGuestComponent() {
+    	if (topGuestComponent == null)
+        {
+            // TODO Develop Custom Exception 
+            throw new RuntimeException(OPTION_NULL_MESSAGE);
+        }
+        return topGuestComponent;
+    }
 
+	protected TopGuestComponent createTopGuestComponent() {
+    	topGuestComponent = new TopGuestComponent(driver);
+        return getTopGuestComponent();
+    }
+
+	protected void clickTopGuestSignin() {
+    	getTopGuestComponent().clickSigninLink();
+    	//topGuestComponent = null;
+    }
+    
+	protected void clickTopGuestSignup() {
+    	getTopGuestComponent().clickSignupLink();
+    	//topGuestComponent = null;
+    }
+
+	protected void closeTopGuestComponent() {
+        //clickSearchTopField();
+    	topGuestComponent = null;
+    }
+	
+	// topUserComponent
+	
+	protected TopUserComponent getTopUserComponent() {
+    	if (topUserComponent == null)
+        {
+            // TODO Develop Custom Exception 
+            throw new RuntimeException(OPTION_NULL_MESSAGE);
+        }
+        return topUserComponent;
+    }
+
+	protected TopUserComponent createTopUserComponent() {
+    	topUserComponent = new TopUserComponent(driver);
+        return getTopUserComponent();
+    }
+    
+	public String getTopUserName() {
+		// TODO
+		//getTopUserComponent().getUserNameButtonText();
+		return createTopUserComponent().getUserNameButtonText();
+	}
+	
+	protected void clickTopUserFavoritePlaces() {
+    	getTopUserComponent().clickProfileDropdownFavoritePlaces();
+    	//topGuestComponent = null;
+    }
+    
+	protected void clickTopUserSettings() {
+    	getTopUserComponent().clickProfileDropdownUserSettings();
+    	//topGuestComponent = null;
+    }
+    
+	protected void clickTopUserSignout() {
+    	getTopUserComponent().clickProfileDropdownSignout();
+    	//topGuestComponent = null;
+    }
+
+	protected void closeTopUserComponent() {
+        //clickSearchTopField();
+    	topUserComponent = null;
+    }
+	
+	// language
+	
 	protected void chooseLanguage(Languages language) {
 		clickLanguageSwitcher();
 		setLanguageSwitcher(language.toString());
@@ -165,6 +253,29 @@ public abstract class TopPart {
 		return new AboutPage(driver);
 	}
 
+	public LoginDropdown signin() {
+		// TODO
+		//getTopGuestComponent().clickSigninLink();
+		createTopGuestComponent().clickSigninLink();
+		return new LoginDropdown(driver);
+	}
+	
+	public RegisterDropdown signup() {
+		// TODO
+	    //getTopGuestComponent().clickSignupLink();
+		createTopGuestComponent().clickSignupLink();
+		return new RegisterDropdown(driver);
+	}
+	
+	public TipsTricksPage signout() {
+		getTopUserComponent().clickProfileDropdownSignout();
+		//createTopUserComponent().clickProfileDropdownSignout();
+		closeTopUserComponent();
+		createTopGuestComponent();
+		return new TipsTricksPage(driver);
+	}
+	
+	/*-
 	public LoginDropdown gotoLoginDropdown() {
 		topGuestComponent = new TopGuestComponent(driver);
 		topGuestComponent.clickSigninLink();
@@ -176,4 +287,5 @@ public abstract class TopPart {
 		topGuestComponent.clickSignupLink();
 		return new RegisterDropdown(driver);
 	}
+	*/
 }
