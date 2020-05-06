@@ -100,6 +100,10 @@ public class MyCabinetPage extends TopPart {
         return getHabitsContainer().findHabitComponent(habit);
     }
 
+    public MyCabinetPage refresh() {
+        driver.navigate().refresh();
+        return new MyCabinetPage(driver);
+    }
 
     // Business Logic
 
@@ -117,7 +121,6 @@ public class MyCabinetPage extends TopPart {
      * @return NewHabitDropdown
      */
     public CreateHabitDropdown gotoCreateHabitDropdown() {
-       // System.out.println("dfvvdf");
         clickAddNewHabitButton();
         return new CreateHabitDropdown(driver);
     }

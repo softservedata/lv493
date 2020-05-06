@@ -61,7 +61,7 @@ public class HabitCardComponent {
     // Functional
 
     public DeleteCard delete() {
-        clickDeleteButton();
+       clickDeleteButton();
        return new DeleteCard();
     }
 
@@ -69,7 +69,7 @@ public class HabitCardComponent {
     // Business Logic
 
 
-    // Inner class
+    // Inner class for Confirmation Deleting
 
     class DeleteCard {
         private WebElement cancelButton;
@@ -80,8 +80,8 @@ public class HabitCardComponent {
         }
 
         private void initElements() {
-            cancelButton = habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-cancel"));;
-            confirmButton =  habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-save")); ;
+            cancelButton = habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-cancel"));
+            confirmButton =  habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-save"));
         }
 
         // Page Object
