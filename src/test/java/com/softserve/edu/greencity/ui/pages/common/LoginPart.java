@@ -90,12 +90,16 @@ public abstract class LoginPart {
         return this;
     }
 
-
+    
     // Functional
-
+    
     protected void fillFields(User user) {
         inputEmail(user.getEmail())
-                .inputPassword(user.getPassword());
+            .inputPassword(user.getPassword());
     }
-
+    
+    protected void fillFieldsSubmit(User user) {
+        fillFields(user);
+        clickLoginButton();
+    }
 }

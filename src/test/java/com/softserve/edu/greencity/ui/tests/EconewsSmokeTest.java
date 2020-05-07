@@ -48,7 +48,7 @@ public class EconewsSmokeTest extends GreencityTestRunner {
 		
 	}
 	
-	@Test
+//	@Test
 	public void chooseTags() {
 		
 		//open onenewspage

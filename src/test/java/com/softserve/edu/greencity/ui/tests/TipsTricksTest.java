@@ -51,7 +51,7 @@ public class TipsTricksTest extends GreencityTestRunner {
      subscr.clickSubscribeOnTipsTricks();
   } 
      
-   @Test
+//   @Test
    public void mainEcoNews() {
        TipsTricksPage news = loadApplication();
        news.moveMainEcoNewsLink();
