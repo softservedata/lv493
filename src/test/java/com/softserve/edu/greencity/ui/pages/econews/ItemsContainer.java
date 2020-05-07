@@ -14,7 +14,6 @@ import com.softserve.edu.greencity.ui.data.NewsData;
 public class ItemsContainer {
 	
 	private WebDriver driver;
-	
 	private List<ItemComponent> itemComponents;
 	
 	public ItemsContainer(WebDriver driver) {
@@ -34,6 +33,7 @@ public class ItemsContainer {
 	// Page Object
 	
     //itemComponents
+	
     public List<ItemComponent> getItemComponents() {
     	return itemComponents;
     }
@@ -75,7 +75,7 @@ public class ItemsContainer {
             }
         }
         if (result == null) {
-        	System.err.format(headerName, null);
+        	System.err.format(headerName, result);
             //throw new RuntimeException("HeaderName " + headerName + " not found");
         }
         return result;
@@ -86,7 +86,7 @@ public class ItemsContainer {
      * @param OneNewsData one
      */
     public void clickItemComponentOpenPage(NewsData news) {
-//    	getItemComponentByHeader(one.getTitle()).clickHeader();
+//   	getItemComponentByHeader(news.getTitle()).clickContent();
     	findItemComponentByParameters(news).getIitle().click();
     	
     }
@@ -94,14 +94,14 @@ public class ItemsContainer {
     
     /**
      * Find appropriate news by its parameters: title, list tags & content
-     * @param  OneNewsData one
+     * @param  OneNewsData 
      * @return ItemComponent
      */
     public ItemComponent findItemComponentByParameters(NewsData news) {
     	ItemComponent result = null;
     	for(ItemComponent cur : getItemComponents() ) {
-    		if(cur.getIitleText().toLowerCase().equals(news.getTitle().toLowerCase())
-    				&& cur.getTagsText().equals(news.getTags())
+    		if(cur.getIitleText().toLowerCase().equals(news.getTitle().toLowerCase()) 
+    				&& cur.getTagsText().equals(news.getTagsName())
     				&& news.getContent().toLowerCase().contains(cur.getContentText().toLowerCase())) {
     					result = cur;
     		}
@@ -119,7 +119,7 @@ public class ItemsContainer {
      * @return ItemComponent
      */
  	public ItemComponent chooseNewsByNumber(int number) {
- 				return getItemComponents().get(number - 1);
+ 				return getItemComponents().get(number);
 	}
     
 	// Business Logic

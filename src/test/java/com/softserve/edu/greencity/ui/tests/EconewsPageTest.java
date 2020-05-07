@@ -1,5 +1,7 @@
 package com.softserve.edu.greencity.ui.tests;
 
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -11,19 +13,17 @@ import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.OneNewsPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
+public class EconewsPageTest extends GreencityTestRunner {
 
-
-public class EconewsSmokeTest extends GreencityTestRunner {
-
-	//@Test(dataProvider = "newsData")
+	@Test(dataProvider = "newsData")
 	public void econewsSmokeTest(NewsData news) {
 
 		TipsTricksPage page = loadApplication();
 		page.navigateMenuEconews()
 		.switchToOneNewsPagebyParameters(news)
-		.switchToNextOneNewsPagebyNumber(1)
+		.switchToNextOneNewsPage()
 		.switchToEconewsPageBack();
-
+		
 	}
 
 	@DataProvider
@@ -31,37 +31,46 @@ public class EconewsSmokeTest extends GreencityTestRunner {
 		return new Object[][] {
 				 {  NewsRepository.getAllFildsNews() }
 			 };
-				//{ Languages.ENGLISH } };
 	}
 
 	
-	//@Test(dataProvider = "newsData")
-	public void econewsTest(NewsData news) {
+	@Test(dataProvider = "newsData")
+	public void openNewsTest(NewsData news) {
 		
 		//open onenewspage
+		
 		OneNewsPage findedeconewspage = loadApplication()
-		.navigateMenuEconews()
-		.switchToOneNewsPagebyParameters(news);
+				.navigateMenuEconews()
+				.switchToOneNewsPagebyParameters(news);
 		
 		// check if is appropriate page
-		Assert.assertEquals(news.getTitle(), findedeconewspage.getTitleText(), "message");	
+		
+		Assert.assertEquals(news.getTitle(), findedeconewspage.getTitleText(), 
+				"titles of news does not match");	
 		
 	}
 	
-//	@Test
-	public void chooseTags() {
+	@DataProvider
+	public Object[][] newsTags() {
+		return new Object[][] {
+				 {  NewsRepository.getNewsByTags() }
+			 };
+	}
+	
+	@Test(dataProvider = "newsTags")
+	public void chooseTags(List<Tag> tags) {
 		
 		//open onenewspage
-/*		EconewsPage page = loadApplication()
-		.navigateMenuEconews()
-		.selectFilters(Tag.NEWS);*/
-
-		loadApplication()
+		
+		EconewsPage page = loadApplication()
 				.navigateMenuEconews()
-				.chooseTags(Tag.NEWS);
-
-		// check if is appropriate page
-		//Assert.assertEquals(page.getNumberOfItemComponent(), page.getItemsContainer().getItemComponentsCount(), "message");
+				.selectFilters(tags);
+	
+		// check if is appropriate numbers of news items
+		
+		Assert.assertEquals(page.getNumberOfItemComponent(), 
+				page.getItemsContainer().getItemComponentsCount(), 
+				"Number of news items does not match to required");
 		
 	}
 		

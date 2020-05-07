@@ -75,19 +75,16 @@ public class TagsComponent {
     }
 
     public void selectTags(List<Tag> tags) {
-        if (tags.size() > 0) {  // do we need to check size?
-            for (Tag current : tags) {
+             for (Tag current : tags) {
                 selectTag(current);
             }
-        }
     }
     
     public void deselectTags(List<Tag> tags) {
-        if (tags.size() > 0) {  // do we need to check size?
             for (Tag current : tags) {
                 deselectTag(current);
             }
-        }
+        
     }
     // Business Logic
 

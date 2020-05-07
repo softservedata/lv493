@@ -1,6 +1,9 @@
 package com.softserve.edu.greencity.ui.data;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class NewsData {
 
@@ -14,6 +17,8 @@ public class NewsData {
         this.title = title;
         this.tags = tags;
         this.content = content;
+        this.source = "";
+        this.filePath = "";
     }
 
     public NewsData(String title, List<Tag> tags, String source, String content, String filePath) {
@@ -43,4 +48,22 @@ public class NewsData {
     public String getContent() {
         return content;
     }
+    
+    public List<String> getTagsName() {
+    	List<String> list = new ArrayList<>();
+    	for(Tag current : getTags()) {
+    		list.add(current.toString().toLowerCase());
+    	}
+		return list;
+    }
+    
+    public Set<String> getTagName() {
+    	Set<String> set = new HashSet<>();
+    	for(Tag current : getTags()) {
+    		set.add(current.toString().toLowerCase());
+    	}
+		return set;
+    }
+    
+    
 }

@@ -22,13 +22,11 @@ public final class ItemComponent {
 	
 
 	public ItemComponent(WebDriver driver, WebElement newsItem) {
-		//this.container = container; // change name
+	
 		this.driver = driver;
 		this.newsItem = newsItem;
-	
 		initElements();
 	}
-	
 	
 	private void initElements() {
 		
@@ -50,7 +48,7 @@ public final class ItemComponent {
 	public List<String> getTagsText() {
 		List<String> str = new ArrayList<String>();
 		for(WebElement elem : getTags() ) {
-			str.add(elem.getText());
+			str.add(elem.getText().toLowerCase());
 		}
 		return  str;
 	}

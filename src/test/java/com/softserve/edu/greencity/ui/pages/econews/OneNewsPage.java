@@ -30,7 +30,7 @@ public class OneNewsPage extends TopPart {
 		
 		goToNews = driver.findElement(By.cssSelector("div.back-button"));
 		filtersList = driver.findElements(By.cssSelector("div.tags > div"));
-//		title = driver.findElement(By.cssSelector("div.news-content > div.news-text-container > div.news-title"));
+		title = driver.findElement(By.cssSelector("div.news-title"));
 		data = driver.findElement(By.cssSelector("div.news-info > div.news-info-date"));
 		author = driver.findElement(By.cssSelector("div.news-info > div.news-info-author"));
 		picture = driver.findElement(By.cssSelector("div.news-image > img.news-image-img"));
@@ -109,6 +109,11 @@ public class OneNewsPage extends TopPart {
      */
     public OneNewsPage switchToNextOneNewsPagebyNumber(int number) {
 		itemsContainer.chooseNewsByNumber(number).clickIitle();
+		return new OneNewsPage(driver);
+    }
+    
+    public OneNewsPage switchToNextOneNewsPage() {
+    	switchToNextOneNewsPagebyNumber(1);
 		return new OneNewsPage(driver);
     }
     
