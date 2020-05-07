@@ -17,7 +17,7 @@ public class MyCabinetTests extends GreencityTestRunner {
 	@DataProvider
     public Object[][] habitCardDataProvider() {
         return new Object[][] {
-            {HabitCardRepository.getSaveBagsCard(), UserRepository.get().temporary()}
+            {HabitCardRepository.get().saveBagsCard(), UserRepository.get().temporary()}
             };
     }
 
