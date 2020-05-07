@@ -1,12 +1,16 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import java.util.ArrayList;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import com.softserve.edu.greencity.ui.pages.common.RegisterPart;
+import com.softserve.edu.greencity.ui.tools.GetMail10MinTools;
 
 /**
  * RegisterComponent class
@@ -22,12 +26,15 @@ public class RegisterComponent extends RegisterPart {
     private WebElement firstNameValidator;
 //    private WebElement lastNameValidator; // not exist
     //
+    protected String confirmURL = "";
+    //
     private final String EMAIL_VALIDATOR_SELECTOR = "//div[@id='validation-error']/div";
     private final String REGISTRATION_VALIDATOR_SELECTOR = "app-sign-up input#email + div";
     private final String FIRST_NAME_VALIDATOR_SELECTOR = "div[class='field-wrapper-left'] div[class='ng-star-inserted']";
 //    private final String LAST_NAME_VALIDATOR_SELECTOR = ""; // not exist
     private final String PASSWORD_VALIDATOR_SELECTOR = "div.password-wrapper + div";
     private final String PASSWORD_CONFIRM_VALIDATOR_SELECTOR = "app-sign-up form div#img-confirm + div[class*='validation-error'] div";
+    private final String SUBMIT_EMAIL_SELECTOR = "app-submit-email div.submit-email";
 
     /**
      * RegisterComponent constructor.
@@ -43,8 +50,7 @@ public class RegisterComponent extends RegisterPart {
      */
     private void initElements() {
         // init elements
-        titleField = driver
-                .findElement(By.cssSelector("form[name='inputform'] h1"));
+        titlePage = driver.getTitle();
         firstNameField = driver.findElement(
                 By.cssSelector("form label[for='first-name'] + input"));
         lastNameField = driver.findElement(
@@ -65,7 +71,7 @@ public class RegisterComponent extends RegisterPart {
         googleSignUpButton = driver
                 .findElement(By.cssSelector("button[class='google']"));
 
-        this.setTitleField(titleField).setEmailField(emailField)
+        this.setEmailField(emailField)
                 .setFirstNameField(firstNameField)
                 .setGoogleSignUpButton(googleSignUpButton)
                 .setPasswordConfirmField(passwordConfirmField)
@@ -74,7 +80,23 @@ public class RegisterComponent extends RegisterPart {
                 .setShowPasswordConfirmButton(showPasswordConfirmButton)
                 .setSignInLink(signInLink).setSignUpButton(signUpButton);
     }
+    
+    @Override
+    protected WebElement getTitleField() {
+        titleField = driver
+                .findElement(By.cssSelector("form[name='inputform'] h1"));
+        this.setTitleField(titleField);
+        return titleField;
+    }
 
+    /**
+     * Get verify URL from the post in temp mailbox.
+     * @return String
+     */
+    protected String getVerifyURLText() {
+        return this.confirmURL;
+    }
+    
     // Page Object
 //  lastNameField
     /**
@@ -293,5 +315,56 @@ public class RegisterComponent extends RegisterPart {
 
     public LoginPage gotoLoginPage() {
         return new LoginPage(driver);
+    }
+
+    @Override
+    protected String getTempEmail() {
+        String currentTab = driver.getWindowHandle();
+        String email = "";
+        ((JavascriptExecutor)driver).executeScript("window.open()");
+        for (String current : driver.getWindowHandles()) {
+            System.out.println("TAB: " + current);
+            if (!current.equals(currentTab)) {
+                driver.switchTo().window(current);
+                driver.get(GetMail10MinTools.URL);
+                System.out.println("driver.getTitle(): " + driver.getTitle());
+                GetMail10MinTools tmp = new GetMail10MinTools(driver);
+                System.out.println("URL: " + driver.getCurrentUrl());
+                email = tmp.getTempEmail();
+                System.out.println("temporary Email address for registration: " + email);
+                driver.switchTo().window(currentTab);
+                break;
+            }
+        }
+        return email;
+    }
+
+    @Override
+    protected RegisterPart verifyTempEmail() {
+        String currentTab = driver.getWindowHandle();
+        for (String current : driver.getWindowHandles()) {
+            System.out.println("TAB: " + current);
+            if (!current.equals(currentTab)) {
+                driver.switchTo().window(current);
+                System.out.println("driver.getTitle(): " + driver.getTitle());
+                GetMail10MinTools tmp = new GetMail10MinTools(driver);
+                System.out.println("URL: " + driver.getCurrentUrl());
+                tmp.verifyEmail();
+//                System.out.println("Confirm email address: " + confirmURL);
+                break;
+            }
+        }
+        driver.switchTo().window(currentTab);
+        return this;
+    }
+    
+    /**
+     * Get text which shows after a successful registration.
+     * @return String
+     */
+    protected String getConfirmRegisterationText() {
+        submitEmailText = driver.findElement(
+                By.cssSelector(SUBMIT_EMAIL_SELECTOR));
+        return setSubmitEmailText(submitEmailText).getSubmitEmailText();
     }
 }

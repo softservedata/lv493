@@ -21,7 +21,7 @@ public class CreateNewsTests extends GreencityTestRunner {
         };
     }
 
-    @Test
+//    @Test
     public void CancelNewsCreatingTest() {
         NewsData newsData = NewsDataRepository.getDefault();
         EconewsPage econewsPage = loadApplication()
@@ -36,7 +36,7 @@ public class CreateNewsTests extends GreencityTestRunner {
         Assert.assertEquals(driver.getTitle(), "Eco news");
     }
 
-    @Test(dataProvider = "newsDataProvider")
+//    @Test(dataProvider = "newsDataProvider")
     public void CancelContinueNewsCreatingTest(NewsData newsData) {
         CreateNewsPage createNewsPage = loadApplication()
                 .navigateMenuEconews()
@@ -51,7 +51,7 @@ public class CreateNewsTests extends GreencityTestRunner {
        // createNewsPage.publishNews();
     }
 
-    @Test(dataProvider = "newsDataProvider")
+//    @Test(dataProvider = "newsDataProvider")
     public void createNewsTest(NewsData newsData) {
         PreViewPage preViewPage = loadApplication()
                 .navigateMenuEconews()

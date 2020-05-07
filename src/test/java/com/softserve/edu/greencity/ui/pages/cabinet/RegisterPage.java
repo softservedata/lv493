@@ -2,7 +2,7 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import org.openqa.selenium.WebDriver;
 
-import com.softserve.edu.greencity.ui.data.UserData;
+import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
 /**
@@ -38,7 +38,7 @@ public class RegisterPage extends TopPart {
      * @return String
      */
     public String getTitleFieldText() {
-        return this.getRegisterComponent().getTitleFieldText();
+        return this.getRegisterComponent().getTitlePageText();
     }
     
     /**
@@ -200,6 +200,14 @@ public class RegisterPage extends TopPart {
         return "password confirm error text not found";
     }
     
+    /**
+     * Get text which shows after a successful registration.
+     * @return String
+     */
+    public String getConfirmRegistrationText() {
+        return getRegisterComponent().getConfirmRegisterationText();
+    }
+    
     // Business Logic
 
     // completion of user registration
@@ -208,13 +216,30 @@ public class RegisterPage extends TopPart {
      * @param userData object with user's credentials
      * @return RegisterPage page
      */
-    public RegisterPage registrationNewUser(UserData userData) {
+    public void registrationNewRandomUser(User userData) {
+        userData.setEmail(getRegisterComponent().getTempEmail());
         enterEmail(userData.getEmail())
             .enterFirstName(userData.getFirstName())
             .enterLastName(userData.getLastName())
             .enterPassword(userData.getPassword())
             .enterPasswordConfirm(userData.getPassword());
-        return clickSignUpButton();
+        clickSignUpButton();
+        getRegisterComponent().verifyTempEmail();
+        getRegisterComponent().getConfirmRegisterationText();
+//        return getRegisterComponent().getConfirmRegisterationText();
+    }
+    
+    /**
+     * Test registration user with existing credentials already.
+     * @param userData User
+     */
+    public void registrationUser (User userData) {
+        enterEmail(userData.getEmail())
+        .enterFirstName(userData.getFirstName())
+        .enterLastName(userData.getLastName())
+        .enterPassword(userData.getPassword())
+        .enterPasswordConfirm(userData.getPassword())
+        .clickSignUpButton();
     }
 
     /**
@@ -223,7 +248,7 @@ public class RegisterPage extends TopPart {
      * @param userData object with user's credentials
      * @return RegisterPage page
      */
-    public void fillFieldsWithoutRegistration(UserData userData) {
+    public void fillFieldsWithoutRegistration(User userData) {
         enterEmail(userData.getEmail())
             .enterFirstName(userData.getFirstName())
             .enterLastName(userData.getLastName())
@@ -237,7 +262,7 @@ public class RegisterPage extends TopPart {
      * @param userData object with user's credentials
      * @return LoginPart page
      */
-    public LoginPage fillFieldsAndGotoLoginPage(UserData userData) {
+    public LoginPage fillFieldsAndGotoLoginPage(User userData) {
         enterEmail(userData.getEmail())
             .enterFirstName(userData.getFirstName())
             .enterLastName(userData.getLastName())

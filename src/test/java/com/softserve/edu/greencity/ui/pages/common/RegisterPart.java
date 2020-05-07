@@ -6,13 +6,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountPage;
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
 
 /**
  * RegisterPart class.
  * @author Serg
  */
 public abstract class RegisterPart {
+    //
+    protected String titlePage;
     //
     protected WebElement titleField;
     protected WebElement firstNameField;
@@ -25,11 +26,40 @@ public abstract class RegisterPart {
     protected WebElement googleSignUpButton;
     protected WebElement signInLink;
     //
+    protected WebElement submitEmailText;
+    //
     protected WebElement emailValidator;
     protected WebElement passwordValidator;
     protected WebElement passwordConfirmValidator;
     //
+    protected String confirmURL = "";
 //    ValidatorMessages validatorMessages;
+
+    // Page object
+
+    //
+    public String getTitleWebSite() {
+        return titlePage;
+    }
+
+    // submitEmailText
+    /**
+     * setSubmitEmailText
+     * @param submitEmailText
+     * @return
+     */
+    protected RegisterPart setSubmitEmailText(WebElement submitEmailText) {
+        this.submitEmailText = submitEmailText;
+        return this;
+    }
+
+    /**
+     * getSubmitEmailText
+     * @return String
+     */
+    public String getSubmitEmailText() {
+        return submitEmailText.getText();
+    }
 
     // titleField
     /**
@@ -54,7 +84,7 @@ public abstract class RegisterPart {
      * getTitleFieldText()
      * @return String
      */
-    public String getTitleFieldText() {
+    protected String getTitleFieldText() {
         return getTitleField().getText();
     }
 
@@ -646,10 +676,31 @@ public abstract class RegisterPart {
      */
     protected abstract boolean sizePasswordConfirmValidator();
 
-    // Functional
+//// Functional
+
+    public String getTitlePageText() {
+        if (isDisplayedTitleField()) {
+            return getTitleFieldText();
+        } else {
+            return "title text not found";
+        }
+    }
+
     /**
-     * Click SignUp with Google Account button and a Google window opens and switches to it.
+     * Click SignUp with Google Account button and a Google window opens and
+     * switches to it.
      * @return GoogleAccountPage
      */
     protected abstract GoogleAccountPage clickSignUpGoogleAccountButton();
+
+    /**
+     * Getting a temporary Email address for registration
+     * @return
+     */
+    protected abstract String getTempEmail();
+
+    /**
+     * Verify a temporary Email and close tab.
+     */
+    protected abstract RegisterPart verifyTempEmail();
 }
