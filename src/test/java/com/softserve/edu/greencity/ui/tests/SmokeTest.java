@@ -7,6 +7,8 @@ import org.testng.annotations.Test;
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
@@ -71,7 +73,7 @@ public class SmokeTest extends GreencityTestRunner {
 			};
 	}
 	
-	@Test(dataProvider = "users")
+	//@Test(dataProvider = "users")
 	public void checkLogin(User user) {
 		TipsTricksPage tipstrickspage = loadApplication()
 				.signin()
@@ -83,4 +85,28 @@ public class SmokeTest extends GreencityTestRunner {
 		tipstrickspage.signout();
 	}
 
+	@Test(dataProvider = "users")
+	public void checkCabinet(User user) {
+		MyCabinetPage myCabinetPage = loadApplication()
+				.navigateMenuMyCabinet(user);
+		presentationSleep();
+		//
+		Assert.assertEquals(myCabinetPage.getTopUserName(), TopPart.PROFILE_NAME);
+		// user.getFirstname());
+		presentationSleep();
+		//
+		myCabinetPage = myCabinetPage
+				.navigateMenuTipsTricks()
+				.navigateMenuEconews()
+				.navigateMenuMyCabinet();
+		presentationSleep();
+		//
+		TipsTricksPage tipstrickspage = myCabinetPage
+				.signout();
+		presentationSleep();
+		LoginPage loginPage = tipstrickspage
+				.navigateMenuMyCabinetGuest();
+		presentationSleep(4);
+	}
+		
 }

@@ -15,6 +15,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 
 import com.softserve.edu.greencity.ui.data.Languages;
+import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
@@ -243,9 +245,23 @@ public abstract class TopPart {
 		return new MapPage(driver);
 	}
 	
+	// for Loggined
 	public MyCabinetPage navigateMenuMyCabinet() {
 		getMainMenuDropdown().clickMenuMyCabinet();
 		return new MyCabinetPage(driver);
+	}
+	
+	// for not Loggined
+	public MyCabinetPage navigateMenuMyCabinet(User user) {
+		getMainMenuDropdown().clickMenuMyCabinet();
+		new LoginPage(driver).getLoginComponent().fillFieldsSubmit(user);
+		return new MyCabinetPage(driver);
+	}
+	
+	// for not Loggined
+	public LoginPage navigateMenuMyCabinetGuest() {
+		getMainMenuDropdown().clickMenuMyCabinet();
+		return new LoginPage(driver);
 	}
 	
 	public AboutPage navigateMenuAbout() {
@@ -268,24 +284,12 @@ public abstract class TopPart {
 	}
 	
 	public TipsTricksPage signout() {
-		getTopUserComponent().clickProfileDropdownSignout();
-		//createTopUserComponent().clickProfileDropdownSignout();
+		// TODO
+		//getTopUserComponent().clickProfileDropdownSignout();
+		createTopUserComponent().clickProfileDropdownSignout();
 		closeTopUserComponent();
 		createTopGuestComponent();
 		return new TipsTricksPage(driver);
 	}
 	
-	/*-
-	public LoginDropdown gotoLoginDropdown() {
-		topGuestComponent = new TopGuestComponent(driver);
-		topGuestComponent.clickSigninLink();
-		return new LoginDropdown(driver);
-	}
-	
-	public RegisterDropdown gotoRegisterDropdown() {
-		topGuestComponent = new TopGuestComponent(driver);
-		topGuestComponent.clickSignupLink();
-		return new RegisterDropdown(driver);
-	}
-	*/
 }

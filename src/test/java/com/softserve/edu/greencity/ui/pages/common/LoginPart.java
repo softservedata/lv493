@@ -98,4 +98,8 @@ public abstract class LoginPart {
     		.inputPassword(user.getPassword());
     }
     
+    protected void fillFieldsSubmit(User user) {
+    	fillFields(user);
+    	clickLoginButton();
+    }
 }
