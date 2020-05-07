@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.softserve.edu.greencity.ui.data.Habit;
 import com.softserve.edu.greencity.ui.data.HabitCard;
@@ -28,6 +30,8 @@ public class HabitCardsContainer {
     }
 
     private void initElements() {
+        (new WebDriverWait(driver, 5)).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("app-habit-card")));
+
         chosenHabitCardComponents = new ArrayList<HabitCardComponent>();
         driver.findElements(By.cssSelector("div.already-chosen-habits app-habit-card"))
             .forEach(card -> chosenHabitCardComponents.add(new HabitCardComponent(card)));
@@ -74,9 +78,13 @@ public class HabitCardsContainer {
     }
 
     public  HabitCardComponent findChosenHabitCardByHabit(Habit habit) {
-        return getChosenHabitCardComponents().stream()
+        getChosenHabitCardComponents()
+        .forEach(card -> System.out.println(card.getHabitCardTitle()));
+         HabitCardComponent c = getChosenHabitCardComponents().stream()
                  .filter(card -> card.getHabitCardTitle().contains(habit.toString()))
                  .findAny().orElse(null);
+         System.out.println(c);
+         return c;
      }
 
     public  HabitCardComponent findAvailableHabitCardByHabit(Habit habit) {
@@ -137,19 +145,6 @@ public class HabitCardsContainer {
         HabitCardComponent habit = findAvailableHabitCardByHabit(card.getHabit());
         if (habit != null) {
             moveHabitCard(habit, CHOSEN_HABIT_CARD_CONTAINER_SELECTOR);
-        }
-        return new HabitCardsContainer(driver);
-    }
-
-    /**
-     * Remove habit card from chosen to available cards.
-     * @param card
-     * @return HabitCardsContainer
-     */
-    public HabitCardsContainer cancelAddHabitCard(HabitCard card) {
-        HabitCardComponent habit = findChosenHabitCardByHabit(card.getHabit());
-        if (habit != null) {
-            moveHabitCard(habit, AVAILABLE_HABIT_CARD_CONTAINER_SELECTOR);
         }
         return new HabitCardsContainer(driver);
     }

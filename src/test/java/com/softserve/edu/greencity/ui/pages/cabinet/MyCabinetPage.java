@@ -1,8 +1,10 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.softserve.edu.greencity.ui.data.Goal;
 import com.softserve.edu.greencity.ui.data.Habit;
@@ -30,16 +32,18 @@ public class MyCabinetPage extends TopPart {
     }
 
     private void initElements() {
-       // packagesCount = driver.findElement(By.cssSelector("img[src*='package'] + h4 span")).getText();
-       // glassesCount = driver.findElement(By.cssSelector("img[src*='coffe'] + h4 span")).getText();
+        (new WebDriverWait(driver, 0)).until(
+                webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+
+        packagesCount = driver.findElement(By.cssSelector("img[src*='package'] + h4 span")).getText();
+        glassesCount = driver.findElement(By.cssSelector("img[src*='coffe'] + h4 span")).getText();
 
         manageGoalsButton = driver.findElement(By.cssSelector("div.add-goal-button-container button.add-goal-button"));
         addNewHabitButton = driver.findElement(By.cssSelector("button.btn.btn-success"));
 
-        habitsContainer = new HabitsContainer(driver);
+        //habitsContainer = new HabitsContainer(driver);
         goalsContainer = new MyGoalsContainer(driver);
     }
-
 
     // Page Object
 
@@ -171,6 +175,8 @@ public class MyCabinetPage extends TopPart {
         return new MyCabinetPage(driver);
 
     }
+
+
 
 
 }

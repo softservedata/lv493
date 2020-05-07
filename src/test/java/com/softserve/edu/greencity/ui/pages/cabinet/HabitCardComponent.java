@@ -17,7 +17,7 @@ public class HabitCardComponent {
     }
 
     private void initElements() {
-        //habitCardTitle = habitCardLayout.findElement(By.cssSelector(".habit-card-caption")).getText();
+        habitCardTitle = habitCardLayout.findElement(By.cssSelector(".habit-card-caption")).getText();
        // habitCardDescription = habitCardLayout.findElement(By.cssSelector(".habit-card-text")).getText();
     }
 
@@ -32,8 +32,8 @@ public class HabitCardComponent {
     // habitCardTitle
 
     public String getHabitCardTitle() {
-        return habitCardLayout.findElement(By.cssSelector(".habit-card-caption")).getText();
-        //return habitCardTitle;
+        //return habitCardLayout.findElement(By.cssSelector(".habit-card-caption")).getText();
+        return habitCardTitle;
     }
 
     // habitCardText
