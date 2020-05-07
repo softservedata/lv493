@@ -12,8 +12,7 @@ import java.util.Set;
 public class TagsComponent {
 
     private WebDriver driver;
-    private List<WebElement> tagsButtons;
-    private WebElement tagsDescription;
+    private List<WebElement> tags;
 
     public TagsComponent(WebDriver driver) {
         this.driver = driver;
@@ -22,29 +21,22 @@ public class TagsComponent {
 
     private void initElements() {
         // init elements
-        tagsButtons = driver.findElements(By.cssSelector("div.tags > button"));
-       // tagsDescription = driver.findElement(By.cssSelector("div.tags > button + p"));
+        tags = driver.findElements(By.cssSelector("div.tags > button"));
+        if(tags.size() == 0) {
+        	tags = driver.findElements(By.cssSelector("ul.ul-eco-buttons > a > li"));
+        }
     }
 
     // Page Object
 
-    public List<WebElement> getTagsButtons() {
-        return tagsButtons;
+    public List<WebElement> getTags() {
+        return tags;
     }
 
-    public List<WebElement> getSelectedTagsButtons() {
-        List<WebElement> selectedTagsButtons = driver.findElements(By.cssSelector("div.tags > button.filters-color"));
-        return selectedTagsButtons;
-    }
-
-    // tagsDescription and warning
-    public WebElement getTagsDescription() {
-        return tagsDescription;
-    }
-
-    public boolean isTagsDescriptionWarning() {
-        return getTagsDescription().getAttribute("class").contains("warning");
-    }
+ //   public List<WebElement> getSelectedTagsButtons() {
+ //       List<WebElement> selectedTagsButtons = driver.findElements(By.cssSelector("div.tags > button.filters-color"));
+ //       return selectedTagsButtons;
+//    }
 
     // Functional
     public Set<String> getTagsNames(List<WebElement> selectedTagsButtons) {
@@ -57,14 +49,17 @@ public class TagsComponent {
     }
 
     public WebElement getWebElementByTagName(Tag newsfilter) {
-        WebElement tag = getTagsButtons().stream()
-                .filter((element) -> element.getText().contains(newsfilter.toString()))
+        WebElement tag = getTags().stream()
+                .filter((element) -> element
+                .getText().toLowerCase().contains(newsfilter.toString().toLowerCase()))
                 .findFirst().get();
         return tag;
     }
 
     public boolean isTagActive(Tag newsfilter) {
-        return getWebElementByTagName(newsfilter).getAttribute("class").contains("clicked-filter-button");
+        return getWebElementByTagName(newsfilter)
+        		.getAttribute("class")
+        		.matches(".*(clicked-filter-button|active).*");
     }
 
     public void selectTag(Tag newsfilter) {
@@ -72,11 +67,25 @@ public class TagsComponent {
             getWebElementByTagName(newsfilter).click();
         }
     }
+    
+    public void deselectTag(Tag newsfilter) {
+        if (isTagActive(newsfilter)) {
+            getWebElementByTagName(newsfilter).click();
+        }
+    }
 
     public void selectTags(List<Tag> tags) {
-        if (tags.size() > 0) {
+        if (tags.size() > 0) {  // do we need to check size?
             for (Tag current : tags) {
                 selectTag(current);
+            }
+        }
+    }
+    
+    public void deselectTags(List<Tag> tags) {
+        if (tags.size() > 0) {  // do we need to check size?
+            for (Tag current : tags) {
+                deselectTag(current);
             }
         }
     }
