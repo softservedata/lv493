@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.User;
@@ -40,6 +42,7 @@ public abstract class TopPart {
     //protected final String TAG_ATTRIBUTE_VALUE = "value";
     //protected final String TAG_ATTRIBUTE_SRC = "src";
     //
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	protected WebDriver driver;
 	//
 	private Select languageSwitcher;
@@ -284,10 +287,14 @@ public abstract class TopPart {
 	}
 	
 	public TipsTricksPage signout() {
+		logger.debug("start signout()");
 		// TODO
 		//getTopUserComponent().clickProfileDropdownSignout();
+		logger.trace("start clickProfileDropdownSignout();");
 		createTopUserComponent().clickProfileDropdownSignout();
+		logger.trace("start closeTopUserComponent();");
 		closeTopUserComponent();
+		logger.trace("start createTopGuestComponent();");
 		createTopGuestComponent();
 		return new TipsTricksPage(driver);
 	}
