@@ -18,18 +18,22 @@ public class RegisterDropdownGoogleAccountTest extends GreencityTestRunner {
     @DataProvider
     public Object[][] validCredentialGoogleUser() {
         return new Object[][] {
-                { UserRepository.getGoogleUserCredentials() }, };
+                { UserRepository.get().googleUserCredentials() }, };
     }
 
+    /**
+     * A test for register using google account.
+     * @param userGoogleLoginCredentials
+     */
     @Test(dataProvider = "validCredentialGoogleUser")
     public void checkGoogleSignUpPage(User userGoogleLoginCredentials) {
-        System.out.println("-----------validCredentialUser------------");
+        logger.info("start test checkGoogleSignUpPage with user = "
+                + userGoogleLoginCredentials.toString());
         RegisterDropdown registerDropdown = loadApplication()
                 .signup();
-        System.out.println("registerDropdown.getTitleFieldText(): "
+        logger.info("get a top title text on the page: "
                 + registerDropdown.getTitlePageText());
         GoogleAccountPage googleAccountPage = registerDropdown.clickSignUpGoogleAccountButton();
-        System.out.println("googleAccountPage.getTitleGoogleAccount(): " + googleAccountPage.getTitleGoogleAccount());
         googleAccountPage.enterEmail(userGoogleLoginCredentials.getEmail());
         presentationSleep(2);
         googleAccountPage.clickEmailNext();

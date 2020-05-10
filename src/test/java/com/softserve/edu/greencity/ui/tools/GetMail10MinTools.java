@@ -2,14 +2,23 @@ package com.softserve.edu.greencity.ui.tools;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * Gives temporary email for registration and verify email.
+ * @author Serg
+ */
 public final class GetMail10MinTools {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private WebDriver driver;
     private WebDriverWait wait;
     //
@@ -24,11 +33,22 @@ public final class GetMail10MinTools {
 
 //    public final static String URL = "https://www.minuteinbox.com/";
 //    public final static String URL = "https://10minutemail.net/";
+    /**
+     * Site URL for temporary email.
+     */
     public final static String URL = "https://temp-mail.org/ru/";
+
+    /**
+     * To determine the desired letter, which gets in the mail from GreenCity
+     * back-end.
+     */
     private final String MAIL_GEEN_CITY = "mailgreencity1@gmail.com";
 
+    /**
+     * Constructor
+     * @param driver WebDriver
+     */
     public GetMail10MinTools(WebDriver driver) {
-        System.out.println("GetMail10MinTools initElements()");
         this.driver = driver;
         wait = new WebDriverWait(driver, 10);
         initElements();
@@ -36,12 +56,17 @@ public final class GetMail10MinTools {
 
     // init elements
     private void initElements() {
+        logger.debug("start initElements() in GetMail10MinTools");
         title = driver.getTitle();
         deleteButton = driver.findElement(By.cssSelector("#click-to-delete"));
     }
 
     // Page Object
     //
+    /**
+     * Returns a page title of the website.
+     * @return String
+     */
     public String getTitleWebSite() {
         return title;
     }
@@ -110,6 +135,11 @@ public final class GetMail10MinTools {
 
 //    emailButton
     private WebElement getEmailButton() {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.xpath("//a[text()='Verify your email address']")));
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        //
         emailButton = driver.findElement(
                 By.xpath("//a[text()='Verify your email address']"));
         return emailButton;
@@ -212,25 +242,32 @@ public final class GetMail10MinTools {
     }
 
     // Business Logic
-    public GetMail10MinTools openNewTabGetMail10MinTools() {
-        driver.get(URL);
-        return this;
-    }
 
+    /**
+     * Returns an email address.
+     * @return String
+     */
     public String getTempEmail() {
+        logger.debug("start getTempEmail()");
+        logger.trace("get teporary New Mail");
         getNewMail();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        logger.trace("wait until a teporary New Mail is displayed");
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        wait.until(ExpectedConditions
+                .stalenessOf(driver.findElement(By.cssSelector("#mail"))));
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         return getEmail();
     }
 
+    /**
+     * Finding the desired letter, opening and clicking on the button 'Verify'.
+     */
     public void verifyEmail() {
+        logger.debug("start verifyEmail()");
+        logger.trace("click on refresh Mail button and open desired mail");
         openMail();
 //        String verifyEmail = getVerifyURL();
+        logger.trace("click on VerifyButton");
         clickVerifyButton();
 //        return verifyEmail;
     }

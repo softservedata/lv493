@@ -1,10 +1,16 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * GoogleAccountPage class.
@@ -13,6 +19,8 @@ import org.openqa.selenium.interactions.Actions;
 public class GoogleAccountPage {
 
     private WebDriver driver;
+    private WebDriverWait wait;
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     //
 //    private WebElement chosenGoogleAccountButton;
 //    private WebElement useAnotherAccountButton;
@@ -38,6 +46,13 @@ public class GoogleAccountPage {
 
     private void initElements() {
         // init elements
+        wait = new WebDriverWait(driver, 10);
+        //
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector("div[role='presentation'] #identifierId")));
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        //
         titleGoogleAccount = driver.getTitle();
         emailField = driver.findElement(
                 By.cssSelector("div[role='presentation'] #identifierId"));
@@ -52,6 +67,10 @@ public class GoogleAccountPage {
      * @return String
      */
     public String getTitleGoogleAccount() {
+        logger.debug("start getTitleGoogleAccount()");
+        logger.trace("returns GoogleAccount page title");
+        logger.info("GoogleAccountPage title: "
+                + titleGoogleAccount);
         return titleGoogleAccount;
     }
 
@@ -150,14 +169,16 @@ public class GoogleAccountPage {
 
     /**
      * Enter an email.
-     * @param email
+     * @param email String
      * @return GoogleAccountPage
      */
     public GoogleAccountPage enterEmail(String email) {
+        logger.debug("start GoogleAccountPage enterEmail()");
+        logger.trace("find email in the field");
         if (isDisplayedEmailField()) {
             clickEmailField();
             clearEmailField();
-            System.out.println("----Email page. Entered email: " + email);
+            logger.info("Email Google page. Entered email: " + email);
             setEmailField(email);
         }
         return this;
@@ -168,8 +189,10 @@ public class GoogleAccountPage {
      * @return GoogleAccountPage
      */
     public GoogleAccountPage clickEmailNext() {
+        logger.debug("start GoogleAccountPage clickEmailNext()");
+        logger.trace("clicking on 'Next' button");
         if (isDisplayedEmailNextButton()) {
-            System.out.println("----Email page. Click on "
+            logger.info("Email Google page. Click on : "
                     + getEmailNextButtonText() + " button");
             clickEmailNextButton();
         }
@@ -178,15 +201,17 @@ public class GoogleAccountPage {
 
     /**
      * Enter a password.
-     * @param password
+     * @param password String
      * @return GoogleAccountPage
      */
     public GoogleAccountPage enterPassword(String password) {
+        logger.debug("start GoogleAccountPage enterPassword()");
+        logger.trace("find password in the field");
         if (isDisplayedPasswordField()) {
             clickPasswordField();
             clearPasswordField();
-            System.out.println(
-                    "----Password page. Entered a password: " + password);
+            logger.info(
+                    "Password Google page. Entered a password: " + password);
             setPasswordField(password);
         }
         return this;
@@ -197,8 +222,10 @@ public class GoogleAccountPage {
      * @return GoogleAccountPage
      */
     public GoogleAccountPage clickPasswordNext() {
+        logger.debug("start GoogleAccountPage clickPasswordNext()");
+        logger.trace("clicking on 'Next' button");
         if (isDisplayedPasswordNextButton()) {
-            System.out.println("----Password page. Click on "
+            logger.info("Password Google page. Click on "
                     + getPasswordNextButtonText() + " button");
             clickPasswordNextButton();
         }

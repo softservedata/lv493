@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.User;
@@ -40,6 +42,7 @@ public abstract class TopPart {
     //protected final String TAG_ATTRIBUTE_VALUE = "value";
     //protected final String TAG_ATTRIBUTE_SRC = "src";
     //
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected WebDriver driver;
     //
     private Select languageSwitcher;
@@ -231,28 +234,38 @@ public abstract class TopPart {
     // Business Logic
     
     public EconewsPage navigateMenuEconews() {
+        logger.debug("go to EcoNews page");
+        logger.trace("click MenuEcoNews link");
         getMainMenuDropdown().clickMenuEcoNews();
         return new EconewsPage(driver);
     }
     
     public TipsTricksPage navigateMenuTipsTricks() {
+        logger.debug("go to TipsTricks page");
+        logger.trace("click TipsTricks link");
         getMainMenuDropdown().clickMenuTipsTricks();
         return new TipsTricksPage(driver);
     }
     
     public MapPage navigateMenuMap() {
+        logger.debug("go to Map page");
+        logger.trace("click Map link");
         getMainMenuDropdown().clickMenuMap();
         return new MapPage(driver);
     }
     
     // for Loggined
     public MyCabinetPage navigateMenuMyCabinet() {
+        logger.debug("go to MyCabinet");
+        logger.trace("click MyCabinet link");
         getMainMenuDropdown().clickMenuMyCabinet();
         return new MyCabinetPage(driver);
     }
     
     // for not Loggined
     public MyCabinetPage navigateMenuMyCabinet(User user) {
+        logger.debug("go to MyCabinet as User");
+        logger.trace("click MyCabinet link as User");
         getMainMenuDropdown().clickMenuMyCabinet();
         new LoginPage(driver).getLoginComponent().fillFieldsSubmit(user);
         return new MyCabinetPage(driver);
@@ -260,34 +273,48 @@ public abstract class TopPart {
     
     // for not Loggined
     public LoginPage navigateMenuMyCabinetGuest() {
+        logger.debug("go to Login Page as Guest");
+        logger.trace("click MyCabinet link as Guest");
+        logger.info("go to Login Page as a Guest");
         getMainMenuDropdown().clickMenuMyCabinet();
         return new LoginPage(driver);
     }
     
     public AboutPage navigateMenuAbout() {
+        logger.debug("go to About page");
+        logger.trace("click About link");
         getMainMenuDropdown().clickMenuAbout();
         return new AboutPage(driver);
     }
 
     public LoginDropdown signin() {
+        logger.debug("start signin()");
         // TODO
         //getTopGuestComponent().clickSigninLink();
+        logger.trace("click Signin link");
         createTopGuestComponent().clickSigninLink();
         return new LoginDropdown(driver);
     }
     
     public RegisterDropdown signup() {
+        logger.debug("start signup()");
         // TODO
         //getTopGuestComponent().clickSignupLink();
+        logger.trace("click Signup link");
+        logger.info("go to RegisterDropdown");
         createTopGuestComponent().clickSignupLink();
         return new RegisterDropdown(driver);
     }
     
     public TipsTricksPage signout() {
+        logger.debug("start signout()");
         // TODO
         //getTopUserComponent().clickProfileDropdownSignout();
+        logger.trace("click Signout link from ProfileDropdown");
         createTopUserComponent().clickProfileDropdownSignout();
+        logger.trace("close TopUserComponent");
         closeTopUserComponent();
+        logger.trace("create TopGuestComponent");
         createTopGuestComponent();
         return new TipsTricksPage(driver);
     }

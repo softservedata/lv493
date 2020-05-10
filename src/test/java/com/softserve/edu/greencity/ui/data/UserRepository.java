@@ -35,7 +35,7 @@ public final class UserRepository {
      * password "A475asd123*".
      * @return UserData
      */
-    public static User getDefaultUserCredentials() {
+    public User defaultUserCredentials() {
         return new User("John", "Wilson", "rjjztqsiayuieydfuy@awdrt.org", "A475asd123*");
     }
     
@@ -45,8 +45,8 @@ public final class UserRepository {
      * password "123456".
      * @return UserData
      */
-    public static User getGoogleUserCredentials() {
-        return new User("sergtaqc@gmail.com", "123456");
+    public User googleUserCredentials() {
+        return new User("sergii.taqc@gmail.com", "A475asd123*");
     }
     
     /**
@@ -57,8 +57,8 @@ public final class UserRepository {
      * password "123Adff890*".
      * @return UserData
      */
-    public static User getWrongUserCredentials1() {
-        return new User("Asdfqwe", "Qwerzxc", "123asd@zxc", "123Adff890");
+    public User wrongUserCredentials1() {
+        return new User(" ", " ", "23423sdf", " ", "  ");
     }
     
     /**
@@ -69,20 +69,19 @@ public final class UserRepository {
      * password "".
      * @return UserData
      */
-    public static User getWrongUserCredentials2() {
-        return new User("A.", "22222222222222", "asdsd.1312", "");
+    public User wrongUserCredentials2() {
+        return new User("Wrong User", "22222222222222", "123asdasd#zxcz.asd", "!A*zxc-", "!A*zxC-");
     }
     
-    public static User getTemporaryUserCredentialsForRegistration() {
-        //
-        int length = 20;
-        boolean useLetters = true;
-        boolean useNumbers = false;
-        //
-        String firstName = Randomizer.getRamdomString(length, useLetters, useNumbers);
-        String lastName = Randomizer.getRamdomString(length, useLetters, useNumbers);
-        String password = Randomizer.getRamdomPassword();
-        return new User(firstName, lastName, "", "A475asd123*");
+    /**
+     * Gives random credentials:
+     * first name - random 20 letters;
+     * last name - random 20 letters;
+     * 
+     * @return
+     */
+    public User temporaryUserCredentialsForRegistration() {
+        return new User(Randomizer.getRamdomString20Letters(), Randomizer.getRamdomString20Letters(), "", "A475asd123*");
     }
 
 }

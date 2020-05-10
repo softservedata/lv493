@@ -4,14 +4,18 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountPage;
 
 /**
- * RegisterPart class.
+ * RegisterPart class. Includes general types of atomic methods and functionality.
  * @author Serg
  */
 public abstract class RegisterPart {
+    //
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     //
     protected String titlePage;
     //
@@ -38,15 +42,19 @@ public abstract class RegisterPart {
     // Page object
 
     //
+    /**
+     * Returns a tab title text.
+     * @return
+     */
     public String getTitleWebSite() {
         return titlePage;
     }
 
     // submitEmailText
     /**
-     * setSubmitEmailText
+     * Taking a WebElement submitEmailText and set it to a private WebElement
      * @param submitEmailText
-     * @return
+     * @return RegisterPart
      */
     protected RegisterPart setSubmitEmailText(WebElement submitEmailText) {
         this.submitEmailText = submitEmailText;
@@ -54,7 +62,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * getSubmitEmailText
+     * Returns the text after a successful registration.
      * @return String
      */
     public String getSubmitEmailText() {
@@ -63,7 +71,7 @@ public abstract class RegisterPart {
 
     // titleField
     /**
-     * setTitleField
+     * Taking a WebElement and set it to a private WebElement
      * @param titleField WebElement
      * @return RegisterPart
      */
@@ -73,23 +81,23 @@ public abstract class RegisterPart {
     }
 
     /**
-     * getTitleField
-     * @return WebElement
+     * Returns a WebElement of the on the top page.
+     * @return WebElement titleField
      */
     protected WebElement getTitleField() {
         return titleField;
     }
 
     /**
-     * getTitleFieldText()
+     * Returns a text which displayed on the top of the page.
      * @return String
      */
     protected String getTitleFieldText() {
-        return getTitleField().getText();
+        return getTitleField().getText().trim();
     }
 
     /**
-     * isDisplayedTitleField
+     * Returns boolean if displayed the 'Title' field.
      * @return boolean
      */
     protected boolean isDisplayedTitleField() {
@@ -98,7 +106,7 @@ public abstract class RegisterPart {
 
     // first name field
     /**
-     * setFirstNameField
+     * Taking a WebElement and set it to a private WebElement
      * @param firstNameField WebElement
      * @return RegisterPart
      */
@@ -108,7 +116,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * getFirstNameField
+     * Returns a WebElement of the 'FirstName' field.
      * @return WebElement
      */
     protected WebElement getFirstNameField() {
@@ -116,30 +124,30 @@ public abstract class RegisterPart {
     }
 
     /**
-     * inputFirstName
+     * Inserting some text on the 'FirstName' field.
      * @param String firstName
      * @return RegisterPart
      */
-    public RegisterPart inputFirstName(String firstName) {
+    protected RegisterPart inputFirstName(String firstName) {
         this.getFirstNameField().sendKeys(firstName);
         return this;
     }
 
     /**
-     * clearFirstName
+     * Clearing the 'FirstName' field.
      * @return RegisterPart
      */
-    public RegisterPart clearFirstName() {
+    protected RegisterPart clearFirstName() {
         this.getFirstNameField().clear();
         return this;
     }
 
     /**
-     * clickFirstName field
+     * Click on FirstName field
      * @param driver WebDriver
      * @return RegisterPart
      */
-    public RegisterPart clickFirstName(WebDriver driver) {
+    protected RegisterPart clickFirstName(WebDriver driver) {
         if (isDisplayedFirstNameField()) {
             this.getFirstNameField().click();
             Actions action = new Actions(driver);
@@ -150,7 +158,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * isDisplayedFirstNameField
+     * Returns boolean if displayed the 'FirstName' field.
      * @return boolean
      */
     protected boolean isDisplayedFirstNameField() {
@@ -159,7 +167,7 @@ public abstract class RegisterPart {
 
     // email field
     /**
-     * getEmailField
+     * Returns a WebElement of the 'Email' field.
      * @return WebElement
      */
     protected WebElement getEmailField() {
@@ -167,30 +175,30 @@ public abstract class RegisterPart {
     }
 
     /**
-     * input in Email field
+     * Inserting some text on the 'Email' field.
      * @param email String
      * @return RegisterPart
      */
-    public RegisterPart inputEmail(String email) {
+    protected RegisterPart inputEmailField(String email) {
         this.getEmailField().sendKeys(email);
         return this;
     }
 
     /**
-     * clearEmail
+     * Clearing the 'Email' field.
      * @return RegisterPart
      */
-    public RegisterPart clearEmail() {
+    protected RegisterPart clearEmailField() {
         this.getEmailField().clear();
         return this;
     }
 
     /**
-     * click in Email field
+     * Click on Email field
      * @param driver WebDriver
      * @return RegisterPart
      */
-    public RegisterPart clickEmail(WebDriver driver) {
+    public RegisterPart clickEmailField(WebDriver driver) {
         if (isDisplayedEmailField()) {
             this.getEmailField().click();
             Actions action = new Actions(driver);
@@ -201,7 +209,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * setEmailField
+     * Taking a WebElement and set it to a private WebElement field.
      * @param emailField WebElement
      * @return RegisterPart
      */
@@ -211,7 +219,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * isDisplayedEmailField
+     * Returns boolean if displayed the 'Email' field.
      * @return boolean
      */
     protected boolean isDisplayedEmailField() {
@@ -220,7 +228,7 @@ public abstract class RegisterPart {
 
     // password field
     /**
-     * getPasswordField
+     * Returns a WebElement of the 'Password' field.
      * @return WebElement
      */
     protected WebElement getPasswordField() {
@@ -228,30 +236,30 @@ public abstract class RegisterPart {
     }
 
     /**
-     * inputPassword
+     * Inserting some text on the 'Password' field.
      * @param password String
      * @return RegisterPart
      */
-    public RegisterPart inputPassword(String password) {
+    protected RegisterPart inputPassword(String password) {
         this.getPasswordField().sendKeys(password);
         return this;
     }
 
     /**
-     * clearPasswordField
+     * Clearing the 'Password' field.
      * @return RegisterPart
      */
-    public RegisterPart clearPasswordField() {
+    protected RegisterPart clearPasswordField() {
         this.getPasswordField().clear();
         return this;
     }
 
     /**
-     * clickPasswordField
+     * Click on the 'Password' field.
      * @param driver WebDriver
      * @return RegisterPart
      */
-    public RegisterPart clickPasswordField(WebDriver driver) {
+    protected RegisterPart clickPasswordField(WebDriver driver) {
         if (isDisplayedPasswordField()) {
             this.getPasswordField().click();
             Actions action = new Actions(driver);
@@ -262,7 +270,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * setPasswordField
+     * Taking a WebElement and set it to a private WebElement field.
      * @param passwordField WebElement
      * @return RegisterPart
      */
@@ -272,7 +280,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * isDisplayedPasswordField
+     * Returns boolean if displayed the 'Password' field.
      * @return boolean
      */
     protected boolean isDisplayedPasswordField() {
@@ -281,7 +289,7 @@ public abstract class RegisterPart {
 
     // showPasswordButton
     /**
-     * getShowPasswordButton
+     * Returns a WebElement of the 'ShowPassword' button.
      * @return WebElement
      */
     protected WebElement getShowPasswordButton() {
@@ -289,10 +297,10 @@ public abstract class RegisterPart {
     }
 
     /**
-     * clickShowPasswordButton
+     * Click on the 'ShowPassword' button.
      * @return RegisterPart
      */
-    public RegisterPart clickShowPasswordButton() {
+    protected RegisterPart clickShowPasswordButton() {
         if (isDisplayedShowPasswordButton()) {
             this.getShowPasswordButton().click();
         }
@@ -300,7 +308,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * setShowPasswordButton
+     * Taking a WebElement and set it to a private WebElement field.
      * @param showPasswordButton WebElement
      * @return RegisterPart
      */
@@ -310,7 +318,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * isDisplayedShowPasswordButton
+     * Returns boolean if displayed the 'ShowPassword' button.
      * @return boolean
      */
     protected boolean isDisplayedShowPasswordButton() {
@@ -319,7 +327,7 @@ public abstract class RegisterPart {
 
     // password confirm field
     /**
-     * getPasswordConfirmField
+     * Returns a WebElement of the 'PasswordConfirm' field.
      * @return WebElement
      */
     protected WebElement getPasswordConfirmField() {
@@ -327,30 +335,30 @@ public abstract class RegisterPart {
     }
 
     /**
-     * inputPasswordConfirm
+     * Inserting some text on the 'PasswordConfirm' field.
      * @param passwordConfirm String
      * @return RegisterPart
      */
-    public RegisterPart inputPasswordConfirm(String passwordConfirm) {
+    protected RegisterPart inputPasswordConfirm(String passwordConfirm) {
         this.getPasswordConfirmField().sendKeys(passwordConfirm);
         return this;
     }
 
     /**
-     * clearPasswordConfirmField
+     * Clearing the 'PasswordConfirm' field.
      * @return RegisterPart
      */
-    public RegisterPart clearPasswordConfirmField() {
+    protected RegisterPart clearPasswordConfirmField() {
         this.getPasswordConfirmField().clear();
         return this;
     }
 
     /**
-     * clickPasswordConfirmField
+     * Click on the 'PasswordConfirm' field.
      * @param driver WebDriver
      * @return RegisterPart
      */
-    public RegisterPart clickPasswordConfirmField(WebDriver driver) {
+    protected RegisterPart clickPasswordConfirmField(WebDriver driver) {
         if (isDisplayedPasswordConfirmField()) {
             this.getPasswordConfirmField().click();
             Actions action = new Actions(driver);
@@ -361,7 +369,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * setPasswordConfirmField
+     * Taking a WebElement and set it to a private WebElement field.
      * @param passwordConfirmField WebElement
      * @return RegisterPart
      */
@@ -372,7 +380,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * isDisplayedPasswordConfirmField
+     * Returns boolean if displayed the 'PasswordConfirm' field.
      * @return boolean
      */
     protected boolean isDisplayedPasswordConfirmField() {
@@ -381,7 +389,7 @@ public abstract class RegisterPart {
 
     // showPasswordConfirmButton
     /**
-     * getShowPasswordConfirmButton
+     * Returns a WebElement of the 'ShowPasswordConfirm' button.
      * @return WebElement
      */
     protected WebElement getShowPasswordConfirmButton() {
@@ -389,17 +397,17 @@ public abstract class RegisterPart {
     }
 
     /**
-     * clickShowPasswordConfirmButton
+     * Click on the 'ShowPasswordConfirm' button.
      * @return RegisterPart
      */
-    public RegisterPart clickShowPasswordConfirmButton() {
+    protected RegisterPart clickShowPasswordConfirmButton() {
         if (isDisplayedShowPasswordConfirmButton())
             this.getShowPasswordConfirmButton().click();
         return this;
     }
 
     /**
-     * setShowPasswordConfirmButton
+     * Taking a WebElement and set it to a private WebElement
      * @param showPasswordConfirmButton
      * @return RegisterPart
      */
@@ -410,7 +418,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * isDisplayedShowPasswordConfirmButton
+     * Returns boolean if displayed the 'ShowPasswordConfirm' button.
      * @return boolean
      */
     protected boolean isDisplayedShowPasswordConfirmButton() {
@@ -419,7 +427,7 @@ public abstract class RegisterPart {
 
     // Sign Up button
     /**
-     * getSignUpButton
+     * Returns a WebElement of the 'SignUp' button.
      * @return WebElement
      */
     protected WebElement getSignUpButton() {
@@ -427,10 +435,10 @@ public abstract class RegisterPart {
     }
 
     /**
-     * clickRegisterButton
+     * Click on the 'SignUp' button.
      * @return RegisterPart
      */
-    public RegisterPart clickRegisterButton() {
+    protected RegisterPart clickSignUpButton() {
         if (isDisplayedSignUpButton()) {
             this.getSignUpButton().click();
         }
@@ -438,7 +446,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * setSignUpButton
+     * Taking a WebElement and set it to a private WebElement field.
      * @param signUpButton WebElement
      * @return RegisterPart
      */
@@ -448,7 +456,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * isDisplayedSignUpButton
+     * Returns boolean if displayed the 'SignUp' button.
      * @return boolean
      */
     protected boolean isDisplayedSignUpButton() {
@@ -456,7 +464,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * getSignUpButtonText
+     * Returns a text which displayed on the 'SignUp' button.
      * @return String
      */
     protected String getSignUpButtonText() {
@@ -469,7 +477,7 @@ public abstract class RegisterPart {
 
     // Sign Up with Google button
     /**
-     * getGoogleSignUpButton
+     * Returns a WebElement of the 'GoogleSignUp' button.
      * @return WebElement
      */
     protected WebElement getGoogleSignUpButton() {
@@ -477,7 +485,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * clickGoogleLoginButton
+     * Click on the 'GoogleSignUp' button.
      * @return RegisterPart
      */
     protected RegisterPart clickGoogleLoginButton() {
@@ -488,7 +496,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * setGoogleSignUpButton
+     * Taking a WebElement and set it to a private WebElement field.
      * @param googleSignUpButton WebElement
      * @return RegisterPart
      */
@@ -498,7 +506,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * isDisplayedGoogleSignUpButton
+     * Returns boolean if displayed the 'GoogleSignUp' button.
      * @return boolean
      */
     protected boolean isDisplayedGoogleSignUpButton() {
@@ -506,7 +514,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * getGoogleSignUpButtonText
+     * Returns a text which displayed on the 'GoogleSignUp' button.
      * @return String
      */
     protected String getGoogleSignUpButtonText() {
@@ -514,7 +522,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * getSignInLink
+     * Returns a WebElement of the 'SignIn' link.
      * @return WebElement
      */
     protected WebElement getSignInLink() {
@@ -522,7 +530,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * getSignInLinkText
+     * Returns a text which displayed on the 'SignIn' link.
      * @return String
      */
     protected String getSignInLinkText() {
@@ -530,10 +538,10 @@ public abstract class RegisterPart {
     }
 
     /**
-     * clickSignInLink
+     * Click on the 'SignIn' link.
      * @return RegisterPart
      */
-    public RegisterPart clickSignInLink() {
+    protected RegisterPart clickSignInLink() {
         if (isDisplayedSignInLink()) {
             this.getSignInLink().click();
         }
@@ -541,7 +549,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * setSignInLink
+     * Taking a WebElement and set it to a private WebElement field.
      * @param signInLink WebElement
      * @return RegisterPart class
      */
@@ -551,7 +559,7 @@ public abstract class RegisterPart {
     }
 
     /**
-     * isDisplayedSignInLink
+     * Returns boolean if displayed the 'SignIn' link.
      * @return boolean
      */
     protected boolean isDisplayedSignInLink() {
@@ -560,7 +568,7 @@ public abstract class RegisterPart {
 
 //  emailValidator
     /**
-     * setEmailValidator
+     * Taking a WebElement and set it to a private WebElement field.
      * @param emailValidator WebElement
      * @return RegisterPart
      */
@@ -570,36 +578,36 @@ public abstract class RegisterPart {
     }
 
     /**
-     * getEmailValidator
+     * Returns a WebElement of the 'emailValidator' message.
      * @return WebElement
      */
     protected abstract WebElement getEmailValidator();
 
     /**
-     * getEmailValidatorText
+     * Returns a text which displayed on the 'emailValidator' message.
      * @return String
      */
-    public String getEmailValidatorText() {
-        return getEmailValidator().getText();
+    protected String getEmailValidatorText() {
+        return getEmailValidator().getText().trim();
     }
 
     /**
-     * isDisplayedEmailValidator
+     * Returns boolean if displayed the 'emailValidator' message.
      * @return boolean
      */
-    public boolean isDisplayedEmailValidator() {
+    protected boolean isDisplayedEmailValidator() {
         return getEmailValidator().isDisplayed();
     }
 
     /**
-     * sizeEmailValidator
+     * Verifying if exists EmailValidator message
      * @return boolean
      */
     protected abstract boolean sizeEmailValidator();
 
 //  passwordValidator
     /**
-     * setPasswordValidator
+     * Taking a WebElement and set it to a private WebElement field.
      * @param passwordValidator WebElement
      * @return RegisterPart
      */
@@ -609,36 +617,36 @@ public abstract class RegisterPart {
     }
 
     /**
-     * getPasswordValidator
+     * Returns a WebElement of the 'PasswordValidator' message.
      * @return WebElement
      */
     protected abstract WebElement getPasswordValidator();
 
     /**
-     * getPasswordValidatorText
+     * Returns a text which displayed on the 'PasswordValidator' message.
      * @return String
      */
-    public String getPasswordValidatorText() {
-        return getPasswordValidator().getText();
+    protected String getPasswordValidatorText() {
+        return getPasswordValidator().getText().trim();
     }
 
     /**
-     * isDisplayedPasswordValidator
+     * Returns boolean if displayed the 'PasswordValidator' message.
      * @return boolean
      */
-    public boolean isDisplayedPasswordValidator() {
+    protected boolean isDisplayedPasswordValidator() {
         return getPasswordValidator().isDisplayed();
     }
 
     /**
-     * sizePasswordValidator
+     * Verifying if exists PasswordValidator message
      * @return boolean
      */
     protected abstract boolean sizePasswordValidator();
 
 //  passwordConfirmValidator
     /**
-     * setPasswordConfirmValidator
+     * Taking a WebElement and set it to a private WebElement field.
      * @param passwordConfirmValidator WebElement
      * @return RegisterPart
      */
@@ -649,35 +657,39 @@ public abstract class RegisterPart {
     }
 
     /**
-     * getPasswordConfirmValidator
+     * Returns a WebElement of the 'PasswordConfirmValidator' message.
      * @return WebElement
      */
     protected abstract WebElement getPasswordConfirmValidator();
 
     /**
-     * getPasswordConfirmValidatorText
+     * Returns a text which displayed on the 'PasswordConfirmValidator' message.
      * @return String
      */
-    public String getPasswordConfirmValidatorText() {
-        return getPasswordConfirmValidator().getText();
+    protected String getPasswordConfirmValidatorText() {
+        return getPasswordConfirmValidator().getText().trim();
     }
 
     /**
-     * isDisplayedPasswordConfirmValidator
+     * Returns boolean if displayed the 'PasswordConfirmValidator' message.
      * @return boolean
      */
-    public boolean isDisplayedPasswordConfirmValidator() {
+    protected boolean isDisplayedPasswordConfirmValidator() {
         return getPasswordConfirmValidator().isDisplayed();
     }
 
     /**
-     * sizePasswordConfirmValidator
+     * Verifying if exists PasswordConfirmValidator message
      * @return boolean
      */
     protected abstract boolean sizePasswordConfirmValidator();
 
 //// Functional
 
+    /**
+     * Returns a top title text on the page.
+     * @return String
+     */
     public String getTitlePageText() {
         if (isDisplayedTitleField()) {
             return getTitleFieldText();
@@ -685,6 +697,18 @@ public abstract class RegisterPart {
             return "title text not found";
         }
     }
+    
+    /**
+     * In the browser switch to another tab.
+     * @param currentTab String
+     */
+    protected abstract void switchToAnotherTab(String currentTab);
+    
+    /**
+     * Load URL in a new tab and get temporary email.
+     * @return String
+     */
+    protected abstract String getTempEmail();
 
     /**
      * Click SignUp with Google Account button and a Google window opens and
@@ -697,7 +721,7 @@ public abstract class RegisterPart {
      * Getting a temporary Email address for registration
      * @return
      */
-    protected abstract String getTempEmail();
+    protected abstract String getTemporaryEmail();
 
     /**
      * Verify a temporary Email and close tab.
