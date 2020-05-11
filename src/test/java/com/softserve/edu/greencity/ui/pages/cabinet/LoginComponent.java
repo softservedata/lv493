@@ -1,10 +1,14 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import com.softserve.edu.greencity.ui.pages.common.ForgotPasswordPart;
-import com.softserve.edu.greencity.ui.pages.common.LoginPart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import com.softserve.edu.greencity.ui.pages.common.ForgotPasswordPart;
+import com.softserve.edu.greencity.ui.pages.common.LoginPart;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class LoginComponent extends LoginPart {
 
@@ -14,14 +18,20 @@ public class LoginComponent extends LoginPart {
     private final String GOOGLE_LOGIN_BUTTON_CLASS = "google";
     private final String FORGOT_PASSWORD_LINK_CLASS = "forgot-password";
     private final String REGISTRATION_LINK_CLASS = "signup-link";
+    private final String ERROR_MASSAGE_CLASS = "error ng-star-inserted";
 
-    private final WebDriver driver;
 
     private WebElement singUpLink;
 
     public LoginComponent(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         initElements();
+    }
+
+    @Override
+    public List<String> getErrorMassages() {
+        return driver.findElements(By.className(ERROR_MASSAGE_CLASS))
+                .stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     private void initElements() {
@@ -33,10 +43,7 @@ public class LoginComponent extends LoginPart {
                 .setSignInButton(driver.findElement(By.xpath(LOGIN_BUTTON_XPATH)));
     }
 
-    @Override
-    public ForgotPasswordPart gotoForgotPassword() {
-        return null;
-    }
+    //Business Logic
 
     public RegisterPage gotoRegisterPage() {
         getSignUpLink().click();

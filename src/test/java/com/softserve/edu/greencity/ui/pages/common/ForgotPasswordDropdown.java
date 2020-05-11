@@ -6,12 +6,12 @@ public class ForgotPasswordDropdown extends ForgotPasswordPart {
 
     WebDriver driver;
 
-    public ForgotPasswordDropdown(WebDriver driver){
+    public ForgotPasswordDropdown(WebDriver driver) {
         this.driver = driver;
         initElements();
     }
 
     private void initElements() {
-        //TODO
+        // TODO
     }
 }

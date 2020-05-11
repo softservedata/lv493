@@ -5,7 +5,8 @@
 
 	<test name="Test01a">
 		<classes>
-			<class name="com.softserve.edu.greencity.ui.tests.LoginTest" />
+			<class name="com.softserve.edu.greencity.ui.tests.LoginDropdownTest" />
+			<class name="com.softserve.edu.greencity.ui.tests.LoginPageTest" />
 		</classes>
 	</test> <!-- Test -->
 

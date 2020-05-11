@@ -1,7 +1,13 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+
+import java.util.List;
 
 public abstract class LoginPart {
 
@@ -12,27 +18,13 @@ public abstract class LoginPart {
     protected WebElement forgotPasswordLink;
     protected WebElement singUpLink;
 
-    public LoginPart inputEmail(String email) {
-        this.getEmailField().sendKeys(email);
-        return this;
+    protected WebDriver driver;
+
+    public LoginPart(WebDriver driver) {
+        this.driver = driver;
     }
 
-    public LoginPart inputPassword(String password) {
-        this.getPasswordField().sendKeys(password);
-        return this;
-    }
-
-    public LoginPart clickLoginButton() {
-        this.getSignInButton().click();
-        return this;
-    }
-
-    public LoginPart clickGoogleLoginButton() {
-        this.getGoogleSigningButton().click();
-        return this;
-    }
-
-    public abstract ForgotPasswordPart gotoForgotPassword();
+    public abstract List<String> getErrorMassages();
 
     public WebElement getEmailField() {
         return emailField;
@@ -88,5 +80,53 @@ public abstract class LoginPart {
         return this;
     }
 
-}
+    
+    // Functional
 
+    public LoginPart inputEmail(String email) {
+        this.getEmailField().sendKeys(email);
+        return this;
+    }
+
+    public LoginPart inputPassword(String password) {
+        this.getPasswordField().sendKeys(password);
+        return this;
+    }
+
+    public LoginPart clickLoginButton() {
+        this.getSignInButton().click();
+        return this;
+    }
+
+    public LoginPart clickGoogleLoginButton() {
+        this.getGoogleSigningButton().click();
+        return this;
+    }
+
+
+    protected void fillFields(User user) {
+        inputEmail(user.getEmail())
+            .inputPassword(user.getPassword());
+    }
+    
+    protected void fillFieldsSubmit(User user) {
+        fillFields(user);
+        clickLoginButton();
+    }
+
+    // Business Logic
+
+    public MyCabinetPage successfullyLogin(User user) {
+        fillFields(user);
+        clickLoginButton();
+        return new MyCabinetPage(driver);
+    }
+
+    public LoginPart unsuccessfullyLogin(User user) {
+        fillFields(user);
+        clickLoginButton();
+        return this;
+    }
+
+
+}
