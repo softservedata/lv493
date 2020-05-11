@@ -6,11 +6,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public final class ItemComponent {
 
@@ -29,20 +32,22 @@ public final class ItemComponent {
 	}
 
 	private void initElements() {
-
-		makeElPresent();
 	
 		tags = newsItem.findElements(By.cssSelector("div.filter-tag div"));
 		title = newsItem.findElement(By.cssSelector("div.title-list p"));
 		content = newsItem.findElement(By.cssSelector("div.list-text p"));
 		dateOfCreation = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(1)"));
 		author = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(2)"));
+//		makeElPresent();
 	}
 
 	private void makeElPresent() {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		Duration duration = Duration.ofMillis(20L);
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(duration).ignoring(TimeoutException.class);
+//		WebDriverWait wait = new WebDriverWait(myDriver, 15);
+//		wait.until(webDriver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete"));
+		wait.until(ExpectedConditions.visibilityOfAllElements( title, content, dateOfCreation, author));
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 

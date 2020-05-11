@@ -35,7 +35,8 @@ public class EconewsPageTest extends GreencityTestRunner {
 
 	//@Test(dataProvider = "newsData")
 	public void econewsSmokeTest(NewsData news) {
-
+		
+		logger.info("econewsSmokeTest starts with parameters: " + news.toString());
 		// go to EconewsPage -> OneNewsPage -> next OneNewsPage -> return to EconewsPage 
 		
 		TipsTricksPage page = loadApplication();
@@ -48,6 +49,8 @@ public class EconewsPageTest extends GreencityTestRunner {
 	
 	//@Test(dataProvider = "newsData")
 	public void openNewsTest(NewsData news) {
+		
+		logger.info("openNewsTest starts with parameters: " + news.toString());
 		
 		//open onenewspage
 		
@@ -65,6 +68,9 @@ public class EconewsPageTest extends GreencityTestRunner {
 	//@Test(dataProvider = "newsTags")
 	public void chooseTags(List<Tag> tags) {
 		
+		logger.info("chooseTags starts with parameters: " + tags.toString());
+		
+		
 		//open onenewspage
 
 		EconewsPage page = loadApplication().navigateMenuEconews().selectFilters(tags);
@@ -79,6 +85,8 @@ public class EconewsPageTest extends GreencityTestRunner {
 	
 	//@Test(dataProvider = "newsTags")
 	public void deselectTags(List<Tag> tags) {
+		
+		logger.info("deselectTags starts with parameters: " + tags.toString());
 		
 		//open onenewspage
 
@@ -97,7 +105,8 @@ public class EconewsPageTest extends GreencityTestRunner {
 	
 	//@Test
 	public void selectListView() {
-
+		
+		logger.info("selectListView starts");
 		// open onenewspage
 
 		EconewsPage page = loadApplication()
@@ -110,9 +119,10 @@ public class EconewsPageTest extends GreencityTestRunner {
 
 	}
 	
-	@Test
+	//@Test
 	public void selectGridView() {
-
+		
+		logger.info("selectListView starts");
 		// open onenewspage
 
 		EconewsPage page = loadApplication()

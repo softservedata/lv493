@@ -57,7 +57,14 @@ public class NewsData {
 		return list;
     }
     
-    public Set<String> getTagName() {
+    
+    
+    @Override
+	public String toString() {
+		return "NewsData [title=" + title + ", tags=" + tags.toString() + ", content=" + content + "]";
+	}
+
+	public Set<String> getTagName() {
     	Set<String> set = new HashSet<>();
     	for(Tag current : getTags()) {
     		set.add(current.toString().toLowerCase());

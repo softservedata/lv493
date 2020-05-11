@@ -6,6 +6,8 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.softserve.edu.greencity.ui.data.NewsData;
 
@@ -16,6 +18,8 @@ import com.softserve.edu.greencity.ui.data.NewsData;
  */
 public class ItemsContainer {
 	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	 
 	private WebDriver driver;
 	private List<ItemComponent> itemComponents;
 	
@@ -78,7 +82,7 @@ public class ItemsContainer {
             }
         }
         if (result == null) {
-        	
+        	logger.warn("News with header " + headerName + "not exist");
         	throw new RuntimeException("HeaderName " + headerName + " not found");
         }
         return result;
@@ -110,7 +114,7 @@ public class ItemsContainer {
     		}
     	}
     	if (result == null) {
-         
+    		logger.warn("News with parameters " + news.toString() + "not exist");
              throw new RuntimeException("ItemComponent with parameters " + news.toString() + " not found");
          }
 		return result;	
