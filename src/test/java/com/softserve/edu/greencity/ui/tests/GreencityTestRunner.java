@@ -55,8 +55,8 @@ public abstract class GreencityTestRunner {
 
 	@BeforeMethod
 	public void setUp() throws Exception {
-//		driver.get("https://ita-social-projects.github.io/GreenCityClient/#/welcome");
-	    driver.get("http://localhost:4200/#/welcome");
+		driver.get("https://ita-social-projects.github.io/GreenCityClient/#/welcome");
+//	    driver.get("http://localhost:4200/#/welcome");
 //		driver.manage().window().maximize();
 		Thread.sleep(1000); // For Presentation Only
 	}

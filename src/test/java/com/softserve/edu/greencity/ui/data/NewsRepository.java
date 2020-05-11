@@ -27,6 +27,8 @@ public class NewsRepository {
     public static List<Tag> getNewsByTags() {
     	 List<Tag> tags = new ArrayList<>();
          tags.add(Tag.NEWS);
+         tags.add(Tag.ADS);
+         tags.add(Tag.EVENTS);
          return tags;
     }
 }

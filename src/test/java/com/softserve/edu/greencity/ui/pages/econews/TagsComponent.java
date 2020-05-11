@@ -33,12 +33,9 @@ public class TagsComponent {
         return tags;
     }
 
- //   public List<WebElement> getSelectedTagsButtons() {
- //       List<WebElement> selectedTagsButtons = driver.findElements(By.cssSelector("div.tags > button.filters-color"));
- //       return selectedTagsButtons;
-//    }
 
     // Functional
+    
     public Set<String> getTagsNames(List<WebElement> selectedTagsButtons) {
         Set<String> tagsNames = new HashSet<>();
         for (WebElement current : selectedTagsButtons) {

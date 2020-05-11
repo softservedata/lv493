@@ -14,8 +14,23 @@ import com.softserve.edu.greencity.ui.pages.econews.OneNewsPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 public class EconewsPageTest extends GreencityTestRunner {
+	
+	
+	@DataProvider
+	public Object[][] newsTags() {
+		return new Object[][] {
+				 {  NewsRepository.getNewsByTags() }
+			 };
+	}
+	
+	@DataProvider
+	public Object[][] newsData() {
+		return new Object[][] {
+				 {  NewsRepository.getAllFildsNews() }
+			 };
+	}
 
-	@Test(dataProvider = "newsData")
+	//@Test(dataProvider = "newsData")
 	public void econewsSmokeTest(NewsData news) {
 
 		TipsTricksPage page = loadApplication();
@@ -25,16 +40,8 @@ public class EconewsPageTest extends GreencityTestRunner {
 		.switchToEconewsPageBack();
 		
 	}
-
-	@DataProvider
-	public Object[][] newsData() {
-		return new Object[][] {
-				 {  NewsRepository.getAllFildsNews() }
-			 };
-	}
-
 	
-	@Test(dataProvider = "newsData")
+	//@Test(dataProvider = "newsData")
 	public void openNewsTest(NewsData news) {
 		
 		//open onenewspage
@@ -46,32 +53,72 @@ public class EconewsPageTest extends GreencityTestRunner {
 		// check if is appropriate page
 		
 		Assert.assertEquals(news.getTitle(), findedeconewspage.getTitleText(), 
-				"titles of news does not match");	
+				"titles of news does not match:");	
 		
 	}
 	
-	@DataProvider
-	public Object[][] newsTags() {
-		return new Object[][] {
-				 {  NewsRepository.getNewsByTags() }
-			 };
-	}
-	
-	@Test(dataProvider = "newsTags")
+	//@Test(dataProvider = "newsTags")
 	public void chooseTags(List<Tag> tags) {
 		
 		//open onenewspage
-		
-		EconewsPage page = loadApplication()
-				.navigateMenuEconews()
-				.selectFilters(tags);
-	
+
+		EconewsPage page = loadApplication().navigateMenuEconews().selectFilters(tags);
+
 		// check if is appropriate numbers of news items
 		
-		Assert.assertEquals(page.getNumberOfItemComponent(), 
-				page.getItemsContainer().getItemComponentsCount(), 
-				"Number of news items does not match to required");
+		Assert.assertEquals(page.getItemsContainer().getItemComponentsCount(), 
+				page.getNumberOfItemComponent(), 
+				"Number of news items does not match to required:");
 		
+	}
+	
+	//@Test(dataProvider = "newsTags")
+	public void deselectTags(List<Tag> tags) {
+		
+		//open onenewspage
+
+		EconewsPage page = loadApplication()
+				.navigateMenuEconews()
+				.selectFilters(tags) 
+				.deselectFilters(tags);
+
+		// check if is appropriate numbers of news items
+		
+		Assert.assertEquals(page.getItemsContainer().getItemComponentsCount(), 
+				page.getNumberOfItemComponent(), 
+				"Number of news items does not match to required:");
+		
+	}
+	
+	//@Test
+	public void selectListView() {
+
+		// open onenewspage
+
+		EconewsPage page = loadApplication()
+				.navigateMenuEconews()
+				.switchToListViev();
+
+		// check if it  is appropriate view
+
+		Assert.assertTrue(page.isActiveListView(), "List view is not active:");
+
+	}
+	
+	@Test
+	public void selectGridView() {
+
+		// open onenewspage
+
+		EconewsPage page = loadApplication()
+				.navigateMenuEconews()
+				.switchToListViev()
+				.switchToGridViev();
+
+		// check if it  is appropriate view
+
+		Assert.assertTrue(page.isActiveGridView(), "Grid view is not active:");
+
 	}
 		
 }
