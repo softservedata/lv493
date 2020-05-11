@@ -2,8 +2,6 @@ package com.softserve.edu.greencity.ui.pages.econews;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +9,11 @@ import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.data.NewsData;
 
+/**
+ * Contains all itemsComponents that are present on page
+ * Use for OnenewsPage & EconewsPage.
+ * @author lv-493
+ */
 public class ItemsContainer {
 	
 	private WebDriver driver;
@@ -34,7 +37,7 @@ public class ItemsContainer {
 	
     //itemComponents
 	
-    public List<ItemComponent> getItemComponents() {
+	private List<ItemComponent> getItemComponents() {
     	return itemComponents;
     }
 
@@ -44,7 +47,7 @@ public class ItemsContainer {
      * In this method we get how many ItemComponent is displayed
      * @return int 
      */
-    public int getItemComponentsCount(){
+	public int getItemComponentsCount(){
         return getItemComponents().size();
     }
     
@@ -52,7 +55,7 @@ public class ItemsContainer {
      * We get list of all news headers 
      * @return list itemComponentsHeader
      */
-    public List<String> getItemComponentsHeader() {  
+    private List<String> getItemComponentsHeader() {  
         List<String> itemComponentsHeader = new ArrayList<>();
         for(ItemComponent cur : getItemComponents()) {
         	itemComponentsHeader.add(cur.getIitleText());
@@ -65,7 +68,7 @@ public class ItemsContainer {
      * @param  String headerName
      * @return ItemComponent
      */
-    public ItemComponent getItemComponentByHeader(String headerName){
+    protected ItemComponent getItemComponentByHeader(String headerName){
     	ItemComponent result = null;
         for (ItemComponent cur : getItemComponents()) {
             if (cur.getIitleText().toLowerCase()
@@ -75,8 +78,8 @@ public class ItemsContainer {
             }
         }
         if (result == null) {
-        	System.err.format(headerName, result);
-            //throw new RuntimeException("HeaderName " + headerName + " not found");
+        	
+        	throw new RuntimeException("HeaderName " + headerName + " not found");
         }
         return result;
     }
@@ -85,7 +88,7 @@ public class ItemsContainer {
      * Open new page with news given by title, tags, content
      * @param OneNewsData one
      */
-    public void clickItemComponentOpenPage(NewsData news) {
+    protected void clickItemComponentOpenPage(NewsData news) {
 //   	getItemComponentByHeader(news.getTitle()).clickContent();
     	findItemComponentByParameters(news).getIitle().click();
     	
@@ -97,7 +100,7 @@ public class ItemsContainer {
      * @param  OneNewsData 
      * @return ItemComponent
      */
-    public ItemComponent findItemComponentByParameters(NewsData news) {
+    protected ItemComponent findItemComponentByParameters(NewsData news) {
     	ItemComponent result = null;
     	for(ItemComponent cur : getItemComponents() ) {
     		if(cur.getIitleText().toLowerCase().equals(news.getTitle().toLowerCase()) 
@@ -107,8 +110,8 @@ public class ItemsContainer {
     		}
     	}
     	if (result == null) {
-         	System.err.format("no matches with ", news.toString());
-             //throw new RuntimeException("ItemComponent with parameters " + one.toString() + " not found");
+         
+             throw new RuntimeException("ItemComponent with parameters " + news.toString() + " not found");
          }
 		return result;	
     }
@@ -118,7 +121,7 @@ public class ItemsContainer {
      * @param number
      * @return ItemComponent
      */
- 	public ItemComponent chooseNewsByNumber(int number) {
+ 	protected ItemComponent chooseNewsByNumber(int number) {
  				return getItemComponents().get(number);
 	}
     

@@ -12,8 +12,9 @@ public class OneNewsPage extends TopPart {
 	
 	//there will be also functionality follow us & search - is not implemented
 	//private WebElement editNewsButton;  // isn't working yet tags
+	
 	private WebElement  goToNews;
-	private List<WebElement> filtersList;
+	private List<WebElement> tagsList;
 	private WebElement title;
 	private WebElement data;
 	private WebElement author;
@@ -29,7 +30,7 @@ public class OneNewsPage extends TopPart {
 	private void initElements() {
 		
 		goToNews = driver.findElement(By.cssSelector("div.back-button"));
-		filtersList = driver.findElements(By.cssSelector("div.tags > div"));
+		tagsList = driver.findElements(By.cssSelector("div.tags > div"));
 		title = driver.findElement(By.cssSelector("div.news-title"));
 		data = driver.findElement(By.cssSelector("div.news-info > div.news-info-date"));
 		author = driver.findElement(By.cssSelector("div.news-info > div.news-info-author"));
@@ -42,27 +43,27 @@ public class OneNewsPage extends TopPart {
 	
 	//goToNews 
 	
-	protected WebElement getGoToNews () {
+	private WebElement getGoToNews () {
         return goToNews ;
     }
 
-    protected String getGoToNewsText() {
+	private String getGoToNewsText() {
         return getGoToNews().getText();
     }
     
-    protected void clickGoToNewsButton() {
+	private void clickGoToNewsButton() {
         getGoToNews().click();
     }
     
     //filtersList
     
-	protected List<WebElement> getfiltersList() {
-        return filtersList;
+	private List<WebElement> getTagsList() {
+        return tagsList;
     }
 
    //title
     
-	protected WebElement getTitle() {
+	private WebElement getTitle() {
         return title;
     }
 
@@ -72,31 +73,31 @@ public class OneNewsPage extends TopPart {
     
     //data
     
-    protected WebElement getData() {
+    private WebElement getData() {
         return data;
     }
 
-    protected String getDataText() {
+    private String getDataText() {
         return getData().getText();
     }
     
     //author
     
-    protected WebElement getAuthor() {
+    private WebElement getAuthor() {
         return author;
     }
 
-    protected String getAuthorText() {
+    private String getAuthorText() {
         return getAuthor().getText();
     }
     
     //content
     
-    protected WebElement getContent() {
+    private WebElement getContent() {
         return content;
     }
 
-    protected String getContentText() {
+    private String getContentText() {
         return getContent().getText();
     }
     
@@ -108,10 +109,15 @@ public class OneNewsPage extends TopPart {
      * @return OneNewsPage
      */
     public OneNewsPage switchToNextOneNewsPagebyNumber(int number) {
-		itemsContainer.chooseNewsByNumber(number).clickIitle();
+		itemsContainer.chooseNewsByNumber(number).clickTitle();
 		return new OneNewsPage(driver);
     }
     
+    /**
+     * Go to next OneNewsPage
+     * @param number
+     * @return OneNewsPage
+     */
     public OneNewsPage switchToNextOneNewsPage() {
     	switchToNextOneNewsPagebyNumber(1);
 		return new OneNewsPage(driver);

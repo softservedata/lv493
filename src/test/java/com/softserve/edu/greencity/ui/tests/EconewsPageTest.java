@@ -13,8 +13,11 @@ import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.OneNewsPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
+/**
+ * Test cases to test EconewsPage
+ * @author lv-493
+ */
 public class EconewsPageTest extends GreencityTestRunner {
-	
 	
 	@DataProvider
 	public Object[][] newsTags() {
@@ -33,6 +36,8 @@ public class EconewsPageTest extends GreencityTestRunner {
 	//@Test(dataProvider = "newsData")
 	public void econewsSmokeTest(NewsData news) {
 
+		// go to EconewsPage -> OneNewsPage -> next OneNewsPage -> return to EconewsPage 
+		
 		TipsTricksPage page = loadApplication();
 		page.navigateMenuEconews()
 		.switchToOneNewsPagebyParameters(news)
