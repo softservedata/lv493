@@ -1,9 +1,15 @@
 package com.softserve.edu.greencity.ui.tests;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.ui.data.Languages;
+import com.softserve.edu.greencity.ui.data.MapData;
+import com.softserve.edu.greencity.ui.pages.map.DiscountRateComponent;
+import com.softserve.edu.greencity.ui.pages.map.MapPage;
+import com.softserve.edu.greencity.ui.pages.map.PlacesComponent;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 public class SmokeTest extends GreencityTestRunner {
@@ -23,6 +29,28 @@ public class SmokeTest extends GreencityTestRunner {
 				.switchLanguage(languages);
 		presentationSleep();
 		//
+		tipstrickspage.navigateMenuMap();
+		presentationSleep();
+//PlacesComponent test = new PlacesComponent(driver);
+MapPage map = new MapPage(driver);
+//map.getDiscountRateComponent();
+map.searchRequest();
+map.clearSearch();
+presentationSleep();
+
+System.out.println("GUT");
+//test.clearSearch();
+
+
+//test.clickIsOpenCheckbox();
+//presentationSleep();
+//
+//test.clickApplyFilter();
+//presentationSleep();
+//
+//WebElement searchResult = driver.findElement(By.xpath("//tbody"));
+//searchResult.getText();
+
 		/*-
 		System.out.println("is menu Home text: " 
 				+ homepage.getMainMenuDropdown().getMenuHomeText());
@@ -35,13 +63,13 @@ public class SmokeTest extends GreencityTestRunner {
 				+ homepage.getMainMenuDropdown().isDisplayedNaviconButton());
 		*/
 		//
-		tipstrickspage = tipstrickspage
-				.navigateMenuEconews()
-				.navigateMenuTipsTricks()
-				.navigateMenuMap()
-				.navigateMenuMyCabinet()
-				.navigateMenuAbout()
-				.navigateMenuTipsTricks();
+//		tipstrickspage = tipstrickspage
+//				.navigateMenuEconews()
+//				.navigateMenuTipsTricks()
+//				.navigateMenuMap()
+//				.navigateMenuMyCabinet()
+//				.navigateMenuAbout()
+//				.navigateMenuTipsTricks();
 		//
 //		TopPart tp = tipstrickspage;
 //		tp = tp.navigateMenuEconews();
@@ -57,6 +85,6 @@ public class SmokeTest extends GreencityTestRunner {
 //				Languages.UKRAINIAN.toString());
 		//
 		// Return to Previous State
-		presentationSleep();
+		//presentationSleep();
 	}
 }
