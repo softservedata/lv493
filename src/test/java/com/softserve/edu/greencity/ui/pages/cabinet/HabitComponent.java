@@ -12,7 +12,7 @@ import com.softserve.edu.greencity.ui.data.Estimation;
 public class HabitComponent {
 
     private final int MAX_ITEMS_COUNT_IN_ROW = 8;
-    private final String IDENTIFY_ELEMENT_ATRIBUTE = "class";
+    private final String IDENTIFY_ELEMENT_CLASS_ATRIBUTE = "class";
     private final String ITEMS_STATUS_ATRIBUTE = "active-element";
 
     private WebElement habitLayout;
@@ -40,7 +40,7 @@ public class HabitComponent {
         moreElementsButton = habitLayout.findElement(By.cssSelector("app-habit-item-list span"));
 
         estimationButtons = new ArrayList<WebElement>();
-        habitLayout.findElements(By.cssSelector("button")).forEach(item ->  estimationButtons.add(item));
+        habitLayout.findElements(By.cssSelector("button")).forEach(item -> estimationButtons.add(item));
 
         initHabitItems();
     }
@@ -92,6 +92,7 @@ public class HabitComponent {
         return estimationButtons;
     }
 
+
     // Functional
 
     public long getHabitItemsCount() {
@@ -103,7 +104,7 @@ public class HabitComponent {
     }
 
     public boolean isActiveItemElement(WebElement item) {
-        return item.getAttribute(IDENTIFY_ELEMENT_ATRIBUTE).contentEquals(ITEMS_STATUS_ATRIBUTE);
+        return item.getAttribute(IDENTIFY_ELEMENT_CLASS_ATRIBUTE).contentEquals(ITEMS_STATUS_ATRIBUTE);
     }
 
     public long getSelectedHabitItemsCount() {
@@ -118,7 +119,9 @@ public class HabitComponent {
         }
     }
 
-    // do not work select estimation / do not know how to identify active button
+    // TODO
+    // do not work select estimation
+    // do not know how to identify active button
     public Estimation getSelectedEstimation() {
          return null;
     }
@@ -127,6 +130,7 @@ public class HabitComponent {
         clickMoreElementsButton();
         initHabitItems();
     }
+
 
     // Business Logic
 
@@ -153,7 +157,7 @@ public class HabitComponent {
     public HabitComponent selectEstimation(Estimation estimation) {
         WebElement estimateButton = getEstimationButtons().stream()
                 .filter(button -> button
-                        .getAttribute(IDENTIFY_ELEMENT_ATRIBUTE)
+                        .getAttribute(IDENTIFY_ELEMENT_CLASS_ATRIBUTE)
                         .contains(estimation.toString()))
                 .findAny().orElse(null);
         if (estimateButton != null) {

@@ -24,4 +24,10 @@ public class HabitItem {
         return estimation;
     }
 
+    @Override
+    public String toString() {
+        return "HabitItem [habit=" + habit + ", itemsCount=" + itemsCount
+                + ", estimation=" + estimation + "]";
+    }
+
 }

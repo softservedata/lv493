@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import org.openqa.selenium.WebDriver;
 
 import com.google.common.collect.Streams;
+import com.softserve.edu.greencity.ui.data.Goal;
 
 public abstract class GoalsContainerPart {
 
@@ -39,6 +40,14 @@ public abstract class GoalsContainerPart {
                 .findAny()
                 .orElse(null);
     }
+
+    protected  GoalComponent findGoal(Goal goal) {
+        return getGoalComponents().stream()
+                .filter(item -> item.getGoalTitle().contains(goal.getTitle()))
+                .findAny()
+                .orElse(null);
+    }
+
 
     protected   List<String> getGoalsTitle() {
         return getGoalComponents().stream()

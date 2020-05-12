@@ -11,4 +11,9 @@ public class Goal {
     public String getTitle() {
         return title;
     }
+
+    @Override
+    public String toString() {
+        return "Goal [title=" + title + "]";
+    }
 }

@@ -11,4 +11,11 @@ public class HabitCard {
     public Habit getHabit() {
         return habit;
     }
+
+    @Override
+    public String toString() {
+        return "HabitCard [habit=" + habit + "]";
+    }
+
+
 }

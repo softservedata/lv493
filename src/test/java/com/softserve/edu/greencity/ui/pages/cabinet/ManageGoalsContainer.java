@@ -1,10 +1,13 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.softserve.edu.greencity.ui.data.Goal;
 
@@ -14,7 +17,14 @@ public class ManageGoalsContainer extends GoalsContainerPart {
 
     public ManageGoalsContainer(WebDriver driver) {
         super(driver);
+        waitForElementLoading();
         initElements();
+    }
+
+    private void waitForElementLoading() {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(GOAL_COMPONENTS)));
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     private void initElements() {
@@ -38,7 +48,7 @@ public class ManageGoalsContainer extends GoalsContainerPart {
      * @return ManageGoalsContainer
      */
     public ManageGoalsContainer deleteGoalComponent(Goal goal) {
-        GoalComponent currentGoal = findGoalByTitle(goal.getTitle());
+        GoalComponent currentGoal = findGoal(goal);
         if (currentGoal != null && currentGoal.isDisplayedDeleteNewGoalButton()) {
             currentGoal.clickDeleteNewGoalButton();
         }
@@ -70,8 +80,9 @@ public class ManageGoalsContainer extends GoalsContainerPart {
      * @return ManageGoalsContainer
      */
     public ManageGoalsContainer selectGoal(Goal goal) {
-        if (findGoalByTitle(goal.getTitle()) != null) {
-            findGoalByTitle(goal.getTitle()).select();
+        GoalComponent goalComponent = findGoal(goal);
+        if (goalComponent != null) {
+            goalComponent.select();
         }
         return new ManageGoalsContainer(driver);
     }
@@ -82,8 +93,9 @@ public class ManageGoalsContainer extends GoalsContainerPart {
      * @return ManageGoalsContainer
      */
     public ManageGoalsContainer deselectGoal(Goal goal) {
-        if (findGoalByTitle(goal.getTitle()) != null) {
-            findGoalByTitle(goal.getTitle()).deselect();
+        GoalComponent goalComponent = findGoal(goal);
+        if (goalComponent != null) {
+            goalComponent.deselect();
         }
         return new ManageGoalsContainer(driver);
     }

@@ -1,5 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -28,20 +30,26 @@ public class MyCabinetPage extends TopPart {
 
     public MyCabinetPage(WebDriver driver) {
         super(driver);
+        waitForPageLoading();
         initElements();
     }
 
-    private void initElements() {
-        (new WebDriverWait(driver, 0)).until(
-                webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+    private void waitForPageLoading() {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        (new WebDriverWait(driver, 10)).until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
 
+//        (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("app-advice")));
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
+
+    private void initElements() {
         packagesCount = driver.findElement(By.cssSelector("img[src*='package'] + h4 span")).getText();
         glassesCount = driver.findElement(By.cssSelector("img[src*='coffe'] + h4 span")).getText();
 
         manageGoalsButton = driver.findElement(By.cssSelector("div.add-goal-button-container button.add-goal-button"));
         addNewHabitButton = driver.findElement(By.cssSelector("button.btn.btn-success"));
 
-        //habitsContainer = new HabitsContainer(driver);
+        habitsContainer = new HabitsContainer(driver);
         goalsContainer = new MyGoalsContainer(driver);
     }
 
@@ -100,6 +108,14 @@ public class MyCabinetPage extends TopPart {
 
     public HabitComponent getHabitComponent(Habit habit) {
         return getHabitsContainer().findHabitComponent(habit);
+    }
+
+    public boolean isAvailableGoal(Goal goal) {
+        return getGoalsContainer().findGoal(goal) != null ? true : false;
+    }
+
+    public GoalComponent getGoalComponent(Goal goal) {
+        return getGoalsContainer().findGoal(goal);
     }
 
     public MyCabinetPage refresh() {

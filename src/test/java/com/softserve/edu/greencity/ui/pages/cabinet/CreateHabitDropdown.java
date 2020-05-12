@@ -83,12 +83,13 @@ public class CreateHabitDropdown {
     // Functional
 
     public boolean isChosenHabitCard(HabitCard card) {
-        return getHabitsContainer().findChosenHabitCardByHabit(card.getHabit()) != null ? true : false;
+        return getHabitsContainer().findChosenHabitCard(card) != null ? true : false;
     }
 
     public boolean isVisibleWarning() {
         return getHabitsContainer().isVisibleDeleteMessageWarning();
     }
+
 
     // Business Logic
 
@@ -112,7 +113,7 @@ public class CreateHabitDropdown {
             clickSaveButton();
         }
 
-        // !!!! Temporary
+        // TODO
         // do not close dropdown when click save button
         clickCloseButton();
         return new MyCabinetPage(driver);
@@ -155,7 +156,7 @@ public class CreateHabitDropdown {
      * @param habit
      * @return CreateHabitDropdown
      */
-    public CreateHabitDropdown deleteAlonelHabitCard() {
+    public CreateHabitDropdown deleteAloneHabitCard() {
         getHabitsContainer().getAloneHabitCard().delete();
         return new CreateHabitDropdown(driver);
     }

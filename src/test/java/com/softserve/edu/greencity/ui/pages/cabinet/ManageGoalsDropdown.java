@@ -95,10 +95,17 @@ public class ManageGoalsDropdown {
 
     // Functional
 
-    private ManageGoalsDropdown createNewGoal() {
+    private ManageGoalsDropdown addNewGoal() {
         clickAddNewGoalButton();
         return new ManageGoalsDropdown(driver);
     }
+
+    public boolean isSelectedGoal(Goal goal) {
+        GoalComponent goalComponent = getGoalsContainer().findGoal(goal);
+        System.out.println(goalComponent.isSelected());
+        return goalComponent != null ? goalComponent.isSelected() : null;
+    }
+
 
     // Business Logic
 
@@ -171,8 +178,8 @@ public class ManageGoalsDropdown {
      * @param goal
      * @return ManageGoalsDropdown
      */
-    public ManageGoalsDropdown addNewGoal(Goal goal) {
-        createNewGoal().getGoalsContainer().setNewGoalComponentTitle(goal);
+    public ManageGoalsDropdown createNewGoal(Goal goal) {
+        addNewGoal().getGoalsContainer().setNewGoalComponentTitle(goal);
         return new ManageGoalsDropdown(driver);
     }
 

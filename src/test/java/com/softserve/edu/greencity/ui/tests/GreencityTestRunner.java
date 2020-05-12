@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -11,6 +13,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import com.softserve.edu.greencity.ui.pages.cabinet.CreateHabitDropdown;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -18,6 +22,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public abstract class GreencityTestRunner {
 	private final Long ONE_SECOND_DELAY = 1000L;
 	//
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	protected WebDriver driver;
 
 	@BeforeSuite
@@ -27,8 +32,16 @@ public abstract class GreencityTestRunner {
 
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
+//      ChromeOptions options = new ChromeOptions();
+//     String chromeProfilePath = System.getenv("USERPROFILE")
+//             + "\\AppData\\Local\\Google\\Chrome\\User Data";
+//     System.out.println("chromeProfilePath: " + chromeProfilePath);
+//     String chromeChooseProfile = "Profile 1";
+//     options.addArguments("user-data-dir=" + chromeProfilePath);
+//     options.addArguments("profile-directory=" + chromeChooseProfile);
+//   driver = new ChromeDriver(options);
 		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		//driver.manage().window().setSize(new Dimension(640, 480));
 		//driver.manage().window().setSize(new Dimension(480, 640));
@@ -36,7 +49,7 @@ public abstract class GreencityTestRunner {
 
 	@AfterClass(alwaysRun = true)
 	public void tearDownAfterClass() throws Exception {
-		Thread.sleep(1000); // For Presentation Only
+	    presentationSleep(1);
 		if (driver != null) {
 			driver.quit();
 		}
@@ -44,7 +57,8 @@ public abstract class GreencityTestRunner {
 
 	@BeforeMethod
 	public void setUp() throws Exception {
-		driver.get("https://ita-social-projects.github.io/GreenCityClient/#/welcome");
+//		driver.get("https://ita-social-projects.github.io/GreenCityClient/#/welcome");
+	    driver.get("http://localhost:4200/#/welcome");
 //		driver.manage().window().maximize();
 		Thread.sleep(1000); // For Presentation Only
 	}
@@ -52,7 +66,8 @@ public abstract class GreencityTestRunner {
 	@AfterMethod
 	public void tearDown(ITestResult result) throws Exception {
 		if (!result.isSuccess()) {
-			System.out.println("Test " + result.getName() + " ERROR");
+		    logger.warn("Test " + result.getName() + " ERROR");
+			// System.out.println("Test " + result.getName() + " ERROR");
 			// Take Screenshot, save sourceCode, save to log, prepare report, Return to previous state, logout, etc.
 			// TODO Logout
 			//driver.get("https://ita-social-projects.github.io/GreenCityClient/#/welcome");
@@ -64,6 +79,14 @@ public abstract class GreencityTestRunner {
 		return new TipsTricksPage(driver);
 		//return new TipsTricksPage(getDriver());
 	}
+
+	public MyCabinetPage loadMyCabinetPage() {
+        return new MyCabinetPage(driver);
+    }
+
+	public CreateHabitDropdown loadCreateHabitDropdown() {
+        return new CreateHabitDropdown(driver);
+    }
 
 	protected void presentationSleep() {
 		presentationSleep(1);

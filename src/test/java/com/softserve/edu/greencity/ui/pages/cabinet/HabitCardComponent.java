@@ -18,7 +18,7 @@ public class HabitCardComponent {
 
     private void initElements() {
         habitCardTitle = habitCardLayout.findElement(By.cssSelector(".habit-card-caption")).getText();
-       // habitCardDescription = habitCardLayout.findElement(By.cssSelector(".habit-card-text")).getText();
+        habitCardDescription = habitCardLayout.findElement(By.cssSelector(".habit-card-text")).getText();
     }
 
     // Page Object
@@ -39,8 +39,8 @@ public class HabitCardComponent {
     // habitCardText
 
     public String getHabitCardDescription() {
-        return habitCardLayout.findElement(By.cssSelector(".habit-card-text")).getText();
-        //return habitCardDescription;
+        //return habitCardLayout.findElement(By.cssSelector(".habit-card-text")).getText();
+        return habitCardDescription;
     }
 
     // deleteButton

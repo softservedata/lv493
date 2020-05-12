@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,13 +11,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.softserve.edu.greencity.ui.data.Habit;
 import com.softserve.edu.greencity.ui.data.HabitCard;
 
 
 public class HabitCardsContainer {
 
-    private final String AVAILABLE_HABIT_CARD_CONTAINER_SELECTOR = "div.available-to-choose-list";
     private final String CHOSEN_HABIT_CARD_CONTAINER_SELECTOR = "div.already-chosen-list";
 
     private WebDriver driver;
@@ -26,12 +25,17 @@ public class HabitCardsContainer {
 
     public HabitCardsContainer(WebDriver driver) {
         this.driver = driver;
+        waitForElementLoading();
         initElements();
     }
 
-    private void initElements() {
-        (new WebDriverWait(driver, 5)).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("app-habit-card")));
+    private void waitForElementLoading() {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("app-habit-card")));
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
 
+    private void initElements() {
         chosenHabitCardComponents = new ArrayList<HabitCardComponent>();
         driver.findElements(By.cssSelector("div.already-chosen-habits app-habit-card"))
             .forEach(card -> chosenHabitCardComponents.add(new HabitCardComponent(card)));
@@ -77,27 +81,26 @@ public class HabitCardsContainer {
         return getChosenHabitCardComponents().size();
     }
 
-    public  HabitCardComponent findChosenHabitCardByHabit(Habit habit) {
-        getChosenHabitCardComponents()
-        .forEach(card -> System.out.println(card.getHabitCardTitle()));
-         HabitCardComponent c = getChosenHabitCardComponents().stream()
-                 .filter(card -> card.getHabitCardTitle().contains(habit.toString()))
+    public  HabitCardComponent findChosenHabitCard(HabitCard card) {
+        return getChosenHabitCardComponents().stream()
+                 .filter(item -> item.getHabitCardTitle().contains(card.getHabit().toString()))
                  .findAny().orElse(null);
-         System.out.println(c);
-         return c;
-     }
+    }
 
-    public  HabitCardComponent findAvailableHabitCardByHabit(Habit habit) {
+    public  HabitCardComponent findAvailableHabitCard(HabitCard card) {
         return getAvailableHabitCardComponents().stream()
-                 .filter(card -> card.getHabitCardTitle().contains(habit.toString()))
+                 .filter(item -> item.getHabitCardTitle().contains(card.getHabit().toString()))
                  .findAny().orElse(null);
-     }
+    }
 
     public  HabitCardComponent getAloneHabitCard() {
+        if (getChosenHabitCardCount() > 1) {
+            getChosenHabitCardComponents().stream().skip(1).forEach(card -> card.delete().confirm());
+        }
         return getChosenHabitCardComponents().get(0);
     }
 
-    public void moveHabitCard(HabitCardComponent habit, String destinationSelector) {
+    private void moveHabitCard(HabitCardComponent habit, String destinationSelector) {
         WebElement destination = driver.findElement(By.cssSelector(destinationSelector));
         Actions action = new Actions(driver);
         action.clickAndHold(habit.getHabitCardLayout())
@@ -116,8 +119,8 @@ public class HabitCardsContainer {
      * @return HabitCardsContainer
      */
     public HabitCardsContainer deleteAndConfirmHabitCard(HabitCard card) {
-        HabitCardComponent habit = findChosenHabitCardByHabit(card.getHabit());
-        if(habit !=null) {
+        HabitCardComponent habit = findChosenHabitCard(card);
+        if(habit != null) {
             habit.delete().confirm();
         }
         return new HabitCardsContainer(driver);
@@ -129,11 +132,11 @@ public class HabitCardsContainer {
      * @return HabitCardsContainer
      */
     public HabitCardsContainer deleteAndCancelHabitCard(HabitCard card) {
-        HabitCardComponent habit = findChosenHabitCardByHabit(card.getHabit());
+        HabitCardComponent habit = findChosenHabitCard(card);
         if (habit != null) {
             habit.delete().cancel();
         }
-        return this;
+        return new HabitCardsContainer(driver);
     }
 
     /**
@@ -142,7 +145,7 @@ public class HabitCardsContainer {
      * @return HabitCardsContainer
      */
     public HabitCardsContainer addHabitCard(HabitCard card) {
-        HabitCardComponent habit = findAvailableHabitCardByHabit(card.getHabit());
+        HabitCardComponent habit = findAvailableHabitCard(card);
         if (habit != null) {
             moveHabitCard(habit, CHOSEN_HABIT_CARD_CONTAINER_SELECTOR);
         }
