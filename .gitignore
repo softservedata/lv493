@@ -93,6 +93,7 @@ hs_err_pid*
 # *.png
 *.jpg
 *.jpeg
+*.ucls
 
 # Ignore doc/notes.txt, but not doc/info/arch.txt
 # doc/*.txt
