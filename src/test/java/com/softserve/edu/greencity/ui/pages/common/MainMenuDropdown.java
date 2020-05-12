@@ -17,6 +17,7 @@ public class MainMenuDropdown {
 	private WebElement menuMap;
 	private WebElement menuMyCabinet;
 	private WebElement menuAbout;
+	private WebElement menuGreenCity;
 	//
 	private WebElement footerEcoNews;
 	private WebElement footerTipsTricks;
@@ -39,6 +40,7 @@ public class MainMenuDropdown {
 		menuMap = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/map']"));
 		menuMyCabinet = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/habits']"));
 		menuAbout = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/about']"));
+		
 		//
 		footerEcoNews = driver.findElement(By.cssSelector("div.app-footer a[href*='/news']"));
 		footerTipsTricks = driver.findElement(By.xpath("//div[@class='app-footer']//a[contains(@href, '/news')]/../following-sibling::li/a[@href='']"));

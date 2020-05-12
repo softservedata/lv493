@@ -2,9 +2,10 @@ package com.softserve.edu.greencity.ui.tests;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -19,6 +20,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public abstract class GreencityTestRunner {
 	private final Long ONE_SECOND_DELAY = 1000L;
 	//
+	 protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	protected WebDriver driver;
 
 	@BeforeSuite

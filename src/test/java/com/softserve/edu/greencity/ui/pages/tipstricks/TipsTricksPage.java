@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.tipstricks;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -12,6 +13,9 @@ import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 
 public class TipsTricksPage extends TopPart {
+
+    private TipsCardsContainer tipsCardsContainer;
+    // private ItemComponent itemComponent;
 
     // Buttons on the TipsTricksPage
     private WebElement startHabitTop;
@@ -38,12 +42,17 @@ public class TipsTricksPage extends TopPart {
     private WebElement other2EcoNewsLink;
     private WebElement allNewsLink;
 
+    // logo GreenCity
+    private WebElement logoCreenCity;
+
     public TipsTricksPage(WebDriver driver) {
         super(driver);
         initElements();
     }
 
     private void initElements() {
+
+        tipsCardsContainer = new TipsCardsContainer(driver);
         // init elements
         startHabitTop = driver
                 .findElement(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']"));
@@ -67,6 +76,9 @@ public class TipsTricksPage extends TopPart {
         other1EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(1) > a"));
         other2EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(3) > a"));
         allNewsLink = driver.findElement(By.cssSelector("div#eco-events > a"));
+
+        // logo GreenCity
+        logoCreenCity = driver.findElement(By.cssSelector("div.logo > a[href='#/welcome']"));
     }
 
     // Page Object
@@ -74,6 +86,8 @@ public class TipsTricksPage extends TopPart {
     // Button 'Start forming a habit'
 
     public WebElement getStartHabitTop() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", startHabitTop);
         return startHabitTop;
     }
 
@@ -215,29 +229,58 @@ public class TipsTricksPage extends TopPart {
     }
 
     // link other1EcoNewsLink
-    public WebElement getOther1EcoNewsLink(){
+
+    public WebElement getOther1EcoNewsLink() {
         return other1EcoNewsLink;
     }
 
     public void clickOther1EcoNewsLink() {
         getOther1EcoNewsLink().click();
     }
-    
+
     // link other2EcoNewsLink
+
     public WebElement getOther2EcoNewsLink() {
         return other2EcoNewsLink;
     }
+
     public void clickOther2EcoNewsLink() {
         getOther2EcoNewsLink().click();
     }
 
     // link to allNewsLink
+
     public WebElement getAllNewsLink() {
         return allNewsLink;
     }
+
     public void clickAllNewsLink() {
         getAllNewsLink().click();
     }
+
+    // logoGreenCity
+
+    public WebElement getLogoCreenCity() {
+        return logoCreenCity;
+    }
+
+    public void clickLogoCreenCity() {
+        getLogoCreenCity().click();
+    }
+
+    // public String getlogoGreenCityText() {
+    // return getLogoCreenCity().getText();
+    // }
+
+    public boolean isDisplayedLogoGreenCity() {
+        return logoCreenCity.isDisplayed();
+    }
+
+    // Container
+    public TipsCardsContainer getTipsCardsContainer() {
+        return tipsCardsContainer;
+    }
+
     // Functional
 
     /**
@@ -283,11 +326,13 @@ public class TipsTricksPage extends TopPart {
         return new MyCabinetPage(driver);
     }
 
+    // Button "Start forming a habit" isn't active for bags
     // public MyCabinetPage navigateCenterMyCabinet() {
     // clickStartHabitCenter();
     // return new MyCabinetPage(driver);
     // }
 
+    // Button "Start forming a habit" isn't active for cups
     // public MyCabinetPage navigateHabitBellowMyCabinet() {
     // clickStartHabitBelow();
     // return new MyCabinetPage(driver);
@@ -309,11 +354,34 @@ public class TipsTricksPage extends TopPart {
         return new MapPage(driver);
 
     }
-    
+
     public EconewsPage moveMainEcoNewsLink() {
         clickMainEcoNewsLink();
         return new EconewsPage(driver);
     }
-    
+
+    public EconewsPage moveOther1EcoNewsLink() {
+        clickOther1EcoNewsLink();
+        return new EconewsPage(driver);
+    }
+
+    public EconewsPage moveOther2EcoNewsLink() {
+        clickOther2EcoNewsLink();
+        return new EconewsPage(driver);
+    }
+
+    public EconewsPage moveAllNewsLink() {
+        clickAllNewsLink();
+        return new EconewsPage(driver);
+    }
+
+    /**
+     * @return Page Top (TipsTricksPage)
+     */
+    public TipsTricksPage toGreenCity() {
+        clickLogoCreenCity();
+        return new TipsTricksPage(driver);
+
+    }
 
 }
