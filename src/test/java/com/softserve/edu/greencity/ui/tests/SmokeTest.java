@@ -74,14 +74,14 @@ public class SmokeTest extends GreencityTestRunner {
     }
     
     //@Test(dataProvider = "users")
-    public void checkLogin(User user) {
-        MyCabinetPage myCabinetPage = loadApplication()
-                .signin()
-                .successfullyLogin(user);
-        System.out.println("name = " + myCabinetPage.getTopUserName());
-        Assert.assertEquals(myCabinetPage.getTopUserName(),
-                TopPart.PROFILE_NAME);
-        myCabinetPage.signout();
+//    public void checkLogin(User user) {
+//        MyCabinetPage myCabinetPage = loadApplication()
+//                .signin()
+//                .successfullyLogin(user);
+//        System.out.println("name = " + myCabinetPage.getTopUserName());
+//        Assert.assertEquals(myCabinetPage.getTopUserName(),
+//                TopPart.PROFILE_NAME);
+//        myCabinetPage.signout();
 
 //        TipsTricksPage tipstrickspage = loadApplication()
 //                .signin()
@@ -91,30 +91,30 @@ public class SmokeTest extends GreencityTestRunner {
 //                TopPart.PROFILE_NAME);
 //                //user.getFirstname());
 //        tipstrickspage.signout();
-    }
+//    }
 
 //    @Test(dataProvider = "users")
-    public void checkCabinet(User user) {
-        MyCabinetPage myCabinetPage = loadApplication()
-                .navigateMenuMyCabinet(user);
-        presentationSleep();
-        //
-        Assert.assertEquals(myCabinetPage.getTopUserName(), TopPart.PROFILE_NAME);
-        // user.getFirstname());
-        presentationSleep();
-        //
-        myCabinetPage = myCabinetPage
-                .navigateMenuTipsTricks()
-                .navigateMenuEconews()
-                .navigateMenuMyCabinet();
-        presentationSleep();
-        //
-        TipsTricksPage tipstrickspage = myCabinetPage
-                .signout();
-        presentationSleep();
-        LoginPage loginPage = tipstrickspage
-                .navigateMenuMyCabinetGuest();
-        presentationSleep(4);
-    }
+//    public void checkCabinet(User user) {
+//        MyCabinetPage myCabinetPage = loadApplication()
+//                .navigateMenuMyCabinet(user);
+//        presentationSleep();
+//        //
+//        Assert.assertEquals(myCabinetPage.getTopUserName(), TopPart.PROFILE_NAME);
+//        // user.getFirstname());
+//        presentationSleep();
+//        //
+//        myCabinetPage = myCabinetPage
+//                .navigateMenuTipsTricks()
+//                .navigateMenuEconews()
+//                .navigateMenuMyCabinet();
+//        presentationSleep();
+//        //
+//        TipsTricksPage tipstrickspage = myCabinetPage
+//                .signout();
+//        presentationSleep();
+//        LoginPage loginPage = tipstrickspage
+//                .navigateMenuMyCabinetGuest();
+//        presentationSleep(4);
+//    }
         
 }

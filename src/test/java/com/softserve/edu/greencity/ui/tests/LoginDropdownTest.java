@@ -15,14 +15,17 @@ public class LoginDropdownTest extends LoginTest {
 
     @BeforeMethod
     public void openLoginDropdown() {
-        loginDropdown = loadApplication().signin();
+        logger.info("Open Login Dropdown");
+        loginDropdown = loadApplication().navigateMenuMyCabinetGuest().signin();
         loginPart = loginDropdown;
     }
 
+    @AfterMethod
     @Override
-    public void checkUnsuccessfullyLogin(User user) {
-        super.checkUnsuccessfullyLogin(user);
-        resultPage = loginDropdown.closeDropdown();
+    public void logout() {
+        if (resultPage == null){
+            resultPage = loginDropdown.closeDropdown().navigateMenuMyCabinetGuest();
+        }
+        super.logout();
     }
-
 }

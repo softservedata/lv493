@@ -2,11 +2,12 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.LoginPart;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -29,6 +30,13 @@ public abstract class LoginTest extends GreencityTestRunner {
         return new Object[][] {
                 { UserRepository.get().wrongLoginUserCredentials() }, };
     }
+
+//    @BeforeMethod
+//    public void resetPages() {
+//        loginPart = null;
+//        resultPage = null;
+//    }
+
 
     @Test
     public void checkAllElements() {
@@ -53,28 +61,29 @@ public abstract class LoginTest extends GreencityTestRunner {
 
     @Test(dataProvider = "validLoginCredentials")
     public void checkSuccessfullyLogin(User user) {
-        logger.info("Filling all fields for logging");
+        logger.info("Try to login with correct credentials");
+
         resultPage = loginPart.successfullyLogin(user);
 
-        Assert.assertNotNull(resultPage.getTopUserName());
+        Assert.assertNotNull(resultPage.getTopUserName(),"User is not logined");
         logger.info("User is Signed in successfully");
     }
 
     @Test(dataProvider = "wrongLoginCredentials")
     public void checkUnsuccessfullyLogin(User user) {
-        logger.info("Filling all fields for logging");
+        logger.info("Try to login with wrong credentials");
         loginPart = loginPart.unsuccessfullyLogin(user);
+
         List<String> errors = loginPart.getErrorMassages();
-        Assert.assertNotNull(errors);
+        Assert.assertNotNull(errors, "No have errors");
         logger.info("User is not Signed in because:\n" + String.join(",", errors));
     }
 
 
     @AfterMethod
     public void logout() {
-        System.out.println(resultPage.getTopUserName());
-        if (resultPage != null) {
-
+        if (resultPage.isLogined()) {
+            logger.info("Signing out");
             resultPage.signout();
         }
     }

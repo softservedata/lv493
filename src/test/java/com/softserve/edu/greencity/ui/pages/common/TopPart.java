@@ -1,14 +1,10 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -23,6 +19,8 @@ import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 /**
  * Base Abstract Class of Header and Footer.
@@ -72,7 +70,7 @@ public abstract class TopPart {
                 .ignoring(TimeoutException.class);
         Alert alert = null;
         try {
-            alert = wait.until(ExpectedConditions.alertIsPresent());
+            alert = wait.until(alertIsPresent());
         } catch(TimeoutException e) {
         }
         if(alert != null) {
@@ -171,7 +169,18 @@ public abstract class TopPart {
     }
     
     // topUserComponent
-    
+
+    public boolean isLogined() {
+        try {
+            createTopUserComponent();
+            return true;
+
+        } catch (NoSuchElementException | NullPointerException e) { // TODO
+            return false;
+        }
+
+    }
+
     protected TopUserComponent getTopUserComponent() {
         if (topUserComponent == null)
         {
@@ -306,7 +315,7 @@ public abstract class TopPart {
         return new RegisterDropdown(driver);
     }
     
-    public TipsTricksPage signout() {
+    public TopPart signout() {
         logger.debug("start signout()");
         // TODO
         //getTopUserComponent().clickProfileDropdownSignout();
@@ -316,7 +325,26 @@ public abstract class TopPart {
         closeTopUserComponent();
         logger.trace("create TopGuestComponent");
         createTopGuestComponent();
-        return new TipsTricksPage(driver);
+        TopPart topPart = null;
+        try {
+            Class<? extends TopPart> classType = this.getClass();
+            if( classType != MyCabinetPage.class) {
+                topPart = classType.getConstructor(WebDriver.class).newInstance(driver);
+            } else {
+                topPart = new LoginPage(driver);
+            }
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return topPart;
     }
     
 }
+

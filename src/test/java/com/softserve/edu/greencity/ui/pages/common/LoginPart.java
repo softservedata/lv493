@@ -116,15 +116,10 @@ public abstract class LoginPart {
 
     // Business Logic
 
-    public MyCabinetPage successfullyLogin(User user) {
-        fillFields(user);
-        clickLoginButton();
-        return new MyCabinetPage(driver);
-    }
+    abstract public TopPart successfullyLogin(User user);
 
     public LoginPart unsuccessfullyLogin(User user) {
-        fillFields(user);
-        clickLoginButton();
+        fillFieldsSubmit(user);
         return this;
     }
 

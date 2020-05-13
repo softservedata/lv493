@@ -1,5 +1,8 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,7 +21,7 @@ public class LoginComponent extends LoginPart {
     private final String GOOGLE_LOGIN_BUTTON_CLASS = "google";
     private final String FORGOT_PASSWORD_LINK_CLASS = "forgot-password";
     private final String REGISTRATION_LINK_CLASS = "signup-link";
-    private final String ERROR_MASSAGE_CLASS = "error ng-star-inserted";
+    private final String ERROR_MASSAGE_XPATH = "//div[contains(@class,'error')]";
 
 
     private WebElement singUpLink;
@@ -30,7 +33,7 @@ public class LoginComponent extends LoginPart {
 
     @Override
     public List<String> getErrorMassages() {
-        return driver.findElements(By.className(ERROR_MASSAGE_CLASS))
+        return driver.findElements(By.xpath(ERROR_MASSAGE_XPATH))
                 .stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
@@ -44,6 +47,13 @@ public class LoginComponent extends LoginPart {
     }
 
     //Business Logic
+
+
+    @Override
+    public TopPart successfullyLogin(User user) {
+        fillFieldsSubmit(user);
+        return new MyCabinetPage(driver);
+    }
 
     public RegisterPage gotoRegisterPage() {
         getSignUpLink().click();

@@ -50,6 +50,7 @@ public class LoginPage extends TopPart{
     }
 
 
+
     public RegisterPage gotoRegisterPage(){
         return getLoginComponent().gotoRegisterPage();
     }
