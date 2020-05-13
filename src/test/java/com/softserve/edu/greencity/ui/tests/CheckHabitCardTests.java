@@ -5,18 +5,20 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.CreateHabitDropdown;
 
 
 public class CheckHabitCardTests extends GreencityTestRunner {
+    private final User user = UserRepository.get().temporary();
 
     @BeforeMethod
     public void beforeMethod() {
         logger.info("Start before method for " +  getClass().getSimpleName());
-        logger.info("Sign in with " + UserRepository.get().temporary().toString());
+        logger.info("Sign in with " + user.toString());
         loadApplication()
-        .navigateMenuMyCabinet(UserRepository.get().temporary());
+        .navigateMenuMyCabinet(user);
     }
 
     @AfterMethod(alwaysRun = true)

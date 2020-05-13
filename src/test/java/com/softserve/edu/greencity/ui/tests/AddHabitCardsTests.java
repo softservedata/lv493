@@ -8,26 +8,29 @@ import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.ui.data.HabitCard;
 import com.softserve.edu.greencity.ui.data.HabitCardRepository;
+import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.CreateHabitDropdown;
 
 
 public class AddHabitCardsTests extends GreencityTestRunner {
+    private final User user = UserRepository.get().temporary();
+    private HabitCard habitCard;
 
     @BeforeMethod
     public void beforeMethod() {
         logger.info("Start before method for " +  getClass().getSimpleName());
-        logger.info("Sign in with " + UserRepository.get().temporary().toString());
+        logger.info("Sign in with " + user.toString());
         loadApplication()
-        .navigateMenuMyCabinet(UserRepository.get().temporary());
+        .navigateMenuMyCabinet(user);
     }
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {
         logger.info("Start after method for " + getClass().getSimpleName());
-        logger.info("Delete " +  HabitCardRepository.get().saveBagsCard().toString());
+        logger.info("Delete " + habitCard.toString());
         loadCreateHabitDropdown()
-        .deleteAndConfirmHabitCard(HabitCardRepository.get().saveBagsCard())
+        .deleteAndConfirmHabitCard(habitCard)
         .saveCreateHabitDropdown();
 
         logger.info("Sign out");
@@ -44,6 +47,7 @@ public class AddHabitCardsTests extends GreencityTestRunner {
 
     @Test(dataProvider = "habitCardDataProvider")
     public void addHabitCardTest(HabitCard card) {
+        habitCard = card;
         logger.info("Start test addHabitCardTest");
         CreateHabitDropdown page = loadMyCabinetPage()
                 .gotoCreateHabitDropdown();

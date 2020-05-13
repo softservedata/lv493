@@ -22,7 +22,7 @@ public class CreateHabitDropdown {
     }
 
     private void initElements() {
-        habitsContainer = new HabitCardsContainer(driver);
+        //habitsContainer = new HabitCardsContainer(driver);
 
         saveButton = driver.findElement(By.cssSelector("div.splitter + div .button-save"));
         cancelButton = driver.findElement(By.cssSelector("div.splitter + div .button-cancel"));
@@ -34,7 +34,8 @@ public class CreateHabitDropdown {
     //chosenHabitsContainer
 
     public HabitCardsContainer getHabitsContainer() {
-        return habitsContainer;
+       // return habitsContainer;
+        return new HabitCardsContainer(driver);
     }
 
     // saveButton

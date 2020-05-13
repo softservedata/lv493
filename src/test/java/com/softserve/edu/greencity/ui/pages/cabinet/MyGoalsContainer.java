@@ -55,7 +55,7 @@ public class MyGoalsContainer extends GoalsContainerPart{
      * @return
      */
     public MyGoalsContainer showMoreGoals() {
-        if(isDisplayedViewAllGoalsButton()) {
+        if(getGoalsCount() == MY_GOALS_MAX_COUNT_WITHOUT_SHOW_MORE & isDisplayedViewAllGoalsButton()) {
             clickViewAllGoalsButton();
         }
         return new MyGoalsContainer(driver);
@@ -78,7 +78,7 @@ public class MyGoalsContainer extends GoalsContainerPart{
      * @return MyGoalsContainer
      */
     public MyGoalsContainer selectGoal(Goal goal) {
-        GoalComponent currentGoal = findGoalByTitle(goal.getTitle());
+        GoalComponent currentGoal = findGoal(goal);
         if (currentGoal != null) {
             currentGoal.select();
         } else {
@@ -96,7 +96,7 @@ public class MyGoalsContainer extends GoalsContainerPart{
      * @return MyGoalsContainer
      */
     public MyGoalsContainer deselectGoal(Goal goal) {
-        GoalComponent currentGoal = findGoalByTitle(goal.getTitle());
+        GoalComponent currentGoal = findGoal(goal);
         if (currentGoal != null) {
             currentGoal.deselect();
         } else {

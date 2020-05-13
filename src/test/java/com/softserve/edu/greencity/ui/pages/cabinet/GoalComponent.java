@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 
 public class GoalComponent {
     //TODO
-    //Differ custom and defined goals
+    //Divide custom and defined goals
 
     private final String CHECKBOX_STATUS_SELECTOR = "input";
 
@@ -55,7 +55,7 @@ public class GoalComponent {
 
     public String getGoalTitle() {
         return goalTitle;
-       // return goalLayout.findElement(By.cssSelector(".goal-text")).getText();
+        //return goalLayout.findElement(By.cssSelector(".goal-text")).getText();
     }
 
     // editNewGoalButton
@@ -132,7 +132,7 @@ public class GoalComponent {
         clearGoalNameField();
         setGoalNameField(title);
         clickEditNewGoalButton();
-        return this;
+        return new GoalComponent(getGoalLayout());
     }
 
     /**

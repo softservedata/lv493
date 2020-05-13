@@ -1,13 +1,10 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.softserve.edu.greencity.ui.data.Goal;
 
@@ -17,14 +14,7 @@ public class ManageGoalsContainer extends GoalsContainerPart {
 
     public ManageGoalsContainer(WebDriver driver) {
         super(driver);
-        waitForElementLoading();
         initElements();
-    }
-
-    private void waitForElementLoading() {
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(GOAL_COMPONENTS)));
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     private void initElements() {

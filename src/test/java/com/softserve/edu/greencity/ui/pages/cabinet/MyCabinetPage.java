@@ -25,20 +25,15 @@ public class MyCabinetPage extends TopPart {
 
     private MyGoalsContainer goalsContainer;
 
-    private ManageGoalsDropdown manageGoalsDropdown;
-    private CreateHabitDropdown createHabitDropdown;
-
     public MyCabinetPage(WebDriver driver) {
         super(driver);
-        waitForPageLoading();
+        //waitForPageLoading();
         initElements();
     }
 
     private void waitForPageLoading() {
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         (new WebDriverWait(driver, 10)).until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
-
-//        (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("app-advice")));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
@@ -49,7 +44,7 @@ public class MyCabinetPage extends TopPart {
         manageGoalsButton = driver.findElement(By.cssSelector("div.add-goal-button-container button.add-goal-button"));
         addNewHabitButton = driver.findElement(By.cssSelector("button.btn.btn-success"));
 
-        habitsContainer = new HabitsContainer(driver);
+        //habitsContainer = new HabitsContainer(driver);
         goalsContainer = new MyGoalsContainer(driver);
     }
 
@@ -80,7 +75,8 @@ public class MyCabinetPage extends TopPart {
     // habitsContainer
 
     public HabitsContainer getHabitsContainer() {
-        return habitsContainer;
+        //return habitsContainer;
+        return new HabitsContainer(driver);
     }
 
     // goalsContainer
@@ -189,7 +185,6 @@ public class MyCabinetPage extends TopPart {
     public MyCabinetPage addTodaysHabitInfo(HabitItem habit) {
         getHabitsContainer().addHabitInfo(habit);
         return new MyCabinetPage(driver);
-
     }
 
 

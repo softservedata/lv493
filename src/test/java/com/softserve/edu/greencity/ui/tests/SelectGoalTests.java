@@ -8,27 +8,30 @@ import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.ui.data.Goal;
 import com.softserve.edu.greencity.ui.data.GoalRepository;
+import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManageGoalsDropdown;
 
 
 public class SelectGoalTests extends GreencityTestRunner {
+    private final User user = UserRepository.get().temporary();
+    private Goal goalComponent;
 
     @BeforeMethod
     public void beforeMethod() {
         logger.info("Start before method for " +  getClass().getSimpleName());
-        logger.info("Sign in with " + UserRepository.get().temporary().toString());
+        logger.info("Sign in with " + user.toString());
         loadApplication()
-        .navigateMenuMyCabinet(UserRepository.get().temporary());
+        .navigateMenuMyCabinet(user);
     }
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {
         logger.info("Start after method for " + getClass().getSimpleName());
 
-        logger.info("Deselect " + GoalRepository.get().defaultGoalForSelecting().toString());
+        logger.info("Deselect " + goalComponent.toString());
         (new ManageGoalsDropdown(driver))
-        .deselectGoal(GoalRepository.get().defaultGoalForSelecting())
+        .deselectGoal(goalComponent)
         .closeManageGoalsDropdown();
 
         logger.info("Sign out");
@@ -45,6 +48,7 @@ public class SelectGoalTests extends GreencityTestRunner {
 
     @Test(dataProvider = "goalsDataProvider")
     public void selectGoalTest(Goal goal) {
+        goalComponent = goal;
         logger.info("Start test selectGoalTest");
 
         logger.info("Select " + goal.toString());
@@ -55,5 +59,6 @@ public class SelectGoalTests extends GreencityTestRunner {
          logger.info("Assert if goal is selected");
          Assert.assertTrue(page.isSelectedGoal(goal), "Goal is not selected:");
     }
+
 
 }
