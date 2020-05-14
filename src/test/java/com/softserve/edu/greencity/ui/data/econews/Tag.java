@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.data;
+package com.softserve.edu.greencity.ui.data.econews;
 
 public enum Tag {
 

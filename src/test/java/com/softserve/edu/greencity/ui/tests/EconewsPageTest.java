@@ -1,17 +1,16 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import java.util.List;
-
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
+import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
+import com.softserve.edu.greencity.ui.data.econews.Tag;
+import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.OneNewsPage;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.softserve.edu.greencity.ui.data.NewsData;
-import com.softserve.edu.greencity.ui.data.NewsRepository;
-import com.softserve.edu.greencity.ui.data.Tag;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.OneNewsPage;
-import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+import java.util.List;
 
 /**
  * Test cases to test EconewsPage
@@ -22,18 +21,18 @@ public class EconewsPageTest extends GreencityTestRunner {
 	@DataProvider
 	public Object[][] newsTags() {
 		return new Object[][] {
-				 {  NewsRepository.getNewsByTags() }
+				 {  NewsDataRepository.getNewsByTags() }
 			 };
 	}
 	
 	@DataProvider
 	public Object[][] newsData() {
 		return new Object[][] {
-				 {  NewsRepository.getAllFildsNews() }
+				 {  NewsDataRepository.getExistingNews() }
 			 };
 	}
 
-	//@Test(dataProvider = "newsData")
+	@Test(dataProvider = "newsData")
 	public void econewsSmokeTest(NewsData news) {
 		
 		logger.info("econewsSmokeTest starts with parameters: " + news.toString());
@@ -47,7 +46,7 @@ public class EconewsPageTest extends GreencityTestRunner {
 		
 	}
 	
-	//@Test(dataProvider = "newsData")
+	@Test(dataProvider = "newsData")
 	public void openNewsTest(NewsData news) {
 		
 		logger.info("openNewsTest starts with parameters: " + news.toString());
@@ -65,7 +64,7 @@ public class EconewsPageTest extends GreencityTestRunner {
 		
 	}
 	
-	//@Test(dataProvider = "newsTags")
+	@Test(dataProvider = "newsTags")
 	public void chooseTags(List<Tag> tags) {
 		
 		logger.info("chooseTags starts with parameters: " + tags.toString());
@@ -83,7 +82,7 @@ public class EconewsPageTest extends GreencityTestRunner {
 		
 	}
 	
-	//@Test(dataProvider = "newsTags")
+	@Test(dataProvider = "newsTags")
 	public void deselectTags(List<Tag> tags) {
 		
 		logger.info("deselectTags starts with parameters: " + tags.toString());
@@ -103,7 +102,7 @@ public class EconewsPageTest extends GreencityTestRunner {
 		
 	}
 	
-	//@Test
+	@Test
 	public void selectListView() {
 		
 		logger.info("selectListView starts");
@@ -119,7 +118,7 @@ public class EconewsPageTest extends GreencityTestRunner {
 
 	}
 	
-	//@Test
+	@Test
 	public void selectGridView() {
 		
 		logger.info("selectListView starts");

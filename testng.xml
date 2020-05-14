@@ -5,7 +5,6 @@
 
 	<test name="Test01a">
 		<classes>
-			<class name="com.softserve.edu.greencity.ui.tests.CreateNewsTests" />
 		</classes>
 	</test> <!-- Test -->
 

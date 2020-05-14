@@ -1,18 +1,24 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
-import com.softserve.edu.greencity.ui.data.NewsData;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.tools.UploadFileUtils;
+import com.softserve.edu.greencity.ui.tools.UploadFileUtil;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.io.File;
+import java.util.List;
 
 /**
+ * CreateNewsPage class
+ *
  * @author lv-493 Taqc/Java
  */
 public class CreateNewsPage extends TopPart {
+    private final String VALUE_ATTRIBUTE = "value";
+    private final String CLASS_ATTRIBUTE = "class";
 
     private TagsComponent tagsComponent;
 
@@ -34,6 +40,8 @@ public class CreateNewsPage extends TopPart {
     private WebElement pictureDescription;
 
     /**
+     * Constructor CreateNewsPage
+     *
      * @param driver
      */
     public CreateNewsPage(WebDriver driver) {
@@ -50,7 +58,7 @@ public class CreateNewsPage extends TopPart {
         contentField = driver.findElement(By.cssSelector("div.textarea-wrapper > textarea"));
         dateField = driver.findElement(By.cssSelector("div.date > p:first-child > span"));
         authorField = driver.findElement(By.cssSelector("div.date > :nth-child(2n) > span"));
-        dropArea = driver.findElement(By.cssSelector("div.text-wrapper"));
+        dropArea = driver.findElement(By.cssSelector("div.text-wrapper, div.ng-star-inserted > img"));
         cancelButton = driver.findElement(By.cssSelector("div.submit-buttons > :first-child"));
         previewButton = driver.findElement(By.cssSelector("div.submit-buttons > :first-child+button"));
         publishButton = driver.findElement(By.cssSelector("div.submit-buttons > button[type='submit']"));
@@ -60,13 +68,17 @@ public class CreateNewsPage extends TopPart {
         tagsDescription = driver.findElement(By.cssSelector("div.tags > button + p"));
         sourceDescription = driver.findElement(By.cssSelector("div[formarrayname='tags']+label > input + span"));
         contentDescription = driver.findElement(By.cssSelector("p.textarea-description"));
-        pictureDescription = driver.findElement(By.xpath("//div[@class = 'text-wrapper']/../../div/../span"));
+        pictureDescription = driver.findElement(By.xpath("//div[@class = 'text-wrapper']/../../div/../span | //div[@class = 'ng-star-inserted']/../span"));
     }
 
     // Page Object
 
+    public TagsComponent getTagsComponent() {
+        return tagsComponent;
+    }
+
     //titleField
-    public WebElement getTitleField() {
+    private WebElement getTitleField() {
         return titleField;
     }
 
@@ -78,12 +90,25 @@ public class CreateNewsPage extends TopPart {
         return getTitleField().getText();
     }
 
+    public String getTitleFieldValue() {
+        return getTitleField().getAttribute(VALUE_ATTRIBUTE);
+    }
+
     public void clearTitleField() {
         getTitleField().clear();
     }
 
     public void clickTitleField() {
         getTitleField().click();
+    }
+
+    //dropArea
+    public WebElement getDropArea() {
+        return dropArea;
+    }
+
+    public Boolean isPictureUploaded() {
+        return getDropArea().getAttribute(CLASS_ATTRIBUTE).contains("ng-star-inserted");
     }
 
     //sourceField
@@ -99,6 +124,10 @@ public class CreateNewsPage extends TopPart {
         return getSourceField().getText();
     }
 
+    public String getSourceFieldValue() {
+        return getSourceField().getAttribute(VALUE_ATTRIBUTE);
+    }
+
     public void clearSourceField() {
         getSourceField().clear();
     }
@@ -108,7 +137,6 @@ public class CreateNewsPage extends TopPart {
     }
 
     //contentField
-
     public WebElement getContentField() {
         return contentField;
     }
@@ -119,6 +147,10 @@ public class CreateNewsPage extends TopPart {
 
     public String getContentFieldText() {
         return getContentField().getText();
+    }
+
+    public String getContentFieldValue() {
+        return getContentField().getAttribute(VALUE_ATTRIBUTE);
     }
 
     public void clearContentField() {
@@ -176,13 +208,17 @@ public class CreateNewsPage extends TopPart {
         getPublishButton().click();
     }
 
+    public boolean isPublishButtonClickable() {
+        return getPublishButton().isEnabled();
+    }
+
     // titleDescription and warning
     public WebElement getTitleDescription() {
         return titleDescription;
     }
 
     public boolean isTitleDescriptionWarning() {
-        return getTitleField().getAttribute("class").contains("invalid");
+        return getTitleField().getAttribute(CLASS_ATTRIBUTE).contains("invalid");
     }
 
     // sourceDescription and warning
@@ -191,7 +227,7 @@ public class CreateNewsPage extends TopPart {
     }
 
     public boolean isSourceDescriptionWarning() {
-        return getSourceDescription().getAttribute("class").contains("warning");
+        return getSourceDescription().getAttribute(CLASS_ATTRIBUTE).contains("warning");
     }
 
     // contentDescription and warning
@@ -200,7 +236,7 @@ public class CreateNewsPage extends TopPart {
     }
 
     public boolean isContentDescriptionWarning() {
-        return getContentField().getAttribute("class").contains("invalid");
+        return getContentField().getAttribute(CLASS_ATTRIBUTE).contains("invalid");
     }
 
     // pictureDescription and warning
@@ -209,7 +245,7 @@ public class CreateNewsPage extends TopPart {
     }
 
     public boolean isPictureDescriptionWarning() {
-        return getPictureDescription().getAttribute("class").contains("warning-color");
+        return getPictureDescription().getAttribute(CLASS_ATTRIBUTE).contains("warning-color");
     }
 
     // tagsDescription and warning
@@ -218,7 +254,7 @@ public class CreateNewsPage extends TopPart {
     }
 
     public boolean isTagsDescriptionWarning() {
-        return getTagsDescription().getAttribute("class").contains("warning");
+        return getTagsDescription().getAttribute(CLASS_ATTRIBUTE).contains("warning");
     }
 
     // Functional
@@ -226,17 +262,17 @@ public class CreateNewsPage extends TopPart {
     // Drop and upload file
     private CreateNewsPage uploadFile(WebElement dropArea, String path) {
         String absolutePath = new File(path).getAbsolutePath();
-        UploadFileUtils.DropFile(new File(absolutePath), dropArea, 0, 0);
+        UploadFileUtil.DropFile(new File(absolutePath), dropArea, 0, 0);
         return this;
     }
 
     /**
-     * Method to fill all field in CreateNewsPage
+     * Method to fill all fields in CreateNewsPage
      *
      * @param newsData
+     * @return CreateNewsPage
      */
     public CreateNewsPage fillAllNewsFields(NewsData newsData) {
-        tagsComponent.selectTags(newsData.getTags());
         clearTitleField();
         setTitleField(newsData.getTitle());
         clearContentField();
@@ -244,19 +280,35 @@ public class CreateNewsPage extends TopPart {
         clearSourceField();
         setSourceField(newsData.getSource());
         uploadFile(dropArea, newsData.getFilePath());
+        tagsComponent.selectTags(newsData.getTags());
         return this;
     }
 
+    /**
+     * Method to fill Required fields in CreateNewsPage
+     *
+     * @param newsData
+     * @return CreateNewsPage
+     */
     public CreateNewsPage fillRequiredFields(NewsData newsData) {
-        tagsComponent.selectTags(newsData.getTags());
         clearTitleField();
         setTitleField(newsData.getTitle());
         clearContentField();
         setContentField(newsData.getContent());
+        tagsComponent.selectTags(newsData.getTags());
         return this;
     }
 
     // Business Logic
+
+    /**
+     * Method to get list of selected tags names from TagsComponent
+     *
+     * @return List<String>
+     */
+    public List<String> getSelectedTagsNames() {
+        return tagsComponent.getTagsNames(tagsComponent.getSelectedTagsButtons());
+    }
 
     /**
      * Method to open PreViewPage
@@ -273,9 +325,10 @@ public class CreateNewsPage extends TopPart {
      *
      * @return EconewsPage
      */
-    public EconewsPage publishNews() {
+    public CreateNewsPage publishNews() {  //FIXME return type should be changed to EconewsPage
         clickPublishButton(); // Button doesn't work
-        return new EconewsPage(driver);
+        return this;
+        //return new EconewsPage(driver);
     }
 
     /**
@@ -286,10 +339,8 @@ public class CreateNewsPage extends TopPart {
      */
     public EconewsPage cancelNewsCreating() {
         clickCancelButton();
-        IFrame iFrame = new IFrame(driver);
-        iFrame.getCancelEditingButton().click();
-        iFrame = null;
-        return new EconewsPage(driver);
+        CancelFrame cancelFrame = new CancelFrame(driver);
+        return cancelFrame.clickCancelEditingButton();
     }
 
     /**
@@ -300,33 +351,59 @@ public class CreateNewsPage extends TopPart {
      */
     public CreateNewsPage continueNewsCreating() {
         clickCancelButton();
-        IFrame iFrame = new IFrame(driver);
-        iFrame.getContinueEditingButton().click();
-        iFrame = null;
-        return this;
+        CancelFrame cancelFrame = new CancelFrame(driver);
+        return cancelFrame.clickContinueEditingButton();
     }
 
-    //inner class
-    private class IFrame { //static?
+    /**
+     * CancelFrame class
+     * Nested class that appears after clicking on Cancel button
+     */
+    private class CancelFrame {
 
         private WebElement continueEditingButton;
         private WebElement cancelEditingButton;
 
-        public IFrame(WebDriver driver) {
+        /**
+         * Constructor CancelFrame
+         *
+         * @param driver
+         */
+        public CancelFrame(WebDriver driver) {
             initElements(driver);
         }
 
-        public WebElement getContinueEditingButton() {
+        private void initElements(WebDriver driver) {
+            continueEditingButton = driver.findElement(By.cssSelector("div.continue-btn > button"));
+            cancelEditingButton = driver.findElement(By.cssSelector("button.primary-global-button"));
+        }
+
+        private WebElement getContinueEditingButton() {
             return continueEditingButton;
         }
 
-        public WebElement getCancelEditingButton() {
+        private WebElement getCancelEditingButton() {
             return cancelEditingButton;
         }
 
-        public void initElements(WebDriver driver) {
-            continueEditingButton = driver.findElement(By.cssSelector("div.continue-btn > button"));
-            cancelEditingButton = driver.findElement(By.cssSelector("button.primary-global-button"));
+        /**
+         * Method to continue news creation after clicking Continue editing button
+         *
+         * @return CreateNewsPage
+         */
+        public CreateNewsPage clickContinueEditingButton() {
+            getContinueEditingButton().click();
+            return new CreateNewsPage(driver);
+        }
+
+        /**
+         * Method to cancel news creation after clicking "Yes, cancel" button
+         *
+         * @return EconewsPage
+         */
+        public EconewsPage clickCancelEditingButton() {
+            getCancelEditingButton().click();
+            return new EconewsPage(driver);
         }
     }
 

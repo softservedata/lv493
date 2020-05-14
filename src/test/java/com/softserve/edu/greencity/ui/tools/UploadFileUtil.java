@@ -10,7 +10,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 
-public class UploadFileUtils {
+/**
+ * UploadFileUtil class
+ */
+public final class UploadFileUtil {
+
+    /**
+     * Method to upload file into WebElement
+     * @return String
+     */
     public static void DropFile(File filePath, WebElement target, int offsetX, int offsetY) {
         if (!filePath.exists())
             throw new WebDriverException("File not found: " + filePath.toString());

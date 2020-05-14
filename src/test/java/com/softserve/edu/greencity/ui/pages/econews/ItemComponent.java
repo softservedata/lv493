@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.pages.econews;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -124,6 +125,7 @@ public final class ItemComponent {
 		for (WebElement elem : getTags()) {
 			str.add(elem.getText().toLowerCase());
 		}
+		Collections.sort(str);
 		return str;
 	}
 

@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.softserve.edu.greencity.ui.data.NewsData;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
 
 /**
  * Contains all itemsComponents that are present on page

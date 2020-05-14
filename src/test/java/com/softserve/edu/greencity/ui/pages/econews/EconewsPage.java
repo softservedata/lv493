@@ -8,8 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import com.softserve.edu.greencity.ui.data.Languages;
-import com.softserve.edu.greencity.ui.data.NewsData;
-import com.softserve.edu.greencity.ui.data.Tag;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
+import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 
@@ -50,7 +50,6 @@ public class EconewsPage extends TopPart {
 	}
 
 	private void initElements() {
-
 		tagsComponent = new TagsComponent(driver);
 		createNewsButton = driver.findElement(By.id("create-button"));
 		itemsContainer = new ItemsContainer(driver);

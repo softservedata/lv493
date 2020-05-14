@@ -1,17 +1,20 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
-import com.softserve.edu.greencity.ui.data.Tag;
+import com.softserve.edu.greencity.ui.data.econews.Tag;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Components of CreateNewsPage & EconewsPage
  * Contains WebElemets that define type of news(names of news is in enum Tag)
+ *
  * @author lv-492
  */
 public class TagsComponent {
@@ -25,11 +28,10 @@ public class TagsComponent {
     }
 
     private void initElements() {
-    	
         // init elements
         tags = driver.findElements(By.cssSelector("div.tags > button"));  //for CreateNewsPage 
-        if(tags.size() == 0) {
-        	tags = driver.findElements(By.cssSelector("ul.ul-eco-buttons > a > li")); //for EconewsPage
+        if (tags.size() == 0) {
+            tags = driver.findElements(By.cssSelector("ul.ul-eco-buttons > a > li")); //for EconewsPage
         }
     }
 
@@ -39,45 +41,78 @@ public class TagsComponent {
         return tags;
     }
 
-
     // Functional
-    
-    protected Set<String> getTagsNames(List<WebElement> selectedTagsButtons) {
-        Set<String> tagsNames = new HashSet<>();
-        for (WebElement current : selectedTagsButtons) {
-            tagsNames.add(current.getText());
+
+    /**
+     * Get sorted list of Strings with tags names
+     *
+     * @param tagsButtons
+     * @return List<String>
+     */
+    protected List<String> getTagsNames(List<WebElement> tagsButtons) {
+        List<String> tagsNames = new ArrayList<>();
+        for (WebElement current : tagsButtons) {
+            tagsNames.add(current.getText().toLowerCase());
         }
-        System.out.println(tagsNames);
+        Collections.sort(tagsNames);
         return tagsNames;
     }
-    
+
     /**
      * Get WebElement of news type by its name
-     * @param Tag
+     *
+     * @param tagName
      * @return WebElement
      */
-    protected WebElement getWebElementByTagName(Tag newsfilter) {
+    protected WebElement getWebElementByTagName(Tag tagName) {
         WebElement tag = getTags().stream()
                 .filter((element) -> element
-                .getText().toLowerCase().contains(newsfilter.toString().toLowerCase()))
+                        .getText().toLowerCase().contains(tagName.toString().toLowerCase()))
                 .findFirst().get();
         return tag;
     }
-    
+
+    /**
+     * Get list of selected tags elements
+     *
+     * @return List<WebElement>
+     */
+    protected List<WebElement> getSelectedTagsButtons() {
+        return getTags().stream()
+                .filter((element) -> element
+                        .getAttribute("class").contains("filters-color"))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Method to select tags
+     *
+     * @param tags
+     */
+    protected void selectTags(List<Tag> tags) {
+        JavascriptExecutor js = ((JavascriptExecutor) driver);
+        js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
+        for (Tag current : tags) {
+            selectTag(current);
+        }
+    }
+
     /**
      * Check is some WebElement are choosen(clicked first time)
-     * @param Tag
+     *
+     * @param newsfilter
      * @return boolean
      */
     protected boolean isTagActive(Tag newsfilter) {
         return getWebElementByTagName(newsfilter)
-        		.getAttribute("class")
-        		.matches(".*(clicked-filter-button|active).*");
+                .getAttribute("class")
+                .matches(".*(clicked-filter-button|filters-color).*");
     }
-    
+
     /**
      * Click on some WebElement to choose it(click first time)
-     * @param Tag
+     *
+     * @param newsfilter
      * @return boolean
      */
     protected void selectTag(Tag newsfilter) {
@@ -85,30 +120,25 @@ public class TagsComponent {
             getWebElementByTagName(newsfilter).click();
         }
     }
-    
+
     /**
      * Click on some WebElement to deselect it(click second time)
-     * @param Tag
+     *
+     * @param tag
      * @return boolean
      */
-    protected void deselectTag(Tag newsfilter) {
-        if (isTagActive(newsfilter)) {
-            getWebElementByTagName(newsfilter).click();
+    protected void deselectTag(Tag tag) {
+        if (isTagActive(tag)) {
+            getWebElementByTagName(tag).click();
         }
     }
 
-    public void selectTags(List<Tag> tags) {
-             for (Tag current : tags) {
-                selectTag(current);
-            }
+    protected void deselectTags(List<Tag> tags) {
+        for (Tag current : tags) {
+            deselectTag(current);
+        }
     }
-    
-    public void deselectTags(List<Tag> tags) {
-            for (Tag current : tags) {
-                deselectTag(current);
-            }
-        
-    }
+
     // Business Logic
 
 }
