@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -35,10 +36,12 @@ public class RegisterDropdownGoogleAccountTest extends GreencityTestRunner {
                 + registerDropdown.getTitlePageText());
         GoogleAccountPage googleAccountPage = registerDropdown.clickSignUpGoogleAccountButton();
         googleAccountPage.enterEmail(userGoogleLoginCredentials.getEmail());
-        presentationSleep(2);
+        presentationSleep(2); // delay only for presentation
         googleAccountPage.clickEmailNext();
+        Assert.assertTrue(driver.getCurrentUrl().contains("https://accounts.google.com/signin/"),
+                "you didn't go to Register page");
 //        googleAccountPage.enterPassword(userGoogleLoginCredentials.getPassword());
-        presentationSleep(2);
+        presentationSleep(5); // delay only for presentation
 //        googleAccountPage.clickPasswordNext();
     }
 }

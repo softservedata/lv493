@@ -46,7 +46,7 @@ public class RegisterPage extends TopPart {
      * @param email String
      * @return RegisterPage
      */
-    public RegisterPage enterEmail(String email) {
+    private RegisterPage enterEmail(String email) {
         this.getRegisterComponent().setEmailField(email);
         return this;
     }
@@ -56,7 +56,7 @@ public class RegisterPage extends TopPart {
      * @param firstName String
      * @return RegisterPage
      */
-    public RegisterPage enterFirstName(String firstName) {
+    private RegisterPage enterFirstName(String firstName) {
         this.getRegisterComponent().setFirstNameField(firstName);
         return this;
     }
@@ -66,7 +66,7 @@ public class RegisterPage extends TopPart {
      * @param lastName String
      * @return RegisterPage
      */
-    public RegisterPage enterLastName(String lastName) {
+    private RegisterPage enterLastName(String lastName) {
         this.getRegisterComponent().setLastNameField(lastName);
         return this;
     }
@@ -76,7 +76,7 @@ public class RegisterPage extends TopPart {
      * @param password String
      * @return RegisterPage
      */
-    public RegisterPage enterPassword(String password) {
+    private RegisterPage enterPassword(String password) {
         this.getRegisterComponent().setPasswordField(password);
         return this;
     }
@@ -86,7 +86,7 @@ public class RegisterPage extends TopPart {
      * @param passwordConfirm String
      * @return RegisterPage
      */
-    public RegisterPage enterPasswordConfirm(String passwordConfirm) {
+    private RegisterPage enterPasswordConfirm(String passwordConfirm) {
         this.getRegisterComponent().setPasswordConfirmField(passwordConfirm);
         return this;
     }
@@ -207,10 +207,10 @@ public class RegisterPage extends TopPart {
                 .enterLastName(userData.getLastName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getPassword());
+        //
         clickSignUpButton();
         getRegisterComponent().verifyTempEmail();
         getRegisterComponent();
-//        return getRegisterComponent().getConfirmRegisterationText();
     }
 
     /**
@@ -224,7 +224,7 @@ public class RegisterPage extends TopPart {
                 .enterPasswordConfirm(userData.getPassword())
                 .clickSignUpButton();
     }
-    
+
     /**
      * Test registration user with already wrong credentials.
      * @param userData
@@ -260,7 +260,7 @@ public class RegisterPage extends TopPart {
         enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
                 .enterLastName(userData.getLastName())
                 .enterPassword(userData.getPassword())
-                .enterPasswordConfirm(userData.getPassword());
+                .enterPasswordConfirm(userData.getConfirmPassword());
         return clickSignInLink();
     }
 }

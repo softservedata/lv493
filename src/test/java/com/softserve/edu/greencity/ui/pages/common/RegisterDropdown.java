@@ -371,7 +371,8 @@ public class RegisterDropdown extends RegisterPart {
         userData.setEmail(getTemporaryEmail());
         enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
                 .enterPassword(userData.getPassword())
-                .enterPasswordConfirm(userData.getPassword());
+                .enterPasswordConfirm(userData.getConfirmPassword());
+        //
         clickSignUpButton();
         verifyTempEmail();
     }
@@ -385,7 +386,7 @@ public class RegisterDropdown extends RegisterPart {
     public TopPart registrationNewUser(User userData) {
         enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
                 .enterPassword(userData.getPassword())
-                .enterPasswordConfirm(userData.getPassword());
+                .enterPasswordConfirm(userData.getConfirmPassword());
         return clickSignupButton();
     }
     
@@ -411,6 +412,7 @@ public class RegisterDropdown extends RegisterPart {
         enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getPassword());
+        //
         return closeRegisterDropdown();
     }
 

@@ -11,7 +11,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.RegisterPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
 /**
- * RegisterPageTest class (doesn't working correctly!).
+ * RegisterPageTest class.
  * @author Serg
  */
 public class RegisterPageTest extends GreencityTestRunner {
@@ -36,8 +36,8 @@ public class RegisterPageTest extends GreencityTestRunner {
     }
 
     /**
-     * Filling all the fields in the Register page without registering
-     * and switch to Login page.
+     * Filling all the fields on the Register page without registering and
+     * switch to Login page.
      * @param userLoginCredentials
      */
     @Test(dataProvider = "validCredentialUser")
@@ -55,21 +55,23 @@ public class RegisterPageTest extends GreencityTestRunner {
         logger.info(
                 "register new User with valid credential without click on Sign-up button");
         registerPage.fillFieldsWithoutRegistration(userLoginCredentials);
-//        presentationSleep(2);
+        presentationSleep(2); // delay only for presentation
         LoginPage loginPage = registerPage.clickSignInLink();
         Assert.assertTrue(driver.getCurrentUrl().contains("#/auth"),
                 "you didn't go to Login page");
+        presentationSleep(2); // delay only for presentation
         logger.info("click on Sign-up link go to RegisterPage");
         loginPage.gotoRegisterPage();
         Assert.assertTrue(driver.getCurrentUrl().contains("#/auth/sign-up"),
                 "you didn't go to Register page");
         Assert.assertEquals("Hello!", registerPage.getTitleFieldText(),
                 "you did not go to the page RegisterPage");
+        presentationSleep(2); // delay only for presentation
     }
 
     /**
-     * Filling all the fields in the Register page using the wrong
-     * credentials and reading the error message.
+     * Filling all the fields on the Register page using the wrong credentials
+     * and reading the error message.
      * @param userLoginCredentials
      */
     @Test(dataProvider = "invalidCredentialUser")
@@ -99,35 +101,7 @@ public class RegisterPageTest extends GreencityTestRunner {
         Assert.assertEquals(registerPage.getPasswordConfirmErrorText(),
                 "Passwords do not match",
                 "the error message does not equal the expected result");
-        presentationSleep(2);
-    }
-
-    /**
-     * Test for registration with temporary email and random other credentials
-     * without logging.
-     * @param userLoginCredentials
-     */
-    @Test(dataProvider = "validCredentialUser2")
-    public void checkRegistation1(User userLoginCredentials) {
-        logger.info("start test checkRegistation1 with user = "
-                + userLoginCredentials.toString());
-        loadApplication().navigateMenuMyCabinetGuest();
-        logger.info("go to RegisterPage (click on Sign-up link)");
-        RegisterPage registerPage = new LoginPage(driver).gotoRegisterPage();
-        //
-        Assert.assertEquals("Hello!", registerPage.getTitleFieldText(),
-                "you did not go to the page RegisterPage");
-        logger.info("get a top title text on the page: "
-                + registerPage.getTitleFieldText());
-        //
-        logger.info(
-                "register new User with random credential and temporary email");
-        registerPage.registrationNewRandomUser(userLoginCredentials);
-        Assert.assertTrue(
-                registerPage.getConfirmRegistrationText()
-                        .contains("You have successfully registered"),
-                "you not complete registration");
-        presentationSleep(2);
+        presentationSleep(2); // delay only for presentation
     }
 
     /**
@@ -158,6 +132,7 @@ public class RegisterPageTest extends GreencityTestRunner {
         registerPage.navigateMenuMyCabinetGuest();
         Assert.assertTrue(driver.getCurrentUrl().contains("#/auth"),
                 "you didn't go to Login page");
+        presentationSleep(2); // delay only for presentation
         LoginPage page = new LoginPage(driver);
         logger.info("login with temporary Email and random credential: "
                 + userLoginCredentials.toString());
@@ -170,7 +145,6 @@ public class RegisterPageTest extends GreencityTestRunner {
                 "you didn't log in successfully");
         logger.info("check TopUserName: " + page.getTopUserName());
         Assert.assertEquals(page.getTopUserName(), TopPart.PROFILE_NAME);
-        logger.info("signout");
-        page.signout(); // some times displayed window 'Welcome you in Green City application!'
+        presentationSleep(5); // delay only for presentation
     }
 }

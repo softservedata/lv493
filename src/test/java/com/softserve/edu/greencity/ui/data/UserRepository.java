@@ -81,7 +81,7 @@ public final class UserRepository {
      * @return
      */
     public User temporaryUserCredentialsForRegistration() {
-        return new User(Randomizer.getRamdomString20Letters(), Randomizer.getRamdomString20Letters(), "", "A475asd123*");
+        return new User(Randomizer.getRamdomString20Letters(), Randomizer.getRamdomString20Letters(), "", "A475asd123*", "A475asd123*");
     }
 
 }

@@ -19,7 +19,10 @@ public abstract class RegisterPart {
     //
     protected String titlePage;
     //
+    protected WebElement topText; // TODO
+    protected WebElement bottomText; // TODO
     protected WebElement titleField;
+    //
     protected WebElement firstNameField;
     protected WebElement emailField;
     protected WebElement passwordField;
@@ -727,4 +730,5 @@ public abstract class RegisterPart {
      * Verify a temporary Email and close tab.
      */
     protected abstract RegisterPart verifyTempEmail();
+    
 }

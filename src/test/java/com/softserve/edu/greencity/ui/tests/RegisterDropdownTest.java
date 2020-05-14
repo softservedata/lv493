@@ -13,7 +13,7 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.GetMail10MinTools;
 
 /**
- * RegisterDropdownTest class (doesn't working correctly!).
+ * RegisterDropdownTest class.
  * @author Serg
  */
 public class RegisterDropdownTest extends GreencityTestRunner {
@@ -38,7 +38,7 @@ public class RegisterDropdownTest extends GreencityTestRunner {
     }
 
     /**
-     * Filling all the fields in the RegisterDropdown window without registering
+     * Filling all the fields on the RegisterDropdown window without registering
      * and switch to LoginDropdown.
      * @param userLoginCredentials
      */
@@ -53,20 +53,21 @@ public class RegisterDropdownTest extends GreencityTestRunner {
         TopPart page = registerDropdown
                 .fillFieldsWithoutRegistration(userLoginCredentials);
         //
-//      presentationSleep(2);
         logger.info("click Sign-in link and go to LoginDropdown");
         LoginDropdown loginDropdown = page.signin();
+        presentationSleep(2); // delay only for presentation
         logger.info("click Sign-un link and go to RegisterDropdown");
         registerDropdown = loginDropdown.gotoRegisterDropdown();
         Assert.assertEquals(registerDropdown.getTitlePageText(), "Hello!",
                 "you did not go to the page RegisterPage");
+        presentationSleep(2); // delay only for presentation
         logger.info("close RegisterDropdown");
         page = registerDropdown.closeRegisterDropdown();
     }
 
     /**
-     * Filling all the fields in the RegisterDropdown window using the wrong
-     * credentials and reading the error message.
+     * Filling all the fields on the RegisterDropdown window using the wrong
+     * credentials and reading the error messages.
      */
     @Test(dataProvider = "invalidCredentialUser")
     public void checkRegisterDropdown2(User userLoginCredentials) {
@@ -86,30 +87,7 @@ public class RegisterDropdownTest extends GreencityTestRunner {
         Assert.assertEquals(registerDropdown.getPasswordConfirmErrorText(),
                 "Passwords do not match",
                 "the error message does not equal the expected result");
-    }
-
-    /**
-     * Test for registration with temporary email and random other credentials
-     * without logging.
-     * @param userLoginCredentials
-     */
-    @Test(dataProvider = "validCredentialUser2")
-    public void successRegistrationUser1(User userLoginCredentials) {
-        logger.info("start test successRegistrationUser1 with user = "
-                + userLoginCredentials.toString());
-        RegisterDropdown registerDropdown = loadApplication().signup();
-        logger.info("get a top title text on the page: "
-                + registerDropdown.getTitlePageText());
-        Assert.assertEquals(registerDropdown.getTitlePageText(), "Hello!",
-                "you did not go to the page RegisterPage");
-        //
-        logger.info(
-                "register new User with random credential and temporary email");
-        registerDropdown.registrationNewRandomUser(userLoginCredentials);
-        Assert.assertTrue(
-                registerDropdown.getConfirmRegisterationText()
-                        .contains("You have successfully registered"),
-                "you did not go to the page RegisterPage");
+        presentationSleep(3); // delay only for presentation
     }
 
     /**
@@ -140,10 +118,12 @@ public class RegisterDropdownTest extends GreencityTestRunner {
         LoginPage page = loadApplication().navigateMenuMyCabinetGuest();
         logger.info("login with temporary Email and random credential: "
                 + userLoginCredentials.toString());
+        // !!!!!!!!!! need one more click
         page.inputEmail(userLoginCredentials.getEmail())
                 .inputPassword(userLoginCredentials.getPassword())
                 .clickLoginButton(); // not always success after one click (need
                                      // one more click)
+        presentationSleep(5); // delay only for presentation
         logger.info("get Title curent page: " + driver.getTitle());
         Assert.assertEquals(driver.getTitle(), "Home",
                 "you didn't log in successfully");
