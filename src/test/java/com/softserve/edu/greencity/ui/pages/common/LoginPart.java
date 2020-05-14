@@ -2,6 +2,9 @@ package com.softserve.edu.greencity.ui.pages.common;
 
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+
 public abstract class LoginPart {
 
     protected WebElement emailField;
@@ -31,7 +34,7 @@ public abstract class LoginPart {
         return this;
     }
 
-    public abstract ForgotPasswordPart gotoForgotPassword();
+    //public abstract ForgotPasswordPart gotoForgotPassword();
 
     public WebElement getEmailField() {
         return emailField;
@@ -87,4 +90,16 @@ public abstract class LoginPart {
         return this;
     }
 
+    
+    // Functional
+    
+    protected void fillFields(User user) {
+        inputEmail(user.getEmail())
+            .inputPassword(user.getPassword());
+    }
+    
+    protected void fillFieldsSubmit(User user) {
+        fillFields(user);
+        clickLoginButton();
+    }
 }

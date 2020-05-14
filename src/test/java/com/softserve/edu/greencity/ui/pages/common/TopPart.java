@@ -13,11 +13,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.softserve.edu.greencity.ui.data.Languages;
+import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.home.HomePage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
@@ -26,12 +29,20 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
  * @author Lv-493.Taqc/Java
  */
 public abstract class TopPart {
+    // TODO to delete
+    public static final String PROFILE_NAME = "Nadiia Steblivets";
+    //
     private final int WINDOW_WIDTH_TO_SCROLL = 1024;
     private final int WINDOW_HEIGHT_TO_CLICK_FOOTER = 480;
+    //
+    protected final String OPTION_NULL_MESSAGE = "DropdownComponent is null";
+    //protected final String OPTION_NOT_FOUND_MESSAGE = "Option %s not found in %s";
+    //protected final String PAGE_DO_NOT_EXIST="Page do not exist!!!";
     //
     //protected final String TAG_ATTRIBUTE_VALUE = "value";
     //protected final String TAG_ATTRIBUTE_SRC = "src";
     //
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected WebDriver driver;
     //
     private Select languageSwitcher;
@@ -41,13 +52,14 @@ public abstract class TopPart {
     private TopGuestComponent topGuestComponent;
     private TopUserComponent topUserComponent;
     //
-    private LoginDropdown loginDropdown;
-    private RegisterDropdown registerDropdown;
+    //private LoginDropdown loginDropdown;
+    //private RegisterDropdown registerDropdown;
     
     public TopPart(WebDriver driver) {
         this.driver = driver;
         closeAlertIfPresent();
         initElements();
+        //initComponents();
     }
     
     private void closeAlertIfPresent() {
@@ -76,6 +88,11 @@ public abstract class TopPart {
         copyright = driver.findElement(By.cssSelector("div.bottom-part"));
     }
 
+//  private void initComponents() {
+        // TODO Develop Application Status Class (Singleton)
+//      createTopGuestComponent();
+//  }
+    
     // Page Object
     
     // languageSwitcher
@@ -121,7 +138,82 @@ public abstract class TopPart {
     }
     
     // Functional
+    
+    // topGuestComponent;
+    
+    protected TopGuestComponent getTopGuestComponent() {
+        if (topGuestComponent == null)
+        {
+            // TODO Develop Custom Exception 
+            throw new RuntimeException(OPTION_NULL_MESSAGE);
+        }
+        return topGuestComponent;
+    }
 
+    protected TopGuestComponent createTopGuestComponent() {
+        topGuestComponent = new TopGuestComponent(driver);
+        return getTopGuestComponent();
+    }
+
+    protected void clickTopGuestSignin() {
+        getTopGuestComponent().clickSigninLink();
+        //topGuestComponent = null;
+    }
+    
+    protected void clickTopGuestSignup() {
+        getTopGuestComponent().clickSignupLink();
+        //topGuestComponent = null;
+    }
+
+    protected void closeTopGuestComponent() {
+        //clickSearchTopField();
+        topGuestComponent = null;
+    }
+    
+    // topUserComponent
+    
+    protected TopUserComponent getTopUserComponent() {
+        if (topUserComponent == null)
+        {
+            // TODO Develop Custom Exception 
+            throw new RuntimeException(OPTION_NULL_MESSAGE);
+        }
+        return topUserComponent;
+    }
+
+    protected TopUserComponent createTopUserComponent() {
+        topUserComponent = new TopUserComponent(driver);
+        return getTopUserComponent();
+    }
+    
+    public String getTopUserName() {
+        // TODO
+        //getTopUserComponent().getUserNameButtonText();
+        return createTopUserComponent().getUserNameButtonText();
+    }
+    
+    protected void clickTopUserFavoritePlaces() {
+        getTopUserComponent().clickProfileDropdownFavoritePlaces();
+        //topGuestComponent = null;
+    }
+    
+    protected void clickTopUserSettings() {
+        getTopUserComponent().clickProfileDropdownUserSettings();
+        //topGuestComponent = null;
+    }
+    
+    protected void clickTopUserSignout() {
+        getTopUserComponent().clickProfileDropdownSignout();
+        //topGuestComponent = null;
+    }
+
+    protected void closeTopUserComponent() {
+        //clickSearchTopField();
+        topUserComponent = null;
+    }
+    
+    // language
+    
     protected void chooseLanguage(Languages language) {
         clickLanguageSwitcher();
         setLanguageSwitcher(language.toString());
@@ -142,39 +234,89 @@ public abstract class TopPart {
     // Business Logic
     
     public EconewsPage navigateMenuEconews() {
+        logger.debug("go to EcoNews page");
+        logger.trace("click MenuEcoNews link");
         getMainMenuDropdown().clickMenuEcoNews();
         return new EconewsPage(driver);
     }
     
     public TipsTricksPage navigateMenuTipsTricks() {
+        logger.debug("go to TipsTricks page");
+        logger.trace("click TipsTricks link");
         getMainMenuDropdown().clickMenuTipsTricks();
         return new TipsTricksPage(driver);
     }
     
     public MapPage navigateMenuMap() {
+        logger.debug("go to Map page");
+        logger.trace("click Map link");
         getMainMenuDropdown().clickMenuMap();
         return new MapPage(driver);
     }
     
+    // for Loggined
     public MyCabinetPage navigateMenuMyCabinet() {
+        logger.debug("go to MyCabinet");
+        logger.trace("click MyCabinet link");
         getMainMenuDropdown().clickMenuMyCabinet();
         return new MyCabinetPage(driver);
     }
     
+    // for not Loggined
+    public MyCabinetPage navigateMenuMyCabinet(User user) {
+        logger.debug("go to MyCabinet as User");
+        logger.trace("click MyCabinet link as User");
+        getMainMenuDropdown().clickMenuMyCabinet();
+        new LoginPage(driver).getLoginComponent().fillFieldsSubmit(user);
+        return new MyCabinetPage(driver);
+    }
+    
+    // for not Loggined
+    public LoginPage navigateMenuMyCabinetGuest() {
+        logger.debug("go to Login Page as Guest");
+        logger.trace("click MyCabinet link as Guest");
+        logger.info("go to Login Page as a Guest");
+        getMainMenuDropdown().clickMenuMyCabinet();
+        return new LoginPage(driver);
+    }
+    
     public AboutPage navigateMenuAbout() {
+        logger.debug("go to About page");
+        logger.trace("click About link");
         getMainMenuDropdown().clickMenuAbout();
         return new AboutPage(driver);
     }
 
-    public LoginDropdown gotoLoginDropdown() {
-        topGuestComponent = new TopGuestComponent(driver);
-        topGuestComponent.clickSigninLink();
+    public LoginDropdown signin() {
+        logger.debug("start signin()");
+        // TODO
+        //getTopGuestComponent().clickSigninLink();
+        logger.trace("click Signin link");
+        createTopGuestComponent().clickSigninLink();
         return new LoginDropdown(driver);
     }
     
-    public RegisterDropdown gotoRegisterDropdown() {
-        topGuestComponent = new TopGuestComponent(driver);
-        topGuestComponent.clickSignupLink();
+    public RegisterDropdown signup() {
+        logger.debug("start signup()");
+        // TODO
+        //getTopGuestComponent().clickSignupLink();
+        logger.trace("click Signup link");
+        logger.info("go to RegisterDropdown");
+        createTopGuestComponent().clickSignupLink();
         return new RegisterDropdown(driver);
     }
+    
+    public TipsTricksPage signout() {
+        logger.debug("start signout()");
+        // TODO
+        //getTopUserComponent().clickProfileDropdownSignout();
+        logger.trace("click Signout link from ProfileDropdown");
+        createTopUserComponent().clickProfileDropdownSignout();
+        logger.trace("close TopUserComponent");
+        closeTopUserComponent();
+        logger.trace("create TopGuestComponent");
+        createTopGuestComponent();
+        return new TipsTricksPage(driver);
+    }
+    
 }

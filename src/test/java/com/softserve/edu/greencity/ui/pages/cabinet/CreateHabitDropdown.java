@@ -1,23 +1,170 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import com.softserve.edu.greencity.ui.data.HabitCard;
 
 public class CreateHabitDropdown {
-	//
-	private WebDriver driver;
+    private WebDriver driver;
 
-	public CreateHabitDropdown(WebDriver driver) {
-		this.driver = driver;
-		initElements();
-	}
+    HabitCardsContainer   habitsContainer;
 
-	private void initElements() {
-		// init elements
-	}
+    private WebElement saveButton;
+    private WebElement  cancelButton;
+    private WebElement closeButton;
 
-	// Page Object
+    public CreateHabitDropdown(WebDriver driver) {
+        this.driver = driver;
+        initElements();
+    }
 
-	// Functional
+    private void initElements() {
+        habitsContainer = new HabitCardsContainer(driver);
 
-	// Business Logic
+        saveButton = driver.findElement(By.cssSelector("div.splitter + div .button-save"));
+        cancelButton = driver.findElement(By.cssSelector("div.splitter + div .button-cancel"));
+        closeButton = driver.findElement(By.cssSelector("img[src*='close']"));
+    }
+
+    // Page Object
+
+    //chosenHabitsContainer
+
+    public HabitCardsContainer getHabitsContainer() {
+        return habitsContainer;
+    }
+
+    // saveButton
+
+    public WebElement getSaveButton() {
+        return saveButton;
+    }
+
+    public void clickSaveButton() {
+        getSaveButton().click();
+    }
+
+    public boolean isDisplayedSaveButton() {
+        return getSaveButton().isDisplayed();
+    }
+
+    // cancelButton
+
+    public WebElement getCancelButton() {
+        return cancelButton;
+    }
+
+    public void clickCancelButton() {
+        getCancelButton().click();
+    }
+
+    public boolean isDisplayedCancelButton() {
+        return getCancelButton().isDisplayed();
+    }
+
+    // closeButton
+
+    public WebElement getCloseButton() {
+        return closeButton;
+    }
+
+    public void clickCloseButton() {
+        getCloseButton().click();
+    }
+
+    public boolean isDisplayedCloseButton() {
+        return getCancelButton().isDisplayed();
+    }
+
+
+    // Functional
+
+    public boolean isChosenHabitCard(HabitCard card) {
+        return getHabitsContainer().findChosenHabitCard(card.getHabit()) != null ? true : false;
+    }
+
+    public boolean isVisibleWarning() {
+        return getHabitsContainer().isVisibleDeleteMessageWarning();
+    }
+
+    // Business Logic
+
+    /**
+     * Close CreateHabitDropdown without saving changes.
+     * @return MyCabinetPage
+     */
+    public MyCabinetPage cancelCreateHabitDropdown() {
+        if(isDisplayedCancelButton()) {
+            clickCancelButton();
+        }
+        return new MyCabinetPage(driver);
+    }
+
+    /**
+     * Close CreateHabitDropdown with saving changes.
+     * @return MyCabinetPage
+     */
+    public MyCabinetPage saveCreateHabitDropdown() {
+        //do not close
+        if(isDisplayedSaveButton()) {
+            clickSaveButton();
+        }
+        // !!!! Temporary
+        clickCloseButton();
+        return new MyCabinetPage(driver);
+    }
+
+    /**
+     * Close CreateHabitDropdown.
+     * @return MyCabinetPage
+     */
+    public MyCabinetPage closeCreateHabitDropdown() {
+        if(isDisplayedCloseButton()) {
+            clickCloseButton();
+        }
+        return new MyCabinetPage(driver);
+    }
+
+    /**
+     * Delete habit card from chosen cards.
+     * @param habit
+     * @return CreateHabitDropdown
+     */
+    public CreateHabitDropdown deleteAndConfirmHabitCard(HabitCard card) {
+        getHabitsContainer().deleteAndConfirmHabitCard(card);
+        return new CreateHabitDropdown(driver);
+    }
+
+    /**
+     * Delete and cancel deleting habit card from chosen cards.
+     * @param habit
+     * @return CreateHabitDropdown
+     */
+    public CreateHabitDropdown deleteAndCancelHabitCard(HabitCard card) {
+        getHabitsContainer().deleteAndCancelHabitCard(card);
+        return new CreateHabitDropdown(driver);
+    }
+
+    /**
+     * Add habit card to chosen cards.
+     * @param habit
+     * @return CreateHabitDropdown
+     */
+    public CreateHabitDropdown addHabitCard(HabitCard card) {
+        getHabitsContainer().addHabitCard(card);
+        return new CreateHabitDropdown(driver);
+    }
+
+    /**
+     * Add habit card to available cards.
+     * @param habit
+     * @return CreateHabitDropdown
+     */
+    public CreateHabitDropdown cancelAddinngHabitCard(HabitCard card) {
+        getHabitsContainer().cancelAddHabitCard(card);
+        return new CreateHabitDropdown(driver);
+    }
+
 }

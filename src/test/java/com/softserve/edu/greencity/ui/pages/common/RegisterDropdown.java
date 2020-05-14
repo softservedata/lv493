@@ -1,13 +1,21 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.softserve.edu.greencity.ui.data.UserData;
+import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountPage;
+import com.softserve.edu.greencity.ui.tools.GetMail10MinTools;
 
 /**
  * RegisterDropdown class.
@@ -24,6 +32,7 @@ public class RegisterDropdown extends RegisterPart {
 //    private final String FIRST_NAME_VALIDATOR_SELECTOR = ""; // not exist
     private final String PASSWORD_VALIDATOR_SELECTOR = "app-new-sign-up input[name='fistName'] + label.content-label + div + div div";
     private final String PASSWORD_CONFIRM_VALIDATOR_SELECTOR = "app-new-sign-up label.content-label.under-error + div + div div";
+    private final String SUBMIT_EMAIL_SELECTOR = "app-submit-email div.submit-email";
     //
 
     /**
@@ -40,6 +49,14 @@ public class RegisterDropdown extends RegisterPart {
      */
     private void initElements() {
         // init elements
+        wait = new WebDriverWait(driver, 10);
+        //
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector("h1[title-text]")));
+        driver.manage().timeouts().implicitlyWait(5,
+                TimeUnit.SECONDS);
+        //
         titleField = driver.findElement(By.cssSelector("h1[title-text]"));
         emailField = driver.findElement(By.cssSelector("input[name='email']"));
         firstNameField = driver
@@ -59,7 +76,6 @@ public class RegisterDropdown extends RegisterPart {
                 "div[class='form-content-container'] button[class*='button-google']"));
         closeRegisterDropdownButton = driver.findElement(
                 By.cssSelector("app-new-sign-up div.close-btn-img a"));
-        wait = new WebDriverWait(driver, 2);
     }
 
     // Page Object
@@ -129,36 +145,80 @@ public class RegisterDropdown extends RegisterPart {
     }
 
     // Functional
-    // a Google window opens and switches to it
     @Override
-    public GoogleAccountPage clickSignUpGoogleAccountButton() {
-        String currentTab = driver.getWindowHandle();
-        clickGoogleLoginButton();
-        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+    protected void switchToAnotherTab(String currentTab) {
+        logger.debug("start switchToAnotherTab()");
         for (String current : driver.getWindowHandles()) {
-            System.out.println("TAB: " + current);
+            logger.info("we're in a TAB: " + current);
             if (!current.equals(currentTab)) {
+                logger.info("and switch to TAB: " + current);
                 driver.switchTo().window(current);
-                System.out.println("URL: " + driver.getCurrentUrl());
                 break;
             }
         }
+    }
+
+    @Override
+    protected String getTempEmail() {
+        driver.get(GetMail10MinTools.URL);
+        GetMail10MinTools tmp = new GetMail10MinTools(driver);
+        return tmp.getTempEmail();
+    }
+
+    // a Google window opens and switches to it
+    @Override
+    public GoogleAccountPage clickSignUpGoogleAccountButton() {
+        logger.info("we're in a TAB: " + driver.getWindowHandle());
+        String currentTab = driver.getWindowHandle();
+        logger.info("click to GoogleLogin Button");
+        clickGoogleLoginButton();
+        //
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+        driver.manage().timeouts().implicitlyWait(5,
+                TimeUnit.SECONDS);
+        //
+        switchToAnotherTab(currentTab);
         return new GoogleAccountPage(driver);
     }
 
-    /**
-     * enterEmail
-     * @param email String
-     * @return RegisterDropdown
-     */
-    private RegisterDropdown enterEmail(String email) {
-        this.clickEmail(driver).clearEmail().setEmailField(emailField)
-                .inputEmail(email);
+    @Override
+    protected String getTemporaryEmail() {
+        String currentTab = driver.getWindowHandle();
+        String email = "";
+        ((JavascriptExecutor) driver).executeScript("window.open()");
+        switchToAnotherTab(currentTab);
+        email = getTempEmail();
+        logger.info("temporary Email address for registration: " + email);
+//        System.out
+//                .println("temporary Email address for registration: " + email);
+        driver.switchTo().window(currentTab);
+        return email;
+    }
+
+    @Override
+    protected RegisterPart verifyTempEmail() {
+        String currentTab = driver.getWindowHandle();
+        switchToAnotherTab(currentTab);
+        GetMail10MinTools tmp = new GetMail10MinTools(driver);
+        tmp.verifyEmail();
+        driver.switchTo().window(currentTab);
         return this;
     }
 
     /**
-     * enterFirstName
+     * Inserting some text on the 'Email' field.
+     * @param email String
+     * @return RegisterDropdown
+     */
+    private RegisterDropdown enterEmail(String email) {
+        this.clickEmailField(driver).clearEmailField().setEmailField(emailField)
+                .inputEmailField(email);
+        return this;
+    }
+
+    /**
+     * Inserting some text on the 'FirstName' field.
      * @param firstName String
      * @return RegisterDropdown
      */
@@ -169,7 +229,7 @@ public class RegisterDropdown extends RegisterPart {
     }
 
     /**
-     * enterPassword
+     * Inserting some text on the 'Password' field.
      * @param password String
      * @return RegisterDropdown
      */
@@ -181,7 +241,7 @@ public class RegisterDropdown extends RegisterPart {
     }
 
     /**
-     * enterPasswordConfirm
+     * Inserting some text on the 'PasswordConfirm' field.
      * @param passwordConfirm String
      * @return RegisterDropdown
      */
@@ -193,24 +253,24 @@ public class RegisterDropdown extends RegisterPart {
         return this;
     }
 
-    // FIXME
     /**
-     * clickSignUpButton
-     * @return RegisterDropdown
+     * Click on the 'SignUp' button.
+     * @return TopPart
      */
-    private TopPart clickSignUpButton() {
-        this.clickRegisterButton();
+    private TopPart clickSignupButton() {
+        clickSignUpButton();
         return new TopPart(driver) {
         };
     }
 
 //  emailError
     /**
-     * getEmailErrorText
+     * Returns a text which displayed on the 'emailValidator' message.
      * @return String
      */
     public String getEmailErrorText() {
         if (sizeEmailValidator() && isDisplayedEmailValidator()) {
+            logger.info("error message below Email field: " + getEmailValidatorText());
             return getEmailValidatorText();
         }
         return "email error text not found";
@@ -218,11 +278,13 @@ public class RegisterDropdown extends RegisterPart {
 
 //  passwordError
     /**
-     * getPasswordErrorText
+     * Returns a text which displayed on the 'PasswordValidator' message.
      * @return String
      */
     public String getPasswordErrorText() {
         if (sizePasswordValidator() && isDisplayedPasswordValidator()) {
+            logger.info("error message below Password field: "
+                    + getPasswordValidatorText());
             return getPasswordValidatorText();
         }
         return "password error text not found";
@@ -230,38 +292,67 @@ public class RegisterDropdown extends RegisterPart {
 
     // passwordConfirmError
     /**
-     * getPasswordConfirmErrorText
+     * Returns a text which displayed on the 'PasswordConfirmValidator' message.
      * @return String
      */
     public String getPasswordConfirmErrorText() {
         if (sizePasswordConfirmValidator()
                 && isDisplayedPasswordConfirmValidator()) {
+            logger.info("error message below PasswordConfirm field: "
+                    + getPasswordConfirmValidatorText());
             return getPasswordConfirmValidatorText();
         }
         return "password confirm error text not found";
     }
 
-    private void setValidatorMessages() {
-//        new ValidatorMessages(getEmailErrorText(), getPasswordErrorText(),
-//                getPasswordConfirmErrorText(), getRegistrationErrorText());
-    }
-
-//    public ValidatorMessages getErrorMessages(){
-//        return ValidatorMessages();
-//    }
-
     // ---!!!! (generic)
     // close register dropdown
     /**
-     * closeRegisterDropdown
+     * Close RegisterDropdown.
      */
-    private TopPart closeRegisterDropdown() {
+    public TopPart closeRegisterDropdown() {
         clickCloseRegisterDropdownButton();
         return new TopPart(driver) {
         };
     }
 
+    /**
+     * Close window with ConfirmRegisteration text.
+     * Working only when the browser starts on the main display.
+     */
+    public void closeConfirmRegisterationText() {
+        logger.info("close Confirm Registeration window using Robot");
+        Point coordinates = driver
+                .findElement(By.cssSelector(SUBMIT_EMAIL_SELECTOR))
+                .getLocation();
+        Robot robot;
+        try {
+            robot = new Robot();
+            robot.mouseMove(coordinates.getX(), coordinates.getY() - 150);
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            logger.info("Robot clicks to coordinates: " + coordinates.getX()
+            + " : " + coordinates.getY());
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 // Business Logic
+
+    /**
+     * Get text which shows after a successful registration.
+     * @return String
+     */
+    public String getConfirmRegisterationText() {
+        logger.debug("start getConfirmRegisterationText()");
+        logger.trace("find WebElement submitEmailText");
+        submitEmailText = driver
+                .findElement(By.cssSelector(SUBMIT_EMAIL_SELECTOR));
+        logger.info("get Confirm Registeration text: " + setSubmitEmailText(submitEmailText).getSubmitEmailText());
+        return setSubmitEmailText(submitEmailText).getSubmitEmailText();
+    }
 
     /**
      * click on SignIn link and go to the login Dropdown
@@ -272,18 +363,43 @@ public class RegisterDropdown extends RegisterPart {
         return gotoLoginDropdown();
     }
 
+    /**
+     * Filling all fields on Register page and click on SingUp button.
+     * @param userData object with user's credentials
+     */
+    public void registrationNewRandomUser(User userData) {
+        userData.setEmail(getTemporaryEmail());
+        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterPassword(userData.getPassword())
+                .enterPasswordConfirm(userData.getConfirmPassword());
+        //
+        clickSignUpButton();
+        verifyTempEmail();
+    }
+
     // completion of user registration
     /**
      * Filling all fields on RegisterDropdown page and click on SingUp button.
      * @param userData object with user's credentials
      * @return TopPart page
      */
-    public TopPart registrationNewUser(UserData userData) {
+    public TopPart registrationNewUser(User userData) {
         enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
                 .enterPassword(userData.getPassword())
-                .enterPasswordConfirm(userData.getPassword());
-        setValidatorMessages();
-        return clickSignUpButton();
+                .enterPasswordConfirm(userData.getConfirmPassword());
+        return clickSignupButton();
+    }
+    
+    /**
+     * Filling all fields on RegisterDropdown page and click on SingUp button.
+     * @param userData object with user's credentials
+     * @return TopPart page
+     */
+    public TopPart registrationNewWrongUser(User userData) {
+        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterPassword(userData.getPassword())
+                .enterPasswordConfirm(userData.getConfirmPassword());
+        return clickSignupButton();
     }
 
     /**
@@ -292,11 +408,11 @@ public class RegisterDropdown extends RegisterPart {
      * @param userData object with user's credentials
      * @return TopPart page
      */
-    public TopPart fillFieldsWithoutRegistration(UserData userData) {
+    public TopPart fillFieldsWithoutRegistration(User userData) {
         enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getPassword());
-        setValidatorMessages();
+        //
         return closeRegisterDropdown();
     }
 
@@ -306,16 +422,19 @@ public class RegisterDropdown extends RegisterPart {
      * @param userData object with user's credentials
      * @return LoginPart page
      */
-    public LoginPart fillFieldsAndGotoLoginPage(UserData userData) {
+    public LoginPart fillFieldsAndGotoLoginPage(User userData) {
         enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getPassword());
-        setValidatorMessages();
         return gotoLoginDropdownUsingLink();
     }
 
-//    public void clickSignUpGoogle() {
-//        clickSignUpGoogleAccountButton();
-//    }
+    /**
+     * Click SignUp with Google Account button and a Google window opens
+     * and switches to it.
+     */
+    public void clickSignUpGoogle() {
+        clickSignUpGoogleAccountButton();
+    }
 
 }

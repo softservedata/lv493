@@ -2,7 +2,7 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import org.openqa.selenium.WebDriver;
 
-import com.softserve.edu.greencity.ui.data.UserData;
+import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
 /**
@@ -32,104 +32,89 @@ public class RegisterPage extends TopPart {
     }
 
     // Functional
-    
+
     /**
-     * getTitleFieldText
+     * Returns a text which displayed on the top of the page.
      * @return String
      */
     public String getTitleFieldText() {
-        return this.getRegisterComponent().getTitleFieldText();
+        return this.getRegisterComponent().getTitlePageText();
     }
-    
+
     /**
-     * enterEmail
+     * Inserting some text on the 'Email' field.
      * @param email String
      * @return RegisterPage
      */
-    public RegisterPage enterEmail(String email) {
-        this.getRegisterComponent()
-            .clickEmail(driver)
-            .clearEmail()
-            .inputEmail(email);
+    private RegisterPage enterEmail(String email) {
+        this.getRegisterComponent().setEmailField(email);
         return this;
     }
 
     /**
-     * enterFirstName
+     * Inserting some text on the 'Email' field.
      * @param firstName String
      * @return RegisterPage
      */
-    public RegisterPage enterFirstName(String firstName) {
-        this.getRegisterComponent()
-            .clickFirstName(driver)
-            .clearFirstName()
-            .inputFirstName(firstName);
+    private RegisterPage enterFirstName(String firstName) {
+        this.getRegisterComponent().setFirstNameField(firstName);
         return this;
     }
 
     /**
-     * enterLastName
+     * Inserting some text on the 'Email' field.
      * @param lastName String
      * @return RegisterPage
      */
-    public RegisterPage enterLastName(String lastName) {
-        this.getRegisterComponent()
-            .clickLastName(driver)
-            .clearLastName()
-            .inputLastName(lastName);
+    private RegisterPage enterLastName(String lastName) {
+        this.getRegisterComponent().setLastNameField(lastName);
         return this;
     }
 
     /**
-     * enterPassword
+     * Inserting some text on the 'Email' field.
      * @param password String
      * @return RegisterPage
      */
-    public RegisterPage enterPassword(String password) {
-        this.getRegisterComponent()
-            .clickPasswordField(driver)
-            .clearPasswordField()
-            .inputPassword(password)
-            .clickShowPasswordButton();
+    private RegisterPage enterPassword(String password) {
+        this.getRegisterComponent().setPasswordField(password);
         return this;
     }
 
     /**
-     * enterPasswordConfirm
+     * Inserting some text on the 'Email' field.
      * @param passwordConfirm String
      * @return RegisterPage
      */
-    public RegisterPage enterPasswordConfirm(String passwordConfirm) {
-        this.getRegisterComponent()
-            .clickPasswordConfirmField(driver)
-            .clearPasswordConfirmField()
-            .inputPasswordConfirm(passwordConfirm)
-            .clickShowPasswordConfirmButton();
+    private RegisterPage enterPasswordConfirm(String passwordConfirm) {
+        this.getRegisterComponent().setPasswordConfirmField(passwordConfirm);
         return this;
     }
 
-    // FIXME
     /**
-     * clickSignUpButton
+     * Inserting some text on the 'Email' field.
      * @return RegisterPage
      */
     public RegisterPage clickSignUpButton() {
-        this.getRegisterComponent()
-            .clickRegisterButton();
+        this.getRegisterComponent().clickSignUpButton();
         return this;
     }
 
     /**
-     * clickSignInLink
+     * Inserting some text on the 'Email' field.
      * @return LoginPart
      */
     public LoginPage clickSignInLink() {
+        logger.debug("start clickSignInLink()");
+        logger.trace("click on Sign-in link");
+        logger.info("click on Sign-in link go to LoginPage");
         this.getRegisterComponent().clickSignInLink();
         return new LoginPage(driver);
     }
 
     /**
-     * clickSignUpGoogle
+     * Click SignUp with Google Account button and a Google window opens and
+     * switches to it.
      */
     public void clickSignUpGoogleButton() {
         this.getRegisterComponent().clickSignUpGoogleAccountButton();
@@ -137,24 +122,24 @@ public class RegisterPage extends TopPart {
 
 //RegistrationError
     /**
-     * getRegistrationErrorText
+     * Returns a text which displayed on the 'RegistrationValidator' field.
      * @return String
      */
     public String getRegistrationErrorText() {
-        if (getRegisterComponent().sizeRegistrationValidator() 
+        if (getRegisterComponent().sizeRegistrationValidator()
                 && getRegisterComponent().isDisplayedRegistrationValidator()) {
             return getRegisterComponent().getRegistrationValidatorText();
         }
         return "Registration error text not found";
     }
-    
+
 //FirstNameError
     /**
-     * getFirstNameErrorText
+     * Returns a text which displayed on the 'RegistrationValidator' field.
      * @return String
      */
     public String getFirstNameErrorText() {
-        if (getRegisterComponent().sizeFirstNameValidator() 
+        if (getRegisterComponent().sizeFirstNameValidator()
                 && getRegisterComponent().isDisplayedFirstNameValidator()) {
             return getRegisterComponent().getFirstNameValidatorText();
         }
@@ -163,12 +148,11 @@ public class RegisterPage extends TopPart {
 
 //emailError
     /**
-     * getEmailErrorText
+     * Returns a text which displayed on the 'emailValidator' message.
      * @return String
      */
     public String getEmailErrorText() {
-        if (getRegisterComponent().sizeEmailValidator() 
-                && getRegisterComponent().isDisplayedEmailValidator()) {
+        if (getRegisterComponent().sizeEmailValidator()) {
             return getRegisterComponent().getEmailValidatorText();
         }
         return "email error text not found";
@@ -176,11 +160,11 @@ public class RegisterPage extends TopPart {
 
 //passwordError
     /**
-     * getPasswordErrorText
+     * Returns a text which displayed on the 'PasswordValidator' message.
      * @return String
      */
     public String getPasswordErrorText() {
-        if (getRegisterComponent().sizePasswordValidator() 
+        if (getRegisterComponent().sizePasswordValidator()
                 && getRegisterComponent().isDisplayedPasswordValidator()) {
             return getRegisterComponent().getPasswordValidatorText();
         }
@@ -189,17 +173,26 @@ public class RegisterPage extends TopPart {
 
 //passwordConfirmError
     /**
-     * getPasswordConfirmErrorText
+     * Returns a text which displayed on the 'PasswordValidator' message.
      * @return String
      */
     public String getPasswordConfirmErrorText() {
         if (getRegisterComponent().sizePasswordConfirmValidator()
-                && getRegisterComponent().isDisplayedPasswordConfirmValidator()) {
+                && getRegisterComponent()
+                        .isDisplayedPasswordConfirmValidator()) {
             return getRegisterComponent().getPasswordConfirmValidatorText();
         }
         return "password confirm error text not found";
     }
-    
+
+    /**
+     * Returns a text which shows after a successful registration.
+     * @return String
+     */
+    public String getConfirmRegistrationText() {
+        return getRegisterComponent().getConfirmRegisterationText();
+    }
+
     // Business Logic
 
     // completion of user registration
@@ -208,35 +201,66 @@ public class RegisterPage extends TopPart {
      * @param userData object with user's credentials
      * @return RegisterPage page
      */
-    public RegisterPage registrationNewUser(UserData userData) {
+    public void registrationNewRandomUser(User userData) {
+        userData.setEmail(getRegisterComponent().getTemporaryEmail());
         enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterLastName(userData.getLastName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getPassword());
-        return clickSignUpButton();
+        //
+        clickSignUpButton();
+        getRegisterComponent().verifyTempEmail();
+        getRegisterComponent();
     }
 
     /**
-     * Filling all fields on Register page without registration (without
-     * click on SingUp button).
+     * Test registration user with existing credentials already.
+     * @param userData User
+     */
+    public void registrationUser(User userData) {
+        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterLastName(userData.getLastName())
+                .enterPassword(userData.getPassword())
+                .enterPasswordConfirm(userData.getPassword())
+                .clickSignUpButton();
+    }
+
+    /**
+     * Test registration user with already wrong credentials.
+     * @param userData
+     */
+    public void registrationWrongUser(User userData) {
+        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterLastName(userData.getLastName())
+                .enterPassword(userData.getPassword())
+                .enterPasswordConfirm(userData.getConfirmPassword())
+                .clickSignUpButton();
+    }
+
+    /**
+     * Filling all fields on Register page without registration (without click
+     * on SingUp button).
      * @param userData object with user's credentials
      * @return RegisterPage page
      */
-    public void fillFieldsWithoutRegistration(UserData userData) {
+    public void fillFieldsWithoutRegistration(User userData) {
         enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterLastName(userData.getLastName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getPassword());
     }
 
     /**
-     * Filling all fields on Register page without registration, click
-     * on SingIn link and go to Login page.
+     * Filling all fields on Register page without registration, click on SingIn
+     * link and go to Login page.
      * @param userData object with user's credentials
      * @return LoginPart page
      */
-    public LoginPage fillFieldsAndGotoLoginPage(UserData userData) {
+    public LoginPage fillFieldsAndGotoLoginPage(User userData) {
         enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+                .enterLastName(userData.getLastName())
                 .enterPassword(userData.getPassword())
-                .enterPasswordConfirm(userData.getPassword());
+                .enterPasswordConfirm(userData.getConfirmPassword());
         return clickSignInLink();
     }
 }

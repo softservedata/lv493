@@ -1,14 +1,32 @@
 package com.softserve.edu.greencity.ui.data;
 
-/**
- * User Repository class.
- * @author Serg
- */
+import com.softserve.edu.greencity.ui.tools.Randomizer;
+
 public final class UserRepository {
+    private static volatile UserRepository instance = null;
 
     private UserRepository() {
     }
 
+    public static UserRepository get() {
+        if (instance == null) {
+            synchronized (UserRepository.class) {
+                if (instance == null) {
+                    instance = new UserRepository();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public User getDefault() {
+        return temporary();
+    }
+
+    public User temporary() {
+        return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
+    }
+    
     /**
      * Default user credentials:
      * firstName "John";
@@ -17,8 +35,8 @@ public final class UserRepository {
      * password "A475asd123*".
      * @return UserData
      */
-    public static UserData getDefaultUserCredentials() {
-        return new UserData("John", "Wilson", "rjjztqsiayuieydfuy@awdrt.org", "A475asd123*");
+    public User defaultUserCredentials() {
+        return new User("John", "Wilson", "rjjztqsiayuieydfuy@awdrt.org", "A475asd123*");
     }
     
     /**
@@ -27,8 +45,8 @@ public final class UserRepository {
      * password "123456".
      * @return UserData
      */
-    public static UserData getGoogleUserCredentials() {
-        return new UserData("sergtaqc@gmail.com", "123456");
+    public User googleUserCredentials() {
+        return new User("sergii.taqc@gmail.com", "A475asd123*");
     }
     
     /**
@@ -39,8 +57,8 @@ public final class UserRepository {
      * password "123Adff890*".
      * @return UserData
      */
-    public static UserData getWrongUserCredentials1() {
-        return new UserData("Asdfqwe", "Qwerzxc", "123asd@zxc", "123Adff890");
+    public User wrongUserCredentials1() {
+        return new User(" ", " ", "23423sdf", " ", "  ");
     }
     
     /**
@@ -51,7 +69,19 @@ public final class UserRepository {
      * password "".
      * @return UserData
      */
-    public static UserData getWrongUserCredentials2() {
-        return new UserData("A.", "22222222222222", "asdsd.1312", "");
+    public User wrongUserCredentials2() {
+        return new User("Wrong User", "22222222222222", "123asdasd#zxcz.asd", "!A*zxc-", "!A*zxC-");
     }
+    
+    /**
+     * Gives random credentials:
+     * first name - random 20 letters;
+     * last name - random 20 letters;
+     * 
+     * @return
+     */
+    public User temporaryUserCredentialsForRegistration() {
+        return new User(Randomizer.getRamdomString20Letters(), Randomizer.getRamdomString20Letters(), "", "A475asd123*", "A475asd123*");
+    }
+
 }
