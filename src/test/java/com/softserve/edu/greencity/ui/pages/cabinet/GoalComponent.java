@@ -4,14 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class GoalComponent {
+    //TODO
+    //Divide custom and defined goals
+
+    private final String CHECKBOX_STATUS_SELECTOR = "input";
 
     private WebElement goalLayout;
 
     private WebElement checkMarkCheckbox;
     private String goalTitle;
-
-    private WebElement editNewGoalButton;
-    private WebElement deleteNewGoalButton;
 
     public GoalComponent(WebElement goalLayout) {
         this.goalLayout = goalLayout;
@@ -19,8 +20,8 @@ public class GoalComponent {
     }
 
     private void initElements() {
-        //checkMarkCheckbox = goalLayout.findElement(By.cssSelector(".check-mark"));
-       //goalTitle = goalLayout.findElement(By.cssSelector(".goal-text")).getText();
+        checkMarkCheckbox = goalLayout.findElement(By.cssSelector(".check-mark"));
+        goalTitle = goalLayout.findElement(By.cssSelector(".goal-text")).getText();
     }
 
     // Page Object
@@ -38,8 +39,8 @@ public class GoalComponent {
     // checkMarkCheckbox
 
     public WebElement getCheckMarkCheckbox() {
-       // return checkMarkCheckbox;
-        return goalLayout.findElement(By.cssSelector(".check-mark"));
+        return checkMarkCheckbox;
+        //return goalLayout.findElement(By.cssSelector(".check-mark"));
     }
 
     public void clickCheckMarkCheckbox() {
@@ -53,8 +54,8 @@ public class GoalComponent {
     // goalName
 
     public String getGoalTitle() {
-        //return goalTitle;
-        return goalLayout.findElement(By.cssSelector(".goal-text")).getText();
+        return goalTitle;
+        //return goalLayout.findElement(By.cssSelector(".goal-text")).getText();
     }
 
     // editNewGoalButton
@@ -114,10 +115,9 @@ public class GoalComponent {
 
     // Functional
 
-    public boolean isSelectedCheckMarkCheckbox() {
-        return goalLayout.findElement(By.cssSelector("input")).isSelected();
+    public boolean isSelected() {
+        return goalLayout.findElement(By.cssSelector(CHECKBOX_STATUS_SELECTOR)).isSelected();
     }
-
 
     // Business Logic
 
@@ -132,7 +132,7 @@ public class GoalComponent {
         clearGoalNameField();
         setGoalNameField(title);
         clickEditNewGoalButton();
-        return this;
+        return new GoalComponent(getGoalLayout());
     }
 
     /**
@@ -140,10 +140,10 @@ public class GoalComponent {
      * @return GoalComponent
      */
     public GoalComponent select() {
-        if (!isSelectedCheckMarkCheckbox()) {
+        if (!isSelected()) {
            clickCheckMarkCheckbox();
         }
-        return this;
+        return new GoalComponent(getGoalLayout());
     }
 
     /**
@@ -151,9 +151,9 @@ public class GoalComponent {
      * @return GoalComponent
      */
     public GoalComponent deselect() {
-        if (isSelectedCheckMarkCheckbox()) {
+        if (isSelected()) {
             clickCheckMarkCheckbox();
         }
-        return this;
+        return new GoalComponent(getGoalLayout());
     }
 }

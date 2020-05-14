@@ -21,25 +21,21 @@ public class MyCabinetPage extends TopPart {
 
     private MyGoalsContainer goalsContainer;
 
-    private ManageGoalsDropdown manageGoalsDropdown;
-    private CreateHabitDropdown createHabitDropdown;
-
     public MyCabinetPage(WebDriver driver) {
         super(driver);
         initElements();
     }
 
     private void initElements() {
-       // packagesCount = driver.findElement(By.cssSelector("img[src*='package'] + h4 span")).getText();
-       // glassesCount = driver.findElement(By.cssSelector("img[src*='coffe'] + h4 span")).getText();
+        packagesCount = driver.findElement(By.cssSelector("img[src*='package'] + h4 span")).getText();
+        glassesCount = driver.findElement(By.cssSelector("img[src*='coffe'] + h4 span")).getText();
 
         manageGoalsButton = driver.findElement(By.cssSelector("div.add-goal-button-container button.add-goal-button"));
         addNewHabitButton = driver.findElement(By.cssSelector("button.btn.btn-success"));
 
-        habitsContainer = new HabitsContainer(driver);
+        //habitsContainer = new HabitsContainer(driver);
         goalsContainer = new MyGoalsContainer(driver);
     }
-
 
     // Page Object
 
@@ -68,14 +64,13 @@ public class MyCabinetPage extends TopPart {
     // habitsContainer
 
     public HabitsContainer getHabitsContainer() {
-       // return new HabitsContainer(driver);
-        return habitsContainer;
+        //return habitsContainer;
+        return new HabitsContainer(driver);
     }
 
     // goalsContainer
 
     public MyGoalsContainer getGoalsContainer() {
-        //return new MyGoalsContainer(driver);
         return goalsContainer;
     }
 
@@ -100,6 +95,18 @@ public class MyCabinetPage extends TopPart {
         return getHabitsContainer().findHabitComponent(habit);
     }
 
+    public boolean isAvailableGoal(Goal goal) {
+        return getGoalsContainer().findGoal(goal) != null ? true : false;
+    }
+
+    public GoalComponent getGoalComponent(Goal goal) {
+        return getGoalsContainer().findGoal(goal);
+    }
+
+    public MyCabinetPage refresh() {
+        driver.navigate().refresh();
+        return new MyCabinetPage(driver);
+    }
 
     // Business Logic
 
@@ -117,7 +124,6 @@ public class MyCabinetPage extends TopPart {
      * @return NewHabitDropdown
      */
     public CreateHabitDropdown gotoCreateHabitDropdown() {
-       // System.out.println("dfvvdf");
         clickAddNewHabitButton();
         return new CreateHabitDropdown(driver);
     }
@@ -168,8 +174,9 @@ public class MyCabinetPage extends TopPart {
     public MyCabinetPage addTodaysHabitInfo(HabitItem habit) {
         getHabitsContainer().addHabitInfo(habit);
         return new MyCabinetPage(driver);
-
     }
+
+
 
 
 }

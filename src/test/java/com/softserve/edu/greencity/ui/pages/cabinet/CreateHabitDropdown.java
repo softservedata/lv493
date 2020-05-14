@@ -7,9 +7,10 @@ import org.openqa.selenium.WebElement;
 import com.softserve.edu.greencity.ui.data.HabitCard;
 
 public class CreateHabitDropdown {
+
     private WebDriver driver;
 
-    HabitCardsContainer   habitsContainer;
+    private HabitCardsContainer habitsContainer;
 
     private WebElement saveButton;
     private WebElement  cancelButton;
@@ -21,7 +22,7 @@ public class CreateHabitDropdown {
     }
 
     private void initElements() {
-        habitsContainer = new HabitCardsContainer(driver);
+        //habitsContainer = new HabitCardsContainer(driver);
 
         saveButton = driver.findElement(By.cssSelector("div.splitter + div .button-save"));
         cancelButton = driver.findElement(By.cssSelector("div.splitter + div .button-cancel"));
@@ -33,7 +34,8 @@ public class CreateHabitDropdown {
     //chosenHabitsContainer
 
     public HabitCardsContainer getHabitsContainer() {
-        return habitsContainer;
+       // return habitsContainer;
+        return new HabitCardsContainer(driver);
     }
 
     // saveButton
@@ -75,19 +77,20 @@ public class CreateHabitDropdown {
     }
 
     public boolean isDisplayedCloseButton() {
-        return getCancelButton().isDisplayed();
+        return getCloseButton().isDisplayed();
     }
 
 
     // Functional
 
     public boolean isChosenHabitCard(HabitCard card) {
-        return getHabitsContainer().findChosenHabitCard(card.getHabit()) != null ? true : false;
+        return getHabitsContainer().findChosenHabitCard(card) != null ? true : false;
     }
 
     public boolean isVisibleWarning() {
         return getHabitsContainer().isVisibleDeleteMessageWarning();
     }
+
 
     // Business Logic
 
@@ -107,11 +110,12 @@ public class CreateHabitDropdown {
      * @return MyCabinetPage
      */
     public MyCabinetPage saveCreateHabitDropdown() {
-        //do not close
         if(isDisplayedSaveButton()) {
             clickSaveButton();
         }
-        // !!!! Temporary
+
+        // TODO
+        // do not close dropdown when click save button
         clickCloseButton();
         return new MyCabinetPage(driver);
     }
@@ -121,6 +125,7 @@ public class CreateHabitDropdown {
      * @return MyCabinetPage
      */
     public MyCabinetPage closeCreateHabitDropdown() {
+        // do not work
         if(isDisplayedCloseButton()) {
             clickCloseButton();
         }
@@ -148,22 +153,22 @@ public class CreateHabitDropdown {
     }
 
     /**
+     * Delete alone habit card from chosen cards.
+     * @param habit
+     * @return CreateHabitDropdown
+     */
+    public CreateHabitDropdown deleteAloneHabitCard() {
+        getHabitsContainer().getAloneHabitCard().delete();
+        return new CreateHabitDropdown(driver);
+    }
+
+    /**
      * Add habit card to chosen cards.
      * @param habit
      * @return CreateHabitDropdown
      */
     public CreateHabitDropdown addHabitCard(HabitCard card) {
         getHabitsContainer().addHabitCard(card);
-        return new CreateHabitDropdown(driver);
-    }
-
-    /**
-     * Add habit card to available cards.
-     * @param habit
-     * @return CreateHabitDropdown
-     */
-    public CreateHabitDropdown cancelAddinngHabitCard(HabitCard card) {
-        getHabitsContainer().cancelAddHabitCard(card);
         return new CreateHabitDropdown(driver);
     }
 

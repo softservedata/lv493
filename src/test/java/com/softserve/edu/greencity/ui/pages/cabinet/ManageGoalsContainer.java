@@ -38,7 +38,7 @@ public class ManageGoalsContainer extends GoalsContainerPart {
      * @return ManageGoalsContainer
      */
     public ManageGoalsContainer deleteGoalComponent(Goal goal) {
-        GoalComponent currentGoal = findGoalByTitle(goal.getTitle());
+        GoalComponent currentGoal = findGoal(goal);
         if (currentGoal != null && currentGoal.isDisplayedDeleteNewGoalButton()) {
             currentGoal.clickDeleteNewGoalButton();
         }
@@ -70,8 +70,9 @@ public class ManageGoalsContainer extends GoalsContainerPart {
      * @return ManageGoalsContainer
      */
     public ManageGoalsContainer selectGoal(Goal goal) {
-        if (findGoalByTitle(goal.getTitle()) != null) {
-            findGoalByTitle(goal.getTitle()).select();
+        GoalComponent goalComponent = findGoal(goal);
+        if (goalComponent != null) {
+            goalComponent.select();
         }
         return new ManageGoalsContainer(driver);
     }
@@ -82,8 +83,9 @@ public class ManageGoalsContainer extends GoalsContainerPart {
      * @return ManageGoalsContainer
      */
     public ManageGoalsContainer deselectGoal(Goal goal) {
-        if (findGoalByTitle(goal.getTitle()) != null) {
-            findGoalByTitle(goal.getTitle()).deselect();
+        GoalComponent goalComponent = findGoal(goal);
+        if (goalComponent != null) {
+            goalComponent.deselect();
         }
         return new ManageGoalsContainer(driver);
     }

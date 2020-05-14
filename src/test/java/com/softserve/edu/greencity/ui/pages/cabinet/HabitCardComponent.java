@@ -17,8 +17,8 @@ public class HabitCardComponent {
     }
 
     private void initElements() {
-        //habitCardTitle = habitCardLayout.findElement(By.cssSelector(".habit-card-caption")).getText();
-       // habitCardDescription = habitCardLayout.findElement(By.cssSelector(".habit-card-text")).getText();
+        habitCardTitle = habitCardLayout.findElement(By.cssSelector(".habit-card-caption")).getText();
+        habitCardDescription = habitCardLayout.findElement(By.cssSelector(".habit-card-text")).getText();
     }
 
     // Page Object
@@ -32,15 +32,15 @@ public class HabitCardComponent {
     // habitCardTitle
 
     public String getHabitCardTitle() {
-        return habitCardLayout.findElement(By.cssSelector(".habit-card-caption")).getText();
-        //return habitCardTitle;
+        //return habitCardLayout.findElement(By.cssSelector(".habit-card-caption")).getText();
+        return habitCardTitle;
     }
 
     // habitCardText
 
     public String getHabitCardDescription() {
-        return habitCardLayout.findElement(By.cssSelector(".habit-card-text")).getText();
-        //return habitCardDescription;
+        //return habitCardLayout.findElement(By.cssSelector(".habit-card-text")).getText();
+        return habitCardDescription;
     }
 
     // deleteButton
@@ -61,17 +61,15 @@ public class HabitCardComponent {
     // Functional
 
     public DeleteCard delete() {
-        clickDeleteButton();
+       clickDeleteButton();
        return new DeleteCard();
     }
 
 
-    // Business Logic
-
-
-    // Inner class
+    // Inner class for Confirmation Deleting
 
     class DeleteCard {
+
         private WebElement cancelButton;
         private WebElement confirmButton;
 
@@ -80,8 +78,8 @@ public class HabitCardComponent {
         }
 
         private void initElements() {
-            cancelButton = habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-cancel"));;
-            confirmButton =  habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-save")); ;
+            cancelButton = habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-cancel"));
+            confirmButton =  habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-save"));
         }
 
         // Page Object
@@ -90,7 +88,6 @@ public class HabitCardComponent {
 
         public WebElement getCancelButton() {
             return cancelButton;
-            //return habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-cancel"));
         }
 
         public void clickCancelButton() {
@@ -105,7 +102,6 @@ public class HabitCardComponent {
 
         public WebElement getConfirmButton() {
             return confirmButton;
-            //return habitCardLayout.findElement(By.cssSelector("app-confirmation-modal .button-save"));
         }
 
         public void clickConfirmButton() {
@@ -132,4 +128,6 @@ public class HabitCardComponent {
         }
 
     }
+
+    // Business Logic
 }

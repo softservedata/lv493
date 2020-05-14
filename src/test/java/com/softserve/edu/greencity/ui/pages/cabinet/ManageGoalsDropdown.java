@@ -1,8 +1,12 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.softserve.edu.greencity.ui.data.Goal;
 
@@ -18,8 +22,15 @@ public class ManageGoalsDropdown {
 
     public ManageGoalsDropdown(WebDriver driver) {
         this.driver = driver;
+        waitForLoadingElements();
         initElements();
 
+    }
+
+    private void waitForLoadingElements() {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("mdb-icon.plus.far")));
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     private void initElements() {
@@ -95,10 +106,16 @@ public class ManageGoalsDropdown {
 
     // Functional
 
-    private ManageGoalsDropdown createNewGoal() {
+    private ManageGoalsDropdown addNewGoal() {
         clickAddNewGoalButton();
         return new ManageGoalsDropdown(driver);
     }
+
+    public boolean isSelectedGoal(Goal goal) {
+        GoalComponent goalComponent = getGoalsContainer().findGoal(goal);
+        return goalComponent != null ? goalComponent.isSelected() : null;
+    }
+
 
     // Business Logic
 
@@ -171,8 +188,8 @@ public class ManageGoalsDropdown {
      * @param goal
      * @return ManageGoalsDropdown
      */
-    public ManageGoalsDropdown addNewGoal(Goal goal) {
-        createNewGoal().getGoalsContainer().setNewGoalComponentTitle(goal);
+    public ManageGoalsDropdown createNewGoal(Goal goal) {
+        addNewGoal().getGoalsContainer().setNewGoalComponentTitle(goal);
         return new ManageGoalsDropdown(driver);
     }
 
