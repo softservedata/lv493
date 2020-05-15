@@ -87,6 +87,7 @@ public class SmokeTest extends GreencityTestRunner {
 
 	@Test(dataProvider = "users")
 	public void checkCabinet(User user) {
+		logger.info("start checkCabinet() with user = " + user.toString());
 		MyCabinetPage myCabinetPage = loadApplication()
 				.navigateMenuMyCabinet(user);
 		presentationSleep();
@@ -107,6 +108,7 @@ public class SmokeTest extends GreencityTestRunner {
 		LoginPage loginPage = tipstrickspage
 				.navigateMenuMyCabinetGuest();
 		presentationSleep(4);
+		//throw new RuntimeException("Ha-Ha-Ha");
 	}
 		
 }
