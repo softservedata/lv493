@@ -31,7 +31,7 @@ public abstract class GreencityTestRunner {
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
 		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		//driver.manage().window().setSize(new Dimension(640, 480));
 		//driver.manage().window().setSize(new Dimension(480, 640));

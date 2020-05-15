@@ -8,17 +8,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
+import com.softserve.edu.greencity.ui.pages.tipstricks.CardComponent;
 
 public class TipsCardsContainer {
 
-    
-
     private WebDriver driver;
 
-    private List<ItemComponent> itemComponents;
+    private List<CardComponent> cardComponents;
 
     // button pagination
+
     private WebElement leftPagination;
     private WebElement rightPagination;
 
@@ -29,39 +28,36 @@ public class TipsCardsContainer {
     }
 
     private void initElements() {
+
         // init elements
 
-        itemComponents = new ArrayList<>();
+        cardComponents = new ArrayList<>();
         for (WebElement current : driver.findElements(By.xpath("//app-tips-card"))) {
-            itemComponents.add(new ItemComponent(driver, current));
+            cardComponents.add(new CardComponent(driver, current));
         }
-       
+
         leftPagination = driver.findElement(By.xpath("//i[@class='arrow fas fa-chevron-left']/.."));
         rightPagination = driver.findElement(By.xpath("//i[@class='arrow fas fa-chevron-right']/.."));
 
-        // rightPagination.getLocation().getX();
     }
-
 
     // Page Object
-    public List<ItemComponent> getItemComponents() {
-        return itemComponents;
-    }
 
     // leftPagination
 
     public WebElement getleftPagination() {
-        
+        scrollTo(leftPagination);
         return leftPagination;
     }
 
     public void clickleftPagination() {
-       getleftPagination().click();
+        getleftPagination().click();
     }
 
     // rightPagination
 
     public WebElement getRightPagination() {
+        scrollTo(rightPagination);
         return rightPagination;
     }
 
@@ -69,44 +65,37 @@ public class TipsCardsContainer {
         getRightPagination().click();
     }
 
-    //
+    // cardComponents
 
-    private void scrollTo(WebElement element){
+    public List<CardComponent> getCardComponents() {
+        return cardComponents;
+    }
+
+    // Functional
+
+    /**
+     * @param scroll
+     *            to WebElement element
+     */
+    private void scrollTo(WebElement element) {
         Actions actions = new Actions(driver);
         actions.moveToElement(element);
         actions.perform();
     }
-    // Functional
+
     /**
-     * @return number ItemComponents is displayed
+     * @return number CardComponents is displayed
      */
-    public int getItemComponentsCount() {
-        return getItemComponents().size();
+    public int getCardComponentsCount() {
+        return getCardComponents().size();
     }
 
-    public List<String> getItemComponentsParagra() {  
-        List<String> itemComponentsParagra = new ArrayList<>();
-        for(ItemComponent cur : getItemComponents()) {
-            itemComponentsParagra.add(cur.getParagraphCardText());
+    public List<WebElement> checkActiveCards() {
+        List<WebElement> activeCards = new ArrayList<>();
+        for (CardComponent curr : getCardComponents()) {
+            curr.getCardItem().getAttribute("class").contains("slide-duplicate-active");
         }
-        return itemComponentsParagra;
+        return activeCards;
     }
-    // private String getTipsCards() {
-    //
-    // for (WebElement objShowLink : tipsCard) {
-    // String strObjShowLink = objShowLink.getText();
-    // //System.out.println("Check 'Show': " + strObjShowLink);
-    // }
-    //
-    // }
-    // public List<WebElement> checkActiveFilters() {
-    // List<WebElement> activeFilters = new ArrayList<>();
-    // for(WebElement curr : ) {
-    // if(curr.getAttribute("class").contains("clicked-filter-button")) {
-    // activeFilters.add(curr);
-    // }
-    // }
-    // return activeFilters;
-    // }
     // Business Logic
 }

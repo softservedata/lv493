@@ -7,21 +7,21 @@ import org.openqa.selenium.WebDriver;
 public class ItemsContainer {
 	//
 	private WebDriver driver;
-	//
-	private List<ItemComponent> itemComponents;
-
+//	//
+//	private List<ItemComponent> itemComponents;
+//
 	public ItemsContainer(WebDriver driver) {
 		this.driver = driver;
 		initElements();
 	}
-
+//
 	private void initElements() {
 		// init elements
 	}
-
-	// Page Object
-
-	// Functional
-
-	// Business Logic
+//
+//	// Page Object
+//
+//	// Functional
+//
+//	// Business Logic
 }

@@ -1,15 +1,16 @@
 package com.softserve.edu.greencity.ui.pages.tipstricks;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.data.Languages;
+
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
+import com.softserve.edu.greencity.ui.tools.NumberItems;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 
 public class TipsTricksPage extends TopPart {
@@ -41,6 +42,10 @@ public class TipsTricksPage extends TopPart {
     private WebElement other1EcoNewsLink;
     private WebElement other2EcoNewsLink;
     private WebElement allNewsLink;
+    
+    //Error message
+    private WebElement validationError;
+    private WebElement subscriptionError;
 
     // logo GreenCity
     private WebElement logoCreenCity;
@@ -76,6 +81,9 @@ public class TipsTricksPage extends TopPart {
         other1EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(1) > a"));
         other2EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(3) > a"));
         allNewsLink = driver.findElement(By.cssSelector("div#eco-events > a"));
+        
+        validationError = driver.findElement(By.id("validation-error"));
+        subscriptionError =driver.findElement(By.id("subscription-error"));
 
         // logo GreenCity
         logoCreenCity = driver.findElement(By.cssSelector("div.logo > a[href='#/welcome']"));
@@ -86,8 +94,8 @@ public class TipsTricksPage extends TopPart {
     // Button 'Start forming a habit'
 
     public WebElement getStartHabitTop() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", startHabitTop);
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//        js.executeScript("arguments[0].scrollIntoView();", startHabitTop);
         return startHabitTop;
     }
 
@@ -160,6 +168,7 @@ public class TipsTricksPage extends TopPart {
         getEmailTipsTricks().sendKeys(email);
     }
 
+
     public void clearEmailTipsTricks() {
         getEmailTipsTricks().clear();
     }
@@ -227,7 +236,10 @@ public class TipsTricksPage extends TopPart {
     public void clickMainEcoNewsLink() {
         getMainEcoNewsLink().click();
     }
-
+    
+    public boolean isDesplayedMainEcoNewsLink() {
+        return getMainEcoNewsLink().isDisplayed();
+    }
     // link other1EcoNewsLink
 
     public WebElement getOther1EcoNewsLink() {
@@ -236,6 +248,9 @@ public class TipsTricksPage extends TopPart {
 
     public void clickOther1EcoNewsLink() {
         getOther1EcoNewsLink().click();
+    }
+    public boolean isDesplayedOther1EcoNewsLink() {
+        return getOther1EcoNewsLink().isDisplayed();
     }
 
     // link other2EcoNewsLink
@@ -247,6 +262,9 @@ public class TipsTricksPage extends TopPart {
     public void clickOther2EcoNewsLink() {
         getOther2EcoNewsLink().click();
     }
+    public boolean isDesplayedOther2EcoNewsLink() {
+        return getOther2EcoNewsLink().isDisplayed();
+    }
 
     // link to allNewsLink
 
@@ -256,6 +274,9 @@ public class TipsTricksPage extends TopPart {
 
     public void clickAllNewsLink() {
         getAllNewsLink().click();
+    }
+    public boolean isDesplayedgetAllNewsLink() {
+        return getAllNewsLink().isDisplayed();
     }
 
     // logoGreenCity
@@ -268,10 +289,6 @@ public class TipsTricksPage extends TopPart {
         getLogoCreenCity().click();
     }
 
-    // public String getlogoGreenCityText() {
-    // return getLogoCreenCity().getText();
-    // }
-
     public boolean isDisplayedLogoGreenCity() {
         return logoCreenCity.isDisplayed();
     }
@@ -280,7 +297,24 @@ public class TipsTricksPage extends TopPart {
     public TipsCardsContainer getTipsCardsContainer() {
         return tipsCardsContainer;
     }
-
+    
+    //validationError
+    
+    public WebElement getValidationError() {
+        return validationError;
+    }
+    public String getValidationErrorText() {
+     return getValidationError().getText();
+    }
+    
+    //subscriptionError
+    
+    public WebElement getSubscriptionError() {
+        return subscriptionError;
+    }
+    public String getSubscriptionErrorText() {
+     return getSubscriptionError().getText();
+    }
     // Functional
 
     /**
@@ -292,6 +326,10 @@ public class TipsTricksPage extends TopPart {
     public int quantityPeople() {
         return new QuantityItems().quantityItems(getAmountPeopleText());
     }
+    
+    public int numberPeople() {
+        return new NumberItems().numberItems(getAmountPeopleText());
+    }
 
     /**
      * @return quantity Bags, which we used
@@ -299,7 +337,9 @@ public class TipsTricksPage extends TopPart {
     public int quantityBags() {
         return new QuantityItems().quantityItems(getAmountBagsText());
     }
-
+    public int numberBags() {
+        return new NumberItems().numberItems(getAmountBagsText());
+    }
     /**
      * @return quantity Cups, which we used
      */
@@ -307,8 +347,18 @@ public class TipsTricksPage extends TopPart {
     public int quantityCups() {
         return new QuantityItems().quantityItems(getAmountCupsText());
     }
-
+    
+    public int numberCups() {
+        return new NumberItems().numberItems(getAmountCupsText());
+    }
     // Business Logic
+    
+    public TipsTricksPage subscrintion(String email) {
+       clickEmailTipsTricks();
+       setEmailTipsTricks(email);
+       clickSubscribeOnTipsTricks();
+       return new TipsTricksPage(driver);
+    }
 
     public TipsTricksPage switchLanguage(Languages language) {
         chooseLanguage(language);
@@ -383,5 +433,9 @@ public class TipsTricksPage extends TopPart {
         return new TipsTricksPage(driver);
 
     }
+
+  
+    
+    
 
 }
