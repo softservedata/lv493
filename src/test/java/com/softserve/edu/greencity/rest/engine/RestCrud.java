@@ -1,0 +1,307 @@
+package com.softserve.edu.greencity.rest.engine;
+
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.softserve.edu.greencity.rest.dto.ContentTypes;
+import com.softserve.edu.greencity.rest.dto.KeyParameters;
+import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
+import com.softserve.edu.greencity.rest.dto.RestParameters;
+import com.softserve.edu.greencity.rest.dto.RestUrl;
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+public abstract class RestCrud {
+	protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	private final String NOT_SUPPORT_MESSAGE = "Method %s not Support";
+	private final String FOR_RESOURCE = " for %s Resource";
+	private final String EMPTY_PARAMETER = "Empty Parameter %s";
+	private final String EXECUTE_REQUEST_ERROR = "Execute Request Error %s";
+	//
+	private final String URL_PARAMETERS_SEPARATOR = "?";
+	private final String NEXT_PARAMETERS_SEPARATOR = "&";
+	private final String KEY_VALUE_SEPARATOR = "=";
+	//
+	private RestUrl restUrl;
+	private OkHttpClient client;
+
+	public RestCrud(RestUrl restUrl) {
+		this.restUrl = restUrl;
+		client = new OkHttpClient();
+	}
+
+	protected RestUrl getRestUrl() {
+		return restUrl;
+	}
+
+	// protected - - - - - - - - - - - - - - - - - - - -
+
+	protected void throwException(String prefix, String message) {
+		String resourceName = this.getClass().getName();
+		resourceName = resourceName.substring(resourceName.lastIndexOf(".") + 1);
+		String resourceMessage = String.format(FOR_RESOURCE, resourceName);
+		String exceptionMessage =  String.format(prefix, message) + resourceMessage;
+		LOGGER.error(exceptionMessage);
+		// TODO Develop Custom Exception
+		throw new RuntimeException(exceptionMessage);
+	}
+	
+	protected void throwException(String message) {
+		throwException(NOT_SUPPORT_MESSAGE, message);
+	}
+
+	protected void checkImplementation(RestHttpMethods restUrlKeys) {
+		// if (restUrl.GetUrl(restUrlKeys).Length == 0)
+		// TODO check List size
+		String methodUri = getRestUrl().getUrl(restUrlKeys);
+		if ((methodUri == null) || (methodUri.isEmpty())) {
+			throwException(restUrlKeys.name());
+		}
+	}
+
+	// Parameters - - - - - - - - - - - - - - - - - - - -
+
+	// TODO Use class HttpUrl
+	private String prepareUrlParameters(String urlTemplate, RestParameters urlParameters) {
+		if (urlParameters != null) {
+			boolean isFirstParameter = true;
+			for (KeyParameters currentKey : urlParameters.getAllParameters().keySet()) {
+				if (isFirstParameter) {
+					urlTemplate = urlTemplate + URL_PARAMETERS_SEPARATOR;
+					isFirstParameter = false;
+				} else {
+					urlTemplate = urlTemplate + NEXT_PARAMETERS_SEPARATOR;
+				}
+				urlTemplate = urlTemplate + currentKey + KEY_VALUE_SEPARATOR + urlParameters.getParameter(currentKey);
+			}
+		}
+		return urlTemplate;
+	}
+
+	private String preparePathVariables(String urlTemplate, RestParameters pathVariables) {
+		String url = urlTemplate;
+		if (pathVariables != null) {
+			String searchVariable;
+			for (KeyParameters currentKey : pathVariables.getAllParameters().keySet()) {
+				// TODO Create Const "{", "}"
+				searchVariable = "{" + currentKey.toString() + "}";
+				if (url.contains(searchVariable)) {
+					// TODO Move to RegexUtils
+					//url = url.replaceFirst(Pattern.quote(searchVariable), pathVariables.getParameter(currentKey));
+					url = url.replace(searchVariable, pathVariables.getParameter(currentKey));
+				}
+			}
+		}
+		return url;
+	}
+
+	private RequestBody prepareRequestBody(RestParameters bodyParameters) {
+		FormBody.Builder formBodyBuilder = new FormBody.Builder();
+		if (bodyParameters != null) {
+			for (KeyParameters currentKey : bodyParameters.getAllParameters().keySet()) {
+				formBodyBuilder.add(String.valueOf(currentKey), bodyParameters.getParameter(currentKey));
+			}
+		}
+		return formBodyBuilder.build();
+	}
+
+	private RequestBody prepareRequestBodyMediaType(ContentTypes contentType, RestParameters mediaTypeParameters) {
+		// TODO Use Serialization
+		String json = "{";
+		if (mediaTypeParameters != null) {
+			for (KeyParameters currentKey : mediaTypeParameters.getAllParameters().keySet()) {
+				json = json + "\"" + String.valueOf(currentKey) + "\":\"" 
+						+ mediaTypeParameters.getParameter(currentKey) + "\",";
+			}
+			json = json.substring(0, json.length() -1) + "}";
+			if (json.length() < 2) {
+				throwException("prepareRequestBodyMediaType()");
+			}
+		}
+		return RequestBody.create(MediaType.parse(contentType.toString()),json);
+	}
+
+	private Request.Builder prepareHeader(Request.Builder builder, RestParameters headerParameters) {
+		if (headerParameters != null) {
+			for (KeyParameters currentKey : headerParameters.getAllParameters().keySet()) {
+				builder.header(String.valueOf(currentKey), headerParameters.getParameter(currentKey));
+			}
+		}
+		return builder;
+	}
+	
+	// Request - - - - - - - - - - - - - - - - - - - -
+
+	private Request.Builder prepareRequestBuilder(String requestUrl, RestParameters pathVariables,
+			RestParameters urlParameters) {
+		if ((requestUrl == null) || (requestUrl.isEmpty())) {
+			throwException(EMPTY_PARAMETER, "requestUrl of method prepareRequestBuilder()");
+		}
+		String url = preparePathVariables(requestUrl, pathVariables);
+		url = prepareUrlParameters(url, urlParameters);
+		return new Request.Builder().url(url);
+	}
+
+	private Response executeRequest(Request request) {
+		Response result = null;
+		try {
+			result = client.newCall(request).execute();
+		} catch (IOException e) {
+			throwException(EXECUTE_REQUEST_ERROR, request.toString());
+		}
+		return result;
+	}
+
+	
+	// ++++++++++++
+	private String responseBodyAsText(Response response) {
+		String responseText = null;
+		try {
+			responseText = response.body().string();
+			responseText = "{" + "\"code\":\"" + response.code() + "\","
+					+ (responseText != null && responseText.length() > 0 ? responseText.substring(1)
+							: "\"content\":\"null\"}");
+		} catch (IOException e) {
+			LOGGER.error("Error to get text from ResponseBody. " + e.toString());
+			throw new RuntimeException("Error to get text from ResponseBody." + e.toString());
+		}
+		return responseText;
+	}
+
+	// Http Get - - - - - - - - - - - - - - - - - - - -
+
+	protected Response httpGetAsResponse(RestParameters pathVariables, RestParameters urlParameters, RestUrl restUrl) {
+		checkImplementation(RestHttpMethods.GET);
+		return executeRequest(prepareRequestBuilder(restUrl.readGetUrl(), pathVariables, urlParameters).get().build());
+	}
+
+	protected Response httpGetAsResponse(RestParameters pathVariables, RestParameters urlParameters) {
+		checkImplementation(RestHttpMethods.GET);
+		return executeRequest(
+				prepareRequestBuilder(getRestUrl().readGetUrl(), pathVariables, urlParameters).get().build());
+	}
+
+	protected String httpGetAsText(RestParameters pathVariables, RestParameters urlParameters, RestUrl restUrl) {
+		return responseBodyAsText(httpGetAsResponse(pathVariables, urlParameters, restUrl));
+	}
+
+	protected String httpGetAsText(RestParameters pathVariables, RestParameters urlParameters) {
+		return responseBodyAsText(httpGetAsResponse(pathVariables, urlParameters));
+	}
+
+	public int httpGetAsStatusCode(RestParameters pathVariables, RestParameters urlParameters, RestUrl restUrl) {
+		return httpGetAsResponse(pathVariables, urlParameters, restUrl).code();
+	}
+
+	// Http Post - - - - - - - - - - - - - - - - - - - -
+
+	protected Response httpPostAsResponse(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters, RestUrl restUrl) {
+		checkImplementation(RestHttpMethods.POST);
+		return executeRequest(prepareRequestBuilder(restUrl.readPostUrl(), pathVariables, urlParameters)
+				.post(prepareRequestBody(bodyParameters)).build());
+	}
+
+	protected Response httpPostAsResponse(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters) {
+		checkImplementation(RestHttpMethods.POST);
+		return executeRequest(prepareRequestBuilder(getRestUrl().readPostUrl(), pathVariables, urlParameters)
+				.post(prepareRequestBody(bodyParameters)).build());
+	}
+
+	protected String httpPostAsText(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters, RestUrl restUrl) {
+		return responseBodyAsText(httpPostAsResponse(pathVariables, urlParameters, bodyParameters, restUrl));
+	}
+
+	protected String httpPostAsText(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters) {
+		return responseBodyAsText(httpPostAsResponse(pathVariables, urlParameters, bodyParameters));
+	}
+
+	// Http Put - - - - - - - - - - - - - - - - - - - -
+
+	protected Response httpPutAsResponse(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters, RestUrl restUrl) {
+		checkImplementation(RestHttpMethods.PUT);
+		return executeRequest(prepareRequestBuilder(restUrl.readPutUrl(), pathVariables, urlParameters)
+				.put(prepareRequestBody(bodyParameters)).build());
+	}
+
+	protected Response httpPutAsResponse(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters) {
+		checkImplementation(RestHttpMethods.PUT);
+		return executeRequest(prepareRequestBuilder(getRestUrl().readPutUrl(), pathVariables, urlParameters)
+				.put(prepareRequestBody(bodyParameters)).build());
+	}
+
+	protected String httpPutAsText(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters, RestUrl restUrl) {
+		return responseBodyAsText(httpPutAsResponse(pathVariables, urlParameters, bodyParameters, restUrl));
+	}
+
+	protected String httpPutAsText(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters) {
+		return responseBodyAsText(httpPutAsResponse(pathVariables, urlParameters, bodyParameters));
+	}
+
+	// Http Delete - - - - - - - - - - - - - - - - - - - -
+
+	protected Response httpDeleteAsResponse(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters, RestUrl restUrl) {
+		checkImplementation(RestHttpMethods.DELETE);
+		return executeRequest(prepareRequestBuilder(restUrl.readDeleteUrl(), pathVariables, urlParameters)
+				.delete(prepareRequestBody(bodyParameters)).build());
+	}
+
+	protected Response httpDeleteAsResponse(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters) {
+		checkImplementation(RestHttpMethods.DELETE);
+		return executeRequest(prepareRequestBuilder(getRestUrl().readDeleteUrl(), pathVariables, urlParameters)
+				.delete(prepareRequestBody(bodyParameters)).build());
+	}
+
+	protected String httpDeleteAsText(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters, RestUrl restUrl) {
+		return responseBodyAsText(httpDeleteAsResponse(pathVariables, urlParameters, bodyParameters, restUrl));
+	}
+
+	protected String httpDeleteAsText(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters) {
+		return responseBodyAsText(httpDeleteAsResponse(pathVariables, urlParameters, bodyParameters));
+	}
+
+	// Http Patch - - - - - - - - - - - - - - - - - - - -
+
+	protected Response httpPatchAsResponse(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters, RestUrl restUrl) {
+		checkImplementation(RestHttpMethods.PATCH);
+		return executeRequest(prepareRequestBuilder(restUrl.readPatchUrl(), pathVariables, urlParameters)
+				.patch(prepareRequestBody(bodyParameters)).build());
+	}
+
+	protected Response httpPatchAsResponse(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters) {
+		checkImplementation(RestHttpMethods.PATCH);
+		return executeRequest(prepareRequestBuilder(getRestUrl().readPatchUrl(), pathVariables, urlParameters)
+				.patch(prepareRequestBody(bodyParameters)).build());
+	}
+
+	protected String httpPatchAsText(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters, RestUrl restUrl) {
+		return responseBodyAsText(httpPatchAsResponse(pathVariables, urlParameters, bodyParameters, restUrl));
+	}
+
+	protected String httpPatchAsText(RestParameters pathVariables, RestParameters urlParameters,
+			RestParameters bodyParameters) {
+		return responseBodyAsText(httpPatchAsResponse(pathVariables, urlParameters, bodyParameters));
+	}
+
+}
