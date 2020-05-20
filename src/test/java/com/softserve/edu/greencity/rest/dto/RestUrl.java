@@ -168,6 +168,10 @@ public class RestUrl {
 		return readGetUrlByIndex(0, 0);
 	}
 
+	public String readGetUrlByIndex(int indexGet) {
+		return readGetUrlByIndex(0, indexGet);
+	}
+
 	public String readGetUrlByIndex(int indexBase, int indexGet) {
 		return readBaseUrlByIndex(indexBase) + urls.get(RestHttpMethods.GET).get(indexGet);
 	}
@@ -179,6 +183,10 @@ public class RestUrl {
 		return readPostUrlByIndex(0, 0);
 	}
 
+	public String readPostUrlByIndex(int indexGet) {
+		return readPostUrlByIndex(0, indexGet);
+	}
+	
 	public String readPostUrlByIndex(int indexBase, int indexPost) {
 		return readBaseUrlByIndex(indexBase) + urls.get(RestHttpMethods.POST).get(indexPost);
 	}
@@ -190,6 +198,10 @@ public class RestUrl {
 		return readPutUrlByIndex(0, 0);
 	}
 
+	public String readPutUrlByIndex(int indexGet) {
+		return readPutUrlByIndex(0, indexGet);
+	}
+	
 	public String readPutUrlByIndex(int indexBase, int indexPut) {
 		return readBaseUrlByIndex(indexBase) + urls.get(RestHttpMethods.PUT).get(indexPut);
 	}
@@ -201,6 +213,10 @@ public class RestUrl {
 		return readDeleteUrlByIndex(0, 0);
 	}
 
+	public String readDeleteUrlByIndex(int indexGet) {
+		return readDeleteUrlByIndex(0, indexGet);
+	}
+	
 	public String readDeleteUrlByIndex(int indexBase, int indexDelete) {
 		return readBaseUrlByIndex(indexBase) + urls.get(RestHttpMethods.DELETE).get(indexDelete);
 	}
@@ -212,6 +228,10 @@ public class RestUrl {
 		return readPatchUrlByIndex(0, 0);
 	}
 
+	public String readPatchUrlByIndex(int indexGet) {
+		return readPatchUrlByIndex(0, indexGet);
+	}
+	
 	public String readPatchUrlByIndex(int indexBase, int indexPatch) {
 		return readBaseUrlByIndex(indexBase) + urls.get(RestHttpMethods.PATCH).get(indexPatch);
 	}
