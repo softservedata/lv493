@@ -248,7 +248,8 @@ public class SimpleRestTest {
 		//
 		System.out.println("Http Code: " + response.code());
 		System.out.println("JSON = " + textBody);
-		loginEntity = gson.fromJson(textBody, LoginEntity.class);
+		//loginEntity = gson.fromJson(textBody, LoginEntity.class);
+		loginEntity = gson.fromJson(textBody, new TypeToken<LoginEntity>(){}.getType());
 		System.out.println(loginEntity);
 		//
 		// Get goals of current user.

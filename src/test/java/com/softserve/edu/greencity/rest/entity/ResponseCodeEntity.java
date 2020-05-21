@@ -4,6 +4,10 @@ public class ResponseCodeEntity {
 
 	private int responsecode;
 
+	public ResponseCodeEntity() {
+		responsecode = -1;
+	}
+	
 	public ResponseCodeEntity(int responsecode) {
 		this.responsecode = responsecode;
 	}

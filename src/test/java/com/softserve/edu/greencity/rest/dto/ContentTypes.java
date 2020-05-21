@@ -5,7 +5,8 @@ public enum ContentTypes {
 	APPLICATION_JSON("application/json"),
 	TEXT_HTML("text/html"),
 	TEXT_JSON("text/json"),
-	MULTIPART_FORM_DATA("multipart/form-data");
+	MULTIPART_FORM_DATA("multipart/form-data"),
+	ALL_TYPES("*/*");
 
     private String type;
 

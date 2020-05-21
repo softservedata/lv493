@@ -10,10 +10,7 @@ public class SigninResource extends RestQueries<ResponseCodeEntity,
 					ResponseCodeEntity, ResponseCodeEntity> {
 
 	public SigninResource() {
-        super(RestUrlRepository.getSignin(),
-        		ResponseCodeEntity.class, LogginedUserEntity.class,
-        		ResponseCodeEntity.class, ResponseCodeEntity.class,
-        		ResponseCodeEntity.class);
+        super(RestUrlRepository.getSignin());
     }
 
 }

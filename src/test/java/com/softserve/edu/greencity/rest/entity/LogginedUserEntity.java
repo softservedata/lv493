@@ -7,6 +7,14 @@ public class LogginedUserEntity {
 	private String name;
 	private boolean ownRegistrations;
 
+	public LogginedUserEntity() {
+		userId = -1;
+		accessToken = "";
+		refreshToken = "";
+		name = "";
+		ownRegistrations = false;
+	}
+	
 	public LogginedUserEntity(int userId, String accessToken,
 			String refreshToken, String name,
 			boolean ownRegistrations) {

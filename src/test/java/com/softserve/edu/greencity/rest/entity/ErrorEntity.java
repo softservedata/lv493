@@ -7,6 +7,14 @@ public class ErrorEntity {
 	private String message;
 	private String path;
 
+	public ErrorEntity() {
+		timestamp = "";
+		status = -1;
+		error = "";
+		message = "";
+		path = "";
+	}
+	
 	public ErrorEntity(String timestamp, int status,
 			String error, String message, String path) {
 		this.timestamp = timestamp;

@@ -184,9 +184,11 @@ public abstract class RestCrud {
 
 	protected Response httpGetAsResponse(MethodParameters methodParameters) {
 		checkImplementation(RestHttpMethods.GET);
-		return executeRequest(prepareRequestBuilder(getRestUrl().readPostUrlByIndex(methodParameters.getIndex()),
-				methodParameters.getPathVariables(),
-				methodParameters.getUrlParameters())
+		return executeRequest(prepareHeader(
+				prepareRequestBuilder(getRestUrl().readGetUrlByIndex(methodParameters.getIndex()),
+						methodParameters.getPathVariables(),
+						methodParameters.getUrlParameters()),
+					methodParameters.getHeaderParameters())
 				.get().build());
 	}
 
