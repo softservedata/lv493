@@ -17,4 +17,8 @@ public class LogginedUserService {
 	
 	// Business Logic
 	
+	public MyCabinetService gotoMyCabinetService() {
+		return new MyCabinetService(logginedUserEntity);
+	}
+	
 }

@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.rest.tests;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.testng.Assert;
@@ -7,6 +8,7 @@ import org.testng.annotations.Test;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -264,7 +266,22 @@ public class SimpleRestTest {
 		//
 		System.out.println("Http Code: " + response.code());
 		System.out.println("JSON = " + textBody);
-		userGoalsEntities = gson.fromJson(textBody, new TypeToken<List<UserGoalsEntity>>(){}.getType());
+		//
+		//Type type = new TypeToken<List<UserGoalsEntity>>(){}.getType();
+		Type type = new GenericConverter<List<UserGoalsEntity>>(){}.getGenericType();
+		String typeStr = type.toString();
+		System.out.println("+++typeStr=" + typeStr);
+		//Type type2 = Class.forName(typeStr, false, ClassLoader.getSystemClassLoader()); // Error
+		//String typeStr2 = type.toString();
+		//System.out.println("+++typeStr2=" + typeStr2);
+		//@SuppressWarnings("unchecked")
+		//Class<List<UserGoalsEntity>> cls = (Class<List<UserGoalsEntity>>)(Object)List.class;
+		//Class<List<UserGoalsEntity>> cls = (Class<List<UserGoalsEntity>>) new ArrayList<UserGoalsEntity>().getClass();
+		//System.out.println("+++cls=" + ((Type) cls).toString());
+		//
+		//userGoalsEntities = gson.fromJson(textBody, new TypeToken<List<UserGoalsEntity>>(){}.getType());
+		userGoalsEntities = gson.fromJson(textBody, type);
+		//userGoalsEntities = gson.fromJson(textBody, (Type) Class.forName(typeStr));
 		System.out.println(userGoalsEntities);
 	}
 }

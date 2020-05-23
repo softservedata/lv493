@@ -171,12 +171,15 @@ public abstract class RestCrud {
 		String responseText = null;
 		try {
 			responseText = response.body().string();
-			responseText = "{" + "\"responsecode\":\"" + response.code() + "\","
-					+ (responseText != null && responseText.length() > 0 ? responseText.substring(1)
-							: "\"content\":\"null\"}");
 		} catch (IOException e) {
 			throwException(RESPONSEBODY_ERROR, e.toString());
 		}
+//		responseText = "{" + "\"responsecode\":\"" + response.code() + "\","
+//				+ (responseText != null && responseText.length() > 0 ? responseText.substring(1)
+//						: "\"content\":\"null\"}");
+		responseText =(responseText != null) && (responseText.length() > 0) && responseText.contains("{")
+				? responseText.replace("{", "{" + "\"responsecode\":\"" + response.code() + "\",")
+				: "{" + "\"responsecode\":\"" + response.code() + "\"}";
 		return responseText;
 	}
 

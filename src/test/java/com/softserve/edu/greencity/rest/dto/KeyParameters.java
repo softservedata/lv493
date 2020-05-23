@@ -9,7 +9,8 @@ public enum KeyParameters {
     LANGUAGE("language"),
     LANG("lang"),
     USER_ID("userId"),
-    NAME("name");
+    NAME("name"),
+    BEARER("Bearer ");
 
     private String key;
 

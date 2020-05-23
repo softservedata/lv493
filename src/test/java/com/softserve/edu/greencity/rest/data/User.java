@@ -2,12 +2,12 @@ package com.softserve.edu.greencity.rest.data;
 
 public class User {
 	private String email;
-	private String firstname;
+	private String name;
 	private String password;
 
-	public User(String email, String firstname, String password) {
+	public User(String email, String name, String password) {
 		this.email = email;
-		this.firstname = firstname;
+		this.name = name;
 		this.password = password;
 	}
 
@@ -17,8 +17,8 @@ public class User {
 		this.email = email;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setPassword(String password) {
@@ -31,8 +31,8 @@ public class User {
 		return email;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getName() {
+		return name;
 	}
 
 	public String getPassword() {
@@ -42,7 +42,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [email=" + email 
-				+ ", firstname=" + firstname 
+				+ ", name=" + name 
 				+ ", password=" + password + "]";
 	}
 
