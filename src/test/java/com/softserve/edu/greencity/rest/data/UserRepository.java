@@ -25,4 +25,7 @@ public final class UserRepository {
 		return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
 	}
 	
+	 public User user1() {
+         return new User("acheuusdukwyhuhfab@ttirv.com", "User1", "QwertY12!");
+     }
 }
