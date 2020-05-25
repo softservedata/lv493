@@ -9,8 +9,9 @@ import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.UserGoalsEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
-public class UserGoalsResource extends
-		RestQueries<UserGoalsEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity> {
+public class UserGoalsResource extends RestQueries<UserGoalsEntity,
+		ResponseCodeEntity,	ResponseCodeEntity,
+		ResponseCodeEntity, ResponseCodeEntity> {
 
 	public UserGoalsResource() {
 		super(RestUrlRepository.getUserGoals());

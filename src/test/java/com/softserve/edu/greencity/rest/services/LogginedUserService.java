@@ -17,8 +17,11 @@ public class LogginedUserService {
 	
 	// Business Logic
 	
-	public MyCabinetService gotoMyCabinetService() {
-		return new MyCabinetService(logginedUserEntity);
+	public EconewsUserService gotoEconewsUserService() {
+		return new EconewsUserService(logginedUserEntity);
 	}
 	
+	public MyhabitsService gotoMyhabitsService() {
+		return new MyhabitsService(logginedUserEntity);
+	}
 }

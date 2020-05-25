@@ -17,38 +17,14 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 	private final String CONVERT_OBJECT_ERROR = "ConvertToObject Error. Service Returned\n%s";
 	private final int HTTP_RESPONSE_CODE_300 = 300;
 	//
+	// TODO Get Class<T> from <T>
 	private Map<RestHttpMethods, Type> entityParameters;
 	private Map<RestHttpMethods, Type> listEntityParameters;
 	//
-//	private Class<TGET> classTGET;
-//	private Class<TPOST> classTPOST;
-//	private Class<TPUT> classTPUT;
-//	private Class<TDELETE> classTDELETE;
-//	private Class<TPATCH> classTPATCH;
-	//
-//	private Type typeTGET;
-//	private Type typeTPOST;
-//	private Type typeTPUT;
-//	private Type typeTDELETE;
-//	private Type typeTPATCH;
 	private Gson gson;
 
 	protected RestQueries(RestUrl restUrl) {
 		super(restUrl);
-		//
-		 // TODO Get Class<T> from <T>
-//		this.classTGET = classTGET;
-//		this.classTPOST = classTPOST;
-//		this.classTPUT = classTPUT;
-//		this.classTDELETE = classTDELETE;
-//		this.classTPATCH = classTPATCH;
-		//
-//		this.typeTGET = typeTGET;
-//		this.typeTPOST = typeTPOST;
-//		this.typeTPUT = classTPUT;
-//		this.typeTDELETE = typeTDELETE;
-//		this.typeTPATCH = typeTPATCH;
-		//
 		gson = new Gson();
 		initParameters();
 	}
@@ -87,9 +63,10 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 		}
 		//System.out.println("***responseCodeEntity = " + responseCodeEntity);
 		if ((responseCodeEntity == null) || (responseCodeEntity.getResponsecode() >= HTTP_RESPONSE_CODE_300)) {
+			int responseCode = (responseCodeEntity == null) ? 0 : responseCodeEntity.getResponsecode();
 			ErrorEntity errorEntity = convertToEntity(json, new TypeToken<ErrorEntity>(){});
 			//ErrorEntity errorEntity = convertToEntity(json, ErrorEntity.class);
-			throwException(CONVERT_OBJECT_ERROR, errorEntity.toString());
+			throwException(CONVERT_OBJECT_ERROR, errorEntity.toString(), responseCode);
 		}
 	}
 	

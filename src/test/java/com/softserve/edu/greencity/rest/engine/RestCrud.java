@@ -11,6 +11,9 @@ import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.dto.RestUrl;
+import com.softserve.edu.greencity.rest.tools.GreenCity400Exception;
+import com.softserve.edu.greencity.rest.tools.GreenCity404Exception;
+import com.softserve.edu.greencity.rest.tools.GreenCityCommonException;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -44,15 +47,23 @@ public abstract class RestCrud {
 	}
 
 	// protected - - - - - - - - - - - - - - - - - - - -
-
-	protected void throwException(String prefix, String message) {
+	protected void throwException(String prefix, String message, int responseCode) {
 		String resourceName = this.getClass().getName();
 		resourceName = resourceName.substring(resourceName.lastIndexOf(".") + 1);
 		String resourceMessage = String.format(FOR_RESOURCE, resourceName);
 		String exceptionMessage =  String.format(prefix, message) + resourceMessage;
 		LOGGER.error(exceptionMessage);
-		// TODO Develop Custom Exception
-		throw new RuntimeException(exceptionMessage);
+		// TODO Add Custom Exception
+		switch (responseCode) {
+			case 0: throw new GreenCityCommonException(exceptionMessage);
+			case 400: throw new GreenCity400Exception(exceptionMessage);
+			case 404: throw new GreenCity404Exception(exceptionMessage);
+			default: throw new GreenCityCommonException(exceptionMessage);
+		}
+	}
+	
+	protected void throwException(String prefix, String message) {
+		throwException(NOT_SUPPORT_MESSAGE, message, 0);
 	}
 	
 	protected void throwException(String message) {
