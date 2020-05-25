@@ -11,6 +11,9 @@ import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.dto.RestUrl;
+import com.softserve.edu.greencity.rest.tools.GreenCity400Exception;
+import com.softserve.edu.greencity.rest.tools.GreenCity404Exception;
+import com.softserve.edu.greencity.rest.tools.GreenCityCommonException;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -45,222 +48,232 @@ public abstract class RestCrud {
 
 	// protected - - - - - - - - - - - - - - - - - - - -
 
+	protected void throwException(String prefix, String message, int responseCode) {
+        String resourceName = this.getClass().getName();
+        resourceName = resourceName.substring(resourceName.lastIndexOf(".") + 1);
+        String resourceMessage = String.format(FOR_RESOURCE, resourceName);
+        String exceptionMessage =  String.format(prefix, message) + resourceMessage;
+        LOGGER.error(exceptionMessage);
+        // TODO Add Custom Exception
+        switch (responseCode) {
+            case 0: throw new GreenCityCommonException(exceptionMessage);
+            case 400: throw new GreenCity400Exception(exceptionMessage);
+            case 404: throw new GreenCity404Exception(exceptionMessage);
+            default: throw new GreenCityCommonException(exceptionMessage);
+        }
+    }
+	
 	protected void throwException(String prefix, String message) {
-		String resourceName = this.getClass().getName();
-		resourceName = resourceName.substring(resourceName.lastIndexOf(".") + 1);
-		String resourceMessage = String.format(FOR_RESOURCE, resourceName);
-		String exceptionMessage =  String.format(prefix, message) + resourceMessage;
-		LOGGER.error(exceptionMessage);
-		// TODO Develop Custom Exception
-		throw new RuntimeException(exceptionMessage);
-	}
-	
-	protected void throwException(String message) {
-		throwException(NOT_SUPPORT_MESSAGE, message);
-	}
+        throwException(NOT_SUPPORT_MESSAGE, message, 0);
+    }
+    
+    protected void throwException(String message) {
+        throwException(NOT_SUPPORT_MESSAGE, message);
+    }
 
-	protected void checkImplementation(RestHttpMethods restUrlKeys) {
-		// if (restUrl.GetUrl(restUrlKeys).Length == 0)
-		// TODO check List size
-		String methodUri = getRestUrl().getUrl(restUrlKeys);
-		if ((methodUri == null) || (methodUri.isEmpty())) {
-			throwException(restUrlKeys.name());
-		}
-	}
+    protected void checkImplementation(RestHttpMethods restUrlKeys) {
+        // if (restUrl.GetUrl(restUrlKeys).Length == 0)
+        // TODO check List size
+        String methodUri = getRestUrl().getUrl(restUrlKeys);
+        if ((methodUri == null) || (methodUri.isEmpty())) {
+            throwException(restUrlKeys.name());
+        }
+    }
 
-	// Parameters - - - - - - - - - - - - - - - - - - - -
 
-	// TODO Use class HttpUrl
-	private String prepareUrlParameters(String urlTemplate, RestParameters urlParameters) {
-		if (urlParameters != null) {
-			boolean isFirstParameter = true;
-			for (KeyParameters currentKey : urlParameters.getAllParameters().keySet()) {
-				if (isFirstParameter) {
-					urlTemplate = urlTemplate + URL_PARAMETERS_SEPARATOR;
-					isFirstParameter = false;
-				} else {
-					urlTemplate = urlTemplate + NEXT_PARAMETERS_SEPARATOR;
-				}
-				urlTemplate = urlTemplate + currentKey + KEY_VALUE_SEPARATOR + urlParameters.getParameter(currentKey);
-			}
-		}
-		return urlTemplate;
-	}
+    // Parameters - - - - - - - - - - - - - - - - - - - -
 
-	private String preparePathVariables(String urlTemplate, RestParameters pathVariables) {
-		String url = urlTemplate;
-		if (pathVariables != null) {
-			String searchVariable;
-			for (KeyParameters currentKey : pathVariables.getAllParameters().keySet()) {
-				// TODO Create Const "{", "}"
-				searchVariable = "{" + currentKey.toString() + "}";
-				if (url.contains(searchVariable)) {
-					// TODO Move to RegexUtils
-					//url = url.replaceFirst(Pattern.quote(searchVariable), pathVariables.getParameter(currentKey));
-					url = url.replace(searchVariable, pathVariables.getParameter(currentKey));
-				}
-			}
-		}
-		return url;
-	}
+    // TODO Use class HttpUrl
+    private String prepareUrlParameters(String urlTemplate, RestParameters urlParameters) {
+        if (urlParameters != null) {
+            boolean isFirstParameter = true;
+            for (KeyParameters currentKey : urlParameters.getAllParameters().keySet()) {
+                if (isFirstParameter) {
+                    urlTemplate = urlTemplate + URL_PARAMETERS_SEPARATOR;
+                    isFirstParameter = false;
+                } else {
+                    urlTemplate = urlTemplate + NEXT_PARAMETERS_SEPARATOR;
+                }
+                urlTemplate = urlTemplate + currentKey + KEY_VALUE_SEPARATOR + urlParameters.getParameter(currentKey);
+            }
+        }
+        return urlTemplate;
+    }
 
-	private RequestBody prepareRequestBody(RestParameters bodyParameters) {
-		FormBody.Builder formBodyBuilder = new FormBody.Builder();
-		if (bodyParameters != null) {
-			for (KeyParameters currentKey : bodyParameters.getAllParameters().keySet()) {
-				formBodyBuilder.add(String.valueOf(currentKey), bodyParameters.getParameter(currentKey));
-			}
-		}
-		return formBodyBuilder.build();
-	}
+    private String preparePathVariables(String urlTemplate, RestParameters pathVariables) {
+        String url = urlTemplate;
+        if (pathVariables != null) {
+            String searchVariable;
+            for (KeyParameters currentKey : pathVariables.getAllParameters().keySet()) {
+                // TODO Create Const "{", "}"
+                searchVariable = "{" + currentKey.toString() + "}";
+                if (url.contains(searchVariable)) {
+                    // TODO Move to RegexUtils
+                    //url = url.replaceFirst(Pattern.quote(searchVariable), pathVariables.getParameter(currentKey));
+                    url = url.replace(searchVariable, pathVariables.getParameter(currentKey));
+                }
+            }
+        }
+        return url;
+    }
 
-	private RequestBody prepareRequestBodyMediaType(ContentTypes contentType, RestParameters mediaTypeParameters) {
-		// TODO Use Serialization
-		String json = "{";
-		if (mediaTypeParameters != null) {
-			for (KeyParameters currentKey : mediaTypeParameters.getAllParameters().keySet()) {
-				json = json + "\"" + String.valueOf(currentKey) + "\":\"" 
-						+ mediaTypeParameters.getParameter(currentKey) + "\",";
-			}
-			json = json.substring(0, json.length() -1) + "}";
-			if (json.length() < 2) {
-				throwException("prepareRequestBodyMediaType()");
-			}
-		}
-		return RequestBody.create(MediaType.parse(contentType.toString()),json);
-	}
+    private RequestBody prepareRequestBody(RestParameters bodyParameters) {
+        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+        if (bodyParameters != null) {
+            for (KeyParameters currentKey : bodyParameters.getAllParameters().keySet()) {
+                formBodyBuilder.add(String.valueOf(currentKey), bodyParameters.getParameter(currentKey));
+            }
+        }
+        return formBodyBuilder.build();
+    }
 
-	private RequestBody getFormBody(MethodParameters methodParameters) {
-		return methodParameters.getContentType() != null
-			   ? prepareRequestBodyMediaType(methodParameters.getContentType(), methodParameters.getMediaTypeParameters())
-			   : prepareRequestBody(methodParameters.getBodyParameters());
-	}
-	
-	private Request.Builder prepareHeader(Request.Builder builder, RestParameters headerParameters) {
-		if (headerParameters != null) {
-			for (KeyParameters currentKey : headerParameters.getAllParameters().keySet()) {
-				builder.header(String.valueOf(currentKey), headerParameters.getParameter(currentKey));
-			}
-		}
-		return builder;
-	}
-	
-	// Request - - - - - - - - - - - - - - - - - - - -
+    private RequestBody prepareRequestBodyMediaType(ContentTypes contentType, RestParameters mediaTypeParameters) {
+        // TODO Use Serialization
+        String json = "{";
+        if (mediaTypeParameters != null) {
+            for (KeyParameters currentKey : mediaTypeParameters.getAllParameters().keySet()) {
+                json = json + "\"" + String.valueOf(currentKey) + "\":\"" 
+                        + mediaTypeParameters.getParameter(currentKey) + "\",";
+            }
+            json = json.substring(0, json.length() -1) + "}";
+            if (json.length() < 2) {
+                throwException("prepareRequestBodyMediaType()");
+            }
+        }
+        return RequestBody.create(MediaType.parse(contentType.toString()),json);
+    }
 
-	private Request.Builder prepareRequestBuilder(String requestUrl, RestParameters pathVariables,
-			RestParameters urlParameters) {
-		if ((requestUrl == null) || (requestUrl.isEmpty())) {
-			throwException(EMPTY_PARAMETER, "requestUrl of method prepareRequestBuilder()");
-		}
-		String url = preparePathVariables(requestUrl, pathVariables);
-		url = prepareUrlParameters(url, urlParameters);
-		return new Request.Builder().url(url);
-	}
+    private RequestBody getFormBody(MethodParameters methodParameters) {
+        return methodParameters.getContentType() != null
+               ? prepareRequestBodyMediaType(methodParameters.getContentType(), methodParameters.getMediaTypeParameters())
+               : prepareRequestBody(methodParameters.getBodyParameters());
+    }
+    
+    private Request.Builder prepareHeader(Request.Builder builder, RestParameters headerParameters) {
+        if (headerParameters != null) {
+            for (KeyParameters currentKey : headerParameters.getAllParameters().keySet()) {
+                builder.header(String.valueOf(currentKey), headerParameters.getParameter(currentKey));
+            }
+        }
+        return builder;
+    }
+    
+    // Request - - - - - - - - - - - - - - - - - - - -
 
-	private Response executeRequest(Request request) {
-		Response result = null;
-		try {
-			result = client.newCall(request).execute();
-		} catch (IOException e) {
-			throwException(EXECUTE_REQUEST_ERROR, request.toString());
-		}
-		return result;
-	}
+    private Request.Builder prepareRequestBuilder(String requestUrl, RestParameters pathVariables,
+            RestParameters urlParameters) {
+        if ((requestUrl == null) || (requestUrl.isEmpty())) {
+            throwException(EMPTY_PARAMETER, "requestUrl of method prepareRequestBuilder()");
+        }
+        String url = preparePathVariables(requestUrl, pathVariables);
+        url = prepareUrlParameters(url, urlParameters);
+        return new Request.Builder().url(url);
+    }
 
-	private String responseBodyAsText(Response response) {
-		String responseText = null;
-		try {
-			responseText = response.body().string();
-		} catch (IOException e) {
-			throwException(RESPONSEBODY_ERROR, e.toString());
-		}
-//		responseText = "{" + "\"responsecode\":\"" + response.code() + "\","
-//				+ (responseText != null && responseText.length() > 0 ? responseText.substring(1)
-//						: "\"content\":\"null\"}");
-		responseText =(responseText != null) && (responseText.length() > 0) && responseText.contains("{")
-				? responseText.replace("{", "{" + "\"responsecode\":\"" + response.code() + "\",")
-				: "{" + "\"responsecode\":\"" + response.code() + "\"}";
-		return responseText;
-	}
+    private Response executeRequest(Request request) {
+        Response result = null;
+        try {
+            result = client.newCall(request).execute();
+        } catch (IOException e) {
+            throwException(EXECUTE_REQUEST_ERROR, request.toString());
+        }
+        return result;
+    }
 
-	// Http Get - - - - - - - - - - - - - - - - - - - -
+    private String responseBodyAsText(Response response) {
+        String responseText = null;
+        try {
+            responseText = response.body().string();
+        } catch (IOException e) {
+            throwException(RESPONSEBODY_ERROR, e.toString());
+        }
+//      responseText = "{" + "\"responsecode\":\"" + response.code() + "\","
+//              + (responseText != null && responseText.length() > 0 ? responseText.substring(1)
+//                      : "\"content\":\"null\"}");
+        responseText =(responseText != null) && (responseText.length() > 0) && responseText.contains("{")
+                ? responseText.replace("{", "{" + "\"responsecode\":\"" + response.code() + "\",")
+                : "{" + "\"responsecode\":\"" + response.code() + "\"}";
+        return responseText;
+    }
 
-	protected Response httpGetAsResponse(MethodParameters methodParameters) {
-		checkImplementation(RestHttpMethods.GET);
-		return executeRequest(prepareHeader(
-				prepareRequestBuilder(getRestUrl().readGetUrlByIndex(methodParameters.getIndex()),
-						methodParameters.getPathVariables(),
-						methodParameters.getUrlParameters()),
-					methodParameters.getHeaderParameters())
-				.get().build());
-	}
+    // Http Get - - - - - - - - - - - - - - - - - - - -
 
-	protected String httpGetAsText(MethodParameters methodParameters) {
-		return responseBodyAsText(httpGetAsResponse(methodParameters));
-	}
+    protected Response httpGetAsResponse(MethodParameters methodParameters) {
+        checkImplementation(RestHttpMethods.GET);
+        return executeRequest(prepareHeader(
+                prepareRequestBuilder(getRestUrl().readGetUrlByIndex(methodParameters.getIndex()),
+                        methodParameters.getPathVariables(),
+                        methodParameters.getUrlParameters()),
+                    methodParameters.getHeaderParameters())
+                .get().build());
+    }
 
-	// Http Post - - - - - - - - - - - - - - - - - - - -
+    protected String httpGetAsText(MethodParameters methodParameters) {
+        return responseBodyAsText(httpGetAsResponse(methodParameters));
+    }
 
-	protected Response httpPostAsResponse(MethodParameters methodParameters) {
-		checkImplementation(RestHttpMethods.POST);
-		return executeRequest(prepareHeader(
-				prepareRequestBuilder(getRestUrl().readPostUrlByIndex(methodParameters.getIndex()),
-					methodParameters.getPathVariables(),
-					methodParameters.getUrlParameters()),
-				methodParameters.getHeaderParameters())
-			.post(getFormBody(methodParameters)).build());
-	}
+    // Http Post - - - - - - - - - - - - - - - - - - - -
 
-	protected String httpPostAsText(MethodParameters methodParameters) {
-		return responseBodyAsText(httpPostAsResponse(methodParameters));
-	}
+    protected Response httpPostAsResponse(MethodParameters methodParameters) {
+        checkImplementation(RestHttpMethods.POST);
+        return executeRequest(prepareHeader(
+                prepareRequestBuilder(getRestUrl().readPostUrlByIndex(methodParameters.getIndex()),
+                    methodParameters.getPathVariables(),
+                    methodParameters.getUrlParameters()),
+                methodParameters.getHeaderParameters())
+            .post(getFormBody(methodParameters)).build());
+    }
 
-	// Http Put - - - - - - - - - - - - - - - - - - - -
+    protected String httpPostAsText(MethodParameters methodParameters) {
+        return responseBodyAsText(httpPostAsResponse(methodParameters));
+    }
 
-	protected Response httpPutAsResponse(MethodParameters methodParameters) {
-		checkImplementation(RestHttpMethods.PUT);
-		return executeRequest(prepareHeader(
-				prepareRequestBuilder(getRestUrl().readPutUrlByIndex(methodParameters.getIndex()),
-					methodParameters.getPathVariables(),
-					methodParameters.getUrlParameters()),
-				methodParameters.getHeaderParameters())
-			.put(getFormBody(methodParameters)).build());
-	}
+    // Http Put - - - - - - - - - - - - - - - - - - - -
 
-	protected String httpPutAsText(MethodParameters methodParameters) {
-		return responseBodyAsText(httpPutAsResponse(methodParameters));
-	}
+    protected Response httpPutAsResponse(MethodParameters methodParameters) {
+        checkImplementation(RestHttpMethods.PUT);
+        return executeRequest(prepareHeader(
+                prepareRequestBuilder(getRestUrl().readPutUrlByIndex(methodParameters.getIndex()),
+                    methodParameters.getPathVariables(),
+                    methodParameters.getUrlParameters()),
+                methodParameters.getHeaderParameters())
+            .put(getFormBody(methodParameters)).build());
+    }
 
-	// Http Delete - - - - - - - - - - - - - - - - - - - -
+    protected String httpPutAsText(MethodParameters methodParameters) {
+        return responseBodyAsText(httpPutAsResponse(methodParameters));
+    }
 
-	protected Response httpDeleteAsResponse(MethodParameters methodParameters) {
-		checkImplementation(RestHttpMethods.DELETE);
-		return executeRequest(prepareHeader(
-				prepareRequestBuilder(getRestUrl().readDeleteUrlByIndex(methodParameters.getIndex()),
-					methodParameters.getPathVariables(),
-					methodParameters.getUrlParameters()),
-				methodParameters.getHeaderParameters())
-			.delete(getFormBody(methodParameters)).build());
-	}
+    // Http Delete - - - - - - - - - - - - - - - - - - - -
 
-	protected String httpDeleteAsText(MethodParameters methodParameters) {
-		return responseBodyAsText(httpDeleteAsResponse(methodParameters));
-	}
+    protected Response httpDeleteAsResponse(MethodParameters methodParameters) {
+        checkImplementation(RestHttpMethods.DELETE);
+        return executeRequest(prepareHeader(
+                prepareRequestBuilder(getRestUrl().readDeleteUrlByIndex(methodParameters.getIndex()),
+                    methodParameters.getPathVariables(),
+                    methodParameters.getUrlParameters()),
+                methodParameters.getHeaderParameters())
+            .delete(getFormBody(methodParameters)).build());
+    }
 
-	// Http Patch - - - - - - - - - - - - - - - - - - - -
+    protected String httpDeleteAsText(MethodParameters methodParameters) {
+        return responseBodyAsText(httpDeleteAsResponse(methodParameters));
+    }
 
-	protected Response httpPatchAsResponse(MethodParameters methodParameters) {
-		checkImplementation(RestHttpMethods.PATCH);
-		return executeRequest(prepareHeader(
-				prepareRequestBuilder(getRestUrl().readPatchUrlByIndex(methodParameters.getIndex()),
-					methodParameters.getPathVariables(),
-					methodParameters.getUrlParameters()),
-				methodParameters.getHeaderParameters())
-			.patch(getFormBody(methodParameters)).build());
-	}
+    // Http Patch - - - - - - - - - - - - - - - - - - - -
 
-	protected String httpPatchAsText(MethodParameters methodParameters) {
-		return responseBodyAsText(httpPatchAsResponse(methodParameters));
-	}
+    protected Response httpPatchAsResponse(MethodParameters methodParameters) {
+        checkImplementation(RestHttpMethods.PATCH);
+        return executeRequest(prepareHeader(
+                prepareRequestBuilder(getRestUrl().readPatchUrlByIndex(methodParameters.getIndex()),
+                    methodParameters.getPathVariables(),
+                    methodParameters.getUrlParameters()),
+                methodParameters.getHeaderParameters())
+            .patch(getFormBody(methodParameters)).build());
+    }
+
+    protected String httpPatchAsText(MethodParameters methodParameters) {
+        return responseBodyAsText(httpPatchAsResponse(methodParameters));
+    }
 
 }

@@ -1,19 +1,18 @@
 package com.softserve.edu.greencity.rest.dto;
 
 public final class RestUrlRepository {
-	// TODO Send as Parameter
+    // TODO Send as Parameter
     private static String remoteServer = "https://greencity.azurewebsites.net";
 
     private RestUrlRepository() {
     }
 
     public static RestUrl getDefault() {
-    	return getSignin();
+        return getSignin();
     }
-    
+
     public static RestUrl getSignin() {
-        return new RestUrl()
-                .addBaseUrl(remoteServer)
+        return new RestUrl().addBaseUrl(remoteServer)
                 .addGetUrl("")
                 .addPostUrl("/ownSecurity/signIn")
                 .addPutUrl("")
@@ -22,14 +21,22 @@ public final class RestUrlRepository {
     }
 
     public static RestUrl getUserGoals() {
-        return new RestUrl()
-                .addBaseUrl(remoteServer)
+        return new RestUrl().addBaseUrl(remoteServer)
                 .addGetUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/goals")
                 .addPostUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/goals")
                 .addPutUrl("")
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
+
+    public static RestUrl getUserSubscriber() {
+         return new RestUrl()
+                 .addBaseUrl(remoteServer)
+                 .addGetUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/newsSubscriber")
+                 .addPostUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/newsSubscriber")
+                 .addPutUrl("")
+                 .addDeleteUrl("")
+                 .addPatchUrl("");
+                 
+     }
 }
-
-
