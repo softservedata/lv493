@@ -29,12 +29,12 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
  * @author Lv-493.Taqc/Java
  */
 public abstract class TopPart {
-	// TODO to delete
+    // TODO to delete
     public static final String PROFILE_NAME = "Nadiia Steblivets";
-	//
-	private final int WINDOW_WIDTH_TO_SCROLL = 1024;
-	private final int WINDOW_HEIGHT_TO_CLICK_FOOTER = 480;
-	//
+    //
+    private final int WINDOW_WIDTH_TO_SCROLL = 1024;
+    private final int WINDOW_HEIGHT_TO_CLICK_FOOTER = 480;
+    //
     protected final String OPTION_NULL_MESSAGE = "DropdownComponent is null";
     //protected final String OPTION_NOT_FOUND_MESSAGE = "Option %s not found in %s";
     //protected final String PAGE_DO_NOT_EXIST="Page do not exist!!!";
@@ -43,106 +43,106 @@ public abstract class TopPart {
     //protected final String TAG_ATTRIBUTE_SRC = "src";
     //
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-	protected WebDriver driver;
-	//
-	private Select languageSwitcher;
-	private WebElement copyright;
-	//
-	private MainMenuDropdown mainMenuDropdown;
-	private TopGuestComponent topGuestComponent;
-	private TopUserComponent topUserComponent;
-	//
-	//private LoginDropdown loginDropdown;
-	//private RegisterDropdown registerDropdown;
-	
-	public TopPart(WebDriver driver) {
-		this.driver = driver;
-		closeAlertIfPresent();
-		initElements();
-		//initComponents();
-	}
-	
-	private void closeAlertIfPresent() {
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-		//driver.switchTo().alert().accept();
-		//Duration duration = Duration.ofSeconds(1);
-		Duration duration = Duration.ofMillis(20L);
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-	            .withTimeout(duration)
-	            .ignoring(TimeoutException.class);
-		Alert alert = null;
-		try {
-			alert = wait.until(ExpectedConditions.alertIsPresent());
-		} catch(TimeoutException e) {
-		}
-		if(alert != null) {
-			//driver.switchTo().alert().accept();
-			alert.accept();
-		}
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	}
-	
-	private void initElements() {
-		languageSwitcher = new Select(driver.findElement(By.cssSelector("select.language-switcher")));
-		mainMenuDropdown = new MainMenuDropdown(driver);
-		copyright = driver.findElement(By.cssSelector("div.bottom-part"));
-	}
+    protected WebDriver driver;
+    //
+    private Select languageSwitcher;
+    private WebElement copyright;
+    //
+    private MainMenuDropdown mainMenuDropdown;
+    private TopGuestComponent topGuestComponent;
+    private TopUserComponent topUserComponent;
+    //
+    //private LoginDropdown loginDropdown;
+    //private RegisterDropdown registerDropdown;
+    
+    public TopPart(WebDriver driver) {
+        this.driver = driver;
+        closeAlertIfPresent();
+        initElements();
+        //initComponents();
+    }
+    
+    private void closeAlertIfPresent() {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        //driver.switchTo().alert().accept();
+        //Duration duration = Duration.ofSeconds(1);
+        Duration duration = Duration.ofMillis(20L);
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(duration)
+                .ignoring(TimeoutException.class);
+        Alert alert = null;
+        try {
+            alert = wait.until(ExpectedConditions.alertIsPresent());
+        } catch(TimeoutException e) {
+        }
+        if(alert != null) {
+            //driver.switchTo().alert().accept();
+            alert.accept();
+        }
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
+    
+    private void initElements() {
+        languageSwitcher = new Select(driver.findElement(By.cssSelector("select.language-switcher")));
+        mainMenuDropdown = new MainMenuDropdown(driver);
+        copyright = driver.findElement(By.cssSelector("div.bottom-part"));
+    }
 
-//	private void initComponents() {
-		// TODO Develop Application Status Class (Singleton)
-//		createTopGuestComponent();
-//	}
-	
-	// Page Object
-	
-	// languageSwitcher
+//  private void initComponents() {
+        // TODO Develop Application Status Class (Singleton)
+//      createTopGuestComponent();
+//  }
+    
+    // Page Object
+    
+    // languageSwitcher
     
     public Select getLanguageSwitcher() {
-		return languageSwitcher;
-	}
+        return languageSwitcher;
+    }
 
-	public WebElement getLanguageSwitcherWebElement() {
-		return getLanguageSwitcher().getWrappedElement();
-	}
+    public WebElement getLanguageSwitcherWebElement() {
+        return getLanguageSwitcher().getWrappedElement();
+    }
 
-	public String getLanguageSwitcherText() {
-		return getLanguageSwitcher().getFirstSelectedOption().getText();
-	}
+    public String getLanguageSwitcherText() {
+        return getLanguageSwitcher().getFirstSelectedOption().getText();
+    }
 
-	protected void setLanguageSwitcher(String text) {
-		getLanguageSwitcher().selectByVisibleText(text);
-	}
+    protected void setLanguageSwitcher(String text) {
+        getLanguageSwitcher().selectByVisibleText(text);
+    }
 
-	protected void clickLanguageSwitcher() {
-		getLanguageSwitcherWebElement().click();
-	}
+    protected void clickLanguageSwitcher() {
+        getLanguageSwitcherWebElement().click();
+    }
 
-	// copyright
+    // copyright
 
-	public WebElement getCopyright() {
-		return copyright;
-	}
+    public WebElement getCopyright() {
+        return copyright;
+    }
 
-	public String getCopyrightText() {
-		return getCopyright().getText();
-	}
+    public String getCopyrightText() {
+        return getCopyright().getText();
+    }
 
-	public void clickCopyright() {
-		getCopyright().click();
-	}
-	 
-	// mainMenuDropdown
-	
-	public MainMenuDropdown getMainMenuDropdown() {
-		return mainMenuDropdown;
-	}
-	
-	// Functional
-	
-	// topGuestComponent;
-	
-	protected TopGuestComponent getTopGuestComponent() {
-    	if (topGuestComponent == null)
+    public void clickCopyright() {
+        getCopyright().click();
+    }
+     
+    // mainMenuDropdown
+    
+    public MainMenuDropdown getMainMenuDropdown() {
+        return mainMenuDropdown;
+    }
+    
+    // Functional
+    
+    // topGuestComponent;
+    
+    protected TopGuestComponent getTopGuestComponent() {
+        if (topGuestComponent == null)
         {
             // TODO Develop Custom Exception 
             throw new RuntimeException(OPTION_NULL_MESSAGE);
@@ -150,30 +150,30 @@ public abstract class TopPart {
         return topGuestComponent;
     }
 
-	protected TopGuestComponent createTopGuestComponent() {
-    	topGuestComponent = new TopGuestComponent(driver);
+    protected TopGuestComponent createTopGuestComponent() {
+        topGuestComponent = new TopGuestComponent(driver);
         return getTopGuestComponent();
     }
 
-	protected void clickTopGuestSignin() {
-    	getTopGuestComponent().clickSigninLink();
-    	//topGuestComponent = null;
+    protected void clickTopGuestSignin() {
+        getTopGuestComponent().clickSigninLink();
+        //topGuestComponent = null;
     }
     
-	protected void clickTopGuestSignup() {
-    	getTopGuestComponent().clickSignupLink();
-    	//topGuestComponent = null;
+    protected void clickTopGuestSignup() {
+        getTopGuestComponent().clickSignupLink();
+        //topGuestComponent = null;
     }
 
-	protected void closeTopGuestComponent() {
+    protected void closeTopGuestComponent() {
         //clickSearchTopField();
-    	topGuestComponent = null;
+        topGuestComponent = null;
     }
-	
-	// topUserComponent
-	
-	protected TopUserComponent getTopUserComponent() {
-    	if (topUserComponent == null)
+    
+    // topUserComponent
+    
+    protected TopUserComponent getTopUserComponent() {
+        if (topUserComponent == null)
         {
             // TODO Develop Custom Exception 
             throw new RuntimeException(OPTION_NULL_MESSAGE);
@@ -181,122 +181,142 @@ public abstract class TopPart {
         return topUserComponent;
     }
 
-	protected TopUserComponent createTopUserComponent() {
-    	topUserComponent = new TopUserComponent(driver);
+    protected TopUserComponent createTopUserComponent() {
+        topUserComponent = new TopUserComponent(driver);
         return getTopUserComponent();
     }
     
-	public String getTopUserName() {
-		// TODO
-		//getTopUserComponent().getUserNameButtonText();
-		return createTopUserComponent().getUserNameButtonText();
-	}
-	
-	protected void clickTopUserFavoritePlaces() {
-    	getTopUserComponent().clickProfileDropdownFavoritePlaces();
-    	//topGuestComponent = null;
+    public String getTopUserName() {
+        // TODO
+        //getTopUserComponent().getUserNameButtonText();
+        return createTopUserComponent().getUserNameButtonText();
     }
     
-	protected void clickTopUserSettings() {
-    	getTopUserComponent().clickProfileDropdownUserSettings();
-    	//topGuestComponent = null;
+    protected void clickTopUserFavoritePlaces() {
+        getTopUserComponent().clickProfileDropdownFavoritePlaces();
+        //topGuestComponent = null;
     }
     
-	protected void clickTopUserSignout() {
-    	getTopUserComponent().clickProfileDropdownSignout();
-    	//topGuestComponent = null;
+    protected void clickTopUserSettings() {
+        getTopUserComponent().clickProfileDropdownUserSettings();
+        //topGuestComponent = null;
+    }
+    
+    protected void clickTopUserSignout() {
+        getTopUserComponent().clickProfileDropdownSignout();
+        //topGuestComponent = null;
     }
 
-	protected void closeTopUserComponent() {
+    protected void closeTopUserComponent() {
         //clickSearchTopField();
-    	topUserComponent = null;
+        topUserComponent = null;
     }
-	
-	// language
-	
-	protected void chooseLanguage(Languages language) {
-		clickLanguageSwitcher();
-		setLanguageSwitcher(language.toString());
-	}
-	
-	protected void scrollDown() {
-		//System.out.println("driver.manage().window().getSize()" + driver.manage().window().getSize());
-		if (driver.manage().window().getSize().width < WINDOW_WIDTH_TO_SCROLL) {
-			JavascriptExecutor js = (JavascriptExecutor) driver;
-	        js.executeScript("arguments[0].scrollIntoView(true);", getCopyright());
-		}
-	}
-	
-	protected boolean isMenuClickable() {
-		return driver.manage().window().getSize().height > WINDOW_HEIGHT_TO_CLICK_FOOTER;
-	}
-	
-	// Business Logic
-	
-	public EconewsPage navigateMenuEconews() {
-		getMainMenuDropdown().clickMenuEcoNews();
-		return new EconewsPage(driver);
-	}
-	
-	public TipsTricksPage navigateMenuTipsTricks() {
-		getMainMenuDropdown().clickMenuTipsTricks();
-		return new TipsTricksPage(driver);
-	}
-	
-	public MapPage navigateMenuMap() {
-		getMainMenuDropdown().clickMenuMap();
-		return new MapPage(driver);
-	}
-	
-	// for Loggined
-	public MyCabinetPage navigateMenuMyCabinet() {
-		getMainMenuDropdown().clickMenuMyCabinet();
-		return new MyCabinetPage(driver);
-	}
-	
-	// for not Loggined
-	public MyCabinetPage navigateMenuMyCabinet(User user) {
-		getMainMenuDropdown().clickMenuMyCabinet();
-		new LoginPage(driver).getLoginComponent().fillFieldsSubmit(user);
-		return new MyCabinetPage(driver);
-	}
-	
-	// for not Loggined
-	public LoginPage navigateMenuMyCabinetGuest() {
-		getMainMenuDropdown().clickMenuMyCabinet();
-		return new LoginPage(driver);
-	}
-	
-	public AboutPage navigateMenuAbout() {
-		getMainMenuDropdown().clickMenuAbout();
-		return new AboutPage(driver);
-	}
+    
+    // language
+    
+    protected void chooseLanguage(Languages language) {
+        clickLanguageSwitcher();
+        setLanguageSwitcher(language.toString());
+    }
+    
+    protected void scrollDown() {
+        //System.out.println("driver.manage().window().getSize()" + driver.manage().window().getSize());
+        if (driver.manage().window().getSize().width < WINDOW_WIDTH_TO_SCROLL) {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].scrollIntoView(true);", getCopyright());
+        }
+    }
+    
+    protected boolean isMenuClickable() {
+        return driver.manage().window().getSize().height > WINDOW_HEIGHT_TO_CLICK_FOOTER;
+    }
+    
+    // Business Logic
+    
+    public EconewsPage navigateMenuEconews() {
+        logger.debug("go to EcoNews page");
+        logger.trace("click MenuEcoNews link");
+        getMainMenuDropdown().clickMenuEcoNews();
+        return new EconewsPage(driver);
+    }
+    
+    public TipsTricksPage navigateMenuTipsTricks() {
+        logger.debug("go to TipsTricks page");
+        logger.trace("click TipsTricks link");
+        getMainMenuDropdown().clickMenuTipsTricks();
+        return new TipsTricksPage(driver);
+    }
+    
+    public MapPage navigateMenuMap() {
+        logger.debug("go to Map page");
+        logger.trace("click Map link");
+        getMainMenuDropdown().clickMenuMap();
+        return new MapPage(driver);
+    }
+    
+    // for Loggined
+    public MyCabinetPage navigateMenuMyCabinet() {
+        logger.debug("go to MyCabinet");
+        logger.trace("click MyCabinet link");
+        getMainMenuDropdown().clickMenuMyCabinet();
+        return new MyCabinetPage(driver);
+    }
+    
+    // for not Loggined
+    public MyCabinetPage navigateMenuMyCabinet(User user) {
+        logger.debug("go to MyCabinet as User");
+        logger.trace("click MyCabinet link as User");
+        getMainMenuDropdown().clickMenuMyCabinet();
+        new LoginPage(driver).getLoginComponent().fillFieldsSubmit(user);
+        return new MyCabinetPage(driver);
+    }
+    
+    // for not Loggined
+    public LoginPage navigateMenuMyCabinetGuest() {
+        logger.debug("go to Login Page as Guest");
+        logger.trace("click MyCabinet link as Guest");
+        logger.info("go to Login Page as a Guest");
+        getMainMenuDropdown().clickMenuMyCabinet();
+        return new LoginPage(driver);
+    }
+    
+    public AboutPage navigateMenuAbout() {
+        logger.debug("go to About page");
+        logger.trace("click About link");
+        getMainMenuDropdown().clickMenuAbout();
+        return new AboutPage(driver);
+    }
 
-	public LoginDropdown signin() {
-		// TODO
-		//getTopGuestComponent().clickSigninLink();
-		createTopGuestComponent().clickSigninLink();
-		return new LoginDropdown(driver);
-	}
-	
-	public RegisterDropdown signup() {
-		// TODO
-	    //getTopGuestComponent().clickSignupLink();
-		createTopGuestComponent().clickSignupLink();
-		return new RegisterDropdown(driver);
-	}
-	
-	public TipsTricksPage signout() {
-		logger.debug("start signout()");
-		// TODO
-		//getTopUserComponent().clickProfileDropdownSignout();
-		logger.trace("start clickProfileDropdownSignout();");
-		createTopUserComponent().clickProfileDropdownSignout();
-		logger.trace("start closeTopUserComponent();");
-		closeTopUserComponent();
-		logger.trace("start createTopGuestComponent();");
-		createTopGuestComponent();
-		return new TipsTricksPage(driver);
-	}
-	
+    public LoginDropdown signin() {
+        logger.debug("start signin()");
+        // TODO
+        //getTopGuestComponent().clickSigninLink();
+        logger.trace("click Signin link");
+        createTopGuestComponent().clickSigninLink();
+        return new LoginDropdown(driver);
+    }
+    
+    public RegisterDropdown signup() {
+        logger.debug("start signup()");
+        // TODO
+        //getTopGuestComponent().clickSignupLink();
+        logger.trace("click Signup link");
+        logger.info("go to RegisterDropdown");
+        createTopGuestComponent().clickSignupLink();
+        return new RegisterDropdown(driver);
+    }
+    
+    public TipsTricksPage signout() {
+        logger.debug("start signout()");
+        // TODO
+        //getTopUserComponent().clickProfileDropdownSignout();
+        logger.trace("click Signout link from ProfileDropdown");
+        createTopUserComponent().clickProfileDropdownSignout();
+        logger.trace("close TopUserComponent");
+        closeTopUserComponent();
+        logger.trace("create TopGuestComponent");
+        createTopGuestComponent();
+        return new TipsTricksPage(driver);
+    }
+    
 }

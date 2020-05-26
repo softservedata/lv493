@@ -1,49 +1,125 @@
 package com.softserve.edu.greencity.ui.data;
 
+/**
+ * User class.
+ */
 public class User {
-	private String email;
-	private String firstname;
-	private String password;
+    //
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String password;
+    private String confirmPassword;
+    
+    /**
+     * Constructor.
+     * @param email
+     * @param password
+     */
+    public User(String email, String password) {
+        this.email = email;
+        this.firstName = "";
+        this.lastName = "";
+        this.password = password;
+        this.confirmPassword = "";
+    }
 
-	public User(String email, String firstname, String password) {
-		this.email = email;
-		this.firstname = firstname;
-		this.password = password;
-	}
+    /**
+     * Constructor.
+     * @param email
+     * @param firstname
+     * @param password
+     */
+    public User(String email, String firstname, String password) {
+        this.email = email;
+        this.firstName = firstname;
+        this.lastName = "";
+        this.password = password;
+        this.confirmPassword = "";
+    }
+    
+    /**
+     * Constructor.
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param password
+     */
+    public User(String firstName, String lastName, String email,
+            String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = "";
+    }
+    
+    /**
+     * Constructor.
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param password
+     * @param confirmPassword
+     */
+    public User(String firstName, String lastName, String email,
+            String password, String confirmPassword) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+    }
 
-	// setters
+    // setters
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+    public void setFirstName(String firstname) {
+        this.firstName = firstname;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	// getters
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+    
+    // getters
 
-	public String getFirstname() {
-		return firstname;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	@Override
-	public String toString() {
-		return "User [email=" + email 
-				+ ", firstname=" + firstname 
-				+ ", password=" + password + "]";
-	}
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "User [email=" + email + ", firstName=" + firstName
+                + ", lastName=" + lastName + ", password=" + password
+                + ", confirmPassword=" + confirmPassword + "]";
+    }
 
 }

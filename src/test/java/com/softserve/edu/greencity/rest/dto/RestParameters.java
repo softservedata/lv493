@@ -22,4 +22,10 @@ public class RestParameters {
 	public Map<KeyParameters, String> getAllParameters() {
 		return parameters;
 	}
+
+    @Override
+    public String toString() {
+        return "RestParameters [parameters=" + parameters + "]";
+    }
+	
 }

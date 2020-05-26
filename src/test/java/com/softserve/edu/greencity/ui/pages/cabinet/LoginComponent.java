@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.greencity.ui.pages.common.ForgotPasswordPart;
 import com.softserve.edu.greencity.ui.pages.common.LoginPart;
 
 public class LoginComponent extends LoginPart {

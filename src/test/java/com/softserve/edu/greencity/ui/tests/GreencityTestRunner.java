@@ -2,7 +2,6 @@ package com.softserve.edu.greencity.ui.tests;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-import com.softserve.training.Some;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -32,8 +30,16 @@ public abstract class GreencityTestRunner {
 
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
+//      ChromeOptions options = new ChromeOptions();
+//     String chromeProfilePath = System.getenv("USERPROFILE")
+//             + "\\AppData\\Local\\Google\\Chrome\\User Data";
+//     System.out.println("chromeProfilePath: " + chromeProfilePath);
+//     String chromeChooseProfile = "Profile 1";
+//     options.addArguments("user-data-dir=" + chromeProfilePath);
+//     options.addArguments("profile-directory=" + chromeChooseProfile);
+//   driver = new ChromeDriver(options);
 		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		//driver.manage().window().setSize(new Dimension(640, 480));
 		//driver.manage().window().setSize(new Dimension(480, 640));
@@ -41,7 +47,7 @@ public abstract class GreencityTestRunner {
 
 	@AfterClass(alwaysRun = true)
 	public void tearDownAfterClass() throws Exception {
-		Thread.sleep(1000); // For Presentation Only
+	    presentationSleep(1);
 		if (driver != null) {
 			driver.quit();
 		}
@@ -50,6 +56,7 @@ public abstract class GreencityTestRunner {
 	@BeforeMethod
 	public void setUp() throws Exception {
 		driver.get("https://ita-social-projects.github.io/GreenCityClient/#/welcome");
+//	    driver.get("http://localhost:4200/#/welcome");
 //		driver.manage().window().maximize();
 		Thread.sleep(1000); // For Presentation Only
 	}
@@ -57,8 +64,8 @@ public abstract class GreencityTestRunner {
 	@AfterMethod
 	public void tearDown(ITestResult result) throws Exception {
 		if (!result.isSuccess()) {
-			logger.warn("Test " + result.getName() + " ERROR");
-			//System.out.println("Test " + result.getName() + " ERROR");
+		    logger.warn("Test " + result.getName() + " ERROR");
+			// System.out.println("Test " + result.getName() + " ERROR");
 			// Take Screenshot, save sourceCode, save to log, prepare report, Return to previous state, logout, etc.
 			// TODO Logout
 			//driver.get("https://ita-social-projects.github.io/GreenCityClient/#/welcome");

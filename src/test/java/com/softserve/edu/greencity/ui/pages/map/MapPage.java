@@ -1,8 +1,8 @@
 package com.softserve.edu.greencity.ui.pages.map;
 
-import org.openqa.selenium.WebDriver;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import org.openqa.selenium.WebDriver;
 
 public class MapPage extends TopPart {
 

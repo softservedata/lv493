@@ -6,6 +6,8 @@ public class ErrorEntity {
 	private String error;
 	private String message;
 	private String path;
+	private String name;
+	private String responsecode;
 
 	public ErrorEntity() {
 		timestamp = "";
@@ -13,15 +15,17 @@ public class ErrorEntity {
 		error = "";
 		message = "";
 		path = "";
+		name = "";
 	}
 	
 	public ErrorEntity(String timestamp, int status,
-			String error, String message, String path) {
+			String error, String message, String path, String name) {
 		this.timestamp = timestamp;
 		this.status = status;
 		this.error = error;
 		this.message = message;
 		this.path = path;
+		this.name = name;
 	}
 
 	public String getTimestamp() {
@@ -43,6 +47,10 @@ public class ErrorEntity {
 	public String getPath() {
 		return path;
 	}
+	
+	public String getName() {
+        return name;
+    }
 
 	@Override
 	public String toString() {
@@ -50,7 +58,8 @@ public class ErrorEntity {
 				+ ", status=" + status
 				+ ", error=" + error
 				+ ", message=" + message
-				+ ", path=" + path + "]";
+				+ ", path=" + path 
+				+ ", name=" + name + "]";
 	}
 
 }

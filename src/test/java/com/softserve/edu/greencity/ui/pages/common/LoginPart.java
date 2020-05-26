@@ -94,12 +94,12 @@ public abstract class LoginPart {
     // Functional
     
     protected void fillFields(User user) {
-    	inputEmail(user.getEmail())
-    		.inputPassword(user.getPassword());
+        inputEmail(user.getEmail())
+            .inputPassword(user.getPassword());
     }
     
     protected void fillFieldsSubmit(User user) {
-    	fillFields(user);
-    	clickLoginButton();
+        fillFields(user);
+        clickLoginButton();
     }
 }

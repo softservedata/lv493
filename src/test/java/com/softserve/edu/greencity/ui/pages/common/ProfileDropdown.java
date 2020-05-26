@@ -27,47 +27,47 @@ public class ProfileDropdown {
 	// Page Object
 
 	// favoritePlaces
-	
+
 	public WebElement getFavoritePlaces() {
 		return favoritePlaces;
 	}
 
 	public String getFavoritePlacesText() {
-        return getFavoritePlaces().getText().trim();
-    }
-	
+		return getFavoritePlaces().getText().trim();
+	}
+
 	public void clickFavoritePlaces() {
 		getFavoritePlaces().click();
 	}
 
 	// userSettings
-	
+
 	public WebElement getUserSettings() {
 		return userSettings;
 	}
 
 	public String getUserSettingsText() {
-        return getUserSettings().getText().trim();
-    }
-	
+		return getUserSettings().getText().trim();
+	}
+
 	public void clickUserSettings() {
 		getUserSettings().click();
 	}
 
 	// signout
-	
+
 	public WebElement getSignout() {
 		return signout;
 	}
 
 	public String getSignoutText() {
-        return getSignout().getText().trim();
-    }
-	
+		return getSignout().getText().trim();
+	}
+
 	public void clickSignout() {
 		getSignout().click();
 	}
-	
+
 	// Functional
 
 	// Business Logic

@@ -8,7 +8,10 @@ public enum KeyParameters {
     AUTHORIZATION("Authorization"),
     LANGUAGE("language"),
     LANG("lang"),
+    ID_TOKEN("idToken"),
+    TOKEN("token"),
     USER_ID("userId"),
+    USER_ID2("user_id"),
     NAME("name"),
     BEARER("Bearer ");
 
