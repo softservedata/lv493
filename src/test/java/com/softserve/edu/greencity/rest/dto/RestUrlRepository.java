@@ -30,6 +30,36 @@ public final class RestUrlRepository {
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
+
+    public static RestUrl getNews() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                .addGetUrl("/econews/{" + KeyParameters.ID.toString() + "}")
+                .addPostUrl("/econews")
+                .addPutUrl("")
+                .addDeleteUrl("/econews/{" + KeyParameters.ECONEWS_ID.toString() + "}")
+                .addPatchUrl("");
+    }
+
+    public static RestUrl getNewest() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                .addGetUrl("/econews/newest")
+                .addPostUrl("")
+                .addPutUrl("")
+                .addDeleteUrl("")
+                .addPatchUrl("");
+    }
+
+    public static RestUrl getEconewsByTag() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                .addGetUrl("/econews/tags")
+                .addPostUrl("")
+                .addPutUrl("")
+                .addDeleteUrl("")
+                .addPatchUrl("");
+    }
 }
 
 

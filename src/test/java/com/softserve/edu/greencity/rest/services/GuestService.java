@@ -31,5 +31,8 @@ public class GuestService {
     					.addHeaderParameters(headerParameters));
 		return new LogginedUserService(logginedUserEntity);
 	}
-    
+
+	public EconewsGuestService gotoEconewsGuestService() {
+		return new EconewsGuestService();
+	}
 }

@@ -24,5 +24,9 @@ public final class UserRepository {
 	public User temporary() {
 		return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
 	}
+
+	public User getAdminUser() {
+		return new User("green.city.marjana@gmail.com", "marJana", "Greencity!1");
+	}
 	
 }

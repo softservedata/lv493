@@ -24,4 +24,9 @@ public class LogginedUserService {
 	public MyhabitsService gotoMyhabitsService() {
 		return new MyhabitsService(logginedUserEntity);
 	}
+
+
+	public EconewsUserService gotoEconewsService() {
+		return new EconewsUserService(logginedUserEntity);
+	}
 }
