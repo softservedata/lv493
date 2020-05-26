@@ -98,4 +98,8 @@ public class LogginedUserService {
     public EconewsUserService gotoEconewsUserService() {
         return new EconewsUserService(logginedUserEntity);
     }
+    
+    public PlacesService gotoPlacesService() {
+        return new PlacesService(logginedUserEntity);
+    }
 }

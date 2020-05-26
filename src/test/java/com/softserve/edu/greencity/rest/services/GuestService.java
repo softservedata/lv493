@@ -16,8 +16,8 @@ import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.RegisterUserEntity;
 import com.softserve.edu.greencity.rest.resources.SignUpResource;
 import com.softserve.edu.greencity.rest.resources.SigninResource;
+import com.softserve.edu.greencity.rest.tools.GetMail10MinTools;
 import com.softserve.edu.greencity.ui.data.Languages;
-import com.softserve.edu.greencity.ui.tools.GetMail10MinTools;
 
 public class GuestService {
     //

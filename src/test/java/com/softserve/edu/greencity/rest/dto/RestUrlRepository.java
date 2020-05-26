@@ -67,6 +67,30 @@ public final class RestUrlRepository {
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
+    
+//    // https://***/advices/13
+//    public static RestUrl getAdvices() {
+//        return new RestUrl()
+//                .addBaseUrl(remoteServer)
+////                .addBaseUrl(localServer)
+//                .addGetUrl("/advices")
+//                .addPostUrl("/advices")
+//                .addPutUrl("/advices/{" + KeyParameters.ADVICE_ID.toString() + "}")
+//                .addDeleteUrl("/advices/{" + KeyParameters.ADVICE_ID.toString() + "}")
+//                .addPatchUrl("");
+//    }
+    
+    // https://***/place/about/1" -H "accept: */*" -H "Authorization: Bearer **"
+    public static RestUrl getPlaceAbouId() {
+        return new RestUrl()
+//                .addBaseUrl(remoteServer)
+                .addBaseUrl(localServer)
+                .addGetUrl("/place/about/{" + KeyParameters.PLACE_ID.toString() + "}")
+                .addPostUrl("")
+                .addPutUrl("")
+                .addDeleteUrl("")
+                .addPatchUrl("");
+    }
 }
 
 

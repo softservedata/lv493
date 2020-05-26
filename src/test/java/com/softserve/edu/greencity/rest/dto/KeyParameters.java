@@ -13,7 +13,9 @@ public enum KeyParameters {
     USER_ID("userId"),
     USER_ID2("user_id"),
     NAME("name"),
-    BEARER("Bearer ");
+    BEARER("Bearer "),
+    ADVICE_ID("adviceId"),
+    PLACE_ID("id");
 
     private String key;
 
