@@ -53,7 +53,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 	}
 	
 	private void validateJson(String json) {
-		//System.out.println("***json = " + json);
+		System.out.println("***json = " + json);
 		ResponseCodeEntity responseCodeEntity = null;
 		if (json.charAt(0) == '{') {
 			responseCodeEntity = convertToEntity(json, new TypeToken<ResponseCodeEntity>(){});
@@ -61,10 +61,15 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 		} else {
 			responseCodeEntity = convertToEntity(json, new TypeToken<List<ResponseCodeEntity>>(){}).get(0);
 		}
-		//System.out.println("***responseCodeEntity = " + responseCodeEntity);
+		System.out.println("***responseCodeEntity = " + responseCodeEntity);
 		if ((responseCodeEntity == null) || (responseCodeEntity.getResponsecode() >= HTTP_RESPONSE_CODE_300)) {
 			int responseCode = (responseCodeEntity == null) ? 0 : responseCodeEntity.getResponsecode();
-			ErrorEntity errorEntity = convertToEntity(json, new TypeToken<ErrorEntity>(){});
+			ErrorEntity errorEntity = null;
+			if (json.charAt(0) == '{') {
+			    errorEntity = convertToEntity(json, new TypeToken<ErrorEntity>(){});
+			} else {
+			    errorEntity = convertToEntity(json, new TypeToken<List<ErrorEntity>>(){}).get(0);
+			}
 			//ErrorEntity errorEntity = convertToEntity(json, ErrorEntity.class);
 			throwException(CONVERT_OBJECT_ERROR, errorEntity.toString(), responseCode);
 		}
@@ -89,6 +94,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 	public TGET httpGetAsEntity(MethodParameters methodParameters) {
 		validateParameter(RestHttpMethods.GET, entityParameters);
 		String json = httpGetAsText(methodParameters);
+//		System.out.println("httpGetAsText(methodParameters): " + json);
 		validateJson(json);
 		//return convertToEntity(json, new TypeToken<TGET>(){});
 		//return convertToEntity(json, classTGET);
