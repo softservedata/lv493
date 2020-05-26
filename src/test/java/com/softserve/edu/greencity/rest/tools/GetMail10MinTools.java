@@ -35,7 +35,7 @@ public final class GetMail10MinTools {
     //
     public static final DataFlavor byteFlavor = new DataFlavor(byte[].class, "Byte Flavor");
 
-    public final static String URL = "https://www.minuteinbox.com/"; // not working
+    public final static String URL = "https://www.minuteinbox.com/"; // working
 //    public final static String URL = "https://10minutemail.net/"; // not working
     /**
      * Site URL for temporary email.
