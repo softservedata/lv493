@@ -6,11 +6,11 @@ import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestUrlRepository;
 import com.softserve.edu.greencity.rest.engine.RestQueries;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
-import com.softserve.edu.greencity.rest.entity.UserGoalsEntity;
+import com.softserve.edu.greencity.rest.entity.UserGoalEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
 public class UserGoalsResource extends
-		RestQueries<UserGoalsEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity> {
+		RestQueries<UserGoalEntity, UserGoalEntity, ResponseCodeEntity, Integer, UserGoalEntity> {
 
 	public UserGoalsResource() {
 		super(RestUrlRepository.getUserGoals());
@@ -18,22 +18,22 @@ public class UserGoalsResource extends
 	}
 
 	private void initParameters() {
-		addEntityParameters(RestHttpMethods.GET, UserGoalsEntity.class);
-		addEntityParameters(RestHttpMethods.POST, ResponseCodeEntity.class);
+		addEntityParameters(RestHttpMethods.GET, UserGoalEntity.class);
+		addEntityParameters(RestHttpMethods.POST, UserGoalEntity.class);
 		addEntityParameters(RestHttpMethods.PUT, ResponseCodeEntity.class);
-		addEntityParameters(RestHttpMethods.DELETE, ResponseCodeEntity.class);
-		addEntityParameters(RestHttpMethods.PATCH, ResponseCodeEntity.class);
+		addEntityParameters(RestHttpMethods.DELETE, Integer.class);
+		addEntityParameters(RestHttpMethods.PATCH, UserGoalEntity.class);
 		//
 		addListEntityParameters(RestHttpMethods.GET,
-				new GenericConverter<List<UserGoalsEntity>>(){}.getGenericType());
+				new GenericConverter<List<UserGoalEntity>>(){}.getGenericType());
 		addListEntityParameters(RestHttpMethods.POST,
-				new GenericConverter<List<ResponseCodeEntity>>(){}.getGenericType());
+				new GenericConverter<List<UserGoalEntity>>(){}.getGenericType());
 		addListEntityParameters(RestHttpMethods.PUT,
 				new GenericConverter<List<ResponseCodeEntity>>(){}.getGenericType());
 		addListEntityParameters(RestHttpMethods.DELETE,
-				new GenericConverter<List<ResponseCodeEntity>>(){}.getGenericType());
+				new GenericConverter<List<Integer>>(){}.getGenericType());
 		addListEntityParameters(RestHttpMethods.PATCH,
-				new GenericConverter<List<ResponseCodeEntity>>(){}.getGenericType());
+				new GenericConverter<List<UserGoalEntity>>(){}.getGenericType());
 	}
 
 }

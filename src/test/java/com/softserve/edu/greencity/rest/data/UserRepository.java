@@ -18,11 +18,15 @@ public final class UserRepository {
 	}
 
 	public User getDefault() {
-		return temporary();
+		return admin();
 	}
-	
+
+	public User admin() {
+        return new User("soyorer682@hubopss.com", "ann", "1!Aaaaaa");
+    }
+
 	public User temporary() {
 		return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
 	}
-	
+
 }

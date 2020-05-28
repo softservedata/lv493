@@ -1,5 +1,9 @@
 package com.softserve.edu.greencity.rest.services;
 
+import com.softserve.edu.greencity.rest.data.LanguagesCode;
+import com.softserve.edu.greencity.rest.dto.ContentTypes;
+import com.softserve.edu.greencity.rest.dto.KeyParameters;
+import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 
 public class LogginedUserService {
@@ -10,15 +14,47 @@ public class LogginedUserService {
 	}
 
 	// getters
-	
+
 	public LogginedUserEntity getLogginedUserEntity() {
 		return logginedUserEntity;
 	}
-	
+
+	// Functionals
+
+    protected RestParameters getHeaderParameters() {
+        return new RestParameters()
+                .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
+                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+    }
+
+    protected RestParameters getLanguageParameter(LanguagesCode language) {
+        return new RestParameters()
+                .addParameter(KeyParameters.LANGUAGE, String.valueOf(language));
+    }
+
 	// Business Logic
-	
-	public MyCabinetService gotoMyCabinetService() {
-		return new MyCabinetService(logginedUserEntity);
-	}
-	
+
+	public MyHabitsService gotoMyhabitsService() {
+        return new MyHabitsService(logginedUserEntity);
+    }
+
+    public HabitStatisticService gotoHabitStatisticService() {
+        return new HabitStatisticService(logginedUserEntity);
+    }
+
+    public TodayHabitStatisticService gotoTodayHabitStatisticService() {
+        return new TodayHabitStatisticService(logginedUserEntity);
+    }
+
+    public AchievementService gotoAchievementService() {
+        return new AchievementService(logginedUserEntity);
+    }
+
+    public GoalsService gotoGoalsService() {
+        return new GoalsService(logginedUserEntity);
+    }
+
+    public HabitFactService gotoHabitFactService() {
+        return new HabitFactService(logginedUserEntity);
+    }
 }

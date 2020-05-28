@@ -1,17 +1,16 @@
 package com.softserve.edu.greencity.rest.tests;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserGoal;
+import com.softserve.edu.greencity.rest.data.UserGoalRepository;
 import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.services.LogginedUserService;
-import com.softserve.edu.greencity.rest.services.MyCabinetService;
+import com.softserve.edu.greencity.rest.services.UserGoalsService;
 
 public class SmokeTest extends GreencityRestTestRunner {
 
@@ -30,18 +29,25 @@ public class SmokeTest extends GreencityRestTestRunner {
 		Assert.assertEquals(logginedUserService.getLogginedUserEntity().getName(),
 				user.getName());
 	}
-	
-	@Test(dataProvider = "users")
-	public void checkUserGoals(User user) {
+
+	@DataProvider
+	public Object[][] userGoals() {
+		return new Object[][] {
+			{ UserRepository.get().temporary(), UserGoalRepository.get().typicalGoal() }
+		};
+	}
+
+	//@Test(dataProvider = "userGoals")
+	public void checkUserGoals(User user, List<UserGoal> expectedGoals) {
 		logger.info("Start checkUserGoals(" + user + ")");
-		MyCabinetService myCabinetService = loadApplication()
+		UserGoalsService myhabitsService = loadApplication()
 				.successfulUserLogin(user)
-				.gotoMyCabinetService();
+				.gotoMyhabitsService()
+				.gotoUserGoalsService();
 		System.out.println("logginedUserEntity = "
-				+ myCabinetService.getLogginedUserEntity());
-		List<UserGoal> userGoals = myCabinetService.userGoals();
+				+ myhabitsService.getLogginedUserEntity());
+		List<UserGoal> userGoals = myhabitsService.userGoals();
 		System.out.println("userGoals = "+ userGoals);
-//		Assert.assertEquals(logginedUserService.getLogginedUserEntity().getName(),
-//				user.getName());
+		Assert.assertEquals(userGoals, expectedGoals);
 	}
 }

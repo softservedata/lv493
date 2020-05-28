@@ -1,19 +1,25 @@
 package com.softserve.edu.greencity.rest.engine;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
+import com.softserve.edu.greencity.rest.dto.FileUploadParameters;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.dto.RestUrl;
+import com.softserve.edu.greencity.rest.tools.GreenCity400Exception;
+import com.softserve.edu.greencity.rest.tools.GreenCity404Exception;
+import com.softserve.edu.greencity.rest.tools.GreenCityCommonException;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -44,15 +50,23 @@ public abstract class RestCrud {
 	}
 
 	// protected - - - - - - - - - - - - - - - - - - - -
-
-	protected void throwException(String prefix, String message) {
+	protected void throwException(String prefix, String message, int responseCode) {
 		String resourceName = this.getClass().getName();
 		resourceName = resourceName.substring(resourceName.lastIndexOf(".") + 1);
 		String resourceMessage = String.format(FOR_RESOURCE, resourceName);
 		String exceptionMessage =  String.format(prefix, message) + resourceMessage;
 		LOGGER.error(exceptionMessage);
-		// TODO Develop Custom Exception
-		throw new RuntimeException(exceptionMessage);
+		// TODO Add Custom Exception
+		switch (responseCode) {
+			case 0: throw new GreenCityCommonException(exceptionMessage);
+			case 400: throw new GreenCity400Exception(exceptionMessage);
+			case 404: throw new GreenCity404Exception(exceptionMessage);
+			default: throw new GreenCityCommonException(exceptionMessage);
+		}
+	}
+	
+	protected void throwException(String prefix, String message) {
+		throwException(NOT_SUPPORT_MESSAGE, message, 0);
 	}
 	
 	protected void throwException(String message) {
@@ -104,6 +118,43 @@ public abstract class RestCrud {
 		return url;
 	}
 
+	private String prepareJson(RestParameters parameters) {
+		// TODO Use Serialization from Entity
+		String json = "{";
+		if (parameters != null) {
+			for (KeyParameters currentKey : parameters.getAllParameters().keySet()) {
+				json = json + "\"" + String.valueOf(currentKey) + "\":\"" 
+						+ parameters.getParameter(currentKey) + "\",";
+			}
+			if (json.length() == 1) {
+				json = json + "}";
+			}
+			json = json.substring(0, json.length() -1) + "}";
+			if (json.length() < 2) { // TODO
+				throwException("prepareJson()");
+			}
+		}
+		return json;
+	}
+	
+	private RequestBody prepareRequestMultipartBody(ContentTypes contentType, FileUploadParameters fileUploadParameters, 
+			KeyParameters formDataPartKey, RestParameters formDataPartParameters) {
+		if (formDataPartKey == null) {
+			throwException(EMPTY_PARAMETER, "formDataPartKey");
+		}
+		return new MultipartBody.Builder()
+				.setType(MultipartBody.FORM)
+				.addFormDataPart(fileUploadParameters.getName(),
+						fileUploadParameters.getFilename(),
+						RequestBody.create(MediaType.parse(contentType.toString()),
+                                new File(fileUploadParameters.getFilepath())))
+                .addFormDataPart(formDataPartKey.toString(), prepareJson(formDataPartParameters)).build();
+	}
+	
+	private RequestBody prepareRequestBodyMediaType(ContentTypes contentType, RestParameters mediaTypeParameters) {
+		return RequestBody.create(MediaType.parse(contentType.toString()), prepareJson(mediaTypeParameters));
+	}
+	
 	private RequestBody prepareRequestBody(RestParameters bodyParameters) {
 		FormBody.Builder formBodyBuilder = new FormBody.Builder();
 		if (bodyParameters != null) {
@@ -114,26 +165,16 @@ public abstract class RestCrud {
 		return formBodyBuilder.build();
 	}
 
-	private RequestBody prepareRequestBodyMediaType(ContentTypes contentType, RestParameters mediaTypeParameters) {
-		// TODO Use Serialization
-		String json = "{";
-		if (mediaTypeParameters != null) {
-			for (KeyParameters currentKey : mediaTypeParameters.getAllParameters().keySet()) {
-				json = json + "\"" + String.valueOf(currentKey) + "\":\"" 
-						+ mediaTypeParameters.getParameter(currentKey) + "\",";
-			}
-			json = json.substring(0, json.length() -1) + "}";
-			if (json.length() < 2) {
-				throwException("prepareRequestBodyMediaType()");
-			}
-		}
-		return RequestBody.create(MediaType.parse(contentType.toString()),json);
-	}
-
 	private RequestBody getFormBody(MethodParameters methodParameters) {
-		return methodParameters.getContentType() != null
-			   ? prepareRequestBodyMediaType(methodParameters.getContentType(), methodParameters.getMediaTypeParameters())
-			   : prepareRequestBody(methodParameters.getBodyParameters());
+		return methodParameters.getFileUploadParameters() != null
+				? prepareRequestMultipartBody(
+						methodParameters.getContentType(),
+						methodParameters.getFileUploadParameters(),
+						methodParameters.getFormDataPartKey(),
+						methodParameters.getFormDataPartParameters())
+				: methodParameters.getContentType() != null
+					   ? prepareRequestBodyMediaType(methodParameters.getContentType(), methodParameters.getMediaTypeParameters())
+					   : prepareRequestBody(methodParameters.getBodyParameters());
 	}
 	
 	private Request.Builder prepareHeader(Request.Builder builder, RestParameters headerParameters) {
