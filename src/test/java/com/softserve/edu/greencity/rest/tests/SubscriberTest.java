@@ -15,23 +15,6 @@ import com.softserve.edu.greencity.rest.services.TipsTricksService;
 
 public class SubscriberTest extends GreencityRestTestRunner {
  
-
-    @DataProvider
-    public Object[][] users() {
-        return new Object[][] { { UserRepository.get().temporary() } };
-    }
-
-//   @Test(dataProvider = "users")
-    public void checkLogin(User user) {
-        logger.info("Start checkLogin(" + user + ")");
-        LogginedUserService logginedUserService = loadApplication()
-                .successfulUserLogin(user)
-                .gotoTipsTricksService();
-        System.out.println("logginedUserEntity = " + 
-                logginedUserService.getLogginedUserEntity());
-        Assert.assertEquals(logginedUserService.getLogginedUserEntity().getName(), user.getName());
-    }
-
     @DataProvider
     public Object[][] rendomEmail() {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getRandomEmail() } };
@@ -51,11 +34,11 @@ public class SubscriberTest extends GreencityRestTestRunner {
     }
     
     
-    @DataProvider
+    //@DataProvider
     public Object[][] sameEmail() {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getSingleEmail()}};
     }
- //todo add error
+ //todo 
    // @Test(dataProvider = "sameEmail")
     public void SingInSame(User user, UserSubscriber userSubscriber) {
        TipsTricksService tipsTricksService = loadApplication()
