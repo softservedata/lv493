@@ -29,10 +29,10 @@ public class PlacesService extends LogginedUserService {
 		return placeStatusResourse;
 	}
 	
-	public PlaceEntity getPlaceAboutIDEntity() {
-        placeAboutIDEntity = new PlaceAboutIDEntity();
-        return placeAboutIDEntity;
-    }
+//	public PlaceEntity getPlaceAboutIDEntity() {
+//        placeAboutIDEntity = new PlaceAboutIDEntity();
+//        return placeAboutIDEntity;
+//    }
     
     public PlacesResource getPlacesResource() {
         return placesResource;

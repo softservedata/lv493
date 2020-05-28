@@ -37,10 +37,10 @@ public class PlasesTest  extends GreencityRestTestRunner{
 	                .successfulUserLogin(user)
 	                .gotoPlacesService();
 
-//	        System.out.println("placesServiceEntity = "
-//	                + placesService.getPlaceStatusResourse());
-//	       PageEntity pageEntity = placesService.getPlasesByStatus(pageParameters, status);
-//	       System.out.println(pageEntity);
+	        System.out.println("placesServiceEntity = "
+	                + placesService.getPlaceStatusResourse());
+	       PageEntity pageEntity = placesService.getPlasesByStatus(pageParameters, status);
+	       System.out.println(pageEntity);
 
 	    }
 }
