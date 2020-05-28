@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.softserve.edu.greencity.rest.data.IgnoreError400;
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.data.UserSubscriber;
@@ -20,7 +21,7 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary() } };
     }
 
-  // @Test(dataProvider = "users")
+//   @Test(dataProvider = "users")
     public void checkLogin(User user) {
         logger.info("Start checkLogin(" + user + ")");
         LogginedUserService logginedUserService = loadApplication()
@@ -32,40 +33,39 @@ public class SubscriberTest extends GreencityRestTestRunner {
     }
 
     @DataProvider
-    public Object[][] singleEmail() {
+    public Object[][] rendomEmail() {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getRandomEmail() } };
     }
     
-    @Test(dataProvider = "singleEmail")
+//    @Test(dataProvider = "rendomEmail")
     public void singleEmail(User user, UserSubscriber userSubscriber) {
         logger.info("Start checkLogin(" + user + ")");
         TipsTricksService tipsTricksService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoTipsTricksService();
-       logger.info("subscribeEntity = "
-                + tipsTricksService.getLogginedUserEntity());
-       NewsSubscriberEntity subscriber = tipsTricksService.subscribeEntity(userSubscriber);
-       logger.info("email = " + subscriber);
-       Assert.assertEquals(subscriber.getEmail(), userSubscriber.getEmail());
+//       System.out.print("\t***newsSubscribeEntity = "
+//                + tipsTricksService.subscribeEntity(userSubscriber));
+       Assert.assertEquals(tipsTricksService.subscribeEntity(userSubscriber).getEmail(), userSubscriber.getEmail());
+      
    
     }
     
     
     @DataProvider
     public Object[][] sameEmail() {
-        return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getSingleEmail() } };
+        return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getSingleEmail()}};
     }
-    //add to message
-    //@Test(dataProvider = "sameEmail")
+ 
+    @Test(dataProvider = "sameEmail")
     public void SingInSame(User user, UserSubscriber userSubscriber) {
-        logger.info("Start checkLogin(" + user + ")");
-        TipsTricksService tipsTricksService = loadApplication()
-                .successfulUserLogin(user)
-                .gotoTipsTricksService();
-        System.out.println("subscribeEntity = "
-                + tipsTricksService.getLogginedUserEntity());
-//        NewsSubscriberEntity subscriber = tipsTricksService.getSubscribeEntity();
-       NewsSubscriberEntity subscriber = tipsTricksService.subscribeEntity(userSubscriber);
-        System.out.println("Random email = " + subscriber);}
+       TipsTricksService tipsTricksService = loadApplication()
+               .successfulUserLogin(user)
+               .gotoTipsTricksService();
+     System.out.println("subscribeEntity = "
+               + tipsTricksService.subscribeEntity(userSubscriber));
+//      NewsSubscriberEntity subscriber = tipsTricksService.subscribeEntity(userSubscriber);
+     Assert.assertEquals(tipsTricksService.subscribeEntity(userSubscriber).getEmail(), userSubscriber.getEmail());
+
+        }
     
 }

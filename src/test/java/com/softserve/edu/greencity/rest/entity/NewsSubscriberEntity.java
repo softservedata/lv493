@@ -19,10 +19,15 @@ public class NewsSubscriberEntity implements Verifaible {
         return email;
     }
         
+//    @Override
+//    public String toString() {
+//        return "NewsSubscriberEntity [email=" + email +"]";
+//    }
+    
     @Override
-    public String toString() {
-        return "NewsSubscriberEntity [email=" + email +"]";
-    }
+  public String toString() {
+  return email;
+}
     
     @Override
      public boolean isValid() {

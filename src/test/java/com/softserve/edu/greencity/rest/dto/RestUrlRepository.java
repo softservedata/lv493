@@ -71,6 +71,16 @@ public final class RestUrlRepository {
                 .addPatchUrl("");
                 
     }
+    
+    public static RestUrl getNews() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                //.addGetUrl("/econews/{" + KeyParameters.ID.toString() + "}")
+                .addPostUrl("/econews")
+                .addPutUrl("")
+                //.addDeleteUrl("/econews/{" + KeyParameters.ECONEWS_ID.toString() + "}")
+                .addPatchUrl("");
+    }
                 
     
 }

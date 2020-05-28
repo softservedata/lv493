@@ -2,11 +2,12 @@ package com.softserve.edu.greencity.rest.data;
 
 
 public class UserSubscriberRepository {
-   
+
     private UserSubscriberRepository() {  
     }
     
-    public static UserSubscriber getDefault() {
+
+    public UserSubscriber getDefault() {
         return  getSingleEmail();
     }
     
