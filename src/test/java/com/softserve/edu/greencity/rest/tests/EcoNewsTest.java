@@ -2,7 +2,7 @@ package com.softserve.edu.greencity.rest.tests;
 
 import java.util.List;
 
-import org.testng.Assert;
+import com.softserve.edu.greencity.rest.entity.econewsEntity.TagsEntity;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -10,10 +10,8 @@ import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.data.econews.PageParameterRepository;
 import com.softserve.edu.greencity.rest.data.econews.PageParameters;
-import com.softserve.edu.greencity.rest.entity.econewsEntity.NewsEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.PageEntity;
 import com.softserve.edu.greencity.rest.services.EconewsUserService;
-import com.softserve.edu.greencity.rest.tools.VerifyUtils;
 
 
 public class EcoNewsTest extends GreencityRestTestRunner {
@@ -37,14 +35,14 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 				.gotoEconewsUserService();
 		System.out.println("logginedUserEntity = "
 				+ tagsService.getLogginedUserEntity());
-		List<String> tagsEntity = tagsService.getTags();
+		String tagsEntity = tagsService.getTags();
 //		String[] tagsEntity = tagsService.getTags();
 		System.out.println("***tagsEntity = "+ tagsEntity);
 //		Assert.assertEquals(logginedUserService.getLogginedUserEntity().getName(),
 //				user.getName());
 	}
 	
-	//@Test(dataProvider = "users")
+	@Test(dataProvider = "users")
 	public void checkFreshNews(User user) {
 		logger.info("Start checkFreshNews(" + user + ")");
 		EconewsUserService newsService = loadApplication()
@@ -53,14 +51,14 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 		System.out.println("newsService  = "
 				+ newsService.getLogginedUserEntity());
 //		List<NewsItems> newsItems = newsService.getNewsEntity();
-		List<NewsEntity> newsEntity = newsService.getNewsEntity();
-		System.out.println("***newsEntity = "+  newsEntity);
+		//List<NewsEntity> newsEntity = newsService.getNewsEntity();
+	//	System.out.println("***newsEntity = "+  newsEntity);
 				
-		Assert.assertTrue(VerifyUtils.verifyClass(newsEntity));
+	//	Assert.assertTrue(VerifyUtils.verifyClass(newsEntity));
 
 	}
 	
-	//@Test(dataProvider = "econews")
+	@Test(dataProvider = "econews")
 	public void checkhNews(User user, PageParameters pageParameters) {
 		logger.info("Start checkFreshNews(" + user + ")");
 		EconewsUserService pageService = loadApplication()

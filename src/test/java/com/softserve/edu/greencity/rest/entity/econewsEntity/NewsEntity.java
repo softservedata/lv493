@@ -1,81 +1,102 @@
 package com.softserve.edu.greencity.rest.entity.econewsEntity;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.softserve.edu.greencity.rest.tools.Verifeible;
-
-public class NewsEntity implements Verifeible {
-	
+public class NewsEntity extends PageEntity {
+    private int id;
     private String creationDate;
     private String imagePath;
-    private int id;
     private String title;
     private String text;
     private String source;
-    //
-    private AuthorEntity author; // "id": 33, // "name": "myname"
-    private  String[] tags;
-    
-	public NewsEntity(String creationDate, String imagePath, int id, String title, String text, String source,
-			AuthorEntity author, String[] tags) {
-		this.creationDate = creationDate;
-		this.imagePath = imagePath;
-		this.id = id;
-		this.title = title;
-		this.text = text;
-		this.source = source;
-		this.author = author;
-		this.tags = tags;
-	}
+    private AuthorEntity author;
+    private List<String> tags;
 
-	@Override
-	public String toString() {
-		return "NewsEntity [creationDate=" + creationDate + ", imagePath=" + imagePath + ", id=" + id + ", title="
-				+ title + ", text=" + text + ", source=" + source + ", author=" + author.getName() +" " + author.getId()
-				+ ", tags=" + (Arrays.asList(tags)).toString() +
-				"]";
-	}
+    public NewsEntity() {
+        id = -1;
+        creationDate = "";
+        imagePath = "";
+        title = "";
+        text = "";
+        source = "";
+        author = new AuthorEntity();
+        tags = new ArrayList<>();
+    }
 
-	public String getCreationDate() {
-		return creationDate;
-	}
+    public NewsEntity(int id, String creationDate, String imagePath, String title,
+                      String text, String source, AuthorEntity author, List<String> tags) {
+        this.id = id;
+        this.creationDate = creationDate;
+        this.imagePath = imagePath;
+        this.title = title;
+        this.text = text;
+        this.source = source;
+        this.author = author;
+        this.tags = tags;
+    }
 
-	public String getImagePath() {
-		return imagePath;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getCreationDate() {
+        return creationDate;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public String getSource() {
-		return source;
-	}
+    public String getImagePath() {
+        return imagePath;
+    }
 
-	public AuthorEntity getAuthor() {
-		return author;
-	}
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
-	public List<String> getTags() {
-		return null;
-		
-	}
-	@Override
-	public boolean isValid () {
-		return (creationDate != null) && (creationDate.length() > 0 );
-		
-	}
-      
-	
+    public String getTitle() {
+        return title;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public AuthorEntity getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(AuthorEntity author) {
+        this.author = author;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
 }

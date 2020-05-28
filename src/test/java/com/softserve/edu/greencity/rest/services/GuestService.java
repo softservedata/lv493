@@ -107,5 +107,9 @@ public class GuestService {
         System.out.println("registerUserEntities: " + registerUserEntities);
         return UnsuccessfulRegistration.converToUnsuccessfulRegistrationList(registerUserEntities);
     }
+
+    public EconewsGuestService gotoEconewsGuestService() {
+        return new EconewsGuestService();
+    }
     
 }

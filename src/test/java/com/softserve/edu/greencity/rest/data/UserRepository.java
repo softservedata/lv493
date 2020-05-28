@@ -52,5 +52,9 @@ public final class UserRepository {
     public User alreadyExistingUserCredentials() {
         return new User("gceurzwfejqtiguoku@ttirv.net", "Sergii_Test", "A475asd123*");
     }
+
+	public User getAdminUser() {
+		return new User("green.city.marjana@gmail.com", "marJana", "Greencity!1");
+	}
 	
 }

@@ -9,12 +9,13 @@ import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.NewsEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
-public class NewsResource extends
-	RestQueries<NewsEntity, ResponseCodeEntity, 
+
+public class NewestNewsResource extends
+	RestQueries<NewsEntity, ResponseCodeEntity,
 	ResponseCodeEntity, ResponseCodeEntity, 
 	ResponseCodeEntity> {
 
-	public NewsResource() {
+	public NewestNewsResource() {
 		super(RestUrlRepository.getRecentlyCreatedNews());
 		initParameters();
 }

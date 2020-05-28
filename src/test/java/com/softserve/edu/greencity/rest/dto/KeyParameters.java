@@ -15,7 +15,12 @@ public enum KeyParameters {
     NAME("name"),
     BEARER("Bearer "),
     PAGE("page"),
-	SIZE("size");
+	SIZE("size"),
+    ADD_ECONEWS_DTO_REQUEST("addEcoNewsDtoRequest"),
+    ECONEWS_ID("econewsId"),
+    IMAGE("image"),
+    TAGS("tags"),
+    ID("id");
 
     private String key;
 

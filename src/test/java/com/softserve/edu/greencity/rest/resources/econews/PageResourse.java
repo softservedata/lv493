@@ -15,7 +15,7 @@ public class PageResourse extends
 		ResponseCodeEntity> {
 
 public PageResourse() {
-	super(RestUrlRepository.getAllNews());
+	super(RestUrlRepository.getNews());
 	initParameters();
 }
 
