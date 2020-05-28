@@ -6,6 +6,7 @@ public class AuthorEntity {
 	
 	private int id;
     private String name;
+    private String email;   // added 
 
 	public AuthorEntity(){
 		id = -1;
@@ -17,12 +18,28 @@ public class AuthorEntity {
 		this.name = name;
 	}
 
+	public AuthorEntity(int id, String name, String email) { //new
+		
+		this.id = id;
+		this.name = name;
+		this.email = email;
+	}
+
 	public int getId() {
 		return id;
 	}
     
 	public String getName() {
 		return name;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	@Override
+	public String toString() {
+		return "AuthorEntity [id=" + id + ", name=" + name + ", email=" + email + "]";
 	}
 
 	public static Author convertToAuthor(AuthorEntity authorEntity) {

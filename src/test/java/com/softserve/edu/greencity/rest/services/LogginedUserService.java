@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.rest.services;
 
-import com.softserve.edu.greencity.rest.data.GoogleSecurity;
 import com.softserve.edu.greencity.rest.data.VerifyEmail;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;

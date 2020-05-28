@@ -120,7 +120,17 @@ public final class RestUrlRepository {
                 .addPatchUrl("");
     }
 
-    //-------------------------------------------------------------------------------
+    //Places ---------------------------------------------------------------------
+    
+    public static RestUrl getPlacesByStatus() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                .addGetUrl("place/APPROVED")
+                .addPostUrl("")
+                .addPutUrl("")
+                .addDeleteUrl("")
+                .addPatchUrl("");
+    }
 }
 
 
