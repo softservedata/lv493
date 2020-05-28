@@ -37,7 +37,27 @@ public class SubscriberTest extends GreencityRestTestRunner {
     }
     
     @Test(dataProvider = "singleEmail")
-    public void SingIn(User user, UserSubscriber userSubscriber) {
+    public void singleEmail(User user, UserSubscriber userSubscriber) {
+        logger.info("Start checkLogin(" + user + ")");
+        TipsTricksService tipsTricksService = loadApplication()
+                .successfulUserLogin(user)
+                .gotoTipsTricksService();
+       logger.info("subscribeEntity = "
+                + tipsTricksService.getLogginedUserEntity());
+       NewsSubscriberEntity subscriber = tipsTricksService.subscribeEntity(userSubscriber);
+       logger.info("email = " + subscriber);
+       Assert.assertEquals(subscriber.getEmail(), userSubscriber.getEmail());
+   
+    }
+    
+    
+    @DataProvider
+    public Object[][] sameEmail() {
+        return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getSingleEmail() } };
+    }
+    //add to message
+    //@Test(dataProvider = "sameEmail")
+    public void SingInSame(User user, UserSubscriber userSubscriber) {
         logger.info("Start checkLogin(" + user + ")");
         TipsTricksService tipsTricksService = loadApplication()
                 .successfulUserLogin(user)
@@ -46,10 +66,6 @@ public class SubscriberTest extends GreencityRestTestRunner {
                 + tipsTricksService.getLogginedUserEntity());
 //        NewsSubscriberEntity subscriber = tipsTricksService.getSubscribeEntity();
        NewsSubscriberEntity subscriber = tipsTricksService.subscribeEntity(userSubscriber);
-        System.out.println("tipsTricksService.subscribeEntity(userSubscriber) = " + subscriber);
-   
-//        Assert.assertEquals(tipsTricksService.getLogginedUserEntity().getName(), user.getName());
+        System.out.println("Random email = " + subscriber);}
     
-        
-    }
 }
