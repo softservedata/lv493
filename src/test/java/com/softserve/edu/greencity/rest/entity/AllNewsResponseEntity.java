@@ -1,20 +1,20 @@
-package com.softserve.edu.greencity.rest.entity.econewsEntity;
+package com.softserve.edu.greencity.rest.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageEntity {
+public class AllNewsResponseEntity {
     private List<NewsEntity> page;
     private int totalElements;
     private int currentPage;
 
-    public PageEntity() {
+    public AllNewsResponseEntity() {
         page = new ArrayList<NewsEntity>();
         totalElements = -1;
         currentPage = -1;
     }
 
-    public PageEntity(List<NewsEntity> page, int totalElements, int currentPage) {
+    public AllNewsResponseEntity(List<NewsEntity> page, int totalElements, int currentPage) {
         this.page = page;
         this.totalElements = totalElements;
         this.currentPage = currentPage;
@@ -42,10 +42,5 @@ public class PageEntity {
 
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
-    }
-
-    @Override
-    public String toString() {
-        return "PageEntity [page=" + page + ", totalElements=" + totalElements + ", currentPage=" + currentPage + "]";
     }
 }

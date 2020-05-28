@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.rest.tools;
 
 public class GreenCity404Exception extends GreenCityCommonException {
+
 	private static final long serialVersionUID = 1L;
 
 	public GreenCity404Exception() {
@@ -18,4 +19,5 @@ public class GreenCity404Exception extends GreenCityCommonException {
 	public GreenCity404Exception(String message, Exception e) {
 		super(message, e);
 	}
+
 }

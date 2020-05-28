@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class UserGoalRepository {
+
 	private static volatile UserGoalRepository instance = null;
 
 	private UserGoalRepository() {
@@ -52,3 +53,5 @@ public class UserGoalRepository {
 	}
 	
 }
+
+    

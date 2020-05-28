@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.rest.services;
 
+
 import com.softserve.edu.greencity.rest.data.PlaceStatus;
 import com.softserve.edu.greencity.rest.data.econews.PageParameters;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
@@ -28,10 +29,10 @@ public class PlacesService extends LogginedUserService {
 		return placeStatusResourse;
 	}
 	
-//	public PlaceEntity getPlaceAboutIDEntity() {
-////        placeAboutIDEntity = new PlaceAboutIDEntity();
-//        return placeAboutIDEntity;
-//    }
+	public PlaceEntity getPlaceAboutIDEntity() {
+        placeAboutIDEntity = new PlaceAboutIDEntity();
+        return placeAboutIDEntity;
+    }
     
     public PlacesResource getPlacesResource() {
         return placesResource;
@@ -67,7 +68,7 @@ public class PlacesService extends LogginedUserService {
     public PlaceEntity placeAboutID() {
         MethodParameters methodParameters = new MethodParameters();
         getPlacesResource();
-        //
+        
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
                 .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
@@ -83,4 +84,5 @@ public class PlacesService extends LogginedUserService {
         // System.out.println("***googleSecurityEntity = " +
         return placeAboutIDEntity;
     }
+
 }

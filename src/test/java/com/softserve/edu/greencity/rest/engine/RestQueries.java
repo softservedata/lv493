@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.softserve.edu.greencity.rest.data.IgnoreError400;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestUrl;
@@ -14,6 +15,7 @@ import com.softserve.edu.greencity.rest.entity.ErrorEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 
 public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends RestCrud {
+
 	private final String CONVERT_OBJECT_ERROR = "ConvertToObject Error. Service Returned\n%s";
 	private final int HTTP_RESPONSE_CODE_300 = 300;
 	//
@@ -180,4 +182,18 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 		//return convertToEntity(json, typeTPATCH);
 		return convertToEntity(json, listEntityParameters.get(RestHttpMethods.PATCH));
 	}
+
+//    private boolean isIgnoreError(String json) {
+//        boolean result = false;
+//        if ((json != null) && (json.length() > 0)) {
+//            for (IgnoreError400 currentMassage : IgnoreError400.values()) {
+//                if (json.contains(currentMassage.toString())) {
+//                    result = true;
+//                    break;
+//                }
+//            }
+//        }
+//        return result;  
+//    }
+    
 }

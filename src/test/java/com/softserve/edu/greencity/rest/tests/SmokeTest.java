@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.rest.tests;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.testng.Assert;
@@ -15,6 +14,7 @@ import com.softserve.edu.greencity.rest.services.LogginedUserService;
 import com.softserve.edu.greencity.rest.services.MyhabitsService;
 
 public class SmokeTest extends GreencityRestTestRunner {
+
 
 	@DataProvider
 	public Object[][] users() {
@@ -52,3 +52,4 @@ public class SmokeTest extends GreencityRestTestRunner {
 		Assert.assertEquals(userGoals, expectedGoals);
 	}
 }
+

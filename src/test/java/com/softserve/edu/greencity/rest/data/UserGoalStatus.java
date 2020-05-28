@@ -1,11 +1,12 @@
 package com.softserve.edu.greencity.rest.data;
 
 public enum UserGoalStatus {
+
 	ACTIVE("ACTIVE"),
 	DONE("DONE");
 	
 	private String status;
-
+ 
     private UserGoalStatus(String status) {
         this.status = status;
     }
@@ -14,4 +15,5 @@ public enum UserGoalStatus {
     public String toString() {
     	return status;
     }
+
 }

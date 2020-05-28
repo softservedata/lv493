@@ -15,6 +15,7 @@ import com.softserve.edu.greencity.rest.resources.UserDtoResource;
 import com.softserve.edu.greencity.rest.resources.places.PlacesResource;
 
 public class LogginedUserService {
+
     //
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     //
@@ -24,6 +25,7 @@ public class LogginedUserService {
     private UserDtoEntity userDtoEntity;
     private UserDtoResource userDtoResource;
     private PlacesResource placesResource;
+
 
     public LogginedUserService(LogginedUserEntity logginedUserEntity) {
         this.logginedUserEntity = logginedUserEntity;
@@ -115,4 +117,9 @@ public class LogginedUserService {
 	public PlacesService gotoPlacesService() {
         return new PlacesService(logginedUserEntity);
     }
+
+    public TipsTricksService gotoTipsTricksService() {
+        return new TipsTricksService(logginedUserEntity);
+    }
 }
+

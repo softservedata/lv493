@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.rest.services;
 
+
 import com.softserve.edu.greencity.rest.data.econews.News;
 import com.softserve.edu.greencity.rest.data.econews.PageParameters;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
@@ -135,4 +136,25 @@ public class EconewsUserService extends LogginedUserService {
         return econewsService.getId();
     }
     // Business Logic
+
+    
+    // TODO
+//    public NewsEntity uploadNews() {
+//        MethodParameters methodParameters = new MethodParameters()
+//                .addContentType(ContentTypes.IMAGE_JPEG)
+//                .addFormDataPartKey(KeyParameters.ECO_NEWS_DTO);
+//        FileUploadParameters fileUploadParameters = new FileUploadParameters("image", "@111.jpg", "D:\\Title1.jpeg");
+//        RestParameters formDataPartParameters = new RestParameters()
+//                .addParameter(KeyParameters.IMAGE_PATH, "string0")
+//                .addParameter(KeyParameters.SOURCE, "string1")
+//                .addParameter(KeyParameters.TAGS, "news")
+//                .addParameter(KeyParameters.TEXT, "string12345string1234500044")
+//                .addParameter(KeyParameters.TITLE, "string2");
+//        NewsEntity newsEntity = econewsResource
+//                .httpPostAsEntity(methodParameters
+//                        .addFileUploadParameters(fileUploadParameters)
+//                        .addFormDataPartParameters(formDataPartParameters));
+//        return newsEntity;
+//    }
+
 }

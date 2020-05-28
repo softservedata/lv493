@@ -24,13 +24,9 @@ public final class UserRepository {
 	}
 	
 	public User temporary() {
-		return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
+		return new User("xdknxusqvjeovowpfk@awdrt.com", "temp", "Temp#001");
 	}
 	
-//	public User temporary() {
-//		return new User("xdknxovowpfk@awdrt.com", "Temp", "Temp#001");
-//	}
-
 	public User temporary2() {
         return new User("yoren18521@aprimail.com", "JXHIASJAwrSgncoJIpPg", "A475asd123*");
     }
@@ -61,4 +57,10 @@ public final class UserRepository {
 		return new User("green.city.marjana@gmail.com", "marJana", "Greencity!1");
 	}
 	
+	 public User ashot() {
+         return new User("acheuusdukwyhuhfab@ttirv.com", "ashot", "QwertY12!");
+     }
+	 
+	 
+
 }

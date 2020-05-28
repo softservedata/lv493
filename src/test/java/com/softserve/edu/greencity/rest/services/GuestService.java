@@ -39,7 +39,7 @@ public class GuestService {
         signUpResource = new SignUpResource();
     }
 
-    // getters
+//     getters
     private RegisterUserEntity getRegisterUserEntity() {
         return registerUserEntity;
     }

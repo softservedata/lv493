@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.rest.tools;
 
-public interface Verifeible {
-	
-	boolean isValid();
+public interface Verifaible {
+    boolean isValid();
 
 }
