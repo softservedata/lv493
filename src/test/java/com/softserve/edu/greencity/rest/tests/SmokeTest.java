@@ -27,18 +27,17 @@ public class SmokeTest extends GreencityRestTestRunner {
                 .successfulUserLogin(user);
         System.out.println("logginedUserEntity = "
                 + logginedUserService.getLogginedUserEntity());
-        Assert.assertEquals(logginedUserService.getLogginedUserEntity().getName(),
-                user.getName());
+        Assert.assertEquals(logginedUserService.getLogginedUserEntity().getName(), 
+                        user.getName());
     }
-    
+
     @DataProvider
     public Object[][] userGoals() {
-        return new Object[][] {
-            { UserRepository.get().temporary(), UserGoalRepository.get().typicalGoal() }
-        };
+        return new Object[][] { 
+                    { UserRepository.get().temporary(), UserGoalRepository.get().typicalGoal() } };
     }
-    
-    @Test(dataProvider = "userGoals")
+
+     @Test(dataProvider = "userGoals")
     public void checkUserGoals(User user, List<UserGoal> expectedGoals) {
         logger.info("Start checkUserGoals(" + user + ")");
         MyhabitsService myhabitsService = loadApplication()
@@ -47,7 +46,7 @@ public class SmokeTest extends GreencityRestTestRunner {
         System.out.println("logginedUserEntity = "
                 + myhabitsService.getLogginedUserEntity());
         List<UserGoal> userGoals = myhabitsService.userGoals();
-        System.out.println("userGoals = "+ userGoals);
+        System.out.println("userGoals = " + userGoals);
         Assert.assertEquals(userGoals, expectedGoals);
     }
 }

@@ -10,15 +10,15 @@ public class EmailRandom {
      * @return random email
      */
 
-    protected String getEmailRandom() {
+    public String getEmailRandom() {
 
         final String SMALL_CHARS = "abcdefghijklmnopqrstuvwxyz";
         final String NUMBERS = "0123456789";
         String file = SMALL_CHARS + NUMBERS;
         StringBuilder bulder = new StringBuilder();
         Random random = new Random();
-        while (bulder.length() < 10) {
-            int index = random.nextInt() * file.length();
+        while (bulder.length() < 14) {
+            int index = (int) (random.nextFloat() * file.length());
             bulder.append(file.charAt(index));
         }
 
@@ -26,4 +26,6 @@ public class EmailRandom {
         return bulderStr + "@test.com";
 
     }
+    
+  
 }

@@ -10,8 +10,12 @@ public enum KeyParameters {
     LANG("lang"),
     USER_ID("userId"),
     NAME("name"),
-    BEARER("Bearer ");
-
+    BEARER("Bearer "),
+    ADVICE_ID("adviceId"),
+    HABIT_ID("habitId"),
+    CONTENT_TYPE("Content-Type");
+    
+    
     private String key;
 
     private KeyParameters(String key) {

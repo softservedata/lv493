@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.softserve.edu.greencity.rest.entity.UserGoalsEntity;
 
-public class UserGoal {
+public class UserGoal implements Comparable<UserGoal> {
     private String text;
     private String status;
 

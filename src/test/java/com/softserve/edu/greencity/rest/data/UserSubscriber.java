@@ -1,38 +1,42 @@
 package com.softserve.edu.greencity.rest.data;
 
+import com.softserve.edu.greencity.rest.tools.EmailRandom;
+
 public class UserSubscriber {
-    private String email;
-    private String status;
     
-    public UserSubscriber(String email, String status){
+    private String email;
+    EmailRandom emailRendom = new EmailRandom();
+    
+    public UserSubscriber(){
+        this.email = generateEmail();
+        
+    }
+    public UserSubscriber(String email){
         this.email = email;
-        this.status = status;
+        
     }
     
     // setters
 
-    public void setText(String email) {
+    public void setEmail(String email) {
         this.email = email;
-    }
-    
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     // getters
 
-    public String getText() {
+    public String getEmail() {
         return email;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
     
-    //public static UserSubscriber
-    //public String getSubscribeEmail() {
-        
-        
-//    }
+
+    public String generateEmail() {
+        email = emailRendom.getEmailRandom();
+        return email;
+    }
+    
+    @Override
+    public String toString() {
+        return "UserSubscriber [email=" + email + "]";
+    }
+  
 }

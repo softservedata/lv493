@@ -12,6 +12,7 @@ public class GreenCity400Exception extends GreenCityCommonException {
     }
     
     public GreenCity400Exception(String message) {
+        
         super(message);
     }
     
