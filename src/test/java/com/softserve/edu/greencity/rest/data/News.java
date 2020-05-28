@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.rest.data;
 
-import com.softserve.edu.greencity.rest.entity.NewsEntity;
+import com.softserve.edu.greencity.rest.entity.AuthorEntity;
+import com.softserve.edu.greencity.rest.entity.EcoNewsEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +12,18 @@ public class News {
     private String text;
     private String source;
     private List<String> tags;
+    private Author author;
 
-    public News(String imagePath, String title, String text, String source, List<String> tags) {
+    public News(String imagePath, String title, String text, String source, List<String> tags, Author author) {
         this.imagePath = imagePath;
         this.title = title;
         this.text = text;
         this.source = source;
         this.tags = tags;
+        this.author = author;
     }
 
-    // setters
+// setters
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
@@ -42,8 +45,10 @@ public class News {
         this.tags = tags;
     }
 
-
-    // getters
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+// getters
 
     public String getImagePath() {
         return imagePath;
@@ -64,16 +69,21 @@ public class News {
     public List<String> getTags() {
         return tags;
     }
-// static factory
 
-    public static News converToNews(NewsEntity newsEntity) {
-        return new News(newsEntity.getImagePath(), newsEntity.getTitle(),
-                newsEntity.getText(), newsEntity.getSource(), newsEntity.getTags() );
+    public Author getAuthor() {
+        return author;
     }
 
-    public static List<News> converToNewsList(List<NewsEntity> newsEntities) {
+    // static factory
+
+    public static News converToNews(EcoNewsEntity newsEntity) {
+        return new News(newsEntity.getImagePath(), newsEntity.getTitle(),
+                newsEntity.getText(), newsEntity.getSource(), newsEntity.getTags(), AuthorEntity.convertToAuthor(newsEntity.getAuthor()) );
+    }
+
+    public static List<News> converToNewsList(List<EcoNewsEntity> newsEntities) {
         List<News> result = new ArrayList<>();
-        for (NewsEntity newsEntity : newsEntities) {
+        for (EcoNewsEntity newsEntity : newsEntities) {
             result.add(converToNews(newsEntity));
         }
         return result;
@@ -82,11 +92,13 @@ public class News {
 
     @Override
     public String toString() {
-        return "\n" + "News = " +
+        return "News{" +
                 "imagePath='" + imagePath + '\'' +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", source='" + source + '\'' +
-                ", tags=" + tags;
+                ", tags=" + tags +
+                ", author=" + author +
+                '}';
     }
 }

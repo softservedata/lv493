@@ -63,7 +63,7 @@ public class EconewsTests extends GreencityRestTestRunner {
 
     @DataProvider
     public Object[][] id() {
-        return new Object[][]{new Object[]{"415"}};
+        return new Object[][]{new Object[]{"491"}};
     }
 
     @Test(dataProvider = "id")
@@ -88,7 +88,7 @@ public class EconewsTests extends GreencityRestTestRunner {
 
         EconewsUserService econewsUserService = loadApplication()
                 .successfulUserLogin(user)
-                .gotoEconewsService();
+                .gotoEconewsUserService();
 
         System.out.println("logginedUserEntity = "
                 + econewsUserService.getLogginedUserEntity());
@@ -99,7 +99,7 @@ public class EconewsTests extends GreencityRestTestRunner {
 
     @DataProvider
     public Object[][] admins() {
-        return new Object[][]{{UserRepository.get().getAdminUser(), "435"}};
+        return new Object[][]{{UserRepository.get().getAdminUser(), "508"}};
     }
 
     @Test(dataProvider = "admins")
@@ -107,11 +107,15 @@ public class EconewsTests extends GreencityRestTestRunner {
         logger.info("Start deleteNews(" + id + ")");
         EconewsUserService econewsUserService = loadApplication()
                 .successfulUserLogin(user)
-                .gotoEconewsService();
+                .gotoEconewsUserService();
         System.out.println("logginedUserEntity = "
                 + econewsUserService.getLogginedUserEntity());
 
         Assert.assertEquals(econewsUserService.deleteNews(id), 200);
+
+        EconewsGuestService econewsGuestService = loadApplication().gotoEconewsGuestService();
+
+       // Assert.assertNotEquals(econewsGuestService.getNewsById(id), null);
     }
 }
 

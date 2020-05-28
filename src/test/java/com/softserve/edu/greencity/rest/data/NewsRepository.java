@@ -29,7 +29,7 @@ public class NewsRepository {
         tags.add("news");
         tags.add("events");
         return new News("C:\\Users\\mJana\\Documents\\GitHub\\lv493\\src\\test\\resources\\ecobag.jpg", "Reusable shopping bag",
-                "A reusable shopping bag, sometimes called bag-for-life in the UK", "", tags );
+                "A reusable shopping bag, sometimes called bag-for-life in the UK", "", tags, null );
     }
 
 }

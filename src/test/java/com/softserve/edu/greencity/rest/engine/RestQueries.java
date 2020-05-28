@@ -92,6 +92,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 		validateJson(json);
 		//return convertToEntity(json, new TypeToken<TGET>(){});
 		//return convertToEntity(json, classTGET);
+		System.out.println("****json  " + json);
 		return convertToEntity(json, entityParameters.get(RestHttpMethods.GET));
 	}
 

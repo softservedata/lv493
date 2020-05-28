@@ -26,7 +26,4 @@ public class LogginedUserService {
 	}
 
 
-	public EconewsUserService gotoEconewsService() {
-		return new EconewsUserService(logginedUserEntity);
-	}
 }

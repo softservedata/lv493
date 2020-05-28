@@ -6,10 +6,11 @@ import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.entity.AllNewsResponseEntity;
-import com.softserve.edu.greencity.rest.entity.NewsEntity;
+import com.softserve.edu.greencity.rest.entity.EcoNewsEntity;
 import com.softserve.edu.greencity.rest.resources.EconewsResource;
 import com.softserve.edu.greencity.rest.resources.EconewsTagsResource;
 import com.softserve.edu.greencity.rest.resources.NewestNewsResource;
+import com.softserve.edu.greencity.rest.resources.NewsByIdResource;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,12 +19,14 @@ public class EconewsGuestService extends GuestService {
     protected EconewsResource econewsResource;
     protected NewestNewsResource newestNewsResource;
     protected EconewsTagsResource econewsTagsResource;
+    protected NewsByIdResource newsByIdResource;
 
     public EconewsGuestService() {
         super();
         econewsResource = new EconewsResource();
         newestNewsResource = new NewestNewsResource();
         econewsTagsResource = new EconewsTagsResource();
+        newsByIdResource = new NewsByIdResource();
     }
 
     public EconewsResource getEconewsResource() {
@@ -36,6 +39,10 @@ public class EconewsGuestService extends GuestService {
 
     public EconewsTagsResource getEconewsTagsResource() {
         return econewsTagsResource;
+    }
+
+    public NewsByIdResource getNewsByIdResource() {
+        return newsByIdResource;
     }
 
     public List<News> getAllNews(String page, String size) { // available for guest
@@ -61,7 +68,7 @@ public class EconewsGuestService extends GuestService {
         MethodParameters methodParameters = new MethodParameters();
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString());
-        List<NewsEntity> newsList = newestNewsResource
+        List<EcoNewsEntity> newsList = newestNewsResource
                 .httpGetAsListEntity(methodParameters
                         .addHeaderParameters(headerParameters));
         return News.converToNewsList(newsList);
@@ -88,7 +95,7 @@ public class EconewsGuestService extends GuestService {
     }
 
 
-    public List<News> getNewsById(String id) { // available for guest
+    public News getNewsById(String id) { // available for guest
         MethodParameters methodParameters = new MethodParameters();
 
         RestParameters pathVariables = new RestParameters()
@@ -97,10 +104,10 @@ public class EconewsGuestService extends GuestService {
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString());
 
-        List<NewsEntity> news = econewsResource
-                .httpGetAsListEntity(methodParameters
+        EcoNewsEntity news = newsByIdResource
+                .httpGetAsEntity(methodParameters
                         .addHeaderParameters(headerParameters)
                         .addPathVariables(pathVariables));
-        return News.converToNewsList(news);
+        return News.converToNews(news);
     }
 }

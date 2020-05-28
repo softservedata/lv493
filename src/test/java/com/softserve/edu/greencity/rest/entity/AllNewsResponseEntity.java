@@ -3,27 +3,27 @@ package com.softserve.edu.greencity.rest.entity;
 import java.util.ArrayList;
 
 public class AllNewsResponseEntity {
-    private ArrayList<NewsEntity> page;
+    private ArrayList<EcoNewsEntity> page;
     private int totalElements;
     private int currentPage;
 
     public AllNewsResponseEntity() {
-        page = new ArrayList<NewsEntity>();
+        page = new ArrayList<EcoNewsEntity>();
         totalElements = -1;
         currentPage = -1;
     }
 
-    public AllNewsResponseEntity(ArrayList<NewsEntity> page, int totalElements, int currentPage) {
+    public AllNewsResponseEntity(ArrayList<EcoNewsEntity> page, int totalElements, int currentPage) {
         this.page = page;
         this.totalElements = totalElements;
         this.currentPage = currentPage;
     }
 
-    public ArrayList<NewsEntity> getPage() {
+    public ArrayList<EcoNewsEntity> getPage() {
         return page;
     }
 
-    public void setPage(ArrayList<NewsEntity> page) {
+    public void setPage(ArrayList<EcoNewsEntity> page) {
         this.page = page;
     }
 

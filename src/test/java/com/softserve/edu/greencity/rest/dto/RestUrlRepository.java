@@ -34,10 +34,20 @@ public final class RestUrlRepository {
     public static RestUrl getNews() {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
-                .addGetUrl("/econews/{" + KeyParameters.ID.toString() + "}")
+                .addGetUrl("/econews")
                 .addPostUrl("/econews")
                 .addPutUrl("")
                 .addDeleteUrl("/econews/{" + KeyParameters.ECONEWS_ID.toString() + "}")
+                .addPatchUrl("");
+    }
+
+    public static RestUrl getNewsById() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                .addGetUrl("/econews/{" + KeyParameters.ID.toString() + "}")
+                .addPostUrl("")
+                .addPutUrl("")
+                .addDeleteUrl("")
                 .addPatchUrl("");
     }
 

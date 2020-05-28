@@ -63,25 +63,15 @@ public class EconewsUserService extends LogginedUserService {
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString());
 
         RestParameters mediaTypeParameters = new RestParameters()
-                .addParameter(KeyParameters.TYPE, "image/jpeg");
-               // .addParameter(KeyParameters.addEcoNewsDtoRequest, "{\"tags\": [\"news\"], \"text\": \"Text test\", \"title\": \"Test title 25\"}")
-              //  .addParameter(KeyParameters.image, news.getImagePath());
-              //  .addParameter(KeyParameters.MediaType, "application/octet-stream");
-
-        RestParameters bodyParameters = new RestParameters()
-  //              .addParameter(KeyParameters.text, news.getText())
-//                .addParameter(KeyParameters.title, news.getTitle())
-//                .addParameter(KeyParameters.image, news.getImagePath())
-//                .addParameter(KeyParameters.source, news.getSource())
- //               .addParameter(KeyParameters.tags, news.getTags().toString())
-                .addParameter(KeyParameters.ADD_ECONEWS_DTO_REQUEST, "{\"tags\": [\"news\"], \"text\": \"Text test\", \"title\": \"Test title 25\"}");
-
+                .addParameter(KeyParameters.TYPE, "image/jpeg")
+                .addParameter(KeyParameters.ADD_ECONEWS_DTO_REQUEST, "{\"tags\": [\"news\"], \"text\": \"Text test\", \"title\": \"Test title 25\"}")
+                .addParameter(KeyParameters.FILE, news.getImagePath())
+                .addParameter(KeyParameters.MEDIA_TYPE, "application/octet-stream");
 
         ResponseCodeEntity econewsService = econewsResource
                 .httpPostAsEntity(methodParameters
                         .addHeaderParameters(headerParameters)
-                        .addMediaTypeParameters(mediaTypeParameters)
-                        .addBodyParameters(bodyParameters));
+                        .addMediaTypeParameters(mediaTypeParameters));
         return econewsService.getResponsecode();
     }
 }

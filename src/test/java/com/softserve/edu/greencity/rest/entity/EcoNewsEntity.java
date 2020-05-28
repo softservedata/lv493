@@ -5,29 +5,29 @@ import org.openqa.selenium.json.Json;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsEntity extends AllNewsResponseEntity {
+public class EcoNewsEntity extends AllNewsResponseEntity {
     private int id;
     private String creationDate;
     private String imagePath;
     private String title;
     private String text;
     private String source;
-    private Json author;
+    private AuthorEntity author;
     private List<String> tags;
 
-    public NewsEntity() {
+    public EcoNewsEntity() {
         id = -1;
         creationDate = "";
         imagePath = "";
         title = "";
         text = "";
         source = "";
-        author = new Json();
+        author = new AuthorEntity();
         tags = new ArrayList<>();
     }
 
-    public NewsEntity(int id, String creationDate, String imagePath, String title,
-                      String text, String source, Json author, List<String> tags) {
+    public EcoNewsEntity(int id, String creationDate, String imagePath, String title,
+                         String text, String source, AuthorEntity author, List<String> tags) {
         this.id = id;
         this.creationDate = creationDate;
         this.imagePath = imagePath;
@@ -86,11 +86,11 @@ public class NewsEntity extends AllNewsResponseEntity {
         this.source = source;
     }
 
-    public Json getAuthor() {
+    public AuthorEntity getAuthor() {
         return author;
     }
 
-    public void setAuthor(Json author) {
+    public void setAuthor(AuthorEntity author) {
         this.author = author;
     }
 

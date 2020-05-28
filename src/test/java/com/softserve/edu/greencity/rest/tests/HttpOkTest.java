@@ -1,8 +1,5 @@
 package com.softserve.edu.greencity.rest.tests;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import okhttp3.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -17,6 +14,7 @@ public class HttpOkTest {
     public void CreateNewsTest() throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
+
         RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
                 .addFormDataPart("file", "C:\\Users\\mJana\\Documents\\GitHub\\lv493\\src\\test\\resources\\ecobag.jpg",
                         RequestBody.create(MediaType.parse("application/octet-stream"),
