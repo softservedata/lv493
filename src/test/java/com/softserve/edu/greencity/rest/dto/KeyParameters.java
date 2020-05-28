@@ -10,6 +10,12 @@ public enum KeyParameters {
     LANG("lang"),
     USER_ID("userId"),
     NAME("name"),
+    ECO_NEWS_DTO("addEcoNewsDtoRequest"),
+    IMAGE_PATH("imagePath"),
+    SOURCE("source"),
+    TAGS("tags"),
+    TEXT("text"),
+    TITLE("title"),
     BEARER("Bearer ");
 
     private String key;

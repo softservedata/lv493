@@ -5,8 +5,11 @@ public class MethodParameters {
 	private RestParameters urlParameters;
 	private RestParameters bodyParameters;
 	private RestParameters mediaTypeParameters;
+	private RestParameters formDataPartParameters;
 	private RestParameters headerParameters;
 	private ContentTypes contentType;
+	private KeyParameters formDataPartKey;
+	private FileUploadParameters fileUploadParameters;
 	private int index;
 
 	public MethodParameters() {
@@ -16,6 +19,8 @@ public class MethodParameters {
 		mediaTypeParameters = null;
 		headerParameters = null;
 		contentType = null;
+		formDataPartKey = null;
+		fileUploadParameters = null;
 		index = 0;
 	}
 
@@ -40,6 +45,11 @@ public class MethodParameters {
 		this.mediaTypeParameters = mediaTypeParameters;
 		return this;
 	}
+	
+	public MethodParameters addFormDataPartParameters(RestParameters formDataPartParameters) {
+		this.formDataPartParameters = formDataPartParameters;
+		return this;
+	}
 
 	public MethodParameters addHeaderParameters(RestParameters headerParameters) {
 		this.headerParameters = headerParameters;
@@ -51,6 +61,16 @@ public class MethodParameters {
 		return this;
 	}
 
+	public MethodParameters addFormDataPartKey(KeyParameters formDataPartKey) {
+		this.formDataPartKey = formDataPartKey;
+		return this;
+	}
+	
+	public MethodParameters addFileUploadParameters(FileUploadParameters fileUploadParameters) {
+		this.fileUploadParameters = fileUploadParameters;
+		return this;
+	}
+	
 	public MethodParameters setIndex(int index) {
 		this.index = index;
 		return this;
@@ -74,6 +94,10 @@ public class MethodParameters {
 		return mediaTypeParameters;
 	}
 
+	public RestParameters getFormDataPartParameters() {
+		return formDataPartParameters;
+	}
+	
 	public RestParameters getHeaderParameters() {
 		return headerParameters;
 	}
@@ -82,6 +106,14 @@ public class MethodParameters {
 		return contentType;
 	}
 
+	public KeyParameters getFormDataPartKey() {
+		return formDataPartKey;
+	}
+	
+	public FileUploadParameters getFileUploadParameters() {
+		return fileUploadParameters;
+	}
+	
 	public int getIndex() {
 		return index;
 	}
