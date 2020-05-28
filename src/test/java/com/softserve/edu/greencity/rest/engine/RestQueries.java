@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.softserve.edu.greencity.rest.data.IgnoreError400;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestUrl;
@@ -14,22 +15,22 @@ import com.softserve.edu.greencity.rest.entity.ErrorEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 
 public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends RestCrud {
-	private final String CONVERT_OBJECT_ERROR = "ConvertToObject Error. Service Returned\n%s";
-	private final int HTTP_RESPONSE_CODE_300 = 300;
-	//
-	private Map<RestHttpMethods, Type> entityParameters;
-	private Map<RestHttpMethods, Type> listEntityParameters;
-	//
-	 // TODO Get Class<T> from <T>
-	private Gson gson;
+    private final String CONVERT_OBJECT_ERROR = "ConvertToObject Error. Service Returned\n%s";
+    private final int HTTP_RESPONSE_CODE_300 = 300;
+    //
+    // TODO Get Class<T> from <T>
+    private Map<RestHttpMethods, Type> entityParameters;
+    private Map<RestHttpMethods, Type> listEntityParameters;
+    //
+    private Gson gson;
 
-	protected RestQueries(RestUrl restUrl) {
-	    super(restUrl);
+    protected RestQueries(RestUrl restUrl) {
+        super(restUrl);
         gson = new Gson();
         initParameters();
-	}
-	
-	private void initParameters() {
+    }
+    
+    private void initParameters() {
         entityParameters = new HashMap<>();
         listEntityParameters = new HashMap<>();
         for (RestHttpMethods currentHttpMethod : RestHttpMethods.values()) {
@@ -46,6 +47,19 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
         listEntityParameters.put(httpMethod, typeValue);
     }
     
+    private boolean isIgnoreError(String json) {
+        boolean result = false;
+        if ((json != null) && (json.length() > 0)) {
+            for (IgnoreError400 currentMassage : IgnoreError400.values()) {
+                if (json.contains(currentMassage.toString())) {
+                    result = true;
+                    break;
+                }
+            }
+        }
+        return result;  
+    }
+    
     private void validateParameter(RestHttpMethods httpMethod, Map<RestHttpMethods, Type> parameter) {
         if (parameter.get(httpMethod) == null) {
             throwException(httpMethod.toString());
@@ -53,7 +67,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
     }
     
     private void validateJson(String json) {
-        System.out.println("***json = " + json);
+        //System.out.println("***json = " + json);
         ResponseCodeEntity responseCodeEntity = null;
         if (json.charAt(0) == '{') {
             responseCodeEntity = convertToEntity(json, new TypeToken<ResponseCodeEntity>(){});
@@ -62,7 +76,8 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
             responseCodeEntity = convertToEntity(json, new TypeToken<List<ResponseCodeEntity>>(){}).get(0);
         }
         //System.out.println("***responseCodeEntity = " + responseCodeEntity);
-        if ((responseCodeEntity == null) || (responseCodeEntity.getResponsecode() >= HTTP_RESPONSE_CODE_300)) {
+        if ((!isIgnoreError(json)) 
+                && ((responseCodeEntity == null) || (responseCodeEntity.getResponsecode() >= HTTP_RESPONSE_CODE_300))) {
             int responseCode = (responseCodeEntity == null) ? 0 : responseCodeEntity.getResponsecode();
             ErrorEntity errorEntity = convertToEntity(json, new TypeToken<ErrorEntity>(){});
             //ErrorEntity errorEntity = convertToEntity(json, ErrorEntity.class);

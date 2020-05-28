@@ -1,5 +1,8 @@
 package com.softserve.edu.greencity.rest.services;
 
+import org.apache.http.entity.ContentType;
+
+import com.softserve.edu.greencity.rest.data.IgnoreError400;
 import com.softserve.edu.greencity.rest.data.UserSubscriber;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
@@ -58,6 +61,26 @@ public class TipsTricksService extends LogginedUserService {
                     .addHeaderParameters(headerParameters));
 
         return subscriberEntity;
+    }
+    
+    public NewsSubscriberEntity previousSubscriber() {
+        MethodParameters methodParameters = new MethodParameters()
+                .addContentType(ContentTypes.APPLICATION_JSON);
+        
+        RestParameters headerParameters = new RestParameters()
+                .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString()) 
+                .addParameter(KeyParameters.AUTHORIZATION,
+                        KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+//    
+        RestParameters mediaTypeParameters = new RestParameters()
+                .addParameter(KeyParameters.EMAIL, userSubscriber.getEmail());
+        
+        NewsSubscriberEntity previousSubscriber = subscriberResource
+                .httpPostAsEntity(methodParameters
+                .addMediaTypeParameters(mediaTypeParameters)
+                .addHeaderParameters(headerParameters));
+        
+        return previousSubscriber;
     }
     
     

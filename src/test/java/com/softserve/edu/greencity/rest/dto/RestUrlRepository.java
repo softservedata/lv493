@@ -64,7 +64,7 @@ public final class RestUrlRepository {
     public static RestUrl getAdvicesRandom() {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
-                .addGetUrl("/advices/random/" + KeyParameters.HABIT_ID.toString()+ "}")
+                .addGetUrl("/advices/random/{" + KeyParameters.HABIT_ID.toString()+ "}")
                 .addPostUrl("")
                 .addPutUrl("")
                 .addDeleteUrl("")

@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.rest.engine;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.slf4j.Logger;
@@ -17,38 +18,38 @@ import com.softserve.edu.greencity.rest.tools.GreenCityCommonException;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public abstract class RestCrud {
-	protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-	private final String NOT_SUPPORT_MESSAGE = "Method %s not Support";
-	private final String FOR_RESOURCE = " for %s Resource";
-	private final String EMPTY_PARAMETER = "Empty Parameter %s";
-	private final String EXECUTE_REQUEST_ERROR = "Execute Request Error %s";
-	private final String RESPONSEBODY_ERROR = "Error to get text from ResponseBody %s";
-	//
-	private final String URL_PARAMETERS_SEPARATOR = "?";
-	private final String NEXT_PARAMETERS_SEPARATOR = "&";
-	private final String KEY_VALUE_SEPARATOR = "=";
-	//
-	private RestUrl restUrl;
-	private OkHttpClient client;
+    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final String NOT_SUPPORT_MESSAGE = "Method %s not Support";
+    private final String FOR_RESOURCE = " for %s Resource";
+    private final String EMPTY_PARAMETER = "Empty Parameter %s";
+    private final String EXECUTE_REQUEST_ERROR = "Execute Request Error %s";
+    private final String RESPONSEBODY_ERROR = "Error to get text from ResponseBody %s";
+    //
+    private final String URL_PARAMETERS_SEPARATOR = "?";
+    private final String NEXT_PARAMETERS_SEPARATOR = "&";
+    private final String KEY_VALUE_SEPARATOR = "=";
+    //
+    private RestUrl restUrl;
+    private OkHttpClient client;
 
-	public RestCrud(RestUrl restUrl) {
-		this.restUrl = restUrl;
-		client = new OkHttpClient();
-	}
+    public RestCrud(RestUrl restUrl) {
+        this.restUrl = restUrl;
+        client = new OkHttpClient();
+    }
 
-	protected RestUrl getRestUrl() {
-		return restUrl;
-	}
+    protected RestUrl getRestUrl() {
+        return restUrl;
+    }
 
-	// protected - - - - - - - - - - - - - - - - - - - -
-
-	protected void throwException(String prefix, String message, int responseCode) {
+    // protected - - - - - - - - - - - - - - - - - - - -
+    protected void throwException(String prefix, String message, int responseCode) {
         String resourceName = this.getClass().getName();
         resourceName = resourceName.substring(resourceName.lastIndexOf(".") + 1);
         String resourceMessage = String.format(FOR_RESOURCE, resourceName);
@@ -62,8 +63,8 @@ public abstract class RestCrud {
             default: throw new GreenCityCommonException(exceptionMessage);
         }
     }
-	
-	protected void throwException(String prefix, String message) {
+    
+    protected void throwException(String prefix, String message) {
         throwException(NOT_SUPPORT_MESSAGE, message, 0);
     }
     
@@ -79,7 +80,6 @@ public abstract class RestCrud {
             throwException(restUrlKeys.name());
         }
     }
-
 
     // Parameters - - - - - - - - - - - - - - - - - - - -
 
@@ -117,6 +117,43 @@ public abstract class RestCrud {
         return url;
     }
 
+    private String prepareJson(RestParameters parameters) {
+        // TODO Use Serialization from Entity
+        String json = "{";
+        if (parameters != null) {
+            for (KeyParameters currentKey : parameters.getAllParameters().keySet()) {
+                json = json + "\"" + String.valueOf(currentKey) + "\":\"" 
+                        + parameters.getParameter(currentKey) + "\",";
+            }
+            if (json.length() == 1) {
+                json = json + "}";
+            }
+            json = json.substring(0, json.length() -1) + "}";
+            if (json.length() < 2) { // TODO
+                throwException("prepareJson()");
+            }
+        }
+        return json;
+    }
+    
+    private RequestBody prepareRequestMultipartBody(ContentTypes contentType, FileUploadParameters fileUploadParameters, 
+            KeyParameters formDataPartKey, RestParameters formDataPartParameters) {
+        if (formDataPartKey == null) {
+            throwException(EMPTY_PARAMETER, "formDataPartKey");
+        }
+        return new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart(fileUploadParameters.getName(),
+                        fileUploadParameters.getFilename(),
+                        RequestBody.create(MediaType.parse(contentType.toString()),
+                                new File(fileUploadParameters.getFilepath())))
+                .addFormDataPart(formDataPartKey.toString(), prepareJson(formDataPartParameters)).build();
+    }
+    
+    private RequestBody prepareRequestBodyMediaType(ContentTypes contentType, RestParameters mediaTypeParameters) {
+        return RequestBody.create(MediaType.parse(contentType.toString()), prepareJson(mediaTypeParameters));
+    }
+    
     private RequestBody prepareRequestBody(RestParameters bodyParameters) {
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
         if (bodyParameters != null) {
@@ -127,26 +164,16 @@ public abstract class RestCrud {
         return formBodyBuilder.build();
     }
 
-    private RequestBody prepareRequestBodyMediaType(ContentTypes contentType, RestParameters mediaTypeParameters) {
-        // TODO Use Serialization
-        String json = "{";
-        if (mediaTypeParameters != null) {
-            for (KeyParameters currentKey : mediaTypeParameters.getAllParameters().keySet()) {
-                json = json + "\"" + String.valueOf(currentKey) + "\":\"" 
-                        + mediaTypeParameters.getParameter(currentKey) + "\",";
-            }
-            json = json.substring(0, json.length() -1) + "}";
-            if (json.length() < 2) {
-                throwException("prepareRequestBodyMediaType()");
-            }
-        }
-        return RequestBody.create(MediaType.parse(contentType.toString()),json);
-    }
-
     private RequestBody getFormBody(MethodParameters methodParameters) {
-        return methodParameters.getContentType() != null
-               ? prepareRequestBodyMediaType(methodParameters.getContentType(), methodParameters.getMediaTypeParameters())
-               : prepareRequestBody(methodParameters.getBodyParameters());
+        return methodParameters.getFileUploadParameters() != null
+                ? prepareRequestMultipartBody(
+                        methodParameters.getContentType(),
+                        methodParameters.getFileUploadParameters(),
+                        methodParameters.getFormDataPartKey(),
+                        methodParameters.getFormDataPartParameters())
+                : methodParameters.getContentType() != null
+                       ? prepareRequestBodyMediaType(methodParameters.getContentType(), methodParameters.getMediaTypeParameters())
+                       : prepareRequestBody(methodParameters.getBodyParameters());
     }
     
     private Request.Builder prepareHeader(Request.Builder builder, RestParameters headerParameters) {

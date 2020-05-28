@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.rest.entity;
 
 public class NewsSubscriberAllEntity {
-
+     //admin
     private String email;
     private String unsubscribeToken;
  
