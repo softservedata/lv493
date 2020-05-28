@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
@@ -15,8 +17,7 @@ import org.testng.annotations.BeforeSuite;
 
 import com.google.gson.Gson;
 import com.softserve.edu.greencity.rest.services.GuestService;
-import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-import com.softserve.edu.greencity.ui.tools.GetMail10MinTools;
+import com.softserve.edu.greencity.rest.tools.GetMail10MinTools;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import okhttp3.OkHttpClient;
@@ -39,28 +40,20 @@ public abstract class GreencityRestRegisterTestRunner {
 	@BeforeSuite
 	public void beforeSuite() {
 	    WebDriverManager.chromedriver().setup();
+	    WebDriverManager.phantomjs().setup();
 	}
 
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception {
         //
-//      WebDriverManager.phantomjs().setup();
-//      WebDriver driver = new PhantomJSDriver();
+      driver = new PhantomJSDriver(); // working!
       //
         //
 //      ChromeOptions options = new ChromeOptions();
 //      options.addArguments("--headless"); // Chrome Without UI
 //      driver = new ChromeDriver(options);
-      //
-//      ChromeOptions options = new ChromeOptions();
-//     String chromeProfilePath = System.getenv("USERPROFILE")
-//             + "\\AppData\\Local\\Google\\Chrome\\User Data";
-//     System.out.println("chromeProfilePath: " + chromeProfilePath);
-//     String chromeChooseProfile = "Profile 1";
-//     options.addArguments("user-data-dir=" + chromeProfilePath);
-//     options.addArguments("profile-directory=" + chromeChooseProfile);
-//   driver = new ChromeDriver(options);
-		driver = new ChromeDriver();
+	    //
+//		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		//driver.manage().window().setSize(new Dimension(640, 480));

@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.softserve.edu.greencity.rest.data.User;
+import com.softserve.edu.greencity.rest.data.VerifyEmailLinkAndId;
 import com.softserve.edu.greencity.ui.data.Languages;
 
 public class RegisterUserEntity {
@@ -21,8 +22,26 @@ public class RegisterUserEntity {
     private String name;
     private String message;
     //
+    private VerifyEmailLinkAndId verifyEmailLinkAndId;    
+    //
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     //
+    public void setVerifyEmailLinkAndId(VerifyEmailLinkAndId verifyEmailLinkAndId) {
+        this.verifyEmailLinkAndId = verifyEmailLinkAndId;
+    }
+    
+    public VerifyEmailLinkAndId getVerifyEmailLinkAndId() {
+        return verifyEmailLinkAndId;
+    }
+    
+    public RegisterUserEntity() {
+        this.email = "";
+        this.lang = "";
+        this.username ="";
+        this.password = "";
+        this.name = "";
+        this.message = "";
+    }
 
     public RegisterUserEntity(Languages language, User userData) {
         this.email = "";

@@ -11,7 +11,7 @@ public class GoogleSecurityTest extends GreencityRestTestRunner {
 
     @DataProvider
     public Object[][] users() {
-        return new Object[][] { { UserRepository.get().temporary2() } };
+        return new Object[][] { { UserRepository.get().temporary() } };
     }
     
     @Test(dataProvider = "users")

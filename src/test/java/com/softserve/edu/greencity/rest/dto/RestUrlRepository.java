@@ -25,8 +25,8 @@ public final class RestUrlRepository {
     
     public static RestUrl getSignUp() {
         return new RestUrl()
-//                .addBaseUrl(remoteServer)
-                .addBaseUrl(localServer)
+                .addBaseUrl(remoteServer)
+//                .addBaseUrl(localServer)
                 .addGetUrl("")
                 .addPostUrl("/ownSecurity/signUp")
                 .addPutUrl("")
@@ -126,6 +126,30 @@ public final class RestUrlRepository {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
                 .addGetUrl("place/APPROVED")
+                .addPostUrl("")
+                .addPutUrl("")
+                .addDeleteUrl("")
+                .addPatchUrl("");
+    }
+	
+	// https://***/place/about/1 -H "accept: */*" -H "Authorization: Bearer **"
+    public static RestUrl getPlaceAbouId() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+//                .addBaseUrl(localServer)
+                .addGetUrl("/place/about/{" + KeyParameters.PLACE_ID.toString() + "}")
+                .addPostUrl("")
+                .addPutUrl("")
+                .addDeleteUrl("")
+                .addPatchUrl("");
+    }
+    
+    //"http://***/user" -H "accept: */*" -H "Authorization: Bearer ***"
+    public static RestUrl getUserDto() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+//                .addBaseUrl(localServer)
+                .addGetUrl("/user")
                 .addPostUrl("")
                 .addPutUrl("")
                 .addDeleteUrl("")

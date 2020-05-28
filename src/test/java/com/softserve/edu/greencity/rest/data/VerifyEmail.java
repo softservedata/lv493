@@ -36,7 +36,7 @@ public class VerifyEmail {
 // static factory
     
     public static VerifyEmail converToVerifyEmail(VerifyEmailEntity verifyEmailEntity) {
-        return new VerifyEmail(verifyEmailEntity.getText(), verifyEmailEntity.getStatus());
+        return new VerifyEmail(verifyEmailEntity.getMessage(), verifyEmailEntity.getStatus());
     }
     
     public static List<VerifyEmail> converToGoogleSecurityList(List<VerifyEmailEntity> verifyEmailEntities) {

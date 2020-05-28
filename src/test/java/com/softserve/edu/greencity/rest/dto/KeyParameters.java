@@ -20,7 +20,9 @@ public enum KeyParameters {
     ECONEWS_ID("econewsId"),
     IMAGE("image"),
     TAGS("tags"),
-    ID("id");
+    ID("id"),
+	ADVICE_ID("adviceId"),
+    PLACE_ID("id");
 
     private String key;
 
