@@ -125,7 +125,7 @@ public final class RestUrlRepository {
     public static RestUrl getPlacesByStatus() {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
-                .addGetUrl("place/APPROVED")
+                .addGetUrl("/place/{" + KeyParameters.PLACE_STATUS.toString() + "}")
                 .addPostUrl("")
                 .addPutUrl("")
                 .addDeleteUrl("")

@@ -27,7 +27,7 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 		return new Object[][] { { UserRepository.get().temporary(), PageParameterRepository.getNews() } };
 	}
 	
-	@Test(dataProvider = "users")
+	//@Test(dataProvider = "users")
 	public void checkAllTags(User user) {
 		logger.info("Start checkAllTags(" + user + ")");
 		EconewsUserService tagsService = loadApplication()

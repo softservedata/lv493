@@ -22,7 +22,8 @@ public enum KeyParameters {
     TAGS("tags"),
     ID("id"),
 	ADVICE_ID("adviceId"),
-    PLACE_ID("id");
+    PLACE_ID("id"),
+	PLACE_STATUS("status");
 
     private String key;
 

@@ -112,7 +112,7 @@ public class LogginedUserService {
         return new EconewsUserService(logginedUserEntity);
     }
 	
-//	public PlacesService gotoPlacesService() {
-//        return new PlacesService(logginedUserEntity, placesResource);
-//    }
+	public PlacesService gotoPlacesService() {
+        return new PlacesService(logginedUserEntity);
+    }
 }
