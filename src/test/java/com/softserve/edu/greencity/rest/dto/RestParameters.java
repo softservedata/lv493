@@ -1,17 +1,18 @@
 package com.softserve.edu.greencity.rest.dto;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import com.softserve.edu.greencity.rest.data.IgnoreError400;
-
+import java.util.stream.Collectors;
 
 public class RestParameters {
 	private Map<KeyParameters, String> parameters;
-	private Map<IgnoreError400, String> messages;
+	private Map<KeyParameters, List<String>> listParameters;
 
 	public RestParameters() {
 		parameters = new HashMap<>();
+		listParameters = new HashMap<>();
 	}
 
 	public RestParameters addParameter(KeyParameters key, String value) {
@@ -19,24 +20,31 @@ public class RestParameters {
 		return this;
 	}
 
+	public RestParameters addListParameter(KeyParameters key, String value) {
+		List<String> list = listParameters.get(key);
+		if (list == null) {
+			list = new ArrayList<>();
+			list.add(value);
+			listParameters.put(key, list);
+		} else {
+			list.add(value);
+		}
+		return this;
+	}
+
 	public String getParameter(KeyParameters key) {
 		return parameters.get(key);
+	}
+
+	public List<String> getListParameter(KeyParameters key) {
+		return listParameters.get(key);
 	}
 
 	public Map<KeyParameters, String> getAllParameters() {
 		return parameters;
 	}
-	
-	 public RestParameters addMessage(IgnoreError400 message, String value){
-	     messages.put(message, value);
-	     return this;
-	 }
-	 
-	 public String getMessage(IgnoreError400 message) {
-	     return messages.get(message);
-	 }
-	 
-	 public Map<IgnoreError400, String> getAllMessage() {
-	     return messages;
-	 }
+
+	public Map<KeyParameters, List<String>> getAllListParameters() {
+		return listParameters;
+	}
 }

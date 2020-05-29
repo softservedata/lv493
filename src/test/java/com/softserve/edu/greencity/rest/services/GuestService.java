@@ -2,6 +2,8 @@ package com.softserve.edu.greencity.rest.services;
 
 import java.util.List;
 
+import com.softserve.edu.greencity.rest.entity.places.PlaceEntity;
+import com.softserve.edu.greencity.rest.resources.places.FavoritePlaceResources;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +36,15 @@ public class GuestService {
     private WebDriver driver;
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+
+    private PlaceEntity placeEntity;
+    private FavoritePlaceResources favoritePlaceResources;
+
     public GuestService() {
         signinResource = new SigninResource();
         signUpResource = new SignUpResource();
+        placeEntity = new PlaceEntity();
+        favoritePlaceResources = new FavoritePlaceResources();
     }
 
 //     getters
@@ -204,9 +212,4 @@ public class GuestService {
         return VerifyEmail.converToVerifyEmail(verifyEmailEntity);
     }
     
-    public EconewsGuestService gotoEconewsGuestService() {
-        return new EconewsGuestService();
-    }
-    
-   
 }

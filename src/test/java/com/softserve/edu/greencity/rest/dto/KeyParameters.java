@@ -16,7 +16,11 @@ public enum KeyParameters {
     BEARER("Bearer "),
     PAGE("page"),
 	SIZE("size"),
-    ADD_ECONEWS_DTO_REQUEST("addEcoNewsDtoRequest"),
+    ECO_NEWS_DTO("addEcoNewsDtoRequest"),
+    IMAGE_PATH("imagePath"),
+    SOURCE("source"),
+    TEXT("text"),
+    TITLE("title"),
     ECONEWS_ID("econewsId"),
     IMAGE("image"),
     TAGS("tags"),
@@ -24,14 +28,10 @@ public enum KeyParameters {
 	ADVICE_ID("adviceId"),
     PLACE_ID("id"),
 	PLACE_STATUS("status"),
-    IMAGE_PATH("imagePath"),
-    SOURCE("source"),
-    TEXT("text"),
-    TITLE("title"),
     HABIT_ID("habitId"),
     CONTENT_TYPE("Content-Type");
-    
-    
+
+
 
     private String key;
 
@@ -41,6 +41,7 @@ public enum KeyParameters {
 
     @Override
     public String toString() {
+        //return String.valueOf(key);
     	return key;
     }
 }

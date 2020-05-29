@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.rest.entity.econewsEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsEntity extends PageEntity {
+public class NewsEntity {
     private int id;
     private String creationDate;
     private String imagePath;

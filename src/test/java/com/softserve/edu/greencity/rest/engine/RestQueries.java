@@ -1,10 +1,5 @@
 package com.softserve.edu.greencity.rest.engine;
 
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.softserve.edu.greencity.rest.data.IgnoreError400;
@@ -13,6 +8,11 @@ import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestUrl;
 import com.softserve.edu.greencity.rest.entity.ErrorEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends RestCrud {
 
@@ -30,7 +30,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 		gson = new Gson();
 		initParameters();
 	}
-	
+
 	private void initParameters() {
 		entityParameters = new HashMap<>();
 		listEntityParameters = new HashMap<>();
@@ -43,19 +43,19 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 	protected void addEntityParameters(RestHttpMethods httpMethod, Class<?> classValue) {
 		entityParameters.put(httpMethod, classValue);
 	}
-	
+
 	protected void addListEntityParameters(RestHttpMethods httpMethod, Type typeValue) {
 		listEntityParameters.put(httpMethod, typeValue);
 	}
-	
+
 	private void validateParameter(RestHttpMethods httpMethod, Map<RestHttpMethods, Type> parameter) {
 		if (parameter.get(httpMethod) == null) {
 			throwException(httpMethod.toString());
 		}
 	}
-	
+
 	private void validateJson(String json) {
-		System.out.println("***json = " + json);
+		//System.out.println("***json = " + json);
 		ResponseCodeEntity responseCodeEntity = null;
 		if (json.charAt(0) == '{') {
 			responseCodeEntity = convertToEntity(json, new TypeToken<ResponseCodeEntity>(){});
@@ -63,24 +63,19 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 		} else {
 			responseCodeEntity = convertToEntity(json, new TypeToken<List<ResponseCodeEntity>>(){}).get(0);
 		}
-		System.out.println("***responseCodeEntity = " + responseCodeEntity);
+		//System.out.println("***responseCodeEntity = " + responseCodeEntity);
 		if ((responseCodeEntity == null) || (responseCodeEntity.getResponsecode() >= HTTP_RESPONSE_CODE_300)) {
 			int responseCode = (responseCodeEntity == null) ? 0 : responseCodeEntity.getResponsecode();
-			ErrorEntity errorEntity = null;
-			if (json.charAt(0) == '{') {
-			    errorEntity = convertToEntity(json, new TypeToken<ErrorEntity>(){});
-			} else {
-			    errorEntity = convertToEntity(json, new TypeToken<List<ErrorEntity>>(){}).get(0);
-			}
+			ErrorEntity errorEntity = convertToEntity(json, new TypeToken<ErrorEntity>(){});
 			//ErrorEntity errorEntity = convertToEntity(json, ErrorEntity.class);
 			throwException(CONVERT_OBJECT_ERROR, errorEntity.toString(), responseCode);
 		}
 	}
-	
+
 //	private <T> T convertToEntity(String json, Class<T> clazz) {
 //		return gson.fromJson(json, clazz);
 //	}
-	
+
 	private <T> T convertToEntity(String json, Type type) {
 		//return gson.fromJson(json, typeToken.getType());
 		return gson.fromJson(json, type);
@@ -96,10 +91,10 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 	public TGET httpGetAsEntity(MethodParameters methodParameters) {
 		validateParameter(RestHttpMethods.GET, entityParameters);
 		String json = httpGetAsText(methodParameters);
-//		System.out.println("httpGetAsText(methodParameters): " + json);
 		validateJson(json);
 		//return convertToEntity(json, new TypeToken<TGET>(){});
 		//return convertToEntity(json, classTGET);
+		System.out.println("****json  " + json);
 		return convertToEntity(json, entityParameters.get(RestHttpMethods.GET));
 	}
 
@@ -140,7 +135,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 	public List<TGET> httpGetAsListEntity(MethodParameters methodParameters) {
 		validateParameter(RestHttpMethods.GET, listEntityParameters);
 		String json = httpGetAsText(methodParameters);
-		//System.out.println("*** json GET:" + json);
+		System.out.println("*** json GET:" + json);
 		validateJson(json);
 		//return convertToEntity(json, new TypeToken<List<?>>() {});
 		//return convertToEntity(json, typeTGET);

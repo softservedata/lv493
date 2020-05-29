@@ -5,12 +5,13 @@ import com.softserve.edu.greencity.rest.dto.RestUrlRepository;
 import com.softserve.edu.greencity.rest.engine.RestQueries;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.NewsEntity;
+import com.softserve.edu.greencity.rest.entity.econewsEntity.PageEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
 import java.util.List;
 
 public class EconewsTagsResource extends
-        RestQueries<NewsEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity> {
+        RestQueries<PageEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity> {
 
     public EconewsTagsResource() {
         super(RestUrlRepository.getEconewsByTag());
@@ -18,14 +19,14 @@ public class EconewsTagsResource extends
     }
 
     private void initParameters() {
-        addEntityParameters(RestHttpMethods.GET, NewsEntity.class);
+        addEntityParameters(RestHttpMethods.GET, PageEntity.class);
         addEntityParameters(RestHttpMethods.POST, ResponseCodeEntity.class);
         addEntityParameters(RestHttpMethods.PUT, ResponseCodeEntity.class);
         addEntityParameters(RestHttpMethods.DELETE, ResponseCodeEntity.class);
         addEntityParameters(RestHttpMethods.PATCH, ResponseCodeEntity.class);
         //
         addListEntityParameters(RestHttpMethods.GET,
-                new GenericConverter<List<NewsEntity>>() {
+                new GenericConverter<List<PageEntity>>() {
                 }.getGenericType());
         addListEntityParameters(RestHttpMethods.POST,
                 new GenericConverter<List<ResponseCodeEntity>>() {
