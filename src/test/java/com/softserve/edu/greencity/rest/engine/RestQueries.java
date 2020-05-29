@@ -72,7 +72,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 			} else {
 			    errorEntity = convertToEntity(json, new TypeToken<List<ErrorEntity>>(){}).get(0);
 			}
-			//ErrorEntity errorEntity = convertToEntity(json, ErrorEntity.class);
+//			ErrorEntity errorEntity = convertToEntity(json, ErrorEntity.class);
 			throwException(CONVERT_OBJECT_ERROR, errorEntity.toString(), responseCode);
 		}
 	}
@@ -195,5 +195,5 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 //        }
 //        return result;  
 //    }
-    
+//    
 }

@@ -6,6 +6,7 @@ import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
+import com.softserve.edu.greencity.rest.entity.ErrorEntity;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.NewsSubscriberEntity;
 import com.softserve.edu.greencity.rest.resources.NewsSubscriberResource;
@@ -50,7 +51,8 @@ public class TipsTricksService extends LogginedUserService {
                         KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
         
         RestParameters mediaTypeParameters = new RestParameters()
-                .addParameter(KeyParameters.EMAIL, userSubscriber.getEmail());  
+                .addParameter(KeyParameters.EMAIL, userSubscriber.getEmail());
+//        System.out.println("**** user = " + userSubscriber.getEmail());
 
         NewsSubscriberEntity subscriberEntity = subscriberResource
                     .httpPostAsEntity(methodParameters
@@ -60,7 +62,7 @@ public class TipsTricksService extends LogginedUserService {
         return subscriberEntity;
     }
     //add ERROr
-    public NewsSubscriberEntity previousSubscriber(UserSubscriber userSubscriber) {
+    public  NewsSubscriberEntity previousSubscriber(UserSubscriber userSubscriber) {
         MethodParameters methodParameters = new MethodParameters()
                 .addContentType(ContentTypes.APPLICATION_JSON);
         
@@ -71,11 +73,13 @@ public class TipsTricksService extends LogginedUserService {
    
         RestParameters mediaTypeParameters = new RestParameters()
                 .addParameter(KeyParameters.EMAIL, userSubscriber.getEmail());
+        
    
         NewsSubscriberEntity previousSubscriber = subscriberResource
                 .httpPostAsEntity(methodParameters
                 .addMediaTypeParameters(mediaTypeParameters)
                 .addHeaderParameters(headerParameters));
+//        String err = new ErrorEntity().getMessage();
         
         return previousSubscriber;
     }
