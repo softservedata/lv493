@@ -9,6 +9,7 @@ import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.data.UserSubscriber;
 import com.softserve.edu.greencity.rest.data.UserSubscriberRepository;
+import com.softserve.edu.greencity.rest.entity.ErrorEntity;
 import com.softserve.edu.greencity.rest.entity.NewsSubscriberEntity;
 import com.softserve.edu.greencity.rest.services.LogginedUserService;
 import com.softserve.edu.greencity.rest.services.TipsTricksService;
@@ -34,21 +35,22 @@ public class SubscriberTest extends GreencityRestTestRunner {
     }
     
     
-    //@DataProvider
+    @DataProvider
     public Object[][] sameEmail() {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getSingleEmail()}};
     }
  //todo 
-   // @Test(dataProvider = "sameEmail")
+   @Test(dataProvider = "sameEmail")
     public void SingInSame(User user, UserSubscriber userSubscriber) {
        TipsTricksService tipsTricksService = loadApplication()
                .successfulUserLogin(user)
                .gotoTipsTricksService();
-     System.out.println("subscribeEntity = "
-               + tipsTricksService.subscribeEntity(userSubscriber));
-//      NewsSubscriberEntity subscriber = tipsTricksService.subscribeEntity(userSubscriber);
-     Assert.assertEquals(tipsTricksService.subscribeEntity(userSubscriber).getEmail(), userSubscriber.getEmail());
-
+//     system.out.println("subscribeentity = "
+//               + tipstricksservice.subscribeentity(usersubscriber));
+     NewsSubscriberEntity subscriber = tipsTricksService.subscribeEntity(userSubscriber);
+//     Assert.assertEquals(tipsTricksService.subscribeEntity(userSubscriber).getEmail(), userSubscriber.getEmail());
+ //   String erorMes = new ErrorEntity().getMessage();
+    System.out.println("message               " + subscriber.getMessage());
         }
     
 }

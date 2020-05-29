@@ -22,7 +22,7 @@ public class PlasesTest  extends GreencityRestTestRunner{
 	 
 	 @DataProvider
 		public Object[][] econews() {
-		 logger.info("-----");
+		
 			return new Object[][] { { UserRepository.get().temporary(), PageParameterRepository.getNews(), PlaceStatus.PROPOSED } };
 		}
 

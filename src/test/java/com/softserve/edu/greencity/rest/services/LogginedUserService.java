@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
+import com.softserve.edu.greencity.rest.entity.ErrorEntity;
 import com.softserve.edu.greencity.rest.entity.GoogleSecurityEntity;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.UserDtoEntity;
@@ -25,6 +26,7 @@ public class LogginedUserService {
     private UserDtoEntity userDtoEntity;
     private UserDtoResource userDtoResource;
     private PlacesResource placesResource;
+    private ErrorEntity error;
 
 
     public LogginedUserService(LogginedUserEntity logginedUserEntity) {
@@ -55,7 +57,7 @@ public class LogginedUserService {
 //        userDtoEntity = new UserDtoEntity();
         return userDtoEntity;
     }
-
+  
     // Functionals
 
     // http://***/googleSecurity?idToken=**" -H "accept: */*" -H "Authorization: Bearer ***"

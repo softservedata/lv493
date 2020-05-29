@@ -59,7 +59,7 @@ public abstract class RestCrud {
 		// TODO Add Custom Exception
 		switch (responseCode) {
 			case 0: throw new GreenCityCommonException(exceptionMessage);
-			case 400: throw new GreenCity400Exception(exceptionMessage);
+			case 400: throw new GreenCity400Exception(exceptionMessage);  
 			case 404: throw new GreenCity404Exception(exceptionMessage);
 			default: throw new GreenCityCommonException(exceptionMessage);
 		}
