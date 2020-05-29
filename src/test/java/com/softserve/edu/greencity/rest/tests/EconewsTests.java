@@ -90,7 +90,7 @@ public class EconewsTests extends GreencityRestTestRunner {
         };
     }
 
-    @Test(dataProvider = "userNews")
+   // @Test(dataProvider = "userNews")
     public void checkUploadEconews(User user, FileUploadProperties fileUploadProperties) {
         logger.info("Start checkUploadEconews(" + user + ")");
         EconewsUserService econewsUserService = loadApplication()
@@ -118,7 +118,7 @@ public class EconewsTests extends GreencityRestTestRunner {
 
         Assert.assertEquals(econewsUserService.deleteNews(id), 200);
 
-        EconewsGuestService econewsGuestService = loadApplication().gotoEconewsGuestService();
+       // EconewsGuestService econewsGuestService = loadApplication().gotoEconewsGuestService();
 
        // Assert.assertNotEquals(econewsGuestService.getNewsById(id), null);
     }

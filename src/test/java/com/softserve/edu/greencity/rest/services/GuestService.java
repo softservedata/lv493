@@ -211,5 +211,9 @@ public class GuestService {
         logger.info("successful verify Email address");
         return VerifyEmail.converToVerifyEmail(verifyEmailEntity);
     }
-    
+
+    public EconewsGuestService gotoEconewsGuestService() {
+        return new EconewsGuestService();
+    }
+
 }
