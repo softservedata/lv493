@@ -38,8 +38,32 @@ public class PlacesService extends LogginedUserService {
         return placesResource;
     }
 	
-
     public PageEntity getPlasesByStatus(PageParameters pageParameters, PlaceStatus status) {
+        MethodParameters methodParameters = new MethodParameters();
+        RestParameters headerParameters = new RestParameters()
+                .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
+                .addParameter(KeyParameters.AUTHORIZATION,
+                        KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+        
+        RestParameters pathVariables = new RestParameters()
+                .addParameter(KeyParameters.PLACE_STATUS, status.toString());
+        
+        RestParameters urlParameter = new RestParameters()
+                .addParameter(KeyParameters.PAGE, pageParameters.getPage())
+                .addParameter(KeyParameters.SIZE, pageParameters.getSize());
+      
+        PageEntity pageEntity = placeStatusResourse
+                .httpGetAsEntity(methodParameters
+                        .addHeaderParameters(headerParameters)
+                        .addPathVariables(pathVariables)
+                        .addUrlParameters(urlParameter));
+
+        System.out.println("***pageEntities = " + pageEntity);
+
+        return pageEntity;
+    }
+    
+    public PageEntity getPlasesByPredicate(PageParameters pageParameters, PlaceStatus status) {
         MethodParameters methodParameters = new MethodParameters();
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())

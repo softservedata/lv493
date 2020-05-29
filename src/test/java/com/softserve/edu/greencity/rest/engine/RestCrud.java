@@ -16,6 +16,7 @@ import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.dto.RestUrl;
 import com.softserve.edu.greencity.rest.tools.GreenCity400Exception;
+import com.softserve.edu.greencity.rest.tools.GreenCity401Exception;
 import com.softserve.edu.greencity.rest.tools.GreenCity404Exception;
 import com.softserve.edu.greencity.rest.tools.GreenCityCommonException;
 
@@ -56,6 +57,8 @@ public abstract class RestCrud {
                 throw new GreenCityCommonException(exceptionMessage);
             case 400:
                 throw new GreenCity400Exception(exceptionMessage);
+            case 401:
+                throw new GreenCity401Exception(exceptionMessage);
             case 404:
                 throw new GreenCity404Exception(exceptionMessage);
             default:

@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.rest.engine;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.softserve.edu.greencity.rest.data.IgnoreError400;
+import com.softserve.edu.greencity.rest.data.IgnoreError401;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestUrl;
@@ -51,6 +52,12 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
         boolean result = false;
         if ((json != null) && (json.length() > 0)) {
             for (IgnoreError400 currentMassage : IgnoreError400.values()) {
+                if (json.contains(currentMassage.toString())) {
+                    result = true;
+                    break;
+                }
+            }
+            for (IgnoreError401 currentMassage : IgnoreError401.values()) {
                 if (json.contains(currentMassage.toString())) {
                     result = true;
                     break;

@@ -40,7 +40,7 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getSingleEmail()}};
     }
  //todo 
-//   @Test(dataProvider = "sameEmail")
+   @Test(dataProvider = "sameEmail")
     public void SingInSame(User user, UserSubscriber userSubscriber) {
        TipsTricksService tipsTricksService = loadApplication()
                .successfulUserLogin(user)

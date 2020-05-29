@@ -139,7 +139,8 @@ public final class RestUrlRepository {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
                 .addGetUrl("/place/{" + KeyParameters.PLACE_STATUS.toString() + "}")
-                .addPostUrl("")
+                .addPostUrl("place/filter/predicate")
+ //               .addPostUrl("")
                 .addPutUrl("")
                 .addDeleteUrl("")
                 .addPatchUrl("");

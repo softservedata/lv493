@@ -27,6 +27,11 @@ public final class UserRepository {
 		return new User("xdknxusqvjeovowpfk@awdrt.com", "temp", "Temp#001");
 	}
 	
+
+	public User temporaryInvalidEmail() {
+		return new User("xdknxusqvpfk@awdrt.com", "temp", "Temp#001");
+	}
+	
 	public User temporary2() {
         return new User("yoren18521@aprimail.com", "JXHIASJAwrSgncoJIpPg", "A475asd123*");
     }
