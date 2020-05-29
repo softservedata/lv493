@@ -1,5 +1,7 @@
 package com.softserve.edu.greencity.rest.dto;
 
+import com.softserve.edu.greencity.rest.data.FileUploadParameters;
+
 public class MethodParameters {
 	private RestParameters pathVariables;
 	private RestParameters urlParameters;

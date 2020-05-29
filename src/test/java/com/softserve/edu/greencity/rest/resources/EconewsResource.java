@@ -27,19 +27,14 @@ public class EconewsResource  extends
         addEntityParameters(RestHttpMethods.PATCH, ResponseCodeEntity.class);
         //
         addListEntityParameters(RestHttpMethods.GET,
-                new GenericConverter<List<AllNewsResponseEntity>>() {
-                }.getGenericType());
+                new GenericConverter<List<AllNewsResponseEntity>>() {}.getGenericType());
         addListEntityParameters(RestHttpMethods.POST,
-                new GenericConverter<List<NewsEntity>>() {
-                }.getGenericType());
+                new GenericConverter<List<NewsEntity>>() {}.getGenericType());
         addListEntityParameters(RestHttpMethods.PUT,
-                new GenericConverter<List<ResponseCodeEntity>>() {
-                }.getGenericType());
+                new GenericConverter<List<ResponseCodeEntity>>() {}.getGenericType());
         addListEntityParameters(RestHttpMethods.DELETE,
-                new GenericConverter<List<ResponseCodeEntity>>() {
-                }.getGenericType());
+                new GenericConverter<List<ResponseCodeEntity>>() {}.getGenericType());
         addListEntityParameters(RestHttpMethods.PATCH,
-                new GenericConverter<List<ResponseCodeEntity>>() {
-                }.getGenericType());
+                new GenericConverter<List<ResponseCodeEntity>>() {}.getGenericType());
     }
 }

@@ -296,7 +296,7 @@ public class SimpleRestTest {
 		Response response;
 		String textBody;
 		//String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlcmdyZWVuQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE1OTA1ODQ1NjksImV4cCI6MTU5MDU5MTc2OX0.T4kxAY_aqQudX2R7awVBY1owKdoNQBI1qAS-VlyXw-c";
-		String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncmVlbi5jaXR5Lm1hcmphbmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJpYXQiOjE1OTA1ODU2NTcsImV4cCI6MTU5MDU5Mjg1N30.rSCi1SVbHwvXgMG7A0tCwjR2uMIQd8QudmmFqRK3uuA";
+		String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncmVlbi5jaXR5Lm1hcmphbmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJpYXQiOjE1OTA3NTA2OTEsImV4cCI6MTU5MDc1Nzg5MX0._JT4W98Pf0cfe1x5YwKix1b3zNZNXpIrnpmqnHvSISs";
 		//
 		/*-
 		formBody = new MultipartBody.Builder()
@@ -317,12 +317,14 @@ public class SimpleRestTest {
 				.addFormDataPart("image", "@111.jpg",
 						RequestBody.create(MediaType.parse("image/jpeg"),
                                 new File("D:\\Title1.jpeg")))
-                .addFormDataPart("addEcoNewsDtoRequest", "{" +
-                        "\"imagePath\": \"string0\"," +
-                        "\"source\": \"string1\"," +
-                        "\"tags\": [\"news\"]," +
-                        "\"text\": \"string12345string1234500044\"," +
-                        "\"title\": \"string2\"}")
+                .addFormDataPart("addEcoNewsDtoRequest", "{"
+                        + "\"imagePath\": \"string0\","
+                		+ "\"source\": \"string1\","
+                        //+ "\"tags\": [\"news\"],"
+                		+ "\"text\": \"string12345string1234500055\","
+                        + "\"title\": \"string2\","
+                        + "\"tags\": [\"news\"]"
+                		+"}")
                 .build();
 		//
 		request = new Request.Builder()

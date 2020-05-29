@@ -1,16 +1,19 @@
 package com.softserve.edu.greencity.rest.tests;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.softserve.edu.greencity.rest.data.FileUploadProperties;
+import com.softserve.edu.greencity.rest.data.FileUploadPropertiesRepository;
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserGoal;
 import com.softserve.edu.greencity.rest.data.UserGoalRepository;
 import com.softserve.edu.greencity.rest.data.UserRepository;
+import com.softserve.edu.greencity.rest.entity.NewsEntity;
+import com.softserve.edu.greencity.rest.services.EconewsUserService;
 import com.softserve.edu.greencity.rest.services.LogginedUserService;
 import com.softserve.edu.greencity.rest.services.MyhabitsService;
 
@@ -39,7 +42,7 @@ public class SmokeTest extends GreencityRestTestRunner {
 		};
 	}
 	
-	@Test(dataProvider = "userGoals")
+	//@Test(dataProvider = "userGoals")
 	public void checkUserGoals(User user, List<UserGoal> expectedGoals) {
 		logger.info("Start checkUserGoals(" + user + ")");
 		MyhabitsService myhabitsService = loadApplication()
@@ -50,5 +53,26 @@ public class SmokeTest extends GreencityRestTestRunner {
 		List<UserGoal> userGoals = myhabitsService.userGoals();
 		System.out.println("userGoals = "+ userGoals);
 		Assert.assertEquals(userGoals, expectedGoals);
+	}
+	
+	@DataProvider
+	public Object[][] userNews() {
+		return new Object[][] {
+			{ UserRepository.get().temporary(),
+				FileUploadPropertiesRepository.get().simpleNews() }
+		};
+	}
+	
+	@Test(dataProvider = "userNews")
+	public void checkUploadEconews(User user, FileUploadProperties fileUploadProperties) {
+		logger.info("Start checkUploadEconews(" + user + ")");
+		EconewsUserService econewsUserService = loadApplication()
+				.successfulUserLogin(user)
+				.gotoEconewsUserService();
+		System.out.println("logginedUserEntity = "
+				+ econewsUserService.getLogginedUserEntity());
+		NewsEntity newsEntity = econewsUserService.uploadNews(fileUploadProperties);
+		System.out.println("newsEntity = "+ newsEntity);
+		//Assert.assertEquals(newsEntity, expectedGoals);
 	}
 }

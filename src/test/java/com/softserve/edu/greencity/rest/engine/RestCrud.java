@@ -6,8 +6,8 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.softserve.edu.greencity.rest.data.FileUploadParameters;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
-import com.softserve.edu.greencity.rest.dto.FileUploadParameters;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
@@ -123,17 +123,33 @@ public abstract class RestCrud {
 		String json = "{";
 		if (parameters != null) {
 			for (KeyParameters currentKey : parameters.getAllParameters().keySet()) {
-				json = json + "\"" + String.valueOf(currentKey) + "\":\"" 
-						+ parameters.getParameter(currentKey) + "\",";
+				if ((currentKey != null)
+						&& (String.valueOf(currentKey).length() > 0)
+						&& (parameters.getParameter(currentKey) != null)
+						&& (parameters.getParameter(currentKey).length() > 0)) {
+					json = json + "\"" + String.valueOf(currentKey) + "\":\"" 
+							+ parameters.getParameter(currentKey) + "\",";
+				}
+			}
+			for (KeyParameters currentKey : parameters.getAllListParameters().keySet()) {
+				json = json + "\"" + String.valueOf(currentKey) + "\":[";
+				for (String currentString : parameters.getListParameter(currentKey)) {
+					json = json + "\""+ currentString + "\",";
+				}
+				if (json.charAt(json.length() - 1) == ',') {
+					json = json.substring(0, json.length() - 1);
+				}
+				json = json + "],";
 			}
 			if (json.length() == 1) {
-				json = json + "}";
+				json = json + ",";
 			}
 			json = json.substring(0, json.length() -1) + "}";
-			if (json.length() < 2) { // TODO
+			if (json.length() < 3) { // TODO
 				throwException("prepareJson()");
 			}
 		}
+		//System.out.println("+++RestGrud json = " + json);
 		return json;
 	}
 	
@@ -148,7 +164,8 @@ public abstract class RestCrud {
 						fileUploadParameters.getFilename(),
 						RequestBody.create(MediaType.parse(contentType.toString()),
                                 new File(fileUploadParameters.getFilepath())))
-                .addFormDataPart(formDataPartKey.toString(), prepareJson(formDataPartParameters)).build();
+                .addFormDataPart(formDataPartKey.toString(), prepareJson(formDataPartParameters))
+                .build();
 	}
 	
 	private RequestBody prepareRequestBodyMediaType(ContentTypes contentType, RestParameters mediaTypeParameters) {

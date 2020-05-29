@@ -42,5 +42,3 @@ public final class RestUrlRepository {
     }
 
 }
-
-
