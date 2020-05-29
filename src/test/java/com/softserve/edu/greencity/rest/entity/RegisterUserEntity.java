@@ -62,12 +62,21 @@ public class RegisterUserEntity {
         this.message = "";
     }
 
+    public RegisterUserEntity(String name, String email, String message) {
+        this.userId = -1;
+        this.email = email;
+        this.username = "";
+        this.ownRegistrations = false;
+        this.name = name;
+        this.message = message;
+    }
+    
     public RegisterUserEntity(String name, String message) {
         this.userId = -1;
         this.email = "";
         this.username = "";
         this.ownRegistrations = false;
-        this.name = name;
+        this.name = "";
         this.message = message;
     }
 

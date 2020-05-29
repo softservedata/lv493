@@ -69,6 +69,18 @@ public final class RestUrlRepository {
                 .addPatchUrl("");
     }
     
+    //"http://***/user" -H "accept: */*" -H "Authorization: Bearer ***"
+    public static RestUrl getUserDto() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+//                .addBaseUrl(localServer)
+                .addGetUrl("/user")
+                .addPostUrl("")
+                .addPutUrl("")
+                .addDeleteUrl("")
+                .addPatchUrl("");
+    }
+    
 // EcoNews ---------------------------------------------------------------------
 
     public static RestUrl getAllTags() {
@@ -145,17 +157,6 @@ public final class RestUrlRepository {
                 .addPatchUrl("");
     }
     
-    //"http://***/user" -H "accept: */*" -H "Authorization: Bearer ***"
-    public static RestUrl getUserDto() {
-        return new RestUrl()
-                .addBaseUrl(remoteServer)
-//                .addBaseUrl(localServer)
-                .addGetUrl("/user")
-                .addPostUrl("")
-                .addPutUrl("")
-                .addDeleteUrl("")
-                .addPatchUrl("");
-    }
 
     //Favorite Places ---------------------------------------------------------------------
     public static RestUrl favoritePlaces() {

@@ -21,7 +21,7 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getRandomEmail() } };
     }
     
-//    @Test(dataProvider = "rendomEmail")
+    @Test(dataProvider = "rendomEmail")
     public void singleEmail(User user, UserSubscriber userSubscriber) {
         logger.info("Start checkLogin(" + user + ")");
         TipsTricksService tipsTricksService = loadApplication()
@@ -40,7 +40,7 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getSingleEmail()}};
     }
  //todo 
-   @Test(dataProvider = "sameEmail")
+//   @Test(dataProvider = "sameEmail")
     public void SingInSame(User user, UserSubscriber userSubscriber) {
        TipsTricksService tipsTricksService = loadApplication()
                .successfulUserLogin(user)

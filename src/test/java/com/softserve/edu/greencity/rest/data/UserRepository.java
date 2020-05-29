@@ -50,7 +50,8 @@ public final class UserRepository {
      * @return UserData
      */
     public User alreadyExistingUserCredentials() {
-        return new User("gceurzwfejqtiguoku@ttirv.net", "Sergii_Test", "A475asd123*");
+//      return new User("gceurzwfejqtiguoku@ttirv.net", "Sergii_Test", "A475asd123*");
+        return new User("gceurzwfejqtiguoku@ttirv.net", "Maksym", "123Qwert_");
     }
 
 	public User getAdminUser() {

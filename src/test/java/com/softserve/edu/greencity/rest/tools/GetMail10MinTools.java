@@ -55,7 +55,7 @@ public final class GetMail10MinTools {
     public GetMail10MinTools(WebDriver driver) {
         this.driver = driver;
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wait = new WebDriverWait(driver, 15);
+        wait = new WebDriverWait(driver, 300);
         initElements();
     }
 
@@ -239,10 +239,17 @@ public final class GetMail10MinTools {
         }
     }
 
+    // FIXME
     private void openMail() {
-        while (!isDisplayedEmailButton()) {
+        int i = 0;
+        do {
             refreshMail();
-        }
+//            System.out.println("refreshMail");
+            if (i==4) {
+                break;
+            }
+            i++;
+        } while (isDisplayedEmailButton());
         if (isDisplayedEmailButton()) {
             clickEmailButton();
         }

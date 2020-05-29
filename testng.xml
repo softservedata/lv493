@@ -5,10 +5,23 @@
 
 	<test name="Test01a">
 		<classes>
-			<class name="com.softserve.edu.AppTest" />
-			<class name="com.softserve.edu.SearchTest">
+			<class name="com.softserve.edu.greencity.rest.tests.EcoNewsTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.EconewsTests" />
+			<class name="com.softserve.edu.greencity.rest.tests.FavoritePlaceTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.PlaceAboutIDTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.PlasesTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.SubscriberTest" />
+			
+			<!-- Test for registration -->
+			<!-- <class name="com.softserve.edu.greencity.rest.tests.RegisterUserRestTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.VerifyEmailTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.RegisterUserRestTest2" />
+			<class name="com.softserve.edu.greencity.rest.tests.UserDtoEmailNotificationTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.GoogleSecurityTest" /> -->
+			
+			<class name="com.softserve.edu.greencity.rest.tests.SmokeTest">
 				<methods>
-					<include name="checkCart" />
+					<include name="checkUserGoals" />
 				</methods>
 			</class>
 		</classes>
