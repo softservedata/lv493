@@ -40,18 +40,27 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getSingleEmail()}};
     }
  //todo 
+
     @Test(dataProvider = "sameEmail")
+
     public void SingInSame(User user, UserSubscriber userSubscriber) {
        TipsTricksService tipsTricksService = loadApplication()
                .successfulUserLogin(user)
                .gotoTipsTricksService();
-      System.out.println(UserSubscriberRepository.getSingleEmail());
+      System.out.println(" email" + UserSubscriberRepository.getSingleEmail());
      System.out.println("subscribeEntity = "
                + tipsTricksService.previousSubscriber(userSubscriber));
-//     String erorr = new ErrorEntity().getMessage();
-//     System.out.println("error = " + erorr);
+     Assert.assertNull(tipsTricksService.previousSubscriber(userSubscriber).getMessage());
+    
 //      NewsSubscriberEntity subscriber = tipsTricksService.subscribeEntity(userSubscriber);
 //     Assert.assertEquals(tipsTricksService.subscribeEntity(userSubscriber).getEmail(), userSubscriber.getEmail());
+
+////     system.out.println("subscribeentity = "
+////               + tipstricksservice.subscribeentity(usersubscriber));
+//     NewsSubscriberEntity subscriber = tipsTricksService.subscribeEntity(userSubscriber);
+////     Assert.assertEquals(tipsTricksService.subscribeEntity(userSubscriber).getEmail(), userSubscriber.getEmail());
+// //   String erorMes = new ErrorEntity().getMessage();
+//    System.out.println("message               " + subscriber.getMessage());
 
         }
     

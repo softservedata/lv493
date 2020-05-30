@@ -79,7 +79,6 @@ public class TipsTricksService extends LogginedUserService {
                 .httpPostAsEntity(methodParameters
                 .addMediaTypeParameters(mediaTypeParameters)
                 .addHeaderParameters(headerParameters));
-//        String err = new ErrorEntity().getMessage();
         
         return previousSubscriber;
     }
