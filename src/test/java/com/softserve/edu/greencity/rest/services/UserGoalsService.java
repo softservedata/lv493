@@ -12,6 +12,7 @@ import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.entity.GoalsEntity;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
+import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.UserGoalEntity;
 import com.softserve.edu.greencity.rest.resources.UserGoalsResource;
 import com.softserve.edu.greencity.rest.tools.JsonUtils;
@@ -84,34 +85,28 @@ public class UserGoalsService extends MyHabitsService {
     }
 
 
-	/**
-	 * Select from droppdown to cabinet page
-	 * @param goal
-	 * @return
-	 */
 	public List<UserGoalEntity> selectUserGoals(List<UserGoalEntity> goals, List<UserGoalEntity> customGoals, LanguagesCode language){ // TODO
         RestParameters urlParameters = new RestParameters()
                 .addParameter(KeyParameters.LANGUAGE, String.valueOf(language));
-
-
 
         String json = new JsonUtils().entityToJson(GoalsEntity.convertToGoalsEntity(goals, customGoals), GoalsEntity.class);
 
         RestParameters mediaTypeParameters = new RestParameters()
                 .addParameter(KeyParameters.JSON, json);
 
-
         return getUserGoalsResource().httpPostAsListEntity(new MethodParameters()
-                .addHeaderParameters(getHeaderParameters())
-                .addUrlParameters(urlParameters)
-                .addPathVariables(getUserIdParameter())
-                .addContentType(ContentTypes.APPLICATION_JSON)
-                .addMediaTypeParameters(mediaTypeParameters));
+                        .addHeaderParameters(getHeaderParameters())
+                        .addUrlParameters(urlParameters)
+                        .addPathVariables(getUserIdParameter())
+                        .addContentType(ContentTypes.APPLICATION_JSON)
+                        .addMediaTypeParameters(mediaTypeParameters));
     }
 
 	public List<UserGoalEntity> selectUserGoals(List<UserGoalEntity> goals, List<UserGoalEntity> customGoals){
         return selectUserGoals(goals, customGoals, LanguagesCode.ENGLISH);
     }
+
+
 
 
 
@@ -127,9 +122,9 @@ public class UserGoalsService extends MyHabitsService {
                 .addParameter(KeyParameters.GOAL_ID, String.valueOf(goal.getId()));
 
         return getUserGoalsResource().httpPatchAsEntity(new MethodParameters()
-                .addHeaderParameters(getHeaderParameters())
-                .addUrlParameters(getLanguageParameter(language))
-                .addPathVariables(pathVariables));
+                        .addHeaderParameters(getHeaderParameters())
+                        .addUrlParameters(getLanguageParameter(language))
+                        .addPathVariables(pathVariables));
     }
 
     public UserGoalEntity doUserGoals(UserGoalEntity goal){
@@ -145,8 +140,8 @@ public class UserGoalsService extends MyHabitsService {
     // swagger - only id
     // work correct
 
-	public List<Integer> deleteUserGoals(List<UserGoalEntity> goals){
-        return getUserGoalsResource().httpDeleteAsListEntity(new MethodParameters()
+	public ResponseCodeEntity deselectUserGoals(List<UserGoalEntity> goals){
+        return getUserGoalsResource().httpDeleteAsEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
                 .addUrlParameters(getGoalsIdsParameter(goals))
                 .addPathVariables(getUserIdParameter()));

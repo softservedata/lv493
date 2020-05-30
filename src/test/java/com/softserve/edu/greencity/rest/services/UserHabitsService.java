@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.softserve.edu.greencity.rest.data.LanguagesCode;
+import com.softserve.edu.greencity.rest.data.UserHabit;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
@@ -32,19 +33,27 @@ public class UserHabitsService extends MyHabitsService {
 
 	// Functionals
 
-	public List<UserHabitEntity> userHabits(LanguagesCode language){
+	public List<UserHabitEntity> userHabitEntities(LanguagesCode language){
         return getUserHabitsResource().httpGetAsListEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
                 .addUrlParameters(getLanguageParameter(language))
                 .addPathVariables(getUserIdParameter()));
 	}
 
-	public List<UserHabitEntity> userHabits(){
-        return userHabits(LanguagesCode.ENGLISH);
+	public List<UserHabitEntity> userHabitEntities(){
+        return userHabitEntities(LanguagesCode.ENGLISH);
+    }
+
+	public List<UserHabit> userHabits() {
+        return UserHabit.converToUserHabitList(userHabitEntities());
+    }
+
+    public List<UserHabit> userHabits(LanguagesCode language) {
+        return UserHabit.converToUserHabitList(userHabitEntities(language));
     }
 
 
-	public List<UserHabitEntity> userAvailableHabits(LanguagesCode language){
+	public List<UserHabitEntity> userAvailableHabitEntities(LanguagesCode language){
         return getUserHabitsResource().httpGetAsListEntity(new MethodParameters()
                 .setIndex(1)
                 .addHeaderParameters(getHeaderParameters())
@@ -52,10 +61,17 @@ public class UserHabitsService extends MyHabitsService {
                 .addPathVariables(getUserIdParameter()));
     }
 
-	public List<UserHabitEntity> userAvailableHabits(){
-        return userAvailableHabits(LanguagesCode.ENGLISH);
+	public List<UserHabitEntity> userAvailableHabitEntities(){
+        return userAvailableHabitEntities(LanguagesCode.ENGLISH);
     }
 
+	public List<UserHabit> userAvailableHabits(LanguagesCode language){
+	    return UserHabit.converToUserHabitList(userAvailableHabitEntities(language));
+    }
+
+    public List<UserHabit> userAvailableHabits(){
+        return UserHabit.converToUserHabitList(userAvailableHabitEntities());
+    }
 
 	/**
      * Select from dropdown to cabinet page

@@ -17,14 +17,17 @@ public class HabitRepository {
 		return instance;
 	}
 
-	public Habit getDefault() {
+	public UserHabit getDefault() {
 		return disposableCups();
 	}
 
-	public Habit disposableCups() {
-		return new Habit(1);
+	public UserHabit disposableCups() {
+		return new UserHabit("Discard disposable cups");
 	}
 
+	public UserHabit saveBugs() {
+        return new UserHabit("Save bags");
+    }
 
 
 }

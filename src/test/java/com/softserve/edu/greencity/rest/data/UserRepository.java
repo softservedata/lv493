@@ -18,15 +18,18 @@ public final class UserRepository {
 	}
 
 	public User getDefault() {
-		return admin();
+		return temporary();
 	}
 
-	public User admin() {
+	public User temporary () {
         return new User("soyorer682@hubopss.com", "ann", "1!Aaaaaa");
     }
 
-	public User temporary() {
-		return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
-	}
+	public User remote() {
+        return new User("yehaho8104@reqaxv.com", "aaaaaaaa", "1!Aaaaaa");
+    }
+//	public User temporary() {
+//		return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
+//	}
 
 }

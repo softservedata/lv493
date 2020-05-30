@@ -29,7 +29,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 		gson = new Gson();
 		initParameters();
 	}
-	
+
 	private void initParameters() {
 		entityParameters = new HashMap<>();
 		listEntityParameters = new HashMap<>();
@@ -42,11 +42,11 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 	protected void addEntityParameters(RestHttpMethods httpMethod, Class<?> classValue) {
 		entityParameters.put(httpMethod, classValue);
 	}
-	
+
 	protected void addListEntityParameters(RestHttpMethods httpMethod, Type typeValue) {
 		listEntityParameters.put(httpMethod, typeValue);
 	}
-	
+
 	private boolean isIgnoreError(String json) {
 		boolean result = false;
 		if ((json != null) && (json.length() > 0)) {
@@ -57,17 +57,17 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 				}
 			}
 		}
-		return result;	
+		return result;
 	}
-	
+
 	private void validateParameter(RestHttpMethods httpMethod, Map<RestHttpMethods, Type> parameter) {
 		if (parameter.get(httpMethod) == null) {
 			throwException(httpMethod.toString());
 		}
 	}
-	
+
 	private void validateJson(String json) {
-		//System.out.println("***json = " + json);
+		System.out.println("***json = " + json);
 		ResponseCodeEntity responseCodeEntity = null;
 		if (json.charAt(0) == '{') {
 			responseCodeEntity = convertToEntity(json, new TypeToken<ResponseCodeEntity>(){});
@@ -76,7 +76,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 			responseCodeEntity = convertToEntity(json, new TypeToken<List<ResponseCodeEntity>>(){}).get(0);
 		}
 		//System.out.println("***responseCodeEntity = " + responseCodeEntity);
-		if ((!isIgnoreError(json)) 
+		if ((!isIgnoreError(json))
 				&& ((responseCodeEntity == null) || (responseCodeEntity.getResponsecode() >= HTTP_RESPONSE_CODE_300))) {
 			int responseCode = (responseCodeEntity == null) ? 0 : responseCodeEntity.getResponsecode();
 			ErrorEntity errorEntity = convertToEntity(json, new TypeToken<ErrorEntity>(){});
@@ -84,11 +84,11 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 			throwException(CONVERT_OBJECT_ERROR, errorEntity.toString(), responseCode);
 		}
 	}
-	
+
 //	private <T> T convertToEntity(String json, Class<T> clazz) {
 //		return gson.fromJson(json, clazz);
 //	}
-	
+
 	private <T> T convertToEntity(String json, Type type) {
 		//return gson.fromJson(json, typeToken.getType());
 		return gson.fromJson(json, type);

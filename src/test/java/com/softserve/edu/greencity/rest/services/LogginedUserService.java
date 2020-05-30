@@ -53,8 +53,4 @@ public class LogginedUserService {
     public GoalsService gotoGoalsService() {
         return new GoalsService(logginedUserEntity);
     }
-
-    public HabitFactService gotoHabitFactService() {
-        return new HabitFactService(logginedUserEntity);
-    }
 }

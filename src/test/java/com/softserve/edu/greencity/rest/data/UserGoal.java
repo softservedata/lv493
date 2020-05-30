@@ -10,6 +10,11 @@ public class UserGoal implements Comparable<UserGoal> {
 	private String text;
 	private String status;
 
+	public UserGoal(String text) {
+        this.text = text;
+        this.status = "";
+    }
+
 	public UserGoal(String text, String status) {
 		this.text = text;
 		this.status = status;
@@ -39,7 +44,7 @@ public class UserGoal implements Comparable<UserGoal> {
 	public int compareTo(UserGoal userGoal) {
 		return getText().compareTo(userGoal.getText());
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -58,12 +63,12 @@ public class UserGoal implements Comparable<UserGoal> {
 			return false;
 		}
 		UserGoal other = (UserGoal) obj;
-		if (((status == null) && (other.status != null) 
+		if (((status == null) && (other.status != null)
 				|| (status != null) && (other.status == null))
 				&& (!status.equals(other.status))) {
 			return false;
 		}
-		if (((text == null) && (other.text != null) 
+		if (((text == null) && (other.text != null)
 				|| (text != null) && (other.text == null))
 				&& (!text.equals(other.text))) {
 			return false;
@@ -73,16 +78,17 @@ public class UserGoal implements Comparable<UserGoal> {
 
 	@Override
 	public String toString() {
-		return "UserGoal [text=" + text 
+		return "UserGoal [text=" + text
 				+ ", status=" + status + "]";
 	}
-	
+
 	// static factory
 
 	public static UserGoal converToUserGoal(UserGoalEntity userGoalsEntity) {
-		return new UserGoal(userGoalsEntity.getText(), userGoalsEntity.getStatus());
+
+		return new UserGoal(userGoalsEntity.getText(), userGoalsEntity.getStatus().length() == 0 ? "ACTIVE" : userGoalsEntity.getStatus());
 	}
-	
+
 	public static List<UserGoal> converToUserGoalList(List<UserGoalEntity> userGoalsEntities) {
 		List<UserGoal> result = new ArrayList<>();
 		for (UserGoalEntity userGoalsEntity : userGoalsEntities) {
@@ -91,5 +97,5 @@ public class UserGoal implements Comparable<UserGoal> {
 		Collections.sort(result);
 		return result;
 	}
-	
+
 }

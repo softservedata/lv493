@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.rest.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserHabitStatisticEntity {
@@ -8,9 +9,9 @@ public class UserHabitStatisticEntity {
     private List<Items> differenceUnTakenItemsWithPreviousDay;
 
     public UserHabitStatisticEntity() {
-        allItemsPerMonth = null;
+        allItemsPerMonth = new ArrayList<>();
         createDate = "";
-        differenceUnTakenItemsWithPreviousDay = null;
+        differenceUnTakenItemsWithPreviousDay = new ArrayList<>();
     }
 
     public UserHabitStatisticEntity(List<Items> allItemsPerMonth,

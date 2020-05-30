@@ -2,7 +2,6 @@ package com.softserve.edu.greencity.rest.services;
 
 import java.util.List;
 
-import com.softserve.edu.greencity.rest.data.Habit;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
@@ -10,6 +9,7 @@ import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.entity.HabitStatisticEntity;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
+import com.softserve.edu.greencity.rest.entity.UserHabitEntity;
 import com.softserve.edu.greencity.rest.resources.HabitStatisticResource;
 
 public class HabitStatisticService extends LogginedUserService{
@@ -28,7 +28,7 @@ public class HabitStatisticService extends LogginedUserService{
 
 	// Functionals
 
-	public List<HabitStatisticEntity> habitStatistic(Habit habit){
+	public List<HabitStatisticEntity> habitStatistic(UserHabitEntity habit){
 	    RestParameters pathVariables  = new RestParameters()
 	            .addParameter(KeyParameters.HABIT_ID, String.valueOf(habit.getId()));
 
@@ -40,7 +40,7 @@ public class HabitStatisticService extends LogginedUserService{
 
 	// do not work at all
 
-    public ResponseCodeEntity addHabitStatistic(HabitStatisticEntity statistic, Habit habit) { // TODO
+    public ResponseCodeEntity addHabitStatistic(HabitStatisticEntity statistic, UserHabitEntity habit) { // TODO
         RestParameters mediaTypeParameters = new RestParameters()
                 .addParameter(KeyParameters.AMOUNT_OF_ITEMS, String.valueOf(statistic.getAmountOfItems()))
                 .addParameter(KeyParameters.CREATED_ON, statistic.getCreatedOn())

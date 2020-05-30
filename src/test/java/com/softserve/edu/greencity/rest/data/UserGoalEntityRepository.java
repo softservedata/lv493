@@ -27,37 +27,35 @@ public class UserGoalEntityRepository {
 	}
 
 	public UserGoalEntity buyComposter() {
-		return new UserGoalEntity(43, "Buy composter", "ACTIVE");
-	}
-
-	public UserGoalEntity buyBambooBrush() {
-        return new UserGoalEntity(47, "Buy a bamboo brush", "ACTIVE");
+        return new UserGoalEntity(1, "Buy composter", "ACTIVE");
     }
 
-	public UserGoalEntity sortingTrash() {
-        return new UserGoalEntity(48, "Start sorting trash", "ACTIVE");
+    public UserGoalEntity buyBambooBrush() {
+        return new UserGoalEntity(2, "Buy a bamboo brush", "ACTIVE");
     }
 
-	public List<UserGoalEntity> goalsForDeleting() {
+    public UserGoalEntity sortingTrash() {
+        return new UserGoalEntity(3, "Start sorting trash", "ACTIVE");
+    }
+
+
+    public List<UserGoalEntity> goalsForSortingTrash() {
         List<UserGoalEntity> result = new ArrayList<>();
         result.add(sortingTrash());
+        return result;
+    }
+
+    public List<UserGoalEntity> goalsForSelecting() {
+        List<UserGoalEntity> result = new ArrayList<>();
+        result.add(buyComposter());
         result.add(buyBambooBrush());
         return result;
     }
 
-
-	public UserGoalEntity buyComposterAdd() {
-        return new UserGoalEntity(1, "Buy composter", "");
-    }
-
-    public UserGoalEntity buyBambooBrushAdd() {
-        return new UserGoalEntity(2, "Buy a bamboo brush", "");
-    }
-
 	public List<UserGoalEntity> goalsForAdding() {
         List<UserGoalEntity> result = new ArrayList<>();
-        result.add(buyComposterAdd());
-        result.add(buyBambooBrushAdd());
+        result.add(buyComposter());
+        result.add(buyBambooBrush());
         return result;
     }
 

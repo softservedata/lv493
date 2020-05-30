@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.rest.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserHabitEntity {
@@ -19,7 +20,7 @@ public class UserHabitEntity {
         habitDictionary = null;
         habitItem = "";
         habitName = "";
-        habitStatistics = null;
+        habitStatistics = new ArrayList<>();
         id = -1;
         name = "";
         status = false;

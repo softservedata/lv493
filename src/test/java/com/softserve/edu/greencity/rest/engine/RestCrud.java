@@ -64,11 +64,11 @@ public abstract class RestCrud {
 			default: throw new GreenCityCommonException(exceptionMessage);
 		}
 	}
-	
+
 	protected void throwException(String prefix, String message) {
 		throwException(NOT_SUPPORT_MESSAGE, message, 0);
 	}
-	
+
 	protected void throwException(String message) {
 		throwException(NOT_SUPPORT_MESSAGE, message);
 	}
@@ -120,10 +120,16 @@ public abstract class RestCrud {
 
 	private String prepareJson(RestParameters parameters) {
 		// TODO Use Serialization from Entity
+
+	    if(parameters.getParameter(KeyParameters.JSON) != null &&
+	            parameters.getParameter(KeyParameters.JSON).length() > 0) {
+            return  parameters.getParameter(KeyParameters.JSON);
+        }
+
 		String json = "{";
 		if (parameters != null) {
 			for (KeyParameters currentKey : parameters.getAllParameters().keySet()) {
-				json = json + "\"" + String.valueOf(currentKey) + "\":\"" 
+				json = json + "\"" + String.valueOf(currentKey) + "\":\""
 						+ parameters.getParameter(currentKey) + "\",";
 			}
 			if (json.length() == 1) {
@@ -136,8 +142,8 @@ public abstract class RestCrud {
 		}
 		return json;
 	}
-	
-	private RequestBody prepareRequestMultipartBody(ContentTypes contentType, FileUploadParameters fileUploadParameters, 
+
+	private RequestBody prepareRequestMultipartBody(ContentTypes contentType, FileUploadParameters fileUploadParameters,
 			KeyParameters formDataPartKey, RestParameters formDataPartParameters) {
 		if (formDataPartKey == null) {
 			throwException(EMPTY_PARAMETER, "formDataPartKey");
@@ -150,11 +156,11 @@ public abstract class RestCrud {
                                 new File(fileUploadParameters.getFilepath())))
                 .addFormDataPart(formDataPartKey.toString(), prepareJson(formDataPartParameters)).build();
 	}
-	
+
 	private RequestBody prepareRequestBodyMediaType(ContentTypes contentType, RestParameters mediaTypeParameters) {
 		return RequestBody.create(MediaType.parse(contentType.toString()), prepareJson(mediaTypeParameters));
 	}
-	
+
 	private RequestBody prepareRequestBody(RestParameters bodyParameters) {
 		FormBody.Builder formBodyBuilder = new FormBody.Builder();
 		if (bodyParameters != null) {
@@ -176,7 +182,7 @@ public abstract class RestCrud {
 					   ? prepareRequestBodyMediaType(methodParameters.getContentType(), methodParameters.getMediaTypeParameters())
 					   : prepareRequestBody(methodParameters.getBodyParameters());
 	}
-	
+
 	private Request.Builder prepareHeader(Request.Builder builder, RestParameters headerParameters) {
 		if (headerParameters != null) {
 			for (KeyParameters currentKey : headerParameters.getAllParameters().keySet()) {
@@ -185,7 +191,7 @@ public abstract class RestCrud {
 		}
 		return builder;
 	}
-	
+
 	// Request - - - - - - - - - - - - - - - - - - - -
 
 	private Request.Builder prepareRequestBuilder(String requestUrl, RestParameters pathVariables,

@@ -10,7 +10,7 @@ import com.softserve.edu.greencity.rest.entity.UserGoalEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
 public class UserGoalsResource extends
-		RestQueries<UserGoalEntity, UserGoalEntity, ResponseCodeEntity, Integer, UserGoalEntity> {
+		RestQueries<UserGoalEntity, UserGoalEntity, ResponseCodeEntity, ResponseCodeEntity, UserGoalEntity> {
 
 	public UserGoalsResource() {
 		super(RestUrlRepository.getUserGoals());
@@ -21,7 +21,7 @@ public class UserGoalsResource extends
 		addEntityParameters(RestHttpMethods.GET, UserGoalEntity.class);
 		addEntityParameters(RestHttpMethods.POST, UserGoalEntity.class);
 		addEntityParameters(RestHttpMethods.PUT, ResponseCodeEntity.class);
-		addEntityParameters(RestHttpMethods.DELETE, Integer.class);
+		addEntityParameters(RestHttpMethods.DELETE, ResponseCodeEntity.class);
 		addEntityParameters(RestHttpMethods.PATCH, UserGoalEntity.class);
 		//
 		addListEntityParameters(RestHttpMethods.GET,
@@ -31,7 +31,7 @@ public class UserGoalsResource extends
 		addListEntityParameters(RestHttpMethods.PUT,
 				new GenericConverter<List<ResponseCodeEntity>>(){}.getGenericType());
 		addListEntityParameters(RestHttpMethods.DELETE,
-				new GenericConverter<List<Integer>>(){}.getGenericType());
+				new GenericConverter<List<ResponseCodeEntity>>(){}.getGenericType());
 		addListEntityParameters(RestHttpMethods.PATCH,
 				new GenericConverter<List<UserGoalEntity>>(){}.getGenericType());
 	}
