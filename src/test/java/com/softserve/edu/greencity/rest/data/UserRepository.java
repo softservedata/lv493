@@ -27,6 +27,11 @@ public final class UserRepository {
 		return new User("xdknxusqvjeovowpfk@awdrt.com", "temp", "Temp#001");
 	}
 	
+
+	public User temporaryInvalidEmail() {
+		return new User("xdknxusqvpfk@awdrt.com", "temp", "Temp#001");
+	}
+	
 	public User temporary2() {
         return new User("yoren18521@aprimail.com", "JXHIASJAwrSgncoJIpPg", "A475asd123*");
     }
@@ -50,7 +55,8 @@ public final class UserRepository {
      * @return UserData
      */
     public User alreadyExistingUserCredentials() {
-        return new User("gceurzwfejqtiguoku@ttirv.net", "Sergii_Test", "A475asd123*");
+//      return new User("gceurzwfejqtiguoku@ttirv.net", "Sergii_Test", "A475asd123*");
+        return new User("gceurzwfejqtiguoku@ttirv.net", "Maksym", "123Qwert_");
     }
 
 	public User getAdminUser() {

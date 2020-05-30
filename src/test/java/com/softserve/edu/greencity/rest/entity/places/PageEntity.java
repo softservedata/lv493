@@ -8,10 +8,19 @@ public class PageEntity {
 	private int totalElements;
 	private int currentPage;
 	
+	private String message;
+	
 	public PageEntity() {
 		this.page = null;
 		this.totalElements = 0;
 		this.currentPage = 0;
+	}
+	
+	public PageEntity(String message) {
+		this.page = null;
+		this.totalElements = 0;
+		this.currentPage = 0;
+		this.message = message;
 	}
 	
 	public PageEntity(List<PlaceEntity> page, int totalElements, int currentPage) {
@@ -34,10 +43,13 @@ public class PageEntity {
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "PageEntity [page=" + page + ", totalElements=" + totalElements + ", currentPage=" + currentPage + "]";
-	}	
+		return "PageEntity [page=" + page + ", totalElements=" + totalElements + ", currentPage=" + currentPage
+				+ ", message=" + message + "]";
+	}
+	
+	
 
 }

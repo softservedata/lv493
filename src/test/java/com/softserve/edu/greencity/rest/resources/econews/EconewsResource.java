@@ -10,7 +10,7 @@ import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
 import java.util.List;
 
-public class EconewsResource  extends
+public class EconewsResource extends
         RestQueries<PageEntity, NewsEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity> {
 
     public EconewsResource() {

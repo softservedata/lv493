@@ -21,7 +21,7 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getRandomEmail() } };
     }
     
-//    @Test(dataProvider = "rendomEmail")
+    @Test(dataProvider = "rendomEmail")
     public void singleEmail(User user, UserSubscriber userSubscriber) {
         logger.info("Start checkLogin(" + user + ")");
         TipsTricksService tipsTricksService = loadApplication()

@@ -57,12 +57,14 @@ public class LogginedUserService {
 //        userDtoEntity = new UserDtoEntity();
         return userDtoEntity;
     }
-  
+
     // Functionals
 
     // http://***/googleSecurity?idToken=**" -H "accept: */*" -H "Authorization: Bearer ***"
+
     /**
      * Google security authentication
+     *
      * @return GoogleSecurityEntity
      */
     public GoogleSecurityEntity googleSecurity() {
@@ -122,6 +124,10 @@ public class LogginedUserService {
 
     public TipsTricksService gotoTipsTricksService() {
         return new TipsTricksService(logginedUserEntity);
+    }
+
+    public FavoritePlacesService gotoFavoritePlacesService() {
+        return new FavoritePlacesService(logginedUserEntity);
     }
 }
 

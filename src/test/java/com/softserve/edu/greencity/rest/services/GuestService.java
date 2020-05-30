@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.softserve.edu.greencity.rest.data.UnsuccessfulRegistration;
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.VerifyEmail;
 import com.softserve.edu.greencity.rest.data.VerifyEmailLinkAndId;
@@ -17,9 +16,11 @@ import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.RegisterUserEntity;
 import com.softserve.edu.greencity.rest.entity.VerifyEmailEntity;
+import com.softserve.edu.greencity.rest.entity.places.PlaceEntity;
 import com.softserve.edu.greencity.rest.resources.SignUpResource;
 import com.softserve.edu.greencity.rest.resources.SigninResource;
 import com.softserve.edu.greencity.rest.resources.VerifyEmailResource;
+import com.softserve.edu.greencity.rest.resources.places.FavoritePlaceResources;
 import com.softserve.edu.greencity.rest.tools.GetMail10MinTools;
 import com.softserve.edu.greencity.ui.data.Languages;
 
@@ -34,9 +35,15 @@ public class GuestService {
     private WebDriver driver;
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+
+    private PlaceEntity placeEntity;
+    private FavoritePlaceResources favoritePlaceResources;
+
     public GuestService() {
         signinResource = new SigninResource();
         signUpResource = new SignUpResource();
+        placeEntity = new PlaceEntity();
+        favoritePlaceResources = new FavoritePlaceResources();
     }
 
 //     getters
@@ -159,9 +166,10 @@ public class GuestService {
      * Unsuccessful User Registration
      * @param language Enum
      * @param user User
-     * @return List<UnsuccessfulRegistration>
+     * @return String
      */
-    public List<UnsuccessfulRegistration> unsuccessfulUserRegistration(Languages language, User user) {
+    public RegisterUserEntity unsuccessfulUserRegistration(Languages language, User user) {
+        List<RegisterUserEntity> registerUserEntities;
         logger.debug("start unsuccessfulUserRegistration with parameters: Languages " + language + "; user: " + user);
         logger.trace("preparing REST request for existing user registration");
         logger.trace("forming REST request for existing user registration");
@@ -171,11 +179,11 @@ public class GuestService {
                 .addParameter(KeyParameters.PASSWORD, user.getPassword());
         RestParameters headerParameters = new RestParameters().addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString());
         logger.trace("send REST POST request for existing user registration");
-        List<RegisterUserEntity> registerUserEntities = signUpResource.httpPostAsListEntity(
-                methodParameters.addMediaTypeParameters(mediaTypeParameters).addHeaderParameters(headerParameters));
-        logger.trace("got REST POST response: " + registerUserEntities);
-        logger.info("Unsuccessful user registration with : " + getRegisterUserEntity().getMessage());
-        return UnsuccessfulRegistration.converToUnsuccessfulRegistrationList(registerUserEntities);
+        registerUserEntities = signUpResource
+                .httpPostAsListEntity(methodParameters.addMediaTypeParameters(mediaTypeParameters).addHeaderParameters(headerParameters));
+        logger.trace("got REST POST response: " + registerUserEntities.get(0).getMessage());
+        logger.info("got REST POST response: " + registerUserEntities.get(0).getMessage());
+        return registerUserEntities.get(0);
     }
 
     // http://***/ownSecurity/verifyEmail?token=***&user_id=***" -H "accept: */*
@@ -203,10 +211,9 @@ public class GuestService {
         logger.info("successful verify Email address");
         return VerifyEmail.converToVerifyEmail(verifyEmailEntity);
     }
-    
+
     public EconewsGuestService gotoEconewsGuestService() {
         return new EconewsGuestService();
     }
-    
-   
+
 }

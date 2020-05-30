@@ -14,7 +14,8 @@ public class GoogleSecurityTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary() } };
     }
     
-    @Test(dataProvider = "users")
+    // TODO
+//    @Test(dataProvider = "users")
     public void checkGoogleSecurity(User user) {
         logger.info("Start checkGoogleSecurity(" + user + ")");
         GoogleSecurityEntity googleSecurity = loadApplication()

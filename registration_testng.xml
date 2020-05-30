@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Suite1">
+
+	<test name="Test01a">
+		<classes>
+			<!-- Test for registration -->
+			<class name="com.softserve.edu.greencity.rest.tests.RegisterUserRestTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.VerifyEmailTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.RegisterUserRestTest2" />
+			<class name="com.softserve.edu.greencity.rest.tests.UserDtoEmailNotificationTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.GoogleSecurityTest" />
+			
+			<!-- <class name="com.softserve.edu.greencity.rest.tests.SmokeTest">
+				<methods>
+					<include name="checkUserGoals" />
+				</methods>
+			</class> -->
+		</classes>
+	</test> <!-- Test -->
+
+</suite> <!-- Suite -->

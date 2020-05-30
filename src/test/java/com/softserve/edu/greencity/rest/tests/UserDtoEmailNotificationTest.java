@@ -13,7 +13,7 @@ public class UserDtoEmailNotificationTest extends GreencityRestTestRunner {
 
     @DataProvider
     public Object[][] users() {
-        return new Object[][] { { UserRepository.get().temporary() } };
+        return new Object[][] { { UserRepository.get().temporary() } }; // temporary2 for local base, temporary for remote
     }
 
     @Test(dataProvider = "users")

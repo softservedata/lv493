@@ -2,17 +2,27 @@ package com.softserve.edu.greencity.rest.data.econews;
 
 import com.softserve.edu.greencity.rest.entity.econewsEntity.AuthorEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.NewsEntity;
+import com.softserve.edu.greencity.rest.tools.Verifeible;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class News {
+public class News implements Verifeible {
     private String imagePath;
     private String title;
     private String text;
     private String source;
     private List<String> tags;
     private Author author;
+
+    public News(String imagePath, String title, String text, String source) {
+        this.imagePath = imagePath;
+        this.title = title;
+        this.text = text;
+        this.source = source;
+        tags = new ArrayList<String>();
+        // this.author = author;
+    }
 
     public News(String imagePath, String title, String text, String source, List<String> tags, Author author) {
         this.imagePath = imagePath;
@@ -43,6 +53,11 @@ public class News {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public News addTags(String tag) {
+        tags.add(tag);
+        return this;
     }
 
     public void setAuthor(Author author) {
@@ -99,5 +114,12 @@ public class News {
                 ", source='" + source + '\'' +
                 ", tags=" + tags +
                 ", author=" + author + ";";
+    }
+
+    @Override
+    public boolean isValid() {
+        return (title != null) && (title.length() > 0 )
+                &&(text != null) && (text.length() > 0 )
+                &&(tags != null) && (tags.size() > 0 );
     }
 }
