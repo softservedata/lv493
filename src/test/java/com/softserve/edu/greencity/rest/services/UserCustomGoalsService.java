@@ -33,16 +33,28 @@ public class UserCustomGoalsService extends MyHabitsService {
 
 	// Functionals
 
+	/**
+     * Get all custom goals of current user.
+     * @return list of goal entities
+     */
     public List<UserGoalEntity> customGoalsEntities(){
         return getUserCustomGoalsResource().httpGetAsListEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
                 .addPathVariables(getUserIdParameter()));
     }
 
+    /**
+     * Get all custom goals of current user.
+     * @return list of goals
+     */
     public List<UserGoal> customGoals(){
         return UserGoal.converToUserGoalList(customGoalsEntities());
     }
 
+    /**
+     * Get all available custom goals of current user for selecting.
+     * @return list of goal entities
+     */
     public List<UserGoalEntity> availableCustomGoalsEntities(){
         return getUserCustomGoalsResource().httpGetAsListEntity(new MethodParameters()
                 .setIndex(1)
@@ -50,11 +62,19 @@ public class UserCustomGoalsService extends MyHabitsService {
                 .addPathVariables(getUserIdParameter()));
     }
 
+    /**
+     * Get all available custom goals of current user for selecting.
+     * @return list of goals
+     */
     public List<UserGoal> availableCustomGoals(){
         return UserGoal.converToUserGoalList(availableCustomGoalsEntities());
     }
 
-
+    /**
+     * Create new goals for current user.
+     * @param goals
+     * @return list of created goal entities
+     */
     public List<UserGoalEntity> createCustomGoals(List<UserGoal> goals){ // TODO
 
         List<CustomGoalSaveEntity.CustomGoal> customGoalSaveRequestDtoList = new ArrayList<>();
@@ -73,7 +93,12 @@ public class UserCustomGoalsService extends MyHabitsService {
 
     }
 
-
+    /**
+     * Update custom goals of current user.
+     * @param goals
+     * @param new goals
+     * @return list of created goal entities
+     */
     public List<UserGoalEntity> updateCustomGoals(List<UserGoalEntity> goals, List<UserGoal> newGoals ){ // TODO
 
         List<CustomGoalUpdateEntity.CustomGoal> customGoals  = new ArrayList<>();
@@ -94,12 +119,21 @@ public class UserCustomGoalsService extends MyHabitsService {
                 .addMediaTypeParameters(mediaTypeParameters));
     }
 
+    /**
+     * Update custom goals of current user.
+     * @param new goals
+     * @return list of created goal entities
+     */
     public List<UserGoalEntity> updateCustomGoals(List<UserGoalEntity> goals){
         return updateCustomGoals(goals, UserGoal.converToUserGoalList(goals));
     }
 
 
-
+    /**
+     * Delete custom goals of current user.
+     * @param goals
+     * @return
+     */
     public ResponseCodeEntity deleteCustomGoals(List<UserGoalEntity> goals){
         return getUserCustomGoalsResource().httpDeleteAsEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())

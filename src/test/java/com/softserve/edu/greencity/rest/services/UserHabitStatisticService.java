@@ -21,6 +21,10 @@ public class UserHabitStatisticService extends MyHabitsService{
 
 	// Functionals
 
+	/**
+	 * Get statistic for habits of current user.
+	 * @return habit statistic entity
+	 */
 	public UserHabitStatisticEntity userHabitStatistic(){
         return getUserHabitStatisticResource().httpGetAsEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())

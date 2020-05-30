@@ -33,6 +33,11 @@ public class UserHabitsService extends MyHabitsService {
 
 	// Functionals
 
+	/**
+	 * Get all selected habits of current user according to language.
+	 * @param language code
+	 * @return list of habit entities
+	 */
 	public List<UserHabitEntity> userHabitEntities(LanguagesCode language){
         return getUserHabitsResource().httpGetAsListEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
@@ -40,19 +45,36 @@ public class UserHabitsService extends MyHabitsService {
                 .addPathVariables(getUserIdParameter()));
 	}
 
+	/**
+     * Get all selected habits of current user.
+     * @return list of habit entities
+     */
 	public List<UserHabitEntity> userHabitEntities(){
         return userHabitEntities(LanguagesCode.ENGLISH);
     }
 
-	public List<UserHabit> userHabits() {
-        return UserHabit.converToUserHabitList(userHabitEntities());
-    }
-
+	/**
+     * Get all selected habits of current user according to language.
+     * @param language code
+     * @return list of habits
+     */
     public List<UserHabit> userHabits(LanguagesCode language) {
         return UserHabit.converToUserHabitList(userHabitEntities(language));
     }
 
+    /**
+     * Get all selected habits of current user.
+     * @return list of habits
+     */
+    public List<UserHabit> userHabits() {
+        return UserHabit.converToUserHabitList(userHabitEntities());
+    }
 
+    /**
+     * Get all available habits of current user for selecting according to language.
+     * @param language code
+     * @return list of habit entities
+     */
 	public List<UserHabitEntity> userAvailableHabitEntities(LanguagesCode language){
         return getUserHabitsResource().httpGetAsListEntity(new MethodParameters()
                 .setIndex(1)
@@ -61,21 +83,35 @@ public class UserHabitsService extends MyHabitsService {
                 .addPathVariables(getUserIdParameter()));
     }
 
+	/**
+     * Get all available habits of current user for selecting.
+     * @return list of habit entities
+     */
 	public List<UserHabitEntity> userAvailableHabitEntities(){
         return userAvailableHabitEntities(LanguagesCode.ENGLISH);
     }
 
+	/**
+     * Get all available habits of current user for selecting according to language.
+     * @param language code
+     * @return list of habits
+     */
 	public List<UserHabit> userAvailableHabits(LanguagesCode language){
 	    return UserHabit.converToUserHabitList(userAvailableHabitEntities(language));
     }
 
+	/**
+     * Get all available habits of current user for selecting.
+     * @return list of habits
+     */
     public List<UserHabit> userAvailableHabits(){
         return UserHabit.converToUserHabitList(userAvailableHabitEntities());
     }
 
-	/**
-     * Select from dropdown to cabinet page
-     * @param goal
+    /**
+     * Select habits of current user from available according to language.
+     * @param habits
+     * @param language code
      * @return
      */
 
@@ -103,13 +139,18 @@ public class UserHabitsService extends MyHabitsService {
                 .addMediaTypeParameters(mediaTypeParameters));
     }
 
+    /**
+     * Select habits of current user from available.
+     * @param habits
+     * @return
+     */
     public ResponseCodeEntity addUserHabit(List<UserHabitEntity> habits){
         return addUserHabit(habits, LanguagesCode.ENGLISH );
     }
 
     /**
-     * Remove from cabinet to dropdown
-     * @param goal
+     * Remove habits of current user to available.
+     * @param habit
      * @return
      */
     // No response, only code

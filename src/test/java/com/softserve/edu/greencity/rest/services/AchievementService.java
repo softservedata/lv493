@@ -23,6 +23,10 @@ public class AchievementService extends LogginedUserService{
 
 	// Functionals
 
+	/**
+	 * Get all available achievement. Admin access.
+	 * @return list of achievement entities
+	 */
 	public List<AchievementEntity> achievement(){
 	    return getAchievementResource().httpGetAsListEntity(new MethodParameters()
 	            .addHeaderParameters(getHeaderParameters()));

@@ -28,6 +28,11 @@ public class HabitStatisticService extends LogginedUserService{
 
 	// Functionals
 
+	/**
+	 * Get full statistic of habit. Admin access.
+	 * @param habit
+	 * @return list of habit statistic
+	 */
 	public List<HabitStatisticEntity> habitStatistic(UserHabitEntity habit){
 	    RestParameters pathVariables  = new RestParameters()
 	            .addParameter(KeyParameters.HABIT_ID, String.valueOf(habit.getId()));
@@ -37,6 +42,13 @@ public class HabitStatisticService extends LogginedUserService{
                 .addPathVariables(pathVariables));
 	}
 
+
+	/**
+	 * Add statistic for habit. Admin access.
+	 * @param statistic
+	 * @param habit
+	 * @return
+	 */
 
 	// do not work at all
 
@@ -54,7 +66,11 @@ public class HabitStatisticService extends LogginedUserService{
                 .addMediaTypeParameters(mediaTypeParameters));
     }
 
-
+    /**
+     * Update statistic for habit. Admin access.
+     * @param habit statistic
+     * @return habit statistic
+     */
     public HabitStatisticEntity updateHabitStatistic(HabitStatisticEntity habitStatistic){
         RestParameters pathVariables  = new RestParameters()
                 .addParameter(KeyParameters.HABIT_STATISTIC_ID, String.valueOf(habitStatistic.getId()));
@@ -70,11 +86,5 @@ public class HabitStatisticService extends LogginedUserService{
                 .addContentType(ContentTypes.APPLICATION_JSON)
                 .addMediaTypeParameters(mediaTypeParameters));
     }
-
-
-
-
-
-
 
 }

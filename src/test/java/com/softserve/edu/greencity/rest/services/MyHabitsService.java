@@ -19,16 +19,29 @@ public class MyHabitsService extends LogginedUserService {
 
     // Functionals
 
+    /**
+     * Get user id parameter of current user.
+     * @return rest parameter
+     */
     protected RestParameters getUserIdParameter() {
         return new RestParameters()
                 .addParameter(KeyParameters.USER_ID, String.valueOf(getLogginedUserEntity().getUserId()));
     }
 
+    /**
+     * Get goals id parameter of current user for deleting.
+     * @return rest parameter
+     */
     protected RestParameters getGoalsIdsParameter(List<UserGoalEntity> goals) {
         return new RestParameters()
                 .addParameter(KeyParameters.IDS, getStringOfIds(goals));
     }
 
+    /**
+     * Form string for ids of goals separated by comma.
+     * @param goals
+     * @return ids string
+     */
     private String getStringOfIds(List<UserGoalEntity> goals) {
         return goals.stream().map(UserGoalEntity::getId)
                 .collect(Collectors.toList()).stream()

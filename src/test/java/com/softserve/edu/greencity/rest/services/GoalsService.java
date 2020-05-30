@@ -24,12 +24,21 @@ public class GoalsService extends LogginedUserService{
 
 	// Functionals
 
+	/**
+	 * Get all available goals according to language. Admin access.
+	 * @param language code
+	 * @return list of goal entities
+	 */
 	public List<UserGoalEntity> allGoals(LanguagesCode language){
         return getGoalsResource().httpGetAsListEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
                 .addUrlParameters(getLanguageParameter(language)));
 	}
 
+	/**
+	 *  Get all available goals. Admin access.
+	 * @return list of goal entities
+	 */
 	public List<UserGoalEntity> allGoals(){
         return allGoals(LanguagesCode.ENGLISH);
     }

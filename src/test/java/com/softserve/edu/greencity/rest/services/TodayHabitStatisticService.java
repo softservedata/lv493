@@ -34,6 +34,11 @@ public class TodayHabitStatisticService extends LogginedUserService{
 //	    "notTakenItems": 2
 //	}
 
+	/**
+	 * Get todays statistic for habits of current user according to language.
+	 * @param language code
+	 * @return list of habit statistic entities
+	 */
 	public List<TodayHabitStatisticEntity> todayStatisticsForAllHabitItems(LanguagesCode language){ //TODO try test
         RestParameters urlParameters = new RestParameters()
                 .addParameter(KeyParameters.LANGUAGE, String.valueOf(language));
@@ -44,6 +49,10 @@ public class TodayHabitStatisticService extends LogginedUserService{
                 .addUrlParameters(urlParameters));
     }
 
+	/**
+     * Get todays statistic for habits of current user.
+     * @return list of habit statistic entities
+     */
 	public List<TodayHabitStatisticEntity> todayStatisticsForAllHabitItems(){
         return todayStatisticsForAllHabitItems(LanguagesCode.ENGLISH);
     }
