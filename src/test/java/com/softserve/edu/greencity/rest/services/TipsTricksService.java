@@ -1,12 +1,13 @@
 package com.softserve.edu.greencity.rest.services;
 
 
+import java.util.List;
+
 import com.softserve.edu.greencity.rest.data.UserSubscriber;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
-import com.softserve.edu.greencity.rest.entity.ErrorEntity;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.NewsSubscriberEntity;
 import com.softserve.edu.greencity.rest.resources.NewsSubscriberResource;
@@ -17,7 +18,6 @@ public class TipsTricksService extends LogginedUserService {
     private NewsSubscriberResource subscriberResource;
     private NewsSubscriberEntity subscribeEntity;
     private UserSubscriber userSubscriber;
-//    private ErrorMessages errorMessages;
     
     public TipsTricksService(LogginedUserEntity logginedUserEntity) {
         super(logginedUserEntity);
@@ -62,7 +62,7 @@ public class TipsTricksService extends LogginedUserService {
         return subscriberEntity;
     }
     //add ERROr
-    public  NewsSubscriberEntity previousSubscriber(UserSubscriber userSubscriber) {
+    public  List<NewsSubscriberEntity> faultySubscriber(UserSubscriber userSubscriber) {
         MethodParameters methodParameters = new MethodParameters()
                 .addContentType(ContentTypes.APPLICATION_JSON);
         
@@ -75,12 +75,12 @@ public class TipsTricksService extends LogginedUserService {
                 .addParameter(KeyParameters.EMAIL, userSubscriber.getEmail());
         
    
-        NewsSubscriberEntity previousSubscriber = subscriberResource
-                .httpPostAsEntity(methodParameters
+        List<NewsSubscriberEntity> faultySubscriber = subscriberResource
+                .httpPostAsListEntity(methodParameters
                 .addMediaTypeParameters(mediaTypeParameters)
                 .addHeaderParameters(headerParameters));
         
-        return previousSubscriber;
+        return faultySubscriber;
     }
 
     // Business Logic

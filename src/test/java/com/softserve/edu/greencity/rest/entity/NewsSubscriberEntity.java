@@ -6,21 +6,24 @@ public class NewsSubscriberEntity  {
     private String message;
     
     public NewsSubscriberEntity() {
-    email = "";
-}
+        email = "";
+        message = "";
+    }
+    
     public NewsSubscriberEntity(String email) {
         this.email = email;  
         
     }
    
     public NewsSubscriberEntity(String email, String message) {
-		
 		this.email = email;
 		this.message = message;
 	}
+    
 	public String getMessage() {
 		return message;
 	}
+	
 	public String getEmail() {
         return email;
     }
@@ -29,13 +32,5 @@ public class NewsSubscriberEntity  {
     public String toString() {
         return "NewsSubscriberEntity [email=" + email +"]";
     }
-    
-//    @Override
-//  public String toString() {
-//  return email;
-//}
-    
-
-    
-    
+       
 }
