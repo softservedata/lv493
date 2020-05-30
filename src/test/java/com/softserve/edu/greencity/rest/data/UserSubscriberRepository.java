@@ -20,4 +20,8 @@ public class UserSubscriberRepository {
         return new UserSubscriber();
         
     }
+    
+    public static UserSubscriber getFaultyEmail() {
+        return new UserSubscriber("cake45.com");
+    }
 }
