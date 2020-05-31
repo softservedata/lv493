@@ -31,19 +31,13 @@ public class MyhabitsService extends LogginedUserService {
 
     public List<UserGoalsEntity> userGoalsEntities() {
         MethodParameters methodParameters = new MethodParameters();
-        RestParameters headerParameters = new RestParameters()
-                .addParameter(KeyParameters.ACCEPT,
-                        ContentTypes.ALL_TYPES.toString())
+        RestParameters headerParameters = new RestParameters().addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
                 .addParameter(KeyParameters.AUTHORIZATION,
-                        KeyParameters.BEARER.toString()
-                                + getLogginedUserEntity().getAccessToken());
-        RestParameters pathVariables = new RestParameters().addParameter(
-                KeyParameters.USER_ID,
+                        KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+        RestParameters pathVariables = new RestParameters().addParameter(KeyParameters.USER_ID,
                 String.valueOf(getLogginedUserEntity().getUserId()));
         List<UserGoalsEntity> userGoalsEntities = userGoalsResource
-                .httpGetAsListEntity(
-                        methodParameters.addPathVariables(pathVariables)
-                                .addHeaderParameters(headerParameters));
+                .httpGetAsListEntity(methodParameters.addPathVariables(pathVariables).addHeaderParameters(headerParameters));
         System.out.println("***userGoalsEntities = " + userGoalsEntities);
         return userGoalsEntities;
     }
@@ -54,11 +48,9 @@ public class MyhabitsService extends LogginedUserService {
 
     public List<UserGoal> userGoalsByStatus(UserGoalStatus userGoalStatus) {
         List<UserGoal> result = userGoals();
-        for (Iterator<UserGoal> iterator = result.iterator(); iterator
-                .hasNext();) {
+        for (Iterator<UserGoal> iterator = result.iterator(); iterator.hasNext();) {
             UserGoal current = iterator.next();
-            if (!current.getStatus().toUpperCase()
-                    .equals(userGoalStatus.toString())) {
+            if (!current.getStatus().toUpperCase().equals(userGoalStatus.toString())) {
                 iterator.remove();
             }
         }

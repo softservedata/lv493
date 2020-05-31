@@ -2,9 +2,16 @@ package com.softserve.edu.greencity.rest.tools;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -32,10 +39,11 @@ public final class GetMail10MinTools {
     //
     public String title;
     private String verifyURL;
+    private String httpsAfterVerify;
     //
     public static final DataFlavor byteFlavor = new DataFlavor(byte[].class, "Byte Flavor");
 
-    public final static String URL = "https://www.minuteinbox.com/"; // working
+    public final static String URL = "https://www.minuteinbox.com/"; // not working
 //    public final static String URL = "https://10minutemail.net/"; // not working
     /**
      * Site URL for temporary email.
@@ -55,8 +63,9 @@ public final class GetMail10MinTools {
     public GetMail10MinTools(WebDriver driver) {
         this.driver = driver;
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wait = new WebDriverWait(driver, 15);
+        wait = new WebDriverWait(driver, 300);
         initElements();
+        httpsAfterVerify = "";
     }
 
     // init elements
@@ -181,7 +190,7 @@ public final class GetMail10MinTools {
         return verifyEmailButton;
     }
 
-    private void clickVerifyEmailButton() {
+    private void clickVerifyEmailButton(){
         getVerifyEmailButton().click();
     }
 
@@ -215,6 +224,27 @@ public final class GetMail10MinTools {
     }
 
     // Functional
+    
+    private void takeScreenShot(WebDriver driver) throws IOException {
+        String currentTime = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")
+                .format(new Date());
+        File scrFile = ((TakesScreenshot) driver)
+                .getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(scrFile,
+                new File("./" + currentTime + "_screenshot.png"));
+    }
+    
+    private void switchToAnotherTab(String currentTab) {
+        logger.debug("start switchToAnotherTab()");
+        for (String current : driver.getWindowHandles()) {
+            logger.info("we're in a TAB: " + current);
+            if (!current.equals(currentTab)) {
+                logger.info("and switch to TAB: " + current);
+                driver.switchTo().window(current);
+                break;
+            }
+        }
+    }
 
     private String getEmail() {
         if (isDisplayedTempEmailField()) {
@@ -239,10 +269,17 @@ public final class GetMail10MinTools {
         }
     }
 
+    // FIXME
     private void openMail() {
-        while (!isDisplayedEmailButton()) {
+        int i = 0;
+        do {
             refreshMail();
-        }
+//            System.out.println("refreshMail");
+            if (i == 4) {
+                break;
+            }
+            i++;
+        } while (isDisplayedEmailButton());
         if (isDisplayedEmailButton()) {
             clickEmailButton();
         }
@@ -281,15 +318,41 @@ public final class GetMail10MinTools {
     /**
      * Finding the desired letter, opening and clicking on the button 'Verify'.
      */
-    public void verifyEmail() {
+    public String verifyEmail() {
         logger.debug("start verifyEmail()");
         logger.trace("click on refresh Mail button and open desired mail");
         openMail();
-//        String verifyEmail = getVerifyURL();
         logger.trace("click on VerifyButton");
         clickVerifyButton();
-        System.out.println("**********verifyURL: " + verifyURL);
-//        return verifyEmail;
+        //
+//        switchToAnotherTab(driver.getWindowHandle());
+//        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+//        wait.until(ExpectedConditions.urlContains("/#/welcome")); // for https://www.minuteinbox.com/
+//        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        httpsAfterVerify = driver.getCurrentUrl(); // TODO
+//        System.out.println("getTempEmail getCurrentUrl(): " + driver.getCurrentUrl());
+        return verifyURL;
     }
 
+    /**
+     * Finding the desired letter, opening and get verify Email Url & user Id
+     * without
+     * @return String
+     */
+    public String getVerifyUrlInMail() {
+        logger.debug("start getVerifyUrlInMail()");
+        logger.trace("click on refresh Mail button and open desired mail");
+        openMail();
+        logger.trace("indicate button and URL link");
+        isDisplayedVerifyEmailButton();
+        return verifyURL;
+    }
+
+    /**
+     * Returns current url address after clicking verify button.
+     * @return String
+     */
+    public String getHttpsAfterVerify() {
+        return httpsAfterVerify;
+    }
 }

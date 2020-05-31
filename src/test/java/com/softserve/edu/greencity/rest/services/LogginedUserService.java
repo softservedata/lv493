@@ -1,24 +1,27 @@
 package com.softserve.edu.greencity.rest.services;
 
-import com.softserve.edu.greencity.rest.data.GoogleSecurity;
-import com.softserve.edu.greencity.rest.data.VerifyEmail;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.entity.GoogleSecurityEntity;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
-import com.softserve.edu.greencity.rest.entity.VerifyEmailEntity;
+import com.softserve.edu.greencity.rest.entity.UserDtoEntity;
 import com.softserve.edu.greencity.rest.resources.GoogleSecurityResource;
-import com.softserve.edu.greencity.rest.resources.VerifyEmailResource;
+import com.softserve.edu.greencity.rest.resources.UserDtoResource;
 
 public class LogginedUserService {
     //
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    //
     protected LogginedUserEntity logginedUserEntity;
     private GoogleSecurityEntity googleSecurityEntity;
-    private VerifyEmailEntity verifyEmailEntity;
     private GoogleSecurityResource googleSecurityResource;
-    private VerifyEmailResource verifyEmailResource;
+    private UserDtoEntity userDtoEntity;
+    private UserDtoResource userDtoResource;
 
     public LogginedUserService(LogginedUserEntity logginedUserEntity) {
         this.logginedUserEntity = logginedUserEntity;
@@ -30,28 +33,35 @@ public class LogginedUserService {
         return logginedUserEntity;
     }
 
-    protected GoogleSecurityEntity getGoogleSecurityEntity() {
+    private GoogleSecurityEntity getGoogleSecurityEntity() {
         return googleSecurityEntity;
     }
 
-    protected GoogleSecurityResource getGoogleSecurityResource() {
+    private GoogleSecurityResource getGoogleSecurityResource() {
         googleSecurityResource = new GoogleSecurityResource();
         return googleSecurityResource;
     }
 
-    protected VerifyEmailResource getVerifyEmailResource() {
-        verifyEmailResource = new VerifyEmailResource();
-        return verifyEmailResource;
+    private UserDtoResource getUserDtoResource() {
+        userDtoResource = new UserDtoResource();
+        return userDtoResource;
     }
 
-    protected VerifyEmailEntity getVerifyEmailEntity() {
-        return verifyEmailEntity;
+    private UserDtoEntity getUserDtoEntity() {
+//        userDtoEntity = new UserDtoEntity();
+        return userDtoEntity;
     }
 
     // Functionals
 
     // http://***/googleSecurity?idToken=**" -H "accept: */*" -H "Authorization: Bearer ***"
+    /**
+     * Google security authentication
+     * @return GoogleSecurityEntity
+     */
     public GoogleSecurityEntity googleSecurity() {
+        logger.debug("start check google security authentication");
+        logger.trace("preparing REST request for successfully user registration");
         MethodParameters methodParameters = new MethodParameters();
         getGoogleSecurityResource();
         //
@@ -69,25 +79,26 @@ public class LogginedUserService {
         return googleSecurityEntity;
     }
 
-    // http://***/ownSecurity/verifyEmail?token=***&user_id=***" -H "accept: */*
-    public VerifyEmail verifyEmail() {
+    //"http://***/user" -H "accept: */*" -H "Authorization: Bearer ***"
+    /**
+     * User Dto Email Notification.
+     * @return UserDtoEntity
+     */
+    public UserDtoEntity userDtoEmailNotification() {
+        logger.debug("start userDtoEmailNotification()");
+        logger.trace("preparing REST request for get Email Notification");
+        logger.info("forming REST request for get Email Notification");
         MethodParameters methodParameters = new MethodParameters();
-        getVerifyEmailResource();
-        //
-        RestParameters urlParameters = new RestParameters()
-                .addParameter(KeyParameters.TOKEN, String.valueOf(getLogginedUserEntity().getAccessToken()))
-                .addParameter(KeyParameters.USER_ID2, String.valueOf(getLogginedUserEntity().getUserId()));
+        getUserDtoResource();
         //
         RestParameters headerParameters = new RestParameters()
-                .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString());
+                .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
+                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
         //
-        VerifyEmailEntity verifyEmailEntity = verifyEmailResource
-                .httpGetAsEntity(methodParameters
-                        .addUrlParameters(urlParameters)
-                        .addHeaderParameters(headerParameters));
+        UserDtoEntity userDtoEntity = userDtoResource
+                .httpGetAsEntity(methodParameters.addHeaderParameters(headerParameters));
         //
-        System.out.println("***verifyEmailEntity = " + verifyEmailEntity);
-        return VerifyEmail.converToVerifyEmail(verifyEmailEntity);
+        return userDtoEntity;
     }
 
     // Business Logic

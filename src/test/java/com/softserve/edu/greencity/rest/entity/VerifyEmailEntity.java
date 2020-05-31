@@ -2,34 +2,43 @@ package com.softserve.edu.greencity.rest.entity;
 
 public class VerifyEmailEntity {
 
-    private String text;
+    private String message;
     private String status;
     private String token;
     private String user_id;
 
     public VerifyEmailEntity() {
-        this.text = "";
+        this.message = "";
         this.status = "";
         this.token = "";
         this.user_id = "";
     }
 
     public VerifyEmailEntity(String text) {
-        this.text = text;
+        this.message = text;
         this.status = "";
         this.token = "";
         this.user_id = "";
     }
     
     public VerifyEmailEntity(String token, String user_id) {
-        this.text = "";
+        this.message = "";
         this.status = "";
         this.token = token;
         this.user_id = user_id;
     }
+    
+    
 
-    public String getText() {
-        return text;
+    public VerifyEmailEntity(String message, String status, String token, String user_id) {
+        this.message = message;
+        this.status = status;
+        this.token = token;
+        this.user_id = user_id;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public String getStatus() {
@@ -46,7 +55,7 @@ public class VerifyEmailEntity {
 
     @Override
     public String toString() {
-        return "VerifyEmailEntity [text=" + text + ", status=" + status + ", token=" + token + ", user_id=" + user_id + "]";
+        return "VerifyEmailEntity [text=" + message + ", status=" + status + ", token=" + token + ", user_id=" + user_id + "]";
     }
 
 }

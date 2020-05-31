@@ -1,7 +1,12 @@
 package com.softserve.edu.greencity.rest.tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class GreenCityCommonException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
+	//
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public GreenCityCommonException() {
 		super();

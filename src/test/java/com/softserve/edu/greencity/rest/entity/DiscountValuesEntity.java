@@ -13,6 +13,8 @@ public class DiscountValuesEntity {
     }
 
     public DiscountValuesEntity(int value, Specification specification) {
+        System.out.println("DiscountValuesEntity value: " + value);
+        System.out.println("DiscountValuesEntity specification: " + specification);
         this.value = value;
         this.specification = specification;
     }

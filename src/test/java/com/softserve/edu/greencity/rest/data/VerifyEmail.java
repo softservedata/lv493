@@ -36,10 +36,10 @@ public class VerifyEmail {
 // static factory
     
     public static VerifyEmail converToVerifyEmail(VerifyEmailEntity verifyEmailEntity) {
-        return new VerifyEmail(verifyEmailEntity.getText(), verifyEmailEntity.getStatus());
+        return new VerifyEmail(verifyEmailEntity.getMessage(), verifyEmailEntity.getStatus());
     }
     
-    public static List<VerifyEmail> converToGoogleSecurityList(List<VerifyEmailEntity> verifyEmailEntities) {
+    public static List<VerifyEmail> converToVerifyEmailList(List<VerifyEmailEntity> verifyEmailEntities) {
         List<VerifyEmail> result = new ArrayList<>();
         for (VerifyEmailEntity verifyEmailEntity : verifyEmailEntities) {
             result.add(converToVerifyEmail(verifyEmailEntity));

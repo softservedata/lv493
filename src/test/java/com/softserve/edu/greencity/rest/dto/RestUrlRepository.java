@@ -80,15 +80,37 @@ public final class RestUrlRepository {
 //                .addPatchUrl("");
 //    }
     
-    // https://***/place/about/1" -H "accept: */*" -H "Authorization: Bearer **"
+    // https://***/place/about/1 -H "accept: */*" -H "Authorization: Bearer **"
     public static RestUrl getPlaceAbouId() {
         return new RestUrl()
-//                .addBaseUrl(remoteServer)
-                .addBaseUrl(localServer)
+                .addBaseUrl(remoteServer)
+//                .addBaseUrl(localServer)
                 .addGetUrl("/place/about/{" + KeyParameters.PLACE_ID.toString() + "}")
                 .addPostUrl("")
                 .addPutUrl("")
                 .addDeleteUrl("")
+                .addPatchUrl("");
+    }
+    
+    //"http://***/user" -H "accept: */*" -H "Authorization: Bearer ***"
+    public static RestUrl getUserDto() {
+        return new RestUrl()
+//                .addBaseUrl(remoteServer)
+                .addBaseUrl(localServer)
+                .addGetUrl("/user")
+                .addPostUrl("")
+                .addPutUrl("")
+                .addDeleteUrl("")
+                .addPatchUrl("");
+    }
+    
+    public static RestUrl getNews() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                //.addGetUrl("/econews/{" + KeyParameters.ID.toString() + "}")
+                .addPostUrl("/econews")
+                .addPutUrl("")
+                //.addDeleteUrl("/econews/{" + KeyParameters.ECONEWS_ID.toString() + "}")
                 .addPatchUrl("");
     }
 }

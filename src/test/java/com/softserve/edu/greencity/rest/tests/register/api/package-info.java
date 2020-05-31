@@ -1,0 +1,1 @@
+package com.softserve.edu.greencity.rest.tests.register.api;

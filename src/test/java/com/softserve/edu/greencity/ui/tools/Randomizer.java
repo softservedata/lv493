@@ -78,6 +78,10 @@ public class Randomizer {
         USE_NUMBERS = true;
         return RandomStringUtils.random(LENGTH, USE_LETTERS, USE_NUMBERS);
     }
+    
+    public static String getRndomEmail20Symbols() {
+        return getRamdomStringLetters1(10) + "@" + getRamdomStringLetters1(9);
+    }
 
     /**
      * Returns a one ASCII symbol (!"#$%^&()*+,-./:;<=>?@[\]^_'{|}~).

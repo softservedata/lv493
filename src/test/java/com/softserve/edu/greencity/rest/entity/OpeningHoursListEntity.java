@@ -19,6 +19,7 @@ public class OpeningHoursListEntity {
         this.closeTime = closeTime;
         this.weekDay = weekDay;
         this.breakTime = breakTime;
+        System.out.format("OpeningHoursListEntity openTime %s; closeTime %s; weekDay %s; breakTime %s\n", openTime, closeTime, weekDay, breakTime);
     }
 
     public String getOpenTime() {
