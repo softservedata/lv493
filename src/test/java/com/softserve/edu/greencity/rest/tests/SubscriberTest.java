@@ -1,7 +1,5 @@
 package com.softserve.edu.greencity.rest.tests;
 
-import java.util.List;
-
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -21,7 +19,7 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getRandomEmail() } };
     }
     
-    @Test(dataProvider = "randomEmail")
+//    @Test(dataProvider = "randomEmail")
     public void newSubscriber(User user, UserSubscriber userSubscriber) {
         logger.info("Start checkLogin(" + user + ")");
         TipsTricksService tipsTricksService = loadApplication()
@@ -36,7 +34,7 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getSingleEmail()}};
     }
 
-    @Test(dataProvider = "existEmail")
+//    @Test(dataProvider = "existEmail")
     public void existSubscriber(User user, UserSubscriber userSubscriber) {
        logger.info("Start checkLogin(" + user + ")");
        TipsTricksService tipsTricksService = loadApplication()
@@ -45,7 +43,7 @@ public class SubscriberTest extends GreencityRestTestRunner {
        logger.info("Subscriber (" + userSubscriber +")");
        NewsSubscriberEntity subscriber = tipsTricksService.subscribeEntity(userSubscriber);
        logger.info("ErrorMassege (" + subscriber.getMessage()+ ")");
-//       Assert.assertEquals(subscriber.getMessage(), IgnoreError400.EXIST_EMAIL.toString());
+       Assert.assertEquals(subscriber.getMessage(), IgnoreError400.EXIST_EMAIL.toString());
         }
     
     @DataProvider
@@ -53,15 +51,15 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getFaultyEmail()}};
     }
     
-   // @Test(dataProvider = "badEmail")
+    @Test(dataProvider = "badEmail")
     public void faultyEmail(User user, UserSubscriber userSubscriber) {
        logger.info("Start checkLogin(" + user + ")");
        TipsTricksService tipsTricksService = loadApplication()
                .successfulUserLogin(user)
                .gotoTipsTricksService();
        logger.info("Subscriber (" + userSubscriber +")");
-       List<NewsSubscriberEntity> subscriber = tipsTricksService.faultySubscriber(userSubscriber);
-//       logger.info("ErrorMassege (" + subscriber.getMessage()+ ")");
-//       Assert.assertEquals(subscriber.getMessage(), IgnoreError400.FAULTY_EMAIL.toString());
+       NewsSubscriberEntity subscriber = tipsTricksService.faultySubscriber(userSubscriber);
+       logger.info("ErrorMassege (" + subscriber.getMessage()+ ")");
+       Assert.assertEquals(subscriber.getMessage(), IgnoreError400.FAULTY_EMAIL.toString());
         }
 }
