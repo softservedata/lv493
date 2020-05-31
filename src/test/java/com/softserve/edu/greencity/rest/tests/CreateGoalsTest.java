@@ -8,11 +8,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.softserve.edu.greencity.rest.data.UserGoal;
-import com.softserve.edu.greencity.rest.data.UserGoalRepository;
 import com.softserve.edu.greencity.rest.data.UserRepository;
-import com.softserve.edu.greencity.rest.entity.UserGoalEntity;
-import com.softserve.edu.greencity.rest.services.UserCustomGoalsService;
+import com.softserve.edu.greencity.rest.data.myhabits.UserGoal;
+import com.softserve.edu.greencity.rest.data.myhabits.UserGoalRepository;
+import com.softserve.edu.greencity.rest.entity.myhabits.UserGoalEntity;
+import com.softserve.edu.greencity.rest.services.myhabits.UserCustomGoalsService;
 
 public class CreateGoalsTest extends GreencityRestTestRunner {
 

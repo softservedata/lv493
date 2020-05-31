@@ -6,11 +6,11 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 
 import com.softserve.edu.greencity.rest.data.User;
-import com.softserve.edu.greencity.rest.data.UserGoal;
-import com.softserve.edu.greencity.rest.data.UserGoalRepository;
 import com.softserve.edu.greencity.rest.data.UserRepository;
+import com.softserve.edu.greencity.rest.data.myhabits.UserGoal;
+import com.softserve.edu.greencity.rest.data.myhabits.UserGoalRepository;
 import com.softserve.edu.greencity.rest.services.LogginedUserService;
-import com.softserve.edu.greencity.rest.services.UserGoalsService;
+import com.softserve.edu.greencity.rest.services.myhabits.UserGoalsService;
 
 public class SmokeTest extends GreencityRestTestRunner {
 

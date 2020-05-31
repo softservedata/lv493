@@ -5,6 +5,9 @@ import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
+import com.softserve.edu.greencity.rest.services.habitstatistic.HabitStatisticService;
+import com.softserve.edu.greencity.rest.services.habitstatistic.TodayHabitStatisticService;
+import com.softserve.edu.greencity.rest.services.myhabits.MyHabitsService;
 
 public class LogginedUserService {
 	protected LogginedUserEntity logginedUserEntity;

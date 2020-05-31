@@ -12,5 +12,11 @@
 			<class name="com.softserve.edu.greencity.rest.tests.UpdateGoalsTest"/>	
 		</classes>
 	</test> <!-- Test -->
+	<test name="Test01b">
+		<classes>
+			<class name="com.softserve.edu.greencity.rest.tests.UserHabitsTests" />	
+		</classes>
+	</test> <!-- Test -->
+	
 
 </suite> <!-- Suite -->

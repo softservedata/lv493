@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.rest.resources;
+package com.softserve.edu.greencity.rest.resources.habitstatistic;
 
 import java.util.List;
 
@@ -6,26 +6,26 @@ import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestUrlRepository;
 import com.softserve.edu.greencity.rest.engine.RestQueries;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
-import com.softserve.edu.greencity.rest.entity.myhabits.UserGoalEntity;
+import com.softserve.edu.greencity.rest.entity.habitstatistic.HabitStatisticEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
-public class GoalsResource extends
-		RestQueries<UserGoalEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity> {
+public class HabitStatisticResource extends
+		RestQueries<HabitStatisticEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity, HabitStatisticEntity> {
 
-	public GoalsResource() {
-		super(RestUrlRepository.getAllGoals());
+	public HabitStatisticResource() {
+		super(RestUrlRepository.getHabitStatistic());
 		initParameters();
 	}
 
 	private void initParameters() {
-		addEntityParameters(RestHttpMethods.GET, UserGoalEntity.class);
+		addEntityParameters(RestHttpMethods.GET, HabitStatisticEntity.class);
 		addEntityParameters(RestHttpMethods.POST, ResponseCodeEntity.class);
 		addEntityParameters(RestHttpMethods.PUT, ResponseCodeEntity.class);
 		addEntityParameters(RestHttpMethods.DELETE, ResponseCodeEntity.class);
-		addEntityParameters(RestHttpMethods.PATCH, ResponseCodeEntity.class);
+		addEntityParameters(RestHttpMethods.PATCH, HabitStatisticEntity.class);
 		//
 		addListEntityParameters(RestHttpMethods.GET,
-				new GenericConverter<List<UserGoalEntity>>(){}.getGenericType());
+				new GenericConverter<List<HabitStatisticEntity>>(){}.getGenericType());
 		addListEntityParameters(RestHttpMethods.POST,
 				new GenericConverter<List<ResponseCodeEntity>>(){}.getGenericType());
 		addListEntityParameters(RestHttpMethods.PUT,
@@ -33,7 +33,7 @@ public class GoalsResource extends
 		addListEntityParameters(RestHttpMethods.DELETE,
 				new GenericConverter<List<ResponseCodeEntity>>(){}.getGenericType());
 		addListEntityParameters(RestHttpMethods.PATCH,
-				new GenericConverter<List<ResponseCodeEntity>>(){}.getGenericType());
+				new GenericConverter<List<HabitStatisticEntity>>(){}.getGenericType());
 	}
 
 }

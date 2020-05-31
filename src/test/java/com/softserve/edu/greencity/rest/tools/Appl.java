@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.rest.tools;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.softserve.edu.greencity.rest.entity.HabitDictionaryIdEntity;
+import com.softserve.edu.greencity.rest.entity.myhabits.HabitDictionaryIdEntity;
 
 public class Appl {
 	public static void main(String[] args) {

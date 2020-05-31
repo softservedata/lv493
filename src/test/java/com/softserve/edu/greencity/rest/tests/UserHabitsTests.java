@@ -10,11 +10,11 @@ import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.rest.data.LanguagesCode;
 import com.softserve.edu.greencity.rest.data.User;
-import com.softserve.edu.greencity.rest.data.UserHabit;
-import com.softserve.edu.greencity.rest.data.UserHabitRepository;
 import com.softserve.edu.greencity.rest.data.UserRepository;
-import com.softserve.edu.greencity.rest.entity.UserHabitStatisticEntity;
-import com.softserve.edu.greencity.rest.services.UserHabitsService;
+import com.softserve.edu.greencity.rest.data.myhabits.UserHabit;
+import com.softserve.edu.greencity.rest.data.myhabits.UserHabitRepository;
+import com.softserve.edu.greencity.rest.entity.myhabits.UserHabitStatisticEntity;
+import com.softserve.edu.greencity.rest.services.myhabits.UserHabitsService;
 
 public class UserHabitsTests extends GreencityRestTestRunner {
     User user = UserRepository.get().getDefault();

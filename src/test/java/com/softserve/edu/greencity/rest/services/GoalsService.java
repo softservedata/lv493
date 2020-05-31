@@ -5,7 +5,7 @@ import java.util.List;
 import com.softserve.edu.greencity.rest.data.LanguagesCode;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
-import com.softserve.edu.greencity.rest.entity.UserGoalEntity;
+import com.softserve.edu.greencity.rest.entity.myhabits.UserGoalEntity;
 import com.softserve.edu.greencity.rest.resources.GoalsResource;
 
 public class GoalsService extends LogginedUserService{

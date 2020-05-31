@@ -10,12 +10,12 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.rest.data.User;
-import com.softserve.edu.greencity.rest.data.UserGoal;
-import com.softserve.edu.greencity.rest.data.UserGoalEntityRepository;
-import com.softserve.edu.greencity.rest.data.UserGoalRepository;
 import com.softserve.edu.greencity.rest.data.UserRepository;
-import com.softserve.edu.greencity.rest.entity.UserGoalEntity;
-import com.softserve.edu.greencity.rest.services.MyHabitsService;
+import com.softserve.edu.greencity.rest.data.myhabits.UserGoal;
+import com.softserve.edu.greencity.rest.data.myhabits.UserGoalEntityRepository;
+import com.softserve.edu.greencity.rest.data.myhabits.UserGoalRepository;
+import com.softserve.edu.greencity.rest.entity.myhabits.UserGoalEntity;
+import com.softserve.edu.greencity.rest.services.myhabits.MyHabitsService;
 
 public class SelectGoalsTest extends GreencityRestTestRunner {
     User user = UserRepository.get().getDefault();
