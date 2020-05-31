@@ -176,6 +176,7 @@ public final class RestUrlRepository {
          return new RestUrl()
                  .addBaseUrl(remoteServer)
                  .addGetUrl("/newsSubscriber") //admin can get all newsSubcriber
+                 .addGetUrl("/newsSubscriber/unsubscribe")
                  .addPostUrl("/newsSubscriber")
                  .addPutUrl("")
                  .addDeleteUrl("")
@@ -183,22 +184,14 @@ public final class RestUrlRepository {
 
      }
 
-    public static RestUrl getNewsSubscriberUnsubscribe() {
-        return new RestUrl()
-                .addBaseUrl(remoteServer)
-                .addGetUrl("/newsSubscriber/unsubscribe")
-                .addPostUrl("")
-                .addPutUrl("")
-                .addDeleteUrl("")
-                .addPatchUrl("");
-    }
 
-//Advice------------------------------------------------------------------------------------------
+//Advice -----------------------------------------------------------------------------------------
 
     public static RestUrl getAdvices() {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
                 .addGetUrl("/advices")
+                .addGetUrl("/advices/random/{" + KeyParameters.HABIT_ID.toString()+ "}")
                 .addPostUrl("/advices")
                 .addPutUrl("/advices/{" + KeyParameters.ADVICE_ID.toString() + "}")
                 .addDeleteUrl("/advices/{" + KeyParameters.ADVICE_ID.toString() + "}")
@@ -206,14 +199,4 @@ public final class RestUrlRepository {
 
     }
 
-    public static RestUrl getAdvicesRandom() {
-        return new RestUrl()
-                .addBaseUrl(remoteServer)
-                .addGetUrl("/advices/random/{" + KeyParameters.HABIT_ID.toString()+ "}")
-                .addPostUrl("")
-                .addPutUrl("")
-                .addDeleteUrl("")
-                .addPatchUrl("");
-
-    }
 }
