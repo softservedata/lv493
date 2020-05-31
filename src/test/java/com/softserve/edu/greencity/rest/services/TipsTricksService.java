@@ -61,8 +61,9 @@ public class TipsTricksService extends LogginedUserService {
 
         return subscriberEntity;
     }
-    //add ERROr
-    public  List<NewsSubscriberEntity> faultySubscriber(UserSubscriber userSubscriber) {
+ 
+    public  NewsSubscriberEntity faultySubscriber(UserSubscriber userSubscriber) {
+        List<NewsSubscriberEntity> faultySubscriber;
         MethodParameters methodParameters = new MethodParameters()
                 .addContentType(ContentTypes.APPLICATION_JSON);
         
@@ -73,14 +74,13 @@ public class TipsTricksService extends LogginedUserService {
    
         RestParameters mediaTypeParameters = new RestParameters()
                 .addParameter(KeyParameters.EMAIL, userSubscriber.getEmail());
-        
-   
-        List<NewsSubscriberEntity> faultySubscriber = subscriberResource
+
+         faultySubscriber = subscriberResource
                 .httpPostAsListEntity(methodParameters
                 .addMediaTypeParameters(mediaTypeParameters)
                 .addHeaderParameters(headerParameters));
         
-        return faultySubscriber;
+        return faultySubscriber.get(0);
     }
 
     // Business Logic
