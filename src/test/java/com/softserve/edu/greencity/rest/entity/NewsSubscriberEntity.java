@@ -1,10 +1,11 @@
 package com.softserve.edu.greencity.rest.entity;
 
+
 public class NewsSubscriberEntity  {
     
     private String email;
     private String message;
-    
+     
     public NewsSubscriberEntity() {
         email = "";
         message = "";
@@ -30,7 +31,8 @@ public class NewsSubscriberEntity  {
         
     @Override
     public String toString() {
-        return "NewsSubscriberEntity [email=" + email +"]";
+        return "NewsSubscriberEntity [email=" + email + "message=" + message +"]";
     }
+ 
        
 }
