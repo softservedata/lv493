@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.rest.tests;
+package com.softserve.edu.greencity.rest.tests.myhabits;
 
 import java.util.List;
 
@@ -15,6 +15,7 @@ import com.softserve.edu.greencity.rest.data.myhabits.UserHabit;
 import com.softserve.edu.greencity.rest.data.myhabits.UserHabitRepository;
 import com.softserve.edu.greencity.rest.entity.myhabits.UserHabitStatisticEntity;
 import com.softserve.edu.greencity.rest.services.myhabits.UserHabitsService;
+import com.softserve.edu.greencity.rest.tests.GreencityRestTestRunner;
 
 public class UserHabitsTests extends GreencityRestTestRunner {
     User user = UserRepository.get().getDefault();

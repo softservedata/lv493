@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.rest.tests;
+package com.softserve.edu.greencity.rest.tests.myhabits;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import com.softserve.edu.greencity.rest.data.myhabits.UserGoal;
 import com.softserve.edu.greencity.rest.data.myhabits.UserGoalRepository;
 import com.softserve.edu.greencity.rest.entity.myhabits.UserGoalEntity;
 import com.softserve.edu.greencity.rest.services.myhabits.UserCustomGoalsService;
+import com.softserve.edu.greencity.rest.tests.GreencityRestTestRunner;
 
 public class CreateGoalsTest extends GreencityRestTestRunner {
 
