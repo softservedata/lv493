@@ -23,6 +23,8 @@ public class CreateGoalsTest extends GreencityRestTestRunner {
 
     @BeforeMethod
     public void beforeMethod() {
+        logger.info("Start beforeMethod() for " + getClass().getSimpleName());
+        logger.info("Go to UserCustomGoalsService");
         userCustomGoalsService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoMyhabitsService()
@@ -31,6 +33,8 @@ public class CreateGoalsTest extends GreencityRestTestRunner {
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {
+        logger.info("Start afterMethod() for " + getClass().getSimpleName());
+        logger.info("Delete custom goals: " + customGoals);
         userCustomGoalsService.deleteCustomGoals(customGoals);
     }
 
@@ -44,7 +48,7 @@ public class CreateGoalsTest extends GreencityRestTestRunner {
     @Test(dataProvider = "userGoals")
     public void createUserGoals(List<UserGoal> goals, List<UserGoal> expectedGoals) {
         logger.info("Start createUserGoals()");
-
+        logger.info("Create custom goals: " + goals);
         List<UserGoalEntity> createdGoals = userCustomGoalsService.createCustomGoals(goals);
         customGoals = createdGoals;
 

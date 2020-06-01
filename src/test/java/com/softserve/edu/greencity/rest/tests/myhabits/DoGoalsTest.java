@@ -10,7 +10,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.softserve.edu.greencity.rest.data.LanguagesCode;
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.data.myhabits.UserGoal;
@@ -29,25 +28,35 @@ public class DoGoalsTest extends GreencityRestTestRunner {
 
     @BeforeClass
     public void beforeClass() {
+        logger.info("Start beforeClass() for " + getClass().getSimpleName());
+        logger.info("Go to UserGoalsService");
         userGoalsService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoMyhabitsService()
                 .gotoUserGoalsService();
+
+        logger.info("Select goals: " + goalForDoing);
         selectedGoals = userGoalsService
                 .gotoUserGoalsService()
                 .selectUserGoals(goalForDoing, new ArrayList<>());
+
+        logger.info("Select goal for doing");
         userGoal = selectedGoals.get(0);
 
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
+        logger.info("Start afterClass() for " + getClass().getSimpleName());
+        logger.info("Deselect user goals: " + selectedGoals);
         userGoalsService.deselectUserGoals(selectedGoals);
     }
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {
-        userGoalsService.doUserGoals(userGoal);
+        logger.info("Start afterMethod() for " + getClass().getSimpleName());
+        logger.info("Undo user goal: " + userGoal);
+        userGoalsService.doUserGoal(userGoal);
     }
 
     @DataProvider
@@ -59,23 +68,11 @@ public class DoGoalsTest extends GreencityRestTestRunner {
     @Test(dataProvider = "userGoalEntities")
     public void doUserGoal(UserGoal expectedGoal) {
         logger.info("Start doUserGoal()");
-
-        Assert.assertEquals(UserGoal.converToUserGoal( userGoalsService.doUserGoals(userGoal)),
+        logger.info("Do goal: " + userGoal);
+        UserGoalEntity doneGoal =  userGoalsService.doUserGoal(userGoal);
+        Assert.assertEquals(UserGoal.converToUserGoal(doneGoal),
                 expectedGoal, "Goals is not done: ");
-    }
-
-    @DataProvider
-    public Object[][] userGoalEntitiesWithLanguage() {
-        return new Object[][] { { UserGoalRepository.get().sortingTrashDoneUK(),
-                LanguagesCode.UKRAINIAN } };
-    }
-
-    @Test(dataProvider = "userGoalEntitiesWithLanguage")
-    public void doUserGoal(UserGoal expectedGoal, LanguagesCode language) {
-        logger.info("Start doUserGoal()");
-
-        Assert.assertEquals(UserGoal.converToUserGoal(userGoalsService.doUserGoals(userGoal)),
-                expectedGoal, "Goals is not done: ");
+        logger.info("Пoal is done" + doneGoal);
     }
 
 }

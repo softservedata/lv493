@@ -166,7 +166,7 @@ public class UserGoalsService extends MyHabitsService {
     * @param language code
     * @return
     */
-    public UserGoalEntity doUserGoals(UserGoalEntity goal, LanguagesCode language) {
+    public UserGoalEntity doUserGoal(UserGoalEntity goal, LanguagesCode language) {
         RestParameters pathVariables = new RestParameters()
                 .addParameter(KeyParameters.USER_ID, String.valueOf(getLogginedUserEntity().getUserId()))
                 .addParameter(KeyParameters.GOAL_ID, String.valueOf(goal.getId()));
@@ -182,8 +182,8 @@ public class UserGoalsService extends MyHabitsService {
      * @param goal
      * @return
      */
-    public UserGoalEntity doUserGoals(UserGoalEntity goal) {
-        return doUserGoals(goal, LanguagesCode.ENGLISH);
+    public UserGoalEntity doUserGoal(UserGoalEntity goal) {
+        return doUserGoal(goal, LanguagesCode.ENGLISH);
     }
 
     /**

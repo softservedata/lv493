@@ -70,10 +70,6 @@ public class UserGoalRepository {
         return new UserGoal("Start sorting trash", "DONE");
     }
 
-    public UserGoal sortingTrashDoneUK() {
-        return new UserGoal("Почніть сортувати сміття", "DONE");
-    }
-
     public UserGoal buyGroceryBags() {
         return new UserGoal("Buy grocery bags");
     }

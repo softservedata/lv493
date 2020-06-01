@@ -22,31 +22,40 @@ import com.softserve.edu.greencity.rest.tests.GreencityRestTestRunner;
 public class UserGoalsTests extends GreencityRestTestRunner {
     User user = UserRepository.get().getDefault();
     MyHabitsService myHabitsService;
-    List<UserGoalEntity> customGoals;
+    List<UserGoalEntity> createdGoals;
     List<UserGoalEntity> selectedGoals;
+    List<UserGoal> goalForCreating = UserGoalRepository.get().customGoals();
     List<UserGoalEntity> goalsForSelecting = UserGoalEntityRepository.get().goalsForSelecting();
     UserGoal customGoalForSelecting = UserGoalRepository.get().buyNaturalFood();
 
     @BeforeClass
     public void beforeClass() {
+        logger.info("Start beforeClass() for " + getClass().getSimpleName());
+        logger.info("Go to UserGoalsService");
         myHabitsService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoMyhabitsService();
 
-        customGoals = myHabitsService.gotoUserCustomGoalsService()
-            .createCustomGoals(UserGoalRepository.get().customGoals());
+        logger.info("Create goals: " + goalForCreating);
+        createdGoals = myHabitsService.gotoUserCustomGoalsService()
+            .createCustomGoals(goalForCreating);
         List<UserGoalEntity> customSelected = new ArrayList<>();
-        customSelected.add(customGoals.stream().filter(goal -> goal.getText()
+        customSelected.add(createdGoals.stream().filter(goal -> goal.getText()
                 .contains(customGoalForSelecting.getText())).findAny().orElse(null));
 
+        logger.info("Select goals: " + customSelected + " " + goalsForSelecting);
         selectedGoals = myHabitsService.gotoUserGoalsService()
-            .selectUserGoals(goalsForSelecting,customSelected);
+            .selectUserGoals(goalsForSelecting, customSelected);
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
+        logger.info("Start afterClass() for " + getClass().getSimpleName());
+        logger.info("Deselect user goals: " + selectedGoals);
         myHabitsService.gotoUserGoalsService().deselectUserGoals(selectedGoals);
-        myHabitsService.gotoUserCustomGoalsService().deleteCustomGoals(customGoals);
+
+        logger.info("Delete created goals: " + createdGoals);
+        myHabitsService.gotoUserCustomGoalsService().deleteCustomGoals(createdGoals);
     }
 
 
@@ -60,9 +69,10 @@ public class UserGoalsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "selectedUserGoals")
     public void checkUserGoals(List<UserGoal> expectedGoals) {
         logger.info("Start checkUserGoals()");
-
+        logger.info("Check selected user goals");
         Assert.assertEquals(myHabitsService.gotoUserGoalsService().userGoals(),
-                expectedGoals, "Goal is not selected: ");
+                expectedGoals, "Goals are not selected: ");
+        logger.info("Goals are selected");
     }
 
     @DataProvider
@@ -75,9 +85,10 @@ public class UserGoalsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "availableUserGoals")
     public void checkAvailableUserGoals(List<UserGoal> expectedGoals) {
         logger.info("Start checkAvailableUserGoals()");
-
+        logger.info("Check available user goals");
         Assert.assertEquals(myHabitsService.gotoUserGoalsService().availableUserGoals(),
-                expectedGoals, "Goal is not available: ");
+                expectedGoals, "Goals are not available: ");
+        logger.info("Goals are available");
     }
 
     @DataProvider
@@ -90,9 +101,10 @@ public class UserGoalsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "selectedUserGoalsWithLanguage")
     public void checkUserGoals(List<UserGoal> expectedGoals, LanguagesCode language) {
         logger.info("Start checkUserGoals()");
-
+        logger.info("Check selected user goals");
         Assert.assertEquals(myHabitsService.gotoUserGoalsService().userGoals(language),
-                expectedGoals, "Goal is not selected: ");
+                expectedGoals, "Goals are not selected: ");
+        logger.info("Goals are selected");
     }
 
 
@@ -106,9 +118,10 @@ public class UserGoalsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "availableUserGoalsWithLanguage")
     public void checkAvailableUserGoals(List<UserGoal> expectedGoals, LanguagesCode language) {
         logger.info("Start checkAvailableUserGoals()");
-
+        logger.info("Check available user goals");
         Assert.assertEquals(myHabitsService.gotoUserGoalsService().availableUserGoals(language),
-                expectedGoals, "Goal is not available: ");
+                expectedGoals, "Goals are not available: ");
+        logger.info("Goals are available");
     }
 
 
@@ -122,9 +135,10 @@ public class UserGoalsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "customGoals")
     public void checkUserCustomGoals(List<UserGoal> expectedGoals) {
         logger.info("Start checkUserCustomGoals()");
-
+        logger.info("Check all present user custom goals");
         Assert.assertEquals(myHabitsService.gotoUserCustomGoalsService().customGoals(),
-                expectedGoals, "Goal is not present: ");
+                expectedGoals, "Goals are not present: ");
+        logger.info("Goals are present");
     }
 
     @DataProvider
@@ -137,9 +151,10 @@ public class UserGoalsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "availableCustomGoals")
     public void checkAvailableUserCustomGoals(List<UserGoal> expectedGoals) {
         logger.info("Start checkAvailableUserCustomGoals()");
-
+        logger.info("Check available user custom goals");
         Assert.assertEquals(myHabitsService.gotoUserCustomGoalsService().availableCustomGoals(),
-                expectedGoals, "Goal is not available: ");
+                expectedGoals, "Goals are not available: ");
+        logger.info("Goals are available");
     }
 
 

@@ -28,28 +28,42 @@ public class DoCustomGoalsTest extends GreencityRestTestRunner {
 
     @BeforeClass
     public void beforeClass() {
+        logger.info("Start beforeClass() for " + getClass().getSimpleName());
+        logger.info("Go to UserGoalsService");
         userGoalsService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoMyhabitsService()
                 .gotoUserGoalsService();
+
+        logger.info("Create goals: " + goalForCreating);
         createdGoals = userGoalsService.gotoUserCustomGoalsService()
                 .createCustomGoals(goalForCreating);
+
+        logger.info("Select created goals: " + createdGoals);
         selectedGoals = userGoalsService
                 .gotoUserGoalsService()
                 .selectUserGoals(new ArrayList<>(), createdGoals);
+
+        logger.info("Select goal for doing");
         userCustomGoal = selectedGoals.get(0);
 
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
+        logger.info("Start afterClass() for " + getClass().getSimpleName());
+        logger.info("Deselect user goals: " + selectedGoals);
         userGoalsService.deselectUserGoals(selectedGoals);
+
+        logger.info("Delete created goals: " + createdGoals);
         userGoalsService.gotoUserCustomGoalsService().deleteCustomGoals(createdGoals);
     }
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {
-        userGoalsService.doUserGoals(userCustomGoal);
+        logger.info("Start afterMethod() for " + getClass().getSimpleName());
+        logger.info("Undo user goal: " + userCustomGoal);
+        userGoalsService.doUserGoal(userCustomGoal);
     }
 
 
@@ -61,10 +75,11 @@ public class DoCustomGoalsTest extends GreencityRestTestRunner {
 
     @Test(dataProvider = "customUserGoalEntities")
     public void doUserCustomGoal(UserGoal expectedGoal) {
-        logger.info("Start selectUserGoal()");
-
-        Assert.assertEquals(UserGoal.converToUserGoal( userGoalsService.doUserGoals(userCustomGoal)),
-                expectedGoal, "Goals is not done: ");
+        logger.info("Start doUserCustomGoal()");
+        logger.info("Do custom goal: " + userCustomGoal);
+        UserGoalEntity doneGoal = userGoalsService.doUserGoal(userCustomGoal);
+        Assert.assertEquals(UserGoal.converToUserGoal(doneGoal), expectedGoal, "Custom goal is not done: ");
+        logger.info("Custom goal is done" + doneGoal);
     }
 
 }

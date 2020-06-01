@@ -23,6 +23,8 @@ public class UserHabitsTests extends GreencityRestTestRunner {
 
     @BeforeClass
     public void beforeClass() {
+        logger.info("Start beforeClass() for " + getClass().getSimpleName());
+        logger.info("Go to UserHabitsService");
         userHabitsService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoMyhabitsService()
@@ -39,9 +41,10 @@ public class UserHabitsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "userHabits")
     public void checkUserHabits(List<UserHabit> expectedHabits) {
         logger.info("Start checkUserHabits()");
-
+        logger.info("Check selected user habits");
         Assert.assertEquals(userHabitsService.userHabits(),
-                expectedHabits, "Habit is not selected: ");
+                expectedHabits, "Habits are not selected: ");
+        logger.info("Habits are selected");
     }
 
 
@@ -55,9 +58,10 @@ public class UserHabitsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "userHabitsWithLanguage")
     public void checkUserHabits(List<UserHabit> expectedHabits, LanguagesCode language) {
         logger.info("Start checkUserHabits()");
-
+        logger.info("Check selected user habits");
         Assert.assertEquals(userHabitsService.userHabits(language),
-                expectedHabits, "Habit is not selected: ");
+                expectedHabits, "Habits are not selected: ");
+        logger.info("Habits are selected");
     }
 
 
@@ -71,9 +75,10 @@ public class UserHabitsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "availableHabits")
     public void checkAvailableUserHabits(List<UserHabit> expectedHabits) {
         logger.info("Start checkAvailableUserHabits()");
-
+        logger.info("Check available user habits");
         Assert.assertEquals(userHabitsService.userAvailableHabits(),
-                expectedHabits, "Habit is not available: ");
+                expectedHabits, "Habits are not available: ");
+        logger.info("Habits are available");
     }
 
     @DataProvider
@@ -86,9 +91,10 @@ public class UserHabitsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "availableHabitsWithLanguage")
     public void checkAvailableUserHabits(List<UserHabit> expectedHabits,LanguagesCode language) {
         logger.info("Start checkAvailableUserHabits()");
-
+        logger.info("Check available user habits");
         Assert.assertEquals(userHabitsService.userAvailableHabits(language),
-                expectedHabits, "Habit is not available: ");
+                expectedHabits, "Habits are not available: ");
+        logger.info("Habits are available");
     }
 
     @DataProvider
@@ -101,10 +107,11 @@ public class UserHabitsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "userHabitsStatistic")
     public void checkUserHabitStatistic(UserHabitStatistic expectedStatistic) {
         logger.info("Start checkUserHabitStatistic()");
-
+        logger.info("Check user habits statistic");
         Assert.assertEquals(UserHabitStatistic.converToUserHabitStatistic(
                     userHabitsService.gotoUserHabitStatisticService().userHabitStatistic()),
                 expectedStatistic, "Statistic is not correct: ");
+        logger.info("Statistic is correct");
     }
 
 }

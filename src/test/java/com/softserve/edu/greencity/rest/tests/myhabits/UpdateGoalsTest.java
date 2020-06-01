@@ -25,21 +25,28 @@ public class UpdateGoalsTest extends GreencityRestTestRunner {
 
     @BeforeClass
     public void beforeClass() {
+        logger.info("Start beforeClass() for " + getClass().getSimpleName());
+        logger.info("Go to UserCustomGoalsService");
         userCustomGoalsService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoMyhabitsService()
                 .gotoUserCustomGoalsService();
 
+        logger.info("Create goals: " + goalForCreating);
         createdGoals = userCustomGoalsService.createCustomGoals(goalForCreating);
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
+        logger.info("Start afterClass() for " + getClass().getSimpleName());
+        logger.info("Delete created goals: " + createdGoals);
         userCustomGoalsService.deleteCustomGoals(createdGoals);
     }
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {
+        logger.info("Start afterMethod() for " + getClass().getSimpleName());
+        logger.info("ReUpdate user goals: " + createdGoals);
         userCustomGoalsService.updateCustomGoals(createdGoals);
     }
 
@@ -51,11 +58,12 @@ public class UpdateGoalsTest extends GreencityRestTestRunner {
     }
 
     @Test(dataProvider = "userGoals")
-    public void updateUserGoal(List<UserGoal> newGoals, List<UserGoal> expectedGoals) {
-        logger.info("Start updateUserGoal()");
-
-        Assert.assertEquals(UserGoal.converToUserGoalList(userCustomGoalsService.updateCustomGoals(createdGoals, newGoals)),
-                expectedGoals, "Goals is not updated: ");
+    public void updateUserGoals(List<UserGoal> newGoals, List<UserGoal> expectedGoals) {
+        logger.info("Start updateUserGoals()");
+        logger.info("Update goals: " + createdGoals + "to: " + newGoals);
+        List<UserGoalEntity> updatedGoals = userCustomGoalsService.updateCustomGoals(createdGoals, newGoals);
+        Assert.assertEquals(UserGoal.converToUserGoalList(updatedGoals), expectedGoals, "Goals are not updated: ");
+        logger.info("Goals are updated: " + updatedGoals);
     }
 
 }
