@@ -6,11 +6,11 @@
 	<test name="Test01a">
 		<classes>
 			<class name="com.softserve.edu.AppTest" />
-			<class name="com.softserve.edu.SearchTest">
-				<methods>
-					<include name="checkCart" />
-				</methods>
-			</class>
+			<!-- <class name="com.softserve.edu.SearchTest"> -->
+			<!-- <methods> -->
+			<!-- <include name="checkCart" /> -->
+			<!-- </methods> -->
+			<!-- </class> -->
 		</classes>
 	</test> <!-- Test -->
 

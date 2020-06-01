@@ -42,7 +42,7 @@ public class SmokeTest extends GreencityRestTestRunner {
 		};
 	}
 	
-	//@Test(dataProvider = "userGoals")
+	@Test(dataProvider = "userGoals")
 	public void checkUserGoals(User user, List<UserGoal> expectedGoals) {
 		logger.info("Start checkUserGoals(" + user + ")");
 		MyhabitsService myhabitsService = loadApplication()
@@ -63,7 +63,7 @@ public class SmokeTest extends GreencityRestTestRunner {
 		};
 	}
 	
-	@Test(dataProvider = "userNews")
+	//@Test(dataProvider = "userNews")
 	public void checkUploadEconews(User user, FileUploadProperties fileUploadProperties) {
 		logger.info("Start checkUploadEconews(" + user + ")");
 		EconewsUserService econewsUserService = loadApplication()
