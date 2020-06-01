@@ -23,6 +23,7 @@ public class SelectGoalsTest extends GreencityRestTestRunner {
     MyHabitsService myHabitsService;
     List<UserGoalEntity> customGoals;
     List<UserGoalEntity> userGoals;
+    List<UserGoal> goalForCreating = UserGoalRepository.get().customGoalsForAdding();
 
     @BeforeClass
     public void beforeClass() {
@@ -31,15 +32,13 @@ public class SelectGoalsTest extends GreencityRestTestRunner {
                 .gotoMyhabitsService();
 
         customGoals = myHabitsService.gotoUserCustomGoalsService()
-            .createCustomGoals(UserGoalRepository.get().customGoalsForAdding());
+            .createCustomGoals(goalForCreating);
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
         myHabitsService.gotoUserCustomGoalsService().deleteCustomGoals(customGoals);
     }
-
-
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {

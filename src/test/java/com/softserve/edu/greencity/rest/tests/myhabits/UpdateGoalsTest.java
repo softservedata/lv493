@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -27,24 +26,17 @@ public class UpdateGoalsTest extends GreencityRestTestRunner {
     @BeforeClass
     public void beforeClass() {
         userCustomGoalsService = loadApplication()
-                .successfulUserLogin(UserRepository.get().getDefault())
+                .successfulUserLogin(user)
                 .gotoMyhabitsService()
                 .gotoUserCustomGoalsService();
 
         createdGoals = userCustomGoalsService.createCustomGoals(goalForCreating);
-
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
         userCustomGoalsService.deleteCustomGoals(createdGoals);
     }
-
-    @BeforeMethod
-    public void beforeMethod() {
-
-    }
-
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {

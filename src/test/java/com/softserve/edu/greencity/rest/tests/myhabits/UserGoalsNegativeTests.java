@@ -1,25 +1,20 @@
-package com.softserve.edu.greencity.rest.tests;
+package com.softserve.edu.greencity.rest.tests.myhabits;
 
-import java.util.List;
-
-import org.testng.annotations.AfterClass;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.softserve.edu.greencity.rest.data.LanguagesCode;
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
-import com.softserve.edu.greencity.rest.data.myhabits.UserGoal;
-import com.softserve.edu.greencity.rest.data.myhabits.UserGoalRepository;
-import com.softserve.edu.greencity.rest.entity.myhabits.UserGoalEntity;
+import com.softserve.edu.greencity.rest.resources.myhabits.UserGoalsErrorResource;
 import com.softserve.edu.greencity.rest.services.myhabits.MyHabitsService;
+import com.softserve.edu.greencity.rest.tests.GreencityRestTestRunner;
 
 public class UserGoalsNegativeTests extends GreencityRestTestRunner {
     User user = UserRepository.get().getDefault();
     MyHabitsService myHabitsService;
-    List<UserGoalEntity> customGoals;
-    List<UserGoalEntity> selectedGoals;
-
 
     @BeforeClass
     public void beforeClass() {
@@ -28,29 +23,43 @@ public class UserGoalsNegativeTests extends GreencityRestTestRunner {
                 .gotoMyhabitsService();
     }
 
-    @AfterClass(alwaysRun = true)
-    public void afterClass() {
-
-    }
-
 
     @DataProvider
-    public Object[][] selectedUserGoals() {
+    public Object[][] language() {
         return new Object[][] {
-            { UserGoalRepository.get().typicalGoal()}
+            {LanguagesCode.UKRAINIAN}
+        };
+    }
+    @Test(dataProvider = "language")
+    public void checkUserGoals(LanguagesCode language) {
+        logger.info("Start checkUserGoals(" + user + ")");
+
+        Assert.assertEquals(myHabitsService.gotoUserGoalsErrorService().userGoalsEntities(language).getMessage(),
+                UserGoalsErrorResource.NOT_SELECTED_GOALS);
+    }
+
+    @Test
+    public void checkUserGoals() {
+        logger.info("Start checkUserGoals(" + user + ")");
+
+        Assert.assertEquals(myHabitsService.gotoUserGoalsErrorService().userGoalsEntities().getMessage(),
+                UserGoalsErrorResource.NOT_SELECTED_GOALS);
+    }
+
+    @DataProvider
+    public Object[][] userID() {
+        return new Object[][] {
+            {17}
         };
     }
 
-    @Test(dataProvider = "selectedUserGoals")
-    public void checkUserGoals(List<UserGoal> expectedGoals) {
+    @Test(dataProvider = "userID")
+    public void checkUserGoals(int userID) {
         logger.info("Start checkUserGoals(" + user + ")");
 
-        List<UserGoal> error = myHabitsService.gotoUserGoalsService().userGoals();
-        System.out.println("error   "+ error);
-//        Assert.assertEquals(,
-//                expectedGoals, "Goal is not selected: ");
+        Assert.assertEquals(myHabitsService.gotoUserGoalsErrorService().userGoalsEntitiesWithOtherUser(userID).getMessage(),
+                UserGoalsErrorResource.OTHER_USER);
     }
-
 
 
 }

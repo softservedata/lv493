@@ -3,7 +3,6 @@ package com.softserve.edu.greencity.rest.tests.myhabits;
 import java.util.List;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -13,7 +12,8 @@ import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.data.myhabits.UserHabit;
 import com.softserve.edu.greencity.rest.data.myhabits.UserHabitRepository;
-import com.softserve.edu.greencity.rest.entity.myhabits.UserHabitStatisticEntity;
+import com.softserve.edu.greencity.rest.data.myhabits.UserHabitStatistic;
+import com.softserve.edu.greencity.rest.data.myhabits.UserHabitStatisticRepository;
 import com.softserve.edu.greencity.rest.services.myhabits.UserHabitsService;
 import com.softserve.edu.greencity.rest.tests.GreencityRestTestRunner;
 
@@ -29,12 +29,6 @@ public class UserHabitsTests extends GreencityRestTestRunner {
                 .gotoUserHabitsService();
     }
 
-    @AfterClass(alwaysRun = true)
-    public void afterClass() {
-
-    }
-
-
     @DataProvider
     public Object[][] userHabits() {
         return new Object[][] {
@@ -44,7 +38,7 @@ public class UserHabitsTests extends GreencityRestTestRunner {
 
     @Test(dataProvider = "userHabits")
     public void checkUserHabits(List<UserHabit> expectedHabits) {
-        logger.info("Start checkUserHabits(" + user + ")");
+        logger.info("Start checkUserHabits()");
 
         Assert.assertEquals(userHabitsService.userHabits(),
                 expectedHabits, "Habit is not selected: ");
@@ -60,7 +54,7 @@ public class UserHabitsTests extends GreencityRestTestRunner {
 
     @Test(dataProvider = "userHabitsWithLanguage")
     public void checkUserHabits(List<UserHabit> expectedHabits, LanguagesCode language) {
-        logger.info("Start checkUserHabits(" + user + ")");
+        logger.info("Start checkUserHabits()");
 
         Assert.assertEquals(userHabitsService.userHabits(language),
                 expectedHabits, "Habit is not selected: ");
@@ -76,7 +70,7 @@ public class UserHabitsTests extends GreencityRestTestRunner {
 
     @Test(dataProvider = "availableHabits")
     public void checkAvailableUserHabits(List<UserHabit> expectedHabits) {
-        logger.info("Start checkAvailableUserHabits(" + user + ")");
+        logger.info("Start checkAvailableUserHabits()");
 
         Assert.assertEquals(userHabitsService.userAvailableHabits(),
                 expectedHabits, "Habit is not available: ");
@@ -91,20 +85,26 @@ public class UserHabitsTests extends GreencityRestTestRunner {
 
     @Test(dataProvider = "availableHabitsWithLanguage")
     public void checkAvailableUserHabits(List<UserHabit> expectedHabits,LanguagesCode language) {
-        logger.info("Start checkAvailableUserHabits(" + user + ")");
+        logger.info("Start checkAvailableUserHabits()");
 
         Assert.assertEquals(userHabitsService.userAvailableHabits(language),
                 expectedHabits, "Habit is not available: ");
     }
 
-
-    // TODO
-    //@Test//(dataProvider = "userHabitsWithLanguage")
-    public void checkUserHabitStatistic() {
-        logger.info("Start checkUserHabitStatistic(" + user + ")");
-
-        UserHabitStatisticEntity statistic = userHabitsService.gotoUserHabitStatisticService().userHabitStatistic();
+    @DataProvider
+    public Object[][] userHabitsStatistic() {
+        return new Object[][] {
+            {UserHabitStatisticRepository.get().getDefault()}
+        };
     }
 
+    @Test(dataProvider = "userHabitsStatistic")
+    public void checkUserHabitStatistic(UserHabitStatistic expectedStatistic) {
+        logger.info("Start checkUserHabitStatistic()");
+
+        Assert.assertEquals(UserHabitStatistic.converToUserHabitStatistic(
+                    userHabitsService.gotoUserHabitStatisticService().userHabitStatistic()),
+                expectedStatistic, "Statistic is not correct: ");
+    }
 
 }

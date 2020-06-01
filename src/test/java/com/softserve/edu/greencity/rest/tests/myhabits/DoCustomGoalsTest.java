@@ -10,22 +10,21 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.softserve.edu.greencity.rest.data.LanguagesCode;
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.data.myhabits.UserGoal;
-import com.softserve.edu.greencity.rest.data.myhabits.UserGoalEntityRepository;
 import com.softserve.edu.greencity.rest.data.myhabits.UserGoalRepository;
 import com.softserve.edu.greencity.rest.entity.myhabits.UserGoalEntity;
 import com.softserve.edu.greencity.rest.services.myhabits.UserGoalsService;
 import com.softserve.edu.greencity.rest.tests.GreencityRestTestRunner;
 
-public class DoGoalsTest extends GreencityRestTestRunner {
+public class DoCustomGoalsTest extends GreencityRestTestRunner {
     User user = UserRepository.get().getDefault();
     UserGoalsService userGoalsService;
-    List<UserGoalEntity> goalForDoing = UserGoalEntityRepository.get().goalsForSortingTrash();
+    List<UserGoal> goalForCreating = UserGoalRepository.get().customGoalsForAdding();
     List<UserGoalEntity> selectedGoals;
-    UserGoalEntity userGoal;
+    List<UserGoalEntity> createdGoals;
+    UserGoalEntity userCustomGoal;
 
     @BeforeClass
     public void beforeClass() {
@@ -33,48 +32,38 @@ public class DoGoalsTest extends GreencityRestTestRunner {
                 .successfulUserLogin(user)
                 .gotoMyhabitsService()
                 .gotoUserGoalsService();
+        createdGoals = userGoalsService.gotoUserCustomGoalsService()
+                .createCustomGoals(goalForCreating);
         selectedGoals = userGoalsService
                 .gotoUserGoalsService()
-                .selectUserGoals(goalForDoing, new ArrayList<>());
-        userGoal = selectedGoals.get(0);
+                .selectUserGoals(new ArrayList<>(), createdGoals);
+        userCustomGoal = selectedGoals.get(0);
 
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
         userGoalsService.deselectUserGoals(selectedGoals);
+        userGoalsService.gotoUserCustomGoalsService().deleteCustomGoals(createdGoals);
     }
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {
-        userGoalsService.doUserGoals(userGoal);
+        userGoalsService.doUserGoals(userCustomGoal);
     }
 
+
     @DataProvider
-    public Object[][] userGoalEntities() {
+    public Object[][] customUserGoalEntities() {
         return new Object[][] {
-                { UserGoalRepository.get().sortingTrashDone() }};
+                { UserGoalRepository.get().buyNaturalFoodDONE() } };
     }
 
-    @Test(dataProvider = "userGoalEntities")
-    public void doUserGoal(UserGoal expectedGoal) {
-        logger.info("Start doUserGoal()");
+    @Test(dataProvider = "customUserGoalEntities")
+    public void doUserCustomGoal(UserGoal expectedGoal) {
+        logger.info("Start selectUserGoal()");
 
-        Assert.assertEquals(UserGoal.converToUserGoal( userGoalsService.doUserGoals(userGoal)),
-                expectedGoal, "Goals is not done: ");
-    }
-
-    @DataProvider
-    public Object[][] userGoalEntitiesWithLanguage() {
-        return new Object[][] { { UserGoalRepository.get().sortingTrashDoneUK(),
-                LanguagesCode.UKRAINIAN } };
-    }
-
-    @Test(dataProvider = "userGoalEntitiesWithLanguage")
-    public void doUserGoal(UserGoal expectedGoal, LanguagesCode language) {
-        logger.info("Start doUserGoal()");
-
-        Assert.assertEquals(UserGoal.converToUserGoal(userGoalsService.doUserGoals(userGoal)),
+        Assert.assertEquals(UserGoal.converToUserGoal( userGoalsService.doUserGoals(userCustomGoal)),
                 expectedGoal, "Goals is not done: ");
     }
 

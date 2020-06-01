@@ -24,7 +24,8 @@ public class UserGoalsTests extends GreencityRestTestRunner {
     MyHabitsService myHabitsService;
     List<UserGoalEntity> customGoals;
     List<UserGoalEntity> selectedGoals;
-
+    List<UserGoalEntity> goalsForSelecting = UserGoalEntityRepository.get().goalsForSelecting();
+    UserGoal customGoalForSelecting = UserGoalRepository.get().buyNaturalFood();
 
     @BeforeClass
     public void beforeClass() {
@@ -36,18 +37,16 @@ public class UserGoalsTests extends GreencityRestTestRunner {
             .createCustomGoals(UserGoalRepository.get().customGoals());
         List<UserGoalEntity> customSelected = new ArrayList<>();
         customSelected.add(customGoals.stream().filter(goal -> goal.getText()
-                .contains(UserGoalRepository.get().buyNaturalFood().getText())).findAny().orElse(null));
+                .contains(customGoalForSelecting.getText())).findAny().orElse(null));
+
         selectedGoals = myHabitsService.gotoUserGoalsService()
-            .selectUserGoals(UserGoalEntityRepository.get().goalsForSelecting(),
-                    customSelected);
+            .selectUserGoals(goalsForSelecting,customSelected);
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
         myHabitsService.gotoUserGoalsService().deselectUserGoals(selectedGoals);
         myHabitsService.gotoUserCustomGoalsService().deleteCustomGoals(customGoals);
-
-
     }
 
 
@@ -60,7 +59,8 @@ public class UserGoalsTests extends GreencityRestTestRunner {
 
     @Test(dataProvider = "selectedUserGoals")
     public void checkUserGoals(List<UserGoal> expectedGoals) {
-        logger.info("Start checkUserGoals(" + user + ")");
+        logger.info("Start checkUserGoals()");
+
         Assert.assertEquals(myHabitsService.gotoUserGoalsService().userGoals(),
                 expectedGoals, "Goal is not selected: ");
     }
@@ -74,7 +74,7 @@ public class UserGoalsTests extends GreencityRestTestRunner {
 
     @Test(dataProvider = "availableUserGoals")
     public void checkAvailableUserGoals(List<UserGoal> expectedGoals) {
-        logger.info("Start checkAvailableUserGoals(" + user + ")");
+        logger.info("Start checkAvailableUserGoals()");
 
         Assert.assertEquals(myHabitsService.gotoUserGoalsService().availableUserGoals(),
                 expectedGoals, "Goal is not available: ");
@@ -89,7 +89,7 @@ public class UserGoalsTests extends GreencityRestTestRunner {
 
     @Test(dataProvider = "selectedUserGoalsWithLanguage")
     public void checkUserGoals(List<UserGoal> expectedGoals, LanguagesCode language) {
-        logger.info("Start checkUserGoals(" + user + ")");
+        logger.info("Start checkUserGoals()");
 
         Assert.assertEquals(myHabitsService.gotoUserGoalsService().userGoals(language),
                 expectedGoals, "Goal is not selected: ");
@@ -105,7 +105,7 @@ public class UserGoalsTests extends GreencityRestTestRunner {
 
     @Test(dataProvider = "availableUserGoalsWithLanguage")
     public void checkAvailableUserGoals(List<UserGoal> expectedGoals, LanguagesCode language) {
-        logger.info("Start checkAvailableUserGoals(" + user + ")");
+        logger.info("Start checkAvailableUserGoals()");
 
         Assert.assertEquals(myHabitsService.gotoUserGoalsService().availableUserGoals(language),
                 expectedGoals, "Goal is not available: ");
@@ -121,7 +121,7 @@ public class UserGoalsTests extends GreencityRestTestRunner {
 
     @Test(dataProvider = "customGoals")
     public void checkUserCustomGoals(List<UserGoal> expectedGoals) {
-        logger.info("Start checkUserCustomGoals(" + user + ")");
+        logger.info("Start checkUserCustomGoals()");
 
         Assert.assertEquals(myHabitsService.gotoUserCustomGoalsService().customGoals(),
                 expectedGoals, "Goal is not present: ");
@@ -136,7 +136,7 @@ public class UserGoalsTests extends GreencityRestTestRunner {
 
     @Test(dataProvider = "availableCustomGoals")
     public void checkAvailableUserCustomGoals(List<UserGoal> expectedGoals) {
-        logger.info("Start checkAvailableUserCustomGoals(" + user + ")");
+        logger.info("Start checkAvailableUserCustomGoals()");
 
         Assert.assertEquals(myHabitsService.gotoUserCustomGoalsService().availableCustomGoals(),
                 expectedGoals, "Goal is not available: ");

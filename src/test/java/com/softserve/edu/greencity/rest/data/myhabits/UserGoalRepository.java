@@ -86,6 +86,10 @@ public class UserGoalRepository {
         return new UserGoal( "Buy natural food");
     }
 
+    public UserGoal buyNaturalFoodDONE() {
+        return new UserGoal( "Buy natural food", "DONE");
+    }
+
     public UserGoal buyGrowNaturalFood() {
         return new UserGoal("Buy / grow natural food");
     }
