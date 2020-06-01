@@ -15,6 +15,7 @@
 	<properties>
 		<!-- - - - - - Credentionals - - - - - -->
 		<application.password>null123</application.password>
+		<application.test>testng.xml</application.test>
 		<!-- - - - - - Encoding - - - - - -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
@@ -85,7 +86,7 @@
 			<artifactId>htmlunit-driver</artifactId>
 			<version>${org.seleniumhq.selenium.htmlunit-driver}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.codeborne</groupId>
 			<artifactId>phantomjsdriver</artifactId>
@@ -280,7 +281,8 @@
 					<suiteXmlFiles>
 						<!-- <suiteXmlFile>testng.xml</suiteXmlFile> -->
 						<!-- <suiteXmlFile>testng2.xml</suiteXmlFile> -->
-						<suiteXmlFile>testng.xml</suiteXmlFile>
+						<!-- <suiteXmlFile>testng.xml</suiteXmlFile> -->
+						<suiteXmlFile>${application.test}</suiteXmlFile>
 					</suiteXmlFiles>
 					<reportsDirectory>${testng.reports.directory}</reportsDirectory>
 					<!-- <argLine> -->
