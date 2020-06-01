@@ -8,23 +8,32 @@ public enum KeyParameters {
     AUTHORIZATION("Authorization"),
     LANGUAGE("language"),
     LANG("lang"),
+    ID_TOKEN("idToken"),
+    TOKEN("token"),
     USER_ID("userId"),
-    ECONEWS_ID("econewsId"),
+    USER_ID2("user_id"),
     NAME("name"),
     BEARER("Bearer "),
+    PAGE("page"),
+	SIZE("size"),
+    ECO_NEWS_DTO("addEcoNewsDtoRequest"),
     IMAGE_PATH("imagePath"),
     SOURCE("source"),
-    TAGS("tags"),
     TEXT("text"),
     TITLE("title"),
-    ADD_ECONEWS_DTO_REQUEST("addEcoNewsDtoRequest"),
-    FILE("file"),
+    ECONEWS_ID("econewsId"),
     IMAGE("image"),
-    MEDIA_TYPE("MediaType"),
-    SIZE("size"),
-    PAGE("page"),
-    TYPE("type"),
-    ID("id");;
+    TAGS("tags"),
+    ID("id"),
+	ADVICE_ID("adviceId"),
+    PLACE_ID("id"),
+    PLACE_ID2("placeId"),
+	PLACE_STATUS("status"),
+    HABIT_ID("habitId"),
+    CONTENT_TYPE("Content-Type"),
+    FAVORITE_PLACE_DTO("favoritePlaceDto");
+
+
 
     private String key;
 

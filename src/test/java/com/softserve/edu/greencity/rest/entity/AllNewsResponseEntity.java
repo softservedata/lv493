@@ -1,29 +1,30 @@
 package com.softserve.edu.greencity.rest.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AllNewsResponseEntity {
-    private ArrayList<EcoNewsEntity> page;
+    private List<NewsEntity> page;
     private int totalElements;
     private int currentPage;
 
     public AllNewsResponseEntity() {
-        page = new ArrayList<EcoNewsEntity>();
+        page = new ArrayList<NewsEntity>();
         totalElements = -1;
         currentPage = -1;
     }
 
-    public AllNewsResponseEntity(ArrayList<EcoNewsEntity> page, int totalElements, int currentPage) {
+    public AllNewsResponseEntity(List<NewsEntity> page, int totalElements, int currentPage) {
         this.page = page;
         this.totalElements = totalElements;
         this.currentPage = currentPage;
     }
 
-    public ArrayList<EcoNewsEntity> getPage() {
+    public List<NewsEntity> getPage() {
         return page;
     }
 
-    public void setPage(ArrayList<EcoNewsEntity> page) {
+    public void setPage(List<NewsEntity> page) {
         this.page = page;
     }
 

@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.rest.tools;
 
 public class GreenCityCommonException extends RuntimeException {
+
 	private static final long serialVersionUID = 1L;
 
 	public GreenCityCommonException() {
