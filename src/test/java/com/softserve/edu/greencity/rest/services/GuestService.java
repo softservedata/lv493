@@ -215,5 +215,8 @@ public class GuestService {
     public EconewsGuestService gotoEconewsGuestService() {
         return new EconewsGuestService();
     }
-
+    
+    public PlacesGuestService gotoPlacesGuestService() {
+        return new PlacesGuestService();
+    }
 }
