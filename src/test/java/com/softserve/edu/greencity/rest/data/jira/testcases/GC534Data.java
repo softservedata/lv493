@@ -2,6 +2,9 @@ package com.softserve.edu.greencity.rest.data.jira.testcases;
 
 import com.softserve.edu.greencity.rest.data.User;
 
+/**
+ * GC534Data class (Jira Story: SC-184/GC-468; Test GC-534).
+ */
 public class GC534Data {
 
     // user credentials
@@ -20,6 +23,9 @@ public class GC534Data {
     public static final String EXPECTED_MESSAGE = "must not be blank";
 
     //
+    /**
+     * Default constructor.
+     */
     public GC534Data() {
         this.email = "";
         this.userName = "";
@@ -29,6 +35,10 @@ public class GC534Data {
         this.message = "";
     }
 
+    /**
+     * Constructor.
+     * @param user User
+     */
     public GC534Data(User user) {
         this.email = user.getEmail();
         this.userName = user.getName();

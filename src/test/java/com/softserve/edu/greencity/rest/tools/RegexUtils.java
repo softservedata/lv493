@@ -16,6 +16,11 @@ public final class RegexUtils {
         return text.substring(matcher.end()).trim();
     }
     
+    /**
+     * From Verify Link getting token.
+     * @param text
+     * @return String
+     */
     public static String getToken(String text) {
         String verifyEmailURL = text;
         Pattern pattern;
@@ -33,6 +38,11 @@ public final class RegexUtils {
         return token;
     }
     
+    /**
+     * From Verify Link getting id.
+     * @param text
+     * @return int
+     */
     public static int getId(String text) {
         String verifyEmailURL = text;
         Pattern pattern;

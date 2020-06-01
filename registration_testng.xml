@@ -13,16 +13,16 @@
 			<!-- <class name="com.softserve.edu.greencity.rest.tests.GoogleSecurityTest" /> -->
 			
 			<!-- Jira User Story: SC-184/GC-468 -->
-			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase528"/>
-			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase531"/>
-			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase532"/>
-			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase533"/>
+			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase528"/> <!-- ok  -->
+			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase531"/> <!-- ok  -->
+			<!-- <class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase532"/> -->
+			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase533"/> <!-- ok (error on Assert)  -->
 			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase534"/>
-			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase535"/>
+			<!-- <class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase535"/>
 			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase536"/>
-			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase537"/>
-			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase540"/>
-			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase541"/>
+			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase537"/> -->
+			<class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase540"/> <!-- ok (error on Assert)  -->
+			<!-- <class name="com.softserve.edu.greencity.rest.tests.register.api.UserStory184TestCase541"/> -->
 			
 			<!-- <class name="com.softserve.edu.greencity.rest.tests.SmokeTest">
 				<methods>

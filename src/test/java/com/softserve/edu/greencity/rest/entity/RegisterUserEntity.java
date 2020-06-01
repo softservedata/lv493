@@ -11,6 +11,9 @@ import com.softserve.edu.greencity.rest.data.VerifyEmailLinkAndId;
 import com.softserve.edu.greencity.rest.data.jira.testcases.GC532Data;
 import com.softserve.edu.greencity.ui.data.Languages;
 
+/**
+ * Register User entity class.
+ */
 public class RegisterUserEntity {
 
     private int userId;
@@ -31,15 +34,10 @@ public class RegisterUserEntity {
     //
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    //
-    public void setVerifyEmailLinkAndId(VerifyEmailLinkAndId verifyEmailLinkAndId) {
-        this.verifyEmailLinkAndId = verifyEmailLinkAndId;
-    }
-
-    public VerifyEmailLinkAndId getVerifyEmailLinkAndId() {
-        return verifyEmailLinkAndId;
-    }
-
+    /**
+     * Constructor.
+     * @param resultGC532DataList List<GC532Data>
+     */
     public RegisterUserEntity(List<GC532Data> resultGC532DataList) {
         this.email = "";
         this.lang = "";
@@ -50,6 +48,9 @@ public class RegisterUserEntity {
         this.resultGC532Data = resultGC532DataList;
     }
 
+    /**
+     * Default constructor.
+     */
     public RegisterUserEntity() {
         this.email = "";
         this.lang = "";
@@ -60,6 +61,11 @@ public class RegisterUserEntity {
         this.resultGC532Data = new ArrayList<>();
     }
 
+    /**
+     * Constructor.
+     * @param language Languages enum.
+     * @param userData User
+     */
     public RegisterUserEntity(Languages language, User userData) {
         this.email = "";
         this.lang = language.toString();
@@ -70,6 +76,13 @@ public class RegisterUserEntity {
         this.resultGC532Data = new ArrayList<>();
     }
 
+    /**
+     * Constructor.
+     * @param userId int
+     * @param name String
+     * @param email String
+     * @param ownRegistrations boolean
+     */
     public RegisterUserEntity(int userId, String name, String email, boolean ownRegistrations) {
         this.userId = userId;
         this.email = email;
@@ -80,6 +93,12 @@ public class RegisterUserEntity {
         this.resultGC532Data = new ArrayList<>();
     }
 
+    /**
+     * Constructor.
+     * @param name String
+     * @param email String
+     * @param message String
+     */
     public RegisterUserEntity(String name, String email, String message) {
         this.userId = -1;
         this.email = email;
@@ -89,7 +108,11 @@ public class RegisterUserEntity {
         this.message = message;
         this.resultGC532Data = new ArrayList<>();
     }
-    
+
+    /**
+     * Constructor.
+     * @param message String
+     */
     public RegisterUserEntity(String message) {
         this.email = "";
         this.userId = -1;
@@ -102,6 +125,23 @@ public class RegisterUserEntity {
         this.resultGC532Data = new ArrayList<>();
     }
 
+    //
+    public void setVerifyEmailLinkAndId(VerifyEmailLinkAndId verifyEmailLinkAndId) {
+        this.verifyEmailLinkAndId = verifyEmailLinkAndId;
+    }
+    
+    public void setHttpsAfterVerify(String httpsAfterVerify) {
+        this.httpsAfterVerify = httpsAfterVerify;
+    }
+    
+    //
+    public List<GC532Data> getGC532DataList() {
+        return resultGC532Data;
+    }
+    public VerifyEmailLinkAndId getVerifyEmailLinkAndId() {
+        return verifyEmailLinkAndId;
+    }
+    
     public int getUserId() {
         return userId;
     }
@@ -152,12 +192,5 @@ public class RegisterUserEntity {
                 + ", ownRegistrations=" + ownRegistrations + "]";
     }
 
-    public void setHttpsAfterVerify(String httpsAfterVerify) {
-        this.httpsAfterVerify = httpsAfterVerify;
-    }
-
-    public List<GC532Data> getGC532DataList() {
-        return resultGC532Data;
-    }
 
 }

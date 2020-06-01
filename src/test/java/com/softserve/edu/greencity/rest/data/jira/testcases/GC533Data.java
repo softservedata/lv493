@@ -3,6 +3,9 @@ package com.softserve.edu.greencity.rest.data.jira.testcases;
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.entity.RegisterUserEntity;
 
+/**
+ * GC533Data class (Jira Story: SC-184/GC-468; Test GC-533).
+ */
 public class GC533Data {
 
     /// user credentials
@@ -22,6 +25,9 @@ public class GC533Data {
     public static final String EXPECTED_MESSAGE = "Bad email or password";
 
     //
+    /**
+     * Default constructor.
+     */
     public GC533Data() {
         this.email = "";
         this.userName = "";
@@ -30,6 +36,10 @@ public class GC533Data {
         this.message = "";
     }
 
+    /**
+     * Constructor.
+     * @param user User
+     */
     public GC533Data(User user) {
         this.email = user.getEmail();
         this.userName = user.getName();
@@ -38,6 +48,10 @@ public class GC533Data {
         this.message = "";
     }
 
+    /**
+     * Constructor.
+     * @param registerUserEntity RegisterUserEntity
+     */
     public GC533Data(RegisterUserEntity registerUserEntity) {
         this.userId = registerUserEntity.getUserId();
         this.email = registerUserEntity.getEmail();
@@ -49,6 +63,10 @@ public class GC533Data {
         this.httpsAfterVerify = registerUserEntity.getHttpsAfterVerify();
     }
     
+    /**
+     * Constructor.
+     * @param message String
+     */
     public GC533Data(String message) {
         this.message = message;
     }

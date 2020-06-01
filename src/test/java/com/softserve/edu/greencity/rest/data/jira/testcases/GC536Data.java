@@ -2,6 +2,9 @@ package com.softserve.edu.greencity.rest.data.jira.testcases;
 
 import com.softserve.edu.greencity.rest.data.User;
 
+/**
+ * GC536Data class (Jira Story: SC-184/GC-468; Test GC-536).
+ */
 public class GC536Data {
 
     // user credentials
@@ -20,6 +23,9 @@ public class GC536Data {
     public static final String EXPECTED_MESSAGE = "The email is invalid";
 
     //
+    /**
+     * Default constructor.
+     */
     public GC536Data() {
         this.email = "";
         this.userName = "";
@@ -29,6 +35,10 @@ public class GC536Data {
         this.message = "";
     }
 
+    /**
+     * Constructor.
+     * @param user User
+     */
     public GC536Data(User user) {
         this.email = user.getEmail();
         this.userName = user.getName();

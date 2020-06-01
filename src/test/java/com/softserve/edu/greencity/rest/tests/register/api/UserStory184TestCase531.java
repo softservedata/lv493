@@ -12,8 +12,11 @@ import com.softserve.edu.greencity.rest.tests.GreencityRestRegisterTestRunner;
 import com.softserve.edu.greencity.ui.data.Languages;
 
 /**
- * Registration new user (Jira Story: GC-184/GC-468; Test GC-531)
- * @author Serg
+ * Registration new user.
+ * (Jira Story: GC-184/GC-468; Test GC-531)
+ * Verify that user is registered, after he enters valid values via /ownSecurity/signUp call.
+ * @author SergiiK
+ * 2020-06-02
  */
 public class UserStory184TestCase531 extends GreencityRestRegisterTestRunner {
 
@@ -34,6 +37,8 @@ public class UserStory184TestCase531 extends GreencityRestRegisterTestRunner {
      */
     @Test(dataProvider = "validCredentialUser")
     public void checkUserStory184TestCase531REST(User userLoginCredentials, Languages languages) throws Exception {
+        logger.info("Jira Story: GC-184/GC-468; Test GC-531");
+        logger.info("Verify that user is registered, after he enters valid values via /ownSecurity/signUp call.");
         logger.info("start test checkUserStory184TestCase531REST with user = " + userLoginCredentials.toString());
         //
         logger.info("REST: register new User with random credential and temporary email");

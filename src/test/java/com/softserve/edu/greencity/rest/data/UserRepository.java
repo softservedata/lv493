@@ -23,10 +23,24 @@ public final class UserRepository {
 		return temporary();
 	}
 	
+	/**
+     * Gives user's credentials:
+     * email - "xdknxusqvjeovowpfk@awdrt.com";
+     * first name - "Temp";
+     * password - "Temp#001";
+     * @return User
+     */
 	public User temporary() {
 		return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
 	}
 
+	/**
+	 * Gives user's credentials:
+	 * email - "yoren18521@aprimail.com";
+     * first name - "JXHIASJAwrSgncoJIpPg";
+     * password - "A475asd123*";
+	 * @return User
+	 */
 	public User temporary2() {
         return new User("yoren18521@aprimail.com", "JXHIASJAwrSgncoJIpPg", "A475asd123*");
     }

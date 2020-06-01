@@ -13,7 +13,9 @@ import com.softserve.edu.greencity.ui.data.Languages;
 /**
  * UserStory184TestCase540 class. Negative test of registration user with bad
  * credentials. (Jira Story: SC-184/GC-468; Test GC-540)
- * @author Serg
+ * Verify that user is not registered with too long name via /ownSecurity/signUp call.
+ * @author SergiiK
+ * 2020-06-02
  */
 public class UserStory184TestCase540 extends GreencityRestTestRunner {
 
@@ -33,6 +35,8 @@ public class UserStory184TestCase540 extends GreencityRestTestRunner {
      */
     @Test(dataProvider = "badUserCredentials")
     public void checkUserRegistrationWithBadName(User badUserCredentials, Languages languages) {
+        logger.info("Jira Story: SC-184/GC-468; Test GC-540");
+        logger.info("Verify that user is not registered with too long name via /ownSecurity/signUp call.");
         logger.info("start test checkUserRegistrationWithBadName with user = " + badUserCredentials.toString());
         //
         logger.info("REST: register a user with bad credentials");

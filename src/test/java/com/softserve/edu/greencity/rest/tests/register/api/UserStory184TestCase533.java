@@ -14,9 +14,11 @@ import com.softserve.edu.greencity.rest.tests.GreencityRestRegisterTestRunner;
 import com.softserve.edu.greencity.ui.data.Languages;
 
 /**
- * UserStory184TestCase533 class. Negative test of registration existing user.
+ * UserStory184TestCase533 class. Negative test of the user logging.
  * (Jira Story: SC-184/GC-468; Test GC-533)
- * @author Serg
+ * Verify that user is not registered if he didn’t verify email address in email box via /ownSecurity/signUp call.
+ * @author SergiiK
+ * 2020-06-02
  */
 public class UserStory184TestCase533 extends GreencityRestRegisterTestRunner {
 
@@ -30,13 +32,15 @@ public class UserStory184TestCase533 extends GreencityRestRegisterTestRunner {
     }
 
     /**
-     * Test of successful user registration.
+     * Test of successful user registration and negative logging.
      * @param userLoginCredentials User
      * @param languages Enum
      * @throws Exception need delay for transfer state 'verify email'
      */
     @Test(dataProvider = "validCredentialUser")
     public void checkRegistrationREST(User userLoginCredentials, Languages languages) throws Exception {
+        logger.info("Jira Story: SC-184/GC-468; Test GC-533");
+        logger.info("Verify that user is not registered if he didn’t verify email address in email box via /ownSecurity/signUp call.");
         logger.info("start test checkRegistrationREST with user = " + userLoginCredentials.toString());
         //
         logger.info("REST: register new User with random credential and temporary email");

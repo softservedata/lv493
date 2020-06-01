@@ -2,6 +2,9 @@ package com.softserve.edu.greencity.rest.data.jira.testcases;
 
 import com.softserve.edu.greencity.rest.entity.RegisterUserEntity;
 
+/**
+ * GC531Data class (Jira Story: SC-184/GC-468; Test GC-531).
+ */
 public class GC531Data {
 
     // user credentials
@@ -24,6 +27,9 @@ public class GC531Data {
     public static final boolean EXPECTED_OWNREGISTRATIONS = true;
 
     //
+    /**
+     * Default constructor.
+     */
     public GC531Data() {
         this.userId = -1;
         this.email = "";
@@ -35,6 +41,10 @@ public class GC531Data {
         this.httpsAfterVerify = "";
     }
 
+    /**
+     * Constructor.
+     * @param registerUserEntity RegisterUserEntity
+     */
     public GC531Data(RegisterUserEntity registerUserEntity) {
         this.userId = registerUserEntity.getUserId();
         this.email = registerUserEntity.getEmail();

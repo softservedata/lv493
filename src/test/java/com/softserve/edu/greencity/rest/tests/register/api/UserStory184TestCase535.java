@@ -13,13 +13,16 @@ import com.softserve.edu.greencity.ui.data.Languages;
 /**
  * UserStory184TestCase535 class. Negative test of registration user with bad credentials.
  * (Jira Story: SC-184/GC-468; Test GC-535)
- * @author Serg
+ * Verify that user is not registered, when ‘Password’ field is empty via /ownSecurity/signUp call.
+ * @author SergiiK
+ * 2020-06-02
  */
 public class UserStory184TestCase535 extends GreencityRestTestRunner {
 
     /**
      * Credentials for already existing user: email: "qtiguoku@ttirv.net";
-     * name: "Sergii_Test534"; password: "".
+     * name: "Sergii_Test534"; 
+     * password: "".
      * @return
      */
     @DataProvider
@@ -33,6 +36,8 @@ public class UserStory184TestCase535 extends GreencityRestTestRunner {
      */
     @Test(dataProvider = "badUserCredentials")
     public void checkUserRegistrationWithEmptyPassword(User badUserCredentials, Languages languages) {
+        logger.info("Jira Story: SC-184/GC-468; Test GC-535");
+        logger.info("Verify that user is not registered, when ‘Password’ field is empty via /ownSecurity/signUp call.");
         logger.info("start test checkUserRegistrationWithEmptyPassword with user = " + badUserCredentials.toString());
         //
         logger.info("REST: register a user with bad credentials");

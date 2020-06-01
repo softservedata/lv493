@@ -2,18 +2,25 @@ package com.softserve.edu.greencity.rest.entity;
 
 /**
  * UserDtoEntity class. Get User dto by principal (email) from access token
- * @author Serg
  */
 public class UserDtoEntity {
 
     private String name;
     private String emailNotification;
 
+    /**
+     * Default constructor.
+     */
     public UserDtoEntity() {
         this.name = "";
         this.emailNotification = "";
     }
 
+    /**
+     * Constructor.
+     * @param name String
+     * @param emailNotification String
+     */
     public UserDtoEntity(String name, String emailNotification) {
         this.name = name;
         this.emailNotification = emailNotification;

@@ -9,13 +9,27 @@ import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.entity.UserDtoEntity;
 
+/**
+ * UserDtoEmailNotificationTest class.
+ */
 public class UserDtoEmailNotificationTest extends GreencityRestTestRunner {
 
+    /**
+     * Credentials for already existing user 
+     * email "gceurzwfejqtiguoku@ttirv.net";
+     * name "Maksym"
+     * password "A475asd123*".
+     * @return
+     */
     @DataProvider
     public Object[][] users() {
         return new Object[][] { { UserRepository.get().alreadyExistingUserCredentials() } };
     }
 
+    /**
+     * Check user's email Notification condition.
+     * @param user User
+     */
     @Test(dataProvider = "users")
     public void checkEmailNotification(User user) {
         logger.info("Start checkGoogleSecurity(" + user + ")");

@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.softserve.edu.greencity.rest.entity.RegisterUserEntity;
 
+/**
+ * GC532Data class (Jira Story: SC-184/GC-468; Test GC-532).
+ */
 public class GC532Data {
 
     // user credentials
@@ -16,11 +19,19 @@ public class GC532Data {
     public static final String EXPECTED_NAME = "email";
     public static final String EXPECTED_MESSAGE = "User with this email is already registered";
 
+    /**
+     * Default constructor.
+     */
     public GC532Data() {
         this.name = "";
         this.message = "";
     }
 
+    /**
+     * Constructor.
+     * @param name String
+     * @param message String
+     */
     public GC532Data(String name, String message) {
         this.name = name;
         this.message = message;

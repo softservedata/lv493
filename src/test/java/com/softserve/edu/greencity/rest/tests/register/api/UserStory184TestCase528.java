@@ -14,7 +14,9 @@ import com.softserve.edu.greencity.ui.data.Languages;
 /**
  * RegisterUserRestTest2 class. Negative test of registration existing user.
  * (Jira Story: SC-184/GC-468; Test GC-528)
- * @author Serg
+ * Verify that the user cannot register with the already registered email address via /ownSecurity/signUp call.
+ * @author SergiiK
+ * 2020-06-02
  */
 public class UserStory184TestCase528 extends GreencityRestTestRunner {
 
@@ -35,6 +37,8 @@ public class UserStory184TestCase528 extends GreencityRestTestRunner {
      */
     @Test(dataProvider = "credentialsAlreadyExistingUser")
     public void checkAlreadyExistingUserRegistration(User credentialsAlreadyExistingUser, Languages languages) {
+        logger.info("Jira Story: SC-184/GC-468; Test GC-528");
+        logger.info("Verify that the user cannot register with the already registered email address via /ownSecurity/signUp call.");
         logger.info("start test checkAlreadyExistingUserRegistration with user = " + credentialsAlreadyExistingUser.toString());
         //
         logger.info("REST: register already existing user");

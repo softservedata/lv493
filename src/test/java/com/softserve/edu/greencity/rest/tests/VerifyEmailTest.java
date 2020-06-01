@@ -12,16 +12,27 @@ import com.softserve.edu.greencity.rest.services.LogginedUserService;
 import com.softserve.edu.greencity.ui.data.Languages;
 
 /**
- * 
- * @author Serg
+ * VerifyEmailTest class.
  */
 public class VerifyEmailTest extends GreencityRestRegisterTestRunner {
 
+    /**
+     * Gives random credentials:
+     * email - "";
+     * first name - random 20 letters;
+     * password - "A475asd123*";
+     * @return
+     */
     @DataProvider
     public Object[][] validCredentialUser() {
         return new Object[][] { { UserRepository.get().temporaryUserCredentialsForRegistration(), Languages.ENGLISH }, };
     }
 
+    /**
+     * Check Verify user's Email using id and token from a 'Verify' letter.
+     * @param userLoginCredentials
+     * @param languages
+     */
     @Test(dataProvider = "validCredentialUser")
     public void checkVerifyEmail(User userLoginCredentials, Languages languages) {
         logger.info("Start checkGoogleSecurity with user = " + userLoginCredentials.toString());

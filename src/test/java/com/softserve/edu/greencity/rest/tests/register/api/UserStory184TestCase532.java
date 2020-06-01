@@ -14,7 +14,9 @@ import com.softserve.edu.greencity.ui.data.Languages;
  * UserStory184TestCase532 class.
  * Negative test of registration existing user.
  * (Jira Story: SC-184/GC-468; Test GC-532)
- * @author Serg
+ * Verify that user is not registered, when all values in request are empty via /ownSecurity/signUp call.
+ * @author SergiiK
+ * 2020-06-02
  */
 public class UserStory184TestCase532 extends GreencityRestTestRunner {
 
@@ -37,6 +39,8 @@ public class UserStory184TestCase532 extends GreencityRestTestRunner {
      */
     @Test(dataProvider = "emptyCredentialsForUser")
     public void checkAlreadyExistingUserRegistration(User emptyCredentialsForUser, Languages languages) {
+        logger.info("Jira Story: SC-184/GC-468; Test GC-532");
+        logger.info("Verify that user is not registered, when all values in request are empty via /ownSecurity/signUp call.");
         logger.info("start test checkAlreadyExistingUserRegistration with user = " + emptyCredentialsForUser.toString());
         //
         logger.info("REST: register already existing user");

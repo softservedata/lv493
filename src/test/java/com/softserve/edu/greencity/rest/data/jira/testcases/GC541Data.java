@@ -2,6 +2,9 @@ package com.softserve.edu.greencity.rest.data.jira.testcases;
 
 import com.softserve.edu.greencity.rest.data.User;
 
+/**
+ * GC541Data class (Jira Story: SC-184/GC-468; Test GC-541).
+ */
 public class GC541Data {
 
     // user credentials
@@ -20,6 +23,9 @@ public class GC541Data {
     public static final String EXPECTED_MESSAGE = "Password has contain at least one character";
 
     //
+    /**
+     * Default constructor.
+     */
     public GC541Data() {
         this.email = "";
         this.userName = "";
@@ -29,6 +35,10 @@ public class GC541Data {
         this.message = "";
     }
 
+    /**
+     * Constructor.
+     * @param user User
+     */
     public GC541Data(User user) {
         this.email = user.getEmail();
         this.userName = user.getName();

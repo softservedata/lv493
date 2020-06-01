@@ -13,7 +13,9 @@ import com.softserve.edu.greencity.ui.data.Languages;
 /**
  * UserStory184TestCase534 class. Negative test of registration user with bad credentials.
  * (Jira Story: SC-184/GC-468; Test GC-534)
- * @author Serg
+ * Verify that user is not registered, when ‘Email’ value is empty via /ownSecurity/signUp call.
+ * @author SergiiK
+ * 2020-06-02
  */
 public class UserStory184TestCase534 extends GreencityRestTestRunner {
 
@@ -28,12 +30,14 @@ public class UserStory184TestCase534 extends GreencityRestTestRunner {
     }
 
     /**
-     * Negative test Verify that the user cannot register with the already
-     * registered email address via /ownSecurity/signUp call.
+     * Negative test that the user cannot register with the
+     * empty email address via /ownSecurity/signUp call.
      * @param Credentials for already existing user.
      */
     @Test(dataProvider = "badUserCredentials")
     public void checkUserRegistrationWithEmptyEmail(User badUserCredentials, Languages languages) {
+        logger.info("Jira Story: SC-184/GC-468; Test GC-534");
+        logger.info("Verify that user is not registered, when ‘Email’ value is empty via /ownSecurity/signUp call.");
         logger.info("start test checkUserRegistrationWithEmptyEmail with user = " + badUserCredentials.toString());
         //
         logger.info("REST: register a user with bad credentials");

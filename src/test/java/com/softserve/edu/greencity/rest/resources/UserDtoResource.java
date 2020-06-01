@@ -9,6 +9,9 @@ import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.UserDtoEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
+/**
+ * UserDtoResource class for getting User dto by principal (email) from access token. Includes only a GET method.
+ */
 public class UserDtoResource
         extends RestQueries<UserDtoEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity> {
 

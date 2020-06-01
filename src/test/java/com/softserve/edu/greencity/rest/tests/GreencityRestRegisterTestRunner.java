@@ -25,6 +25,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/**
+ * GreencityRestRegisterTestRunner class for getting temporary email address from 10-min email-box.
+ */
 public abstract class GreencityRestRegisterTestRunner {
 	//
 	protected WebDriver driver;
