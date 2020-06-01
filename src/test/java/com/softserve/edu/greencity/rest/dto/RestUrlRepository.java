@@ -41,4 +41,21 @@ public final class RestUrlRepository {
                 .addPatchUrl("");
     }
 
+    public static RestUrl getChangePassword() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                .addPostUrl("/ownSecurity/changePassword")
+                .addPutUrl("")
+                .addPatchUrl("");
+    }
+
+    public static RestUrl getRestorePassword() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                .addPostUrl("")
+                .addGetUrl("/ownSecurity/restorePassword")
+                .addPutUrl("")
+                .addPatchUrl("");
+    }
+
 }

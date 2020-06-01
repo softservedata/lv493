@@ -16,7 +16,9 @@ public enum KeyParameters {
     TAGS("tags"),
     TEXT("text"),
     TITLE("title"),
-    BEARER("Bearer ");
+    BEARER("Bearer "),
+    TOKEN("token"),
+	CONFIRM_PASSWORD("confirmPassword");
 
     private String key;
 

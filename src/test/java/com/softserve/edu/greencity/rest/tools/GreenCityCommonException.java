@@ -18,5 +18,5 @@ public class GreenCityCommonException extends RuntimeException {
 	public GreenCityCommonException(String message, Exception e) {
 		super(message, e);
 	}
-	
+
 }

@@ -22,7 +22,10 @@ public final class UserRepository {
 	}
 	
 	public User temporary() {
-		return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
+		return new User("xdknxusqvjeovowpfk@awdrt.com", "temp", "Temp#001");
 	}
-	
+
+	public User wrongUserCredentials() {
+		return new User("xdknxusqvowpfk@awdrt.com", "temp", "Temp#001");
+	}
 }
