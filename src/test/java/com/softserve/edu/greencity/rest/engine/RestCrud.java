@@ -2,6 +2,8 @@ package com.softserve.edu.greencity.rest.engine;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,7 +120,42 @@ public abstract class RestCrud {
 		return url;
 	}
 
-	private String prepareJson(RestParameters parameters) {
+	@SuppressWarnings("unchecked")
+	private String prepareObjectJson(Map<KeyParameters, Object> objectParameters) {
+		String result = new String();
+		for (KeyParameters currentKey : objectParameters.keySet()) {
+			Object value = objectParameters.get(currentKey);
+			if (value == null) {
+				continue;
+			}
+			result = result + "\"" + String.valueOf(currentKey)+ "\":";
+			if (value instanceof String) {
+				result = result + "\"" + value + "\",";
+			} if (value instanceof Integer) {
+				result = result + value + ",";
+			} else if (value instanceof List) {
+				result = result + "[";
+				for (String currentString : (List<String>)value) {
+					result = result + "\""+ currentString + "\",";
+				}
+				if (result.charAt(result.length() - 1) == ',') {
+					result = result.substring(0, result.length() - 1);
+				}
+				result = result + "],";
+			} else if (value instanceof Map) {
+				result = result + "{";
+				result = result + prepareObjectJson((Map<KeyParameters, Object>) value);
+				if (result.length() == 1) {
+					result = result + ",";
+				}
+				result = result.substring(0, result.length() -1) + "},";
+			}
+		}
+		return result;
+	}
+	
+	//private
+	public String prepareJson(RestParameters parameters) {
 		// TODO Use Serialization from Entity
 		String json = "{";
 		if (parameters != null) {
@@ -141,6 +178,9 @@ public abstract class RestCrud {
 				}
 				json = json + "],";
 			}
+			//
+			json = json + prepareObjectJson(parameters.getObjectParameters());
+			//
 			if (json.length() == 1) {
 				json = json + ",";
 			}

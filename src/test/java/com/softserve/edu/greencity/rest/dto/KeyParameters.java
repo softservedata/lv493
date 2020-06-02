@@ -16,7 +16,25 @@ public enum KeyParameters {
     TAGS("tags"),
     TEXT("text"),
     TITLE("title"),
-    BEARER("Bearer ");
+    BEARER("Bearer "),
+    //
+    DISCOUNT_DTO("discountDto"),
+    DISCOUNT_MAX("discountMax"),
+    DISCOUNT_MIN("discountMin"),
+    SPECIFICATION("specification"),
+    //NAME("name"),
+    DISTANCE_FROM_USER_DTO("distanceFromUserDto"),
+    DISTANCE("distance"),
+    LAT("lat"),
+    LNG("lng"),
+    MAP_BOUNDS_DTO("mapBoundsDto"),
+    NORTH_EAST_LAT("northEastLat"),
+    NORTH_EAST_LNG("northEastLng"),
+    SOUTH_WEST_LAT("southWestLat"),
+    SOUTH_WEST_LNG("southWestLng"),
+    SEARCH_REG("searchReg"),
+    STATUS("status"),
+    TIME("time");
 
     private String key;
 
