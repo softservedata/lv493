@@ -11,6 +11,8 @@ import org.testng.annotations.BeforeSuite;
 
 import com.softserve.edu.greencity.rest.services.GuestService;
 
+import io.qameta.allure.Step;
+
 public abstract class GreencityRestTestRunner {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -40,7 +42,8 @@ public abstract class GreencityRestTestRunner {
 		logger.info("Done Test " + result.getName());
 		// logout, delete cookie, delete cache
 	}
-
+	
+	@Step("Load_Application")
 	public GuestService loadApplication() {
 		return new GuestService();
 	}

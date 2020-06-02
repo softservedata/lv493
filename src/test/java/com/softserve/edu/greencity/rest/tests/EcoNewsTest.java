@@ -1,8 +1,5 @@
 package com.softserve.edu.greencity.rest.tests;
 
-import java.util.List;
-
-import com.softserve.edu.greencity.rest.entity.econewsEntity.TagsEntity;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -12,6 +9,15 @@ import com.softserve.edu.greencity.rest.data.econews.PageParameterRepository;
 import com.softserve.edu.greencity.rest.data.econews.PageParameters;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.PageEntity;
 import com.softserve.edu.greencity.rest.services.EconewsUserService;
+
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Link;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 
 
 public class EcoNewsTest extends GreencityRestTestRunner {
@@ -27,6 +33,8 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 		return new Object[][] { { UserRepository.get().temporary(), PageParameterRepository.getNews() } };
 	}
 	
+	@Epic("AllureTest")
+	@Feature("Login_Application_Test FEATURE")
 	//@Test(dataProvider = "users")
 	public void checkAllTags(User user) {
 		logger.info("Start checkAllTags(" + user + ")");
@@ -42,6 +50,12 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 //				user.getName());
 	}
 	
+	@Description("Test Description: class LoginLogoutTest; verifyLifeTimeToken()")
+	@Severity(SeverityLevel.CRITICAL)
+	@Story("testApp2 STORY")
+	@Issue("LVATQAOMS-776")
+	@Link(name = "allure", type = "mylink")
+	@Link("https://softserve.academy/")
 	@Test(dataProvider = "users")
 	public void checkFreshNews(User user) {
 		logger.info("Start checkFreshNews(" + user + ")");
