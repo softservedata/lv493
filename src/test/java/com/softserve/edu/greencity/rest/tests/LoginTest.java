@@ -21,7 +21,7 @@ public class LoginTest extends GreencityRestTestRunner {
 
     @Test(dataProvider = "validUser")
     public void successfulLogin(User user) {
-        logger.info("Start checkLogin(" + user + ")");
+        logger.info("Start Login(" + user + ")");
         LogginedUserService logginedUserService = loadApplication()
                 .successfulUserLogin(user);
         logger.info("logginedUserEntity = "
@@ -30,10 +30,12 @@ public class LoginTest extends GreencityRestTestRunner {
                 user.getName());
     }
 
-    @Test(dataProvider = "wrongUser", expectedExceptions = GreencityRestTestRunner.class)
+    @Test(dataProvider = "wrongUser")
     public void unsuccessfulLogin(User user) {
-        logger.info("Start checkLogin(" + user + ")");
+        logger.info("Start Login(" + user + ")");
         LogginedUserService logginedUserService = loadApplication()
                 .successfulUserLogin(user);
+        Assert.assertTrue(logginedUserService.getLogginedUserEntity().getUserId() < 0);
+        Assert.assertFalse(logginedUserService.getLogginedUserEntity().isOwnRegistrations());
     }
 }
