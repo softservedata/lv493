@@ -26,6 +26,6 @@ public final class UserRepository {
 	}
 
 	public User wrongUserCredentials() {
-		return new User("xdknxusqvowpfk@awdrt.com", "temp", "Temp#001");
+		return new User("xdknxowpfk@awdrt.com", "temp", "Tem#001");
 	}
 }
