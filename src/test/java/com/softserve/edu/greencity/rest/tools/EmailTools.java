@@ -100,13 +100,17 @@ public class EmailTools {
 
         while (targetMessage == null) {
             DelayTool.wait(delayUnit, delay);
-
-            List<Message> filteredMessages = filterMessagesByFrom(from,
-                    filterMessagesBySubject(subject, this.getInboxMessages())); // fixme
-            if (filteredMessages.size() > 0) {
-                targetMessage = filteredMessages.get(filteredMessages.size()-1);
-                markAsRead(targetMessage);
+            try {
+                List<Message> filteredMessages = filterMessagesByFrom(from,
+                        filterMessagesBySubject(subject, this.getInboxMessages())); // fixme
+                if (filteredMessages.size() > 0) {
+                    targetMessage = filteredMessages.get(filteredMessages.size()-1);
+                    markAsRead(targetMessage);
+                }
+            } catch (NullPointerException e) {
+                logger.error(e.toString());
             }
+
 
         }
 
