@@ -282,7 +282,7 @@
 						<!-- <suiteXmlFile>testng.xml</suiteXmlFile> -->
 						<!-- <suiteXmlFile>testng2.xml</suiteXmlFile> -->
 <!-- 						<suiteXmlFile>testng.xml</suiteXmlFile> -->
-						<suiteXmlFile>${application.test}</suiteXmlFile>
+						<suiteXmlFile>${application.test.xml}</suiteXmlFile>
 					</suiteXmlFiles>
 					<reportsDirectory>${testng.reports.directory}</reportsDirectory>
 					<!-- <argLine> -->
