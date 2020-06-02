@@ -5,12 +5,8 @@
 
 	<test name="Test01a">
 		<classes>
-			<class name="com.softserve.edu.AppTest" />
-			<class name="com.softserve.edu.SearchTest">
-				<methods>
-					<include name="checkCart" />
-				</methods>
-			</class>
+			<class name="com.softserve.edu.greencity.rest.tests.LoginTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.ChangePasswordTest" />
 		</classes>
 	</test> <!-- Test -->
 
