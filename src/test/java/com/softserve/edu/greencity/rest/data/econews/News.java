@@ -137,15 +137,14 @@ public class News implements Verifiable {
 
     @Override
     public String toString() {
-        return "\nNews{" +
+        return "News: " +
                 "id=" + id +
                 ", imagePath='" + imagePath + '\'' +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", source='" + source + '\'' +
                 ", tags=" + tags +
-                ", author=" + author +
-                '}';
+                ", author=" + author + "\n";
     }
 
     @Override

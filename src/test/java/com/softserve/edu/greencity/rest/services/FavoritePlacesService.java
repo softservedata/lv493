@@ -59,7 +59,8 @@ public class FavoritePlacesService extends LogginedUserService{
 
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
-                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+                .addParameter(KeyParameters.AUTHORIZATION,
+                        KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
 
         List<FavoritePlaceEntity> favoritePlaceEntities= favoritePlaceResources
                 .httpGetAsListEntity(methodParameters.addHeaderParameters(headerParameters));
@@ -74,13 +75,14 @@ public class FavoritePlacesService extends LogginedUserService{
      */
     public PlaceEntity getFavoritePlaceById(int placeId) {
         MethodParameters methodParameters = new MethodParameters();
-        //
+
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
-                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+                .addParameter(KeyParameters.AUTHORIZATION,
+                        KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
 
         RestParameters pathVariables = new RestParameters()
-                .addParameter(KeyParameters.PLACE_ID2, String.valueOf(placeId));
+                .addParameter(KeyParameters.PLACE_ID, String.valueOf(placeId));
 
         PlaceEntity favoritePlaceEntity= favoritePlaceByIdResource
                 .httpGetAsEntity(methodParameters.addHeaderParameters(headerParameters)
@@ -100,11 +102,12 @@ public class FavoritePlacesService extends LogginedUserService{
 
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
-                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+                .addParameter(KeyParameters.AUTHORIZATION,
+                        KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
 
         RestParameters mediaTypeParameters = new RestParameters()
                 .addParameter(KeyParameters.NAME, placeName)
-                .addParameter(KeyParameters.PLACE_ID2, String.valueOf(placeId));
+                .addParameter(KeyParameters.PLACE_ID, String.valueOf(placeId));
 
         FavoritePlaceEntity favoritePlaceEntity= saveFavoritePlaceResource
                 .httpPostAsEntity(methodParameters
@@ -125,11 +128,12 @@ public class FavoritePlacesService extends LogginedUserService{
 
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
-                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+                .addParameter(KeyParameters.AUTHORIZATION,
+                        KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
 
         RestParameters mediaTypeParameters = new RestParameters()
                 .addParameter(KeyParameters.NAME, placeName)
-                .addParameter(KeyParameters.PLACE_ID2, String.valueOf(placeId));
+                .addParameter(KeyParameters.PLACE_ID, String.valueOf(placeId));
 
         FavoritePlaceEntity favoritePlaceEntity= favoritePlaceResources
                 .httpPutAsEntity(methodParameters
@@ -146,14 +150,15 @@ public class FavoritePlacesService extends LogginedUserService{
      */
     public ResponseCodeEntity deleteFavoritePlace(int placeId) {
         MethodParameters methodParameters = new MethodParameters();
-        //
+
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
                 .addParameter(KeyParameters.CONTENT_TYPE, ContentTypes.APPLICATION_JSON.toString())
-                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+                .addParameter(KeyParameters.AUTHORIZATION,
+                        KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
 
         RestParameters pathVariables = new RestParameters()
-                .addParameter(KeyParameters.PLACE_ID2, String.valueOf(placeId));
+                .addParameter(KeyParameters.PLACE_ID, String.valueOf(placeId));
 
         ResponseCodeEntity response = favoritePlaceResources
                 .httpDeleteAsEntity(methodParameters

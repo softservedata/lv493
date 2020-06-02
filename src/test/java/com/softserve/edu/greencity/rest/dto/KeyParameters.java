@@ -22,16 +22,10 @@ public enum KeyParameters {
     TEXT("text"),
     TITLE("title"),
     ECONEWS_ID("econewsId"),
-    IMAGE("image"),
     TAGS("tags"),
     ID("id"),
-	ADVICE_ID("adviceId"),
-    PLACE_ID("id"),
-    PLACE_ID2("placeId"),
-	PLACE_STATUS("status"),
-    HABIT_ID("habitId"),
-    CONTENT_TYPE("Content-Type"),
-    FAVORITE_PLACE_DTO("favoritePlaceDto");
+    PLACE_ID("placeId"),
+    CONTENT_TYPE("Content-Type");
 
 
 
@@ -43,7 +37,6 @@ public enum KeyParameters {
 
     @Override
     public String toString() {
-        //return String.valueOf(key);
     	return key;
     }
 }

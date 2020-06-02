@@ -1,10 +1,11 @@
 package com.softserve.edu.greencity.rest.tests;
 
+import com.softserve.edu.greencity.rest.data.ResponseCode;
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.data.econews.*;
-import com.softserve.edu.greencity.rest.services.EconewsGuestService;
-import com.softserve.edu.greencity.rest.services.EconewsUserService;
+import com.softserve.edu.greencity.rest.services.EcoNewsGuestService;
+import com.softserve.edu.greencity.rest.services.EcoNewsUserService;
 import com.softserve.edu.greencity.rest.tools.GreenCity400Exception;
 import com.softserve.edu.greencity.rest.tools.VerifyUtils;
 import org.testng.Assert;
@@ -20,17 +21,17 @@ import java.util.List;
  *
  * @author Mariana
  */
-public class EconewsTests extends GreencityRestTestRunner {
+public class EcoNewsTests extends GreencityRestTestRunner {
 
     /**
-     * Variable int newsId
+     * Variable List<Integer> newsId
      * to path value from test checkUploadEconews to deleteNews test
      */
     private List<Integer> newsId = new ArrayList<>();
 
     @DataProvider
     public Object[][] news() {
-        return new Object[][]{{PageParameterRepository.getNewsByTags()}};
+        return new Object[][]{{PageParameterRepository.get().getTagsParameters()}};
     }
 
     /**
@@ -41,7 +42,7 @@ public class EconewsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "news")
     public void getAllNews(PageParameters pageParameters) {
         logger.info("Start getAllNews");
-        EconewsGuestService econewsGuestService = loadApplication()
+        EcoNewsGuestService econewsGuestService = loadApplication()
                 .gotoEconewsGuestService();
         List<News> news = econewsGuestService.getAllNews(pageParameters.getPage(), pageParameters.getSize());
 
@@ -60,15 +61,14 @@ public class EconewsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "news")
     public void getNewsByTags(PageParameters pageParameters) {
         logger.info("Start getNewsByTags with " + pageParameters.toStringWithTags());
-        EconewsGuestService econewsGuestService = loadApplication()
+        EcoNewsGuestService econewsGuestService = loadApplication()
                 .gotoEconewsGuestService();
 
         List<News> news = econewsGuestService.getNewsByTags(pageParameters.getPage(),
                 pageParameters.getSize(), pageParameters.getTags());
 
         logger.info(news.size() + " news were founded by tags " + pageParameters.getTags());
-        //  List<String> tags1 = new ArrayList<>();
-        //   tags1.add("events");
+
         Assert.assertTrue(VerifyUtils.verifyClass(news));
         Assert.assertEquals(news.size(), Integer.parseInt(pageParameters.getSize()));
         Assert.assertTrue(pageParameters.verifyNewsByTags(news, pageParameters.getTags()));
@@ -76,9 +76,7 @@ public class EconewsTests extends GreencityRestTestRunner {
 
     @DataProvider
     public Object[] NewsId() {
-        Integer[] intArray = new Integer[newsId.size()];
-        intArray = newsId.toArray(intArray);
-        return intArray;
+        return new Object[]{NewsIdRepository.get().getDefault()};
     }
     /**
      * Test of getting news by NewsId.
@@ -87,10 +85,12 @@ public class EconewsTests extends GreencityRestTestRunner {
     public void getNewsById(int newsId) {
         logger.info("Start getNewsById(" + newsId + ")");
 
-        EconewsGuestService econewsGuestService = loadApplication()
+        EcoNewsGuestService econewsGuestService = loadApplication()
                 .gotoEconewsGuestService();
 
         News news = econewsGuestService.getNewsById(String.valueOf(newsId));
+
+        Assert.assertEquals(news.getId(), newsId);
 
         Assert.assertTrue(news.isValid());
     }
@@ -114,13 +114,14 @@ public class EconewsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "uploadNews", priority = 1)
     public void checkUploadEconews(User user, FileUploadProperties fileUploadProperties) {
         logger.info("Start checkUploadEconews(" + user + ")");
-        EconewsUserService econewsUserService = loadApplication()
+        EcoNewsUserService econewsUserService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoEconewsUserService();
         logger.info("logginedUserEntity = "
                 + econewsUserService.getLogginedUserEntity());
 
-        logger.info("FileUploadProperties: " + fileUploadProperties);
+        logger.info(fileUploadProperties.getNews().toString());
+        logger.info(fileUploadProperties.getFileUploadParameters().toString());
 
         News news = econewsUserService.uploadNews(fileUploadProperties);
 
@@ -131,6 +132,7 @@ public class EconewsTests extends GreencityRestTestRunner {
         Assert.assertTrue(news.isValid());
 
         SoftAssert softAssert = new SoftAssert();
+
         softAssert.assertEquals(news.getTags(), fileUploadProperties.getNews().getTags(),
                 "Tags are not equal");
         softAssert.assertEquals(news.getText(), fileUploadProperties.getNews().getText(),
@@ -139,20 +141,14 @@ public class EconewsTests extends GreencityRestTestRunner {
                 "Title fields are not equal");
         softAssert.assertEquals(news.getSource(), fileUploadProperties.getNews().getSource(),
                 "Source fields are not equal");
+
         softAssert.assertAll();
     }
 
     @DataProvider
     public Object[] deleteNews() {
-        Object[][] dataArray = new Object[newsId.size()][];
-        List<Object[]> dataList = new ArrayList<>();
-        for (int currentId:newsId){
-            Object[] data = new Object[]{UserRepository.get().getAdminUser(), currentId};
-                dataList.add(data);
-        }
-        dataArray = dataList.toArray(dataArray);
-        return dataArray;
-      //  return new Object[][]{{UserRepository.get().getAdminUser()}};
+        return NewsIdRepository.get().generateData(newsId,
+                UserRepository.get().getAdminUser() );
     }
 
     /**
@@ -164,14 +160,15 @@ public class EconewsTests extends GreencityRestTestRunner {
     @Test(dataProvider = "deleteNews", priority = 3, expectedExceptions = GreenCity400Exception.class)
     public void deleteNews(User user, int newsId) {
         logger.info("Start deleteNews(" +  newsId + ")");
-        EconewsUserService econewsUserService = loadApplication()
+        EcoNewsUserService econewsUserService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoEconewsUserService();
         logger.info("logginedUserEntity = "
                 + econewsUserService.getLogginedUserEntity());
-        Assert.assertEquals(econewsUserService.deleteNews(String.valueOf(newsId)), 200);
+        Assert.assertEquals(econewsUserService.deleteNews(String.valueOf(newsId)), ResponseCode.RESPONSE200.getValue());
 
-        EconewsGuestService econewsGuestService = loadApplication().gotoEconewsGuestService();
+        EcoNewsGuestService econewsGuestService = loadApplication().gotoEconewsGuestService();
+
         econewsGuestService.getNewsById(String.valueOf(newsId));
     }
 }

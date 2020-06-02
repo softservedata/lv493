@@ -18,7 +18,7 @@ public class EconewsTagsResource extends
         RestQueries<PageEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity> {
 
     public EconewsTagsResource() {
-        super(RestUrlRepository.getEconewsByTag());
+        super(RestUrlRepository.getEcoNewsByTag());
         initParameters();
     }
 

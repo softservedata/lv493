@@ -15,15 +15,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * EconewsGuestService class implements methods from Eco News Controller
+ * EcoNewsGuestService class implements methods from Eco News Controller
  * which are for unauthorized user
+ *
+ * @author Mariana
  */
-public class EconewsGuestService extends GuestService {
+public class EcoNewsGuestService extends GuestService {
     protected EconewsResource econewsResource;
     protected EconewsTagsResource econewsTagsResource;
     protected NewsByIdResource newsByIdResource;
 
-    public EconewsGuestService() {
+    public EcoNewsGuestService() {
         super();
         econewsResource = new EconewsResource();
         econewsTagsResource = new EconewsTagsResource();
@@ -67,7 +69,6 @@ public class EconewsGuestService extends GuestService {
                         .addUrlParameters(urlParameter)
                         .addPathVariables(pathVariables));
 
-        System.out.println(newsResponse.getPage());
         return News.converToNewsList(newsResponse.getPage());
     }
 

@@ -211,8 +211,8 @@ public class GuestService {
         return VerifyEmail.converToVerifyEmail(verifyEmailEntity);
     }
 
-    public EconewsGuestService gotoEconewsGuestService() {
-        return new EconewsGuestService();
+    public EcoNewsGuestService gotoEconewsGuestService() {
+        return new EcoNewsGuestService();
     }
 
 }

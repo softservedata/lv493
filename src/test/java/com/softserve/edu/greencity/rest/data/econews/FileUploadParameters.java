@@ -28,4 +28,13 @@ public class FileUploadParameters {
     public String getFilepath() {
         return filepath;
     }
+
+    @Override
+    public String toString() {
+        return "FileUploadParameters{" +
+                "name='" + name + '\'' +
+                ", filename='" + filename + '\'' +
+                ", filepath='" + filepath + '\'' +
+                '}';
+    }
 }

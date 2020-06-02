@@ -5,7 +5,7 @@
 
     <test name="Test01a">
         <classes>
-            <class name="com.softserve.edu.greencity.rest.tests.EconewsTests" />
+            <class name="com.softserve.edu.greencity.rest.tests.EcoNewsTests" />
 
             <class name="com.softserve.edu.greencity.rest.tests.FavoritePlaceTest" />
 

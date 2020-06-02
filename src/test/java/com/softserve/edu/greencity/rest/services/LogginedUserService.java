@@ -10,7 +10,6 @@ import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.UserDtoEntity;
 import com.softserve.edu.greencity.rest.resources.GoogleSecurityResource;
 import com.softserve.edu.greencity.rest.resources.UserDtoResource;
-import com.softserve.edu.greencity.rest.resources.places.PlacesResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +23,6 @@ public class LogginedUserService {
     private GoogleSecurityResource googleSecurityResource;
     private UserDtoEntity userDtoEntity;
     private UserDtoResource userDtoResource;
-    private PlacesResource placesResource;
     private ErrorEntity error;
 
 
@@ -110,8 +108,8 @@ public class LogginedUserService {
 
     // Business Logic
 
-    public EconewsUserService gotoEconewsUserService() {
-        return new EconewsUserService(logginedUserEntity);
+    public EcoNewsUserService gotoEconewsUserService() {
+        return new EcoNewsUserService(logginedUserEntity);
     }
 
     public FavoritePlacesService gotoFavoritePlacesService() {

@@ -19,4 +19,12 @@ public class FileUploadProperties {
     public FileUploadParameters getFileUploadParameters() {
         return fileUploadParameters;
     }
+
+    @Override
+    public String toString() {
+        return "FileUploadProperties{" +
+                "news=" + news +
+                ", fileUploadParameters=" + fileUploadParameters +
+                '}';
+    }
 }
