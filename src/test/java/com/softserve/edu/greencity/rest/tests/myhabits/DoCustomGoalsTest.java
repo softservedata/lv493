@@ -78,8 +78,8 @@ public class DoCustomGoalsTest extends GreencityRestTestRunner {
         logger.info("Start doUserCustomGoal()");
 
         logger.info("Do custom goal: " + userCustomGoal);
-        UserGoalEntity doneGoal = userGoalsService.doUserGoal(userCustomGoal);
-        userCustomGoal = goal;
+        UserGoalEntity doneGoal = userGoalsService.doUserGoal(goal);
+        userCustomGoal = doneGoal;
 
         Assert.assertEquals(UserGoal.converToUserGoal(doneGoal), expectedGoal,
                 "Custom goal is not done: ");

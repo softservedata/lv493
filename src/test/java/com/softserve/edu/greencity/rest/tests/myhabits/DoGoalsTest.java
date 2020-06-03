@@ -72,7 +72,7 @@ public class DoGoalsTest extends GreencityRestTestRunner {
 
         logger.info("Do goal: " + goal);
         UserGoalEntity doneGoal = userGoalsService.doUserGoal(goal);
-        userGoal = goal;
+        userGoal = doneGoal;
 
         Assert.assertEquals(UserGoal.converToUserGoal(doneGoal), expectedGoal,
                 "Goals is not done: ");

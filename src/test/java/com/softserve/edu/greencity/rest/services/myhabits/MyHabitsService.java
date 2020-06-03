@@ -56,10 +56,6 @@ public class MyHabitsService extends LogginedUserService {
         return new UserGoalsService(logginedUserEntity);
     }
 
-    public UserGoalsErrorService gotoUserGoalsErrorService() {
-        return new UserGoalsErrorService(logginedUserEntity);
-    }
-
     public UserCustomGoalsService gotoUserCustomGoalsService() {
         return new UserCustomGoalsService(logginedUserEntity);
     }

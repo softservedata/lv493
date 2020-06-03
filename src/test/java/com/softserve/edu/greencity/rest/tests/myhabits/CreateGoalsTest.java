@@ -8,6 +8,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.softserve.edu.greencity.rest.data.ResponseCode;
 import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.data.myhabits.UserGoal;
 import com.softserve.edu.greencity.rest.data.myhabits.UserGoalEntityRepository;
@@ -18,7 +19,9 @@ import com.softserve.edu.greencity.rest.services.myhabits.UserCustomGoalsService
 import com.softserve.edu.greencity.rest.tests.GreencityRestTestRunner;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 
+@Feature("Create user goals")
 public class CreateGoalsTest extends GreencityRestTestRunner {
     UserCustomGoalsService userCustomGoalsService;
 
@@ -59,21 +62,21 @@ public class CreateGoalsTest extends GreencityRestTestRunner {
     @DataProvider
     public Object[][] userGoalsDeleting() {
         return new Object[][] {
-                { UserGoalEntityRepository.get().goalsForDeleting(), 200 } // TODO
+                { UserGoalEntityRepository.get().goalsForDeleting(), ResponseCode.RESPONSE200} // TODO
         };
     }
 
     @Description("Check if user can delete goals")
     @Parameters({ "Goals for deleting", "Response code" })
     @Test(dataProvider = "userGoalsDeleting", description = "Delete goals")
-    public void deleteUserGoals(List<UserGoalEntity> goals, int code) {
+    public void deleteUserGoals(List<UserGoalEntity> goals, ResponseCode code) {
         logger.info("Start deleteUserGoals()");
 
         logger.info("Delete custom goals: " + goals);
         ResponseCodeEntity createdGoals = userCustomGoalsService
                 .deleteCustomGoals(goals);
 
-        Assert.assertEquals(createdGoals.getResponsecode(), code,
+        Assert.assertEquals(createdGoals.getResponsecode(), code.getValue(),
                 "Goals are not deleted: ");
 
         logger.info("Goals are deleted");
