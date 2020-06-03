@@ -3,7 +3,7 @@
 
 <suite name="Suite1" parallel="tests" thread-count="2">
 
-    <test name="Test01a" verbose="7">
+    <test name="Test01a">
         <classes>
             <class name="com.softserve.edu.greencity.rest.tests.EcoNewsTests">
                 <methods>
@@ -17,7 +17,7 @@
             </class>
         </classes>
     </test>
-    <test name="Test01b" verbose="7">
+    <test name="Test01b">
         <classes>
             <class name="com.softserve.edu.greencity.rest.tests.FavoritePlaceTest">
                 <methods>

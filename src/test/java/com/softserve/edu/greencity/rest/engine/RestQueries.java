@@ -131,7 +131,6 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
     public TPUT httpPutAsEntity(MethodParameters methodParameters) {
         validateParameter(RestHttpMethods.PUT, entityParameters);
         String json = httpPutAsText(methodParameters);
-        System.out.println("*** json PUT:" + json);
         validateJson(json);
         // return convertToEntity(json, classTPUT);
         return convertToEntity(json, entityParameters.get(RestHttpMethods.PUT));
@@ -158,7 +157,6 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
     public List<TGET> httpGetAsListEntity(MethodParameters methodParameters) {
         validateParameter(RestHttpMethods.GET, listEntityParameters);
         String json = httpGetAsText(methodParameters);
-        System.out.println("*** json GET:" + json);
         validateJson(json);
         // return convertToEntity(json, new TypeToken<List<?>>() {});
         // return convertToEntity(json, typeTGET);
