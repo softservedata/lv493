@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.softserve.edu.greencity.rest.data.myhabits.UserGoal;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
-import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
@@ -75,22 +74,19 @@ public class UserCustomGoalsService extends MyHabitsService {
      * @param goals
      * @return list of created goal entities
      */
-    public List<UserGoalEntity> createCustomGoals(List<UserGoal> goals){ // TODO
-
+    public List<UserGoalEntity> createCustomGoals(List<UserGoal> goals){
         List<CustomGoalSaveEntity.CustomGoal> customGoalSaveRequestDtoList = new ArrayList<>();
         goals.forEach(goal -> customGoalSaveRequestDtoList.add(new CustomGoalSaveEntity.CustomGoal(goal.getText())));
 
-        String json = new JsonUtils().entityToJson(new CustomGoalSaveEntity(customGoalSaveRequestDtoList), CustomGoalSaveEntity.class);
-
         RestParameters mediaTypeParameters = new RestParameters()
-                .addParameter(KeyParameters.JSON, json);
+                .addDirectJsonParameter(new JsonUtils()
+                        .entityToJson(new CustomGoalSaveEntity(customGoalSaveRequestDtoList), CustomGoalSaveEntity.class));
 
         return getUserCustomGoalsResource().httpPostAsListEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
                 .addPathVariables(getUserIdParameter())
                 .addContentType(ContentTypes.APPLICATION_JSON)
                 .addMediaTypeParameters(mediaTypeParameters));
-
     }
 
     /**
@@ -99,18 +95,15 @@ public class UserCustomGoalsService extends MyHabitsService {
      * @param new goals
      * @return list of created goal entities
      */
-    public List<UserGoalEntity> updateCustomGoals(List<UserGoalEntity> goals, List<UserGoal> newGoals ){ // TODO
-
+    public List<UserGoalEntity> updateCustomGoals(List<UserGoalEntity> goals, List<UserGoal> newGoals ){
         List<CustomGoalUpdateEntity.CustomGoal> customGoals  = new ArrayList<>();
-
         for(int i = 0; i< goals.size(); i++) {
             customGoals.add(new CustomGoalUpdateEntity.CustomGoal(goals.get(i).getId(), newGoals.get(i).getText()));
         }
 
-        String json = new JsonUtils().entityToJson(new CustomGoalUpdateEntity(customGoals), CustomGoalUpdateEntity.class);
-
         RestParameters mediaTypeParameters = new RestParameters()
-                .addParameter(KeyParameters.JSON, json);
+                .addDirectJsonParameter(new JsonUtils()
+                        .entityToJson(new CustomGoalUpdateEntity(customGoals), CustomGoalUpdateEntity.class));
 
         return getUserCustomGoalsResource().httpPatchAsListEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())

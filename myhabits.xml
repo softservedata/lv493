@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="Suite1">
+<suite name="MyHabitsSuite">
 
-	<test name="Test01a">
+	<test name="GoalsPresense">
 		<classes>
 			<class name="com.softserve.edu.greencity.rest.tests.myhabits.UserGoalsTests" />		
+		</classes>
+	</test> 
+	<test name="GoalsOperations">
+		<classes>
 			<class name="com.softserve.edu.greencity.rest.tests.myhabits.SelectGoalsTest"/>			
 			<class name="com.softserve.edu.greencity.rest.tests.myhabits.DoGoalsTest"/>
 			<class name="com.softserve.edu.greencity.rest.tests.myhabits.DoCustomGoalsTest"/>
 			<class name="com.softserve.edu.greencity.rest.tests.myhabits.CreateGoalsTest"/>			
 			<class name="com.softserve.edu.greencity.rest.tests.myhabits.UpdateGoalsTest"/>	
 		</classes>
-	</test> <!-- Test -->
-	<test name="Test01b">
+	</test> 
+	<test name="HabitsPresense">
 		<classes>
 			<class name="com.softserve.edu.greencity.rest.tests.myhabits.UserHabitsTests" />	
 		</classes>
-	</test> <!-- Test -->
-	
-
-</suite> <!-- Suite -->
+	</test> 
+</suite>

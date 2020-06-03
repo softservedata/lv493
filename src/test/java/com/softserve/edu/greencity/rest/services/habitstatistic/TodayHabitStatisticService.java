@@ -3,9 +3,7 @@ package com.softserve.edu.greencity.rest.services.habitstatistic;
 import java.util.List;
 
 import com.softserve.edu.greencity.rest.data.LanguagesCode;
-import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
-import com.softserve.edu.greencity.rest.dto.RestParameters;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.habitstatistic.TodayHabitStatisticEntity;
 import com.softserve.edu.greencity.rest.resources.habitstatistic.TodayHabitStatisticResource;
@@ -27,26 +25,17 @@ public class TodayHabitStatisticService extends LogginedUserService {
 
 	// Functionals
 
-
-	// no response
-
-//	{
-//	    "habitItem": "caps",
-//	    "notTakenItems": 2
-//	}
-
 	/**
 	 * Get todays statistic for habits of current user according to language.
 	 * @param language code
 	 * @return list of habit statistic entities
 	 */
-	public List<TodayHabitStatisticEntity> todayStatisticsForAllHabitItems(LanguagesCode language){ //TODO try test
-        RestParameters urlParameters = new RestParameters()
-                .addParameter(KeyParameters.LANGUAGE, String.valueOf(language));
 
+	// no response
+	public List<TodayHabitStatisticEntity> todayStatisticsForAllHabitItems(LanguagesCode language){
         return getTodayHabitStatisticResource().httpGetAsListEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
-                .addUrlParameters(urlParameters));
+                .addUrlParameters(getLanguageParameter(language)));
     }
 
 	/**

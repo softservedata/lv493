@@ -67,7 +67,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 	}
 
 	private void validateJson(String json) {
-		System.out.println("***json = " + json);
+		//System.out.println("***json = " + json);
 		ResponseCodeEntity responseCodeEntity = null;
 		if (json.charAt(0) == '{') {
 			responseCodeEntity = convertToEntity(json, new TypeToken<ResponseCodeEntity>(){});

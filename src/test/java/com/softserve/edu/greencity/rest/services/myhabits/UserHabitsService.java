@@ -119,21 +119,17 @@ public class UserHabitsService extends MyHabitsService {
 	// code 400
 	// But work correct, habit is saved
 
-    public ResponseCodeEntity addUserHabit(List<UserHabitEntity> habits, LanguagesCode language){ // TODO
-        RestParameters urlParameters = new RestParameters()
-                .addParameter(KeyParameters.LANGUAGE, String.valueOf(language));
-
+    public ResponseCodeEntity addUserHabit(List<UserHabitEntity> habits, LanguagesCode language){
         List<HabitDictionaryIdEntity> habitDirectoryIds = new ArrayList<>();
         habits.forEach(habit -> habitDirectoryIds.add(new HabitDictionaryIdEntity(habit.getId())));
 
-        String json = new JsonUtils().entityToJson(habitDirectoryIds, new GenericConverter<List<HabitDictionaryIdEntity>>() {}.getGenericType());
-
         RestParameters mediaTypeParameters = new RestParameters()
-                .addParameter(KeyParameters.JSON, json);
+                .addDirectJsonParameter(new JsonUtils()
+                        .entityToJson(habitDirectoryIds, new GenericConverter<List<HabitDictionaryIdEntity>>() {}.getGenericType()));
 
         return getUserHabitsResource().httpPostAsEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
-                .addUrlParameters(urlParameters)
+                .addUrlParameters(getLanguageParameter(language))
                 .addPathVariables(getUserIdParameter())
                 .addContentType(ContentTypes.APPLICATION_JSON)
                 .addMediaTypeParameters(mediaTypeParameters));

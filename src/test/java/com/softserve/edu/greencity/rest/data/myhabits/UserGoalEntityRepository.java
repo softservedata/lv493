@@ -38,8 +38,17 @@ public class UserGoalEntityRepository {
         return new UserGoalEntity(3, "Start sorting trash", "ACTIVE");
     }
 
+    private List<UserGoalEntity> goalsForDeleting = new ArrayList<>();
 
-    public List<UserGoalEntity> goalsForSortingTrash() {
+    public void setGoalsForDeleting(List<UserGoalEntity> entities) {
+        entities.forEach(goal -> goalsForDeleting.add(new UserGoalEntity(goal.getId(), goal.getText())));
+    }
+
+    public List<UserGoalEntity> goalsForDeleting() {
+        return goalsForDeleting;
+    }
+
+    public List<UserGoalEntity> goalsForDoing() {
         List<UserGoalEntity> result = new ArrayList<>();
         result.add(sortingTrash());
         return result;

@@ -46,23 +46,23 @@ public class UserGoalRepository {
         return new UserGoal("Buy a bamboo brush", "ACTIVE");
     }
 
-    public UserGoal buyComposterUK() {
+    public UserGoal buyComposterUk() {
         return new UserGoal("Купіть компостер", "ACTIVE");
     }
 
-    public UserGoal sortingTrashUK() {
+    public UserGoal sortingTrashUk() {
         return new UserGoal("Почніть сортувати сміття", "ACTIVE");
     }
 
-    public UserGoal recyclingBatteriesUK() {
+    public UserGoal recyclingBatteriesUk() {
         return new UserGoal("Почніть переробляти батарейки", "ACTIVE");
     }
 
-    public UserGoal bookVegansUK() {
+    public UserGoal bookVegansUk() {
         return new UserGoal("Прочитайте книгу про вегетаріанство", "ACTIVE");
     }
 
-    public UserGoal buyBambooBrushUK() {
+    public UserGoal buyBambooBrushUk() {
         return new UserGoal("Купіть бамбукову щітку", "ACTIVE");
     }
 
@@ -82,7 +82,7 @@ public class UserGoalRepository {
         return new UserGoal( "Buy natural food");
     }
 
-    public UserGoal buyNaturalFoodDONE() {
+    public UserGoal buyNaturalFoodDone() {
         return new UserGoal( "Buy natural food", "DONE");
     }
 
@@ -116,11 +116,11 @@ public class UserGoalRepository {
         return result;
     }
 
-    public List<UserGoal> availableGoalsUK() {
+    public List<UserGoal> availableGoalsUk() {
         List<UserGoal> result = new ArrayList<>();
-        result.add(buyComposterUK());
-        result.add(buyBambooBrushUK());
-        result.add(bookVegansUK());
+        result.add(buyComposterUk());
+        result.add(buyBambooBrushUk());
+        result.add(bookVegansUk());
         Collections.sort(result);
         return result;
     }
@@ -134,10 +134,10 @@ public class UserGoalRepository {
         return result;
     }
 
-    public List<UserGoal> typicalGoalUK() {
+    public List<UserGoal> typicalGoalUk() {
         List<UserGoal> result = new ArrayList<>();
-        result.add(sortingTrashUK());
-        result.add(recyclingBatteriesUK());
+        result.add(sortingTrashUk());
+        result.add(recyclingBatteriesUk());
         result.add(bringPlants());
         Collections.sort(result);
         return result;

@@ -2,6 +2,8 @@ package com.softserve.edu.greencity.rest.engine;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,29 +120,81 @@ public abstract class RestCrud {
 		return url;
 	}
 
-	private String prepareJson(RestParameters parameters) {
-		// TODO Use Serialization from Entity
-
-	    if(parameters.getParameter(KeyParameters.JSON) != null &&
-	            parameters.getParameter(KeyParameters.JSON).length() > 0) {
-            return  parameters.getParameter(KeyParameters.JSON);
+	@SuppressWarnings("unchecked")
+    private String prepareObjectJson(Map<KeyParameters, Object> objectParameters) {
+        String result = new String();
+        for (KeyParameters currentKey : objectParameters.keySet()) {
+            Object value = objectParameters.get(currentKey);
+            if (value == null) {
+                continue;
+            }
+            result = result + "\"" + String.valueOf(currentKey)+ "\":";
+            if (value instanceof String) {
+                result = result + "\"" + value + "\",";
+            } if (value instanceof Integer) {
+                result = result + value + ",";
+            } else if (value instanceof List) {
+                result = result + "[";
+                for (String currentString : (List<String>)value) {
+                    result = result + "\""+ currentString + "\",";
+                }
+                if (result.charAt(result.length() - 1) == ',') {
+                    result = result.substring(0, result.length() - 1);
+                }
+                result = result + "],";
+            } else if (value instanceof Map) {
+                result = result + "{";
+                result = result + prepareObjectJson((Map<KeyParameters, Object>) value);
+                if (result.length() == 1) {
+                    result = result + ",";
+                }
+                result = result.substring(0, result.length() -1) + "},";
+            }
         }
+        return result;
+    }
 
-		String json = "{";
-		if (parameters != null) {
-			for (KeyParameters currentKey : parameters.getAllParameters().keySet()) {
-				json = json + "\"" + String.valueOf(currentKey) + "\":\""
-						+ parameters.getParameter(currentKey) + "\",";
-			}
-			if (json.length() == 1) {
-				json = json + "}";
-			}
-			json = json.substring(0, json.length() -1) + "}";
-			if (json.length() < 2) { // TODO
-				throwException("prepareJson()");
-			}
-		}
-		return json;
+	private String prepareJson(RestParameters parameters) {
+	 // TODO Use Serialization from Entity
+        String json = "{";
+        if (parameters != null) {
+            for (KeyParameters currentKey : parameters.getAllParameters().keySet()) {
+                if ((currentKey != null)
+                        && (String.valueOf(currentKey).length() > 0)
+                        && (parameters.getParameter(currentKey) != null)
+                        && (parameters.getParameter(currentKey).length() > 0)) {
+                    json = json + "\"" + String.valueOf(currentKey) + "\":\""
+                            + parameters.getParameter(currentKey) + "\",";
+                }
+            }
+            for (KeyParameters currentKey : parameters.getAllListParameters().keySet()) {
+                json = json + "\"" + String.valueOf(currentKey) + "\":[";
+                for (String currentString : parameters.getListParameter(currentKey)) {
+                    json = json + "\""+ currentString + "\",";
+                }
+                if (json.charAt(json.length() - 1) == ',') {
+                    json = json.substring(0, json.length() - 1);
+                }
+                json = json + "],";
+            }
+            //
+            json = json + prepareObjectJson(parameters.getObjectParameters());
+            //
+            if (json.length() == 1) {
+                json = json + ",";
+            }
+            json = json.substring(0, json.length() -1) + "}";
+            //
+            if (parameters.getDirectJsonParameter() != null) {
+                json = parameters.getDirectJsonParameter();
+            }
+            //
+            if (json.length() < 3) { // TODO
+                throwException("prepareJson()");
+            }
+        }
+        //System.out.println("+++RestGrud json = " + json);
+        return json;
 	}
 
 	private RequestBody prepareRequestMultipartBody(ContentTypes contentType, FileUploadParameters fileUploadParameters,

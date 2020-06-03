@@ -54,8 +54,7 @@ public class HabitStatisticService extends LogginedUserService{
 	 */
 
 	// do not work at all
-
-    public ResponseCodeEntity addHabitStatistic(HabitStatisticEntity statistic, UserHabitEntity habit) { // TODO
+    public ResponseCodeEntity addHabitStatistic(HabitStatisticEntity statistic, UserHabitEntity habit) {
         RestParameters mediaTypeParameters = new RestParameters()
                 .addParameter(KeyParameters.AMOUNT_OF_ITEMS, String.valueOf(statistic.getAmountOfItems()))
                 .addParameter(KeyParameters.CREATED_ON, statistic.getCreatedOn())

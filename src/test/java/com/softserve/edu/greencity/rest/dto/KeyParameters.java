@@ -24,9 +24,7 @@ public enum KeyParameters {
     ID("id"),
     AMOUNT_OF_ITEMS("amountOfItems"),
     HABIT_RATE("habitRate"),
-    CREATED_ON("createdOn"),
-
-    JSON("")
+    CREATED_ON("createdOn")
 
     ;
 

@@ -132,19 +132,15 @@ public class UserGoalsService extends MyHabitsService {
      * @param language code
      * @return list of selected goal entities
      */
-    public List<UserGoalEntity> selectUserGoals(List<UserGoalEntity> goals, List<UserGoalEntity> customGoals, LanguagesCode language) { // TODO
-        RestParameters urlParameters = new RestParameters()
-                .addParameter(KeyParameters.LANGUAGE, String.valueOf(language));
-
-        String json = new JsonUtils().entityToJson(GoalsEntity.convertToGoalsEntity(goals, customGoals), GoalsEntity.class);
-
+    public List<UserGoalEntity> selectUserGoals(List<UserGoalEntity> goals, List<UserGoalEntity> customGoals, LanguagesCode language) {
         RestParameters mediaTypeParameters = new RestParameters()
-                .addParameter(KeyParameters.JSON, json);
+               .addDirectJsonParameter(new JsonUtils()
+                       .entityToJson(GoalsEntity.convertToGoalsEntity(goals, customGoals), GoalsEntity.class));
 
         return getUserGoalsResource()
                 .httpPostAsListEntity(new MethodParameters()
                         .addHeaderParameters(getHeaderParameters())
-                        .addUrlParameters(urlParameters)
+                        .addUrlParameters(getLanguageParameter(language))
                         .addPathVariables(getUserIdParameter())
                         .addContentType(ContentTypes.APPLICATION_JSON)
                         .addMediaTypeParameters(mediaTypeParameters));
