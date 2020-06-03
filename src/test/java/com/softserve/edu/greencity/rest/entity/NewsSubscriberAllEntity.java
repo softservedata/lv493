@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.rest.entity;
 
-public class NewsSubscriberAllEntity {
+public class NewsSubscriberAllEntity  {
      //admin
     private String email;
     private String unsubscribeToken;
@@ -19,13 +19,14 @@ public class NewsSubscriberAllEntity {
         return email;
     }
     
-    public String getunsubscribeToken() {
+    public String getUnsubscribeToken() {
         return unsubscribeToken;
     }
     
     @Override
     public String toString() {
-        return "NewsSubscriberUnsubscribeEntity [email=" + email 
+        return "NewsSubscriberAllEntity [email=" + email 
                 +"unsubscribeToken="+ unsubscribeToken +"]";
     }
+    
 }

@@ -29,8 +29,15 @@ public enum KeyParameters {
     PLACE_ID("id"),
 	PLACE_STATUS("status"),
     HABIT_ID("habitId"),
-    CONTENT_TYPE("Content-Type");
-
+    CONTENT_TYPE("Content-Type"),
+    
+    //places
+    DISCOUNT_DTO("discountDto"),
+    DISTANCE_FROM_USER_DTO ("distanceFromUserDto"),
+    MAP_BOUNDS_DTO ("mapBoundsDto"),
+    SEARCH_REG ("searchReg"),
+    STATUS ("status"),
+    TIME ("time");
 
 
     private String key;

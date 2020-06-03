@@ -3,12 +3,10 @@ package com.softserve.edu.greencity.rest.engine;
 import java.io.File;
 import java.io.IOException;
 
-import com.softserve.edu.greencity.rest.data.econews.FileUploadParameters;
-import com.softserve.edu.greencity.rest.dto.*;
-import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.softserve.edu.greencity.rest.data.econews.FileUploadParameters;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
@@ -19,6 +17,14 @@ import com.softserve.edu.greencity.rest.tools.GreenCity400Exception;
 import com.softserve.edu.greencity.rest.tools.GreenCity401Exception;
 import com.softserve.edu.greencity.rest.tools.GreenCity404Exception;
 import com.softserve.edu.greencity.rest.tools.GreenCityCommonException;
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public abstract class RestCrud {
     protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());

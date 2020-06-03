@@ -1,9 +1,12 @@
 package com.softserve.edu.greencity.rest.tests;
 
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.softserve.edu.greencity.rest.data.AllSubscriber;
 import com.softserve.edu.greencity.rest.data.IgnoreError400;
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
@@ -21,7 +24,7 @@ public class SubscriberTest extends GreencityRestTestRunner {
     
     @Test(dataProvider = "randomEmail")
     public void newSubscriber(User user, UserSubscriber userSubscriber) {
-        logger.info("Start checkLogin(" + user + ")");
+        logger.info("Start newSubscriber(" + user + ")");
         TipsTricksService tipsTricksService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoTipsTricksService();
@@ -34,9 +37,9 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getSingleEmail()}};
     }
 
-    @Test(dataProvider = "existEmail")
+   @Test(dataProvider = "existEmail")
     public void existSubscriber(User user, UserSubscriber userSubscriber) {
-       logger.info("Start checkLogin(" + user + ")");
+       logger.info("Start existSubscriber(" + user + ")");
        TipsTricksService tipsTricksService = loadApplication()
                .successfulUserLogin(user)
                .gotoTipsTricksService();
@@ -53,7 +56,7 @@ public class SubscriberTest extends GreencityRestTestRunner {
     
     @Test(dataProvider = "badEmail")
     public void faultyEmail(User user, UserSubscriber userSubscriber) {
-       logger.info("Start checkLogin(" + user + ")");
+       logger.info("Start faultyEmail(" + user + ")");
        TipsTricksService tipsTricksService = loadApplication()
                .successfulUserLogin(user)
                .gotoTipsTricksService();
@@ -62,4 +65,21 @@ public class SubscriberTest extends GreencityRestTestRunner {
        logger.info("ErrorMassege (" + subscriber.getMessage()+ ")");
        Assert.assertEquals(subscriber.getMessage(), IgnoreError400.FAULTY_EMAIL.toString());
         }
+    
+    @DataProvider
+    public Object[][] allSubscribers() {
+        return new Object[][] { { UserRepository.get().getAdminUser() }};
+    }
+    
+    @Test(dataProvider = "allSubscribers")
+    public void getAllSubscriber(User user) {
+        logger.info("getAllSubscriber(" + user + ")");
+        TipsTricksService tipsTricksService = loadApplication()
+                .successfulUserLogin(user)
+                .gotoTipsTricksService();
+        List<AllSubscriber> sub = tipsTricksService.allSubscribers();
+        logger.info("***subscriber = " + sub);
+
+    }
+    
 }

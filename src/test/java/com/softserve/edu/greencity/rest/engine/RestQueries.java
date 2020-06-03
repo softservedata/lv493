@@ -74,7 +74,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
     }
 
     private void validateJson(String json) {
-//         System.out.println("***json = " + json);
+         System.out.println("***json = " + json);
         ResponseCodeEntity responseCodeEntity = null;
         if (json.charAt(0) == '{') {
             responseCodeEntity = convertToEntity(json, new TypeToken<ResponseCodeEntity>() {
@@ -157,7 +157,7 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
     public List<TGET> httpGetAsListEntity(MethodParameters methodParameters) {
         validateParameter(RestHttpMethods.GET, listEntityParameters);
         String json = httpGetAsText(methodParameters);
-        // System.out.println("*** json GET:" + json);
+         System.out.println("*** json GET:" + json);
         validateJson(json);
         // return convertToEntity(json, new TypeToken<List<?>>() {});
         // return convertToEntity(json, typeTGET);
