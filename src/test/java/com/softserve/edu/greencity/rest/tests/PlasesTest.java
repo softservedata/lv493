@@ -121,7 +121,7 @@ public class PlasesTest  extends GreencityRestTestRunner{
 		 @Severity(SeverityLevel.NORMAL)
 		 @Parameters({ "Loggined User", "place ID" })
 		 @Epic("Places")
-		 @Test(dataProvider = "boutPlace")
+		 @Test(dataProvider = "aboutPlace")
 		 public void checkPlaceAboutID(User user, PlaceId placeId) {
 			logger.info("Start checkPlaceAboutID");
 			PlaceEntity placeAboutIDEntity = loadApplication().successfulUserLogin(user).gotoPlacesService()
