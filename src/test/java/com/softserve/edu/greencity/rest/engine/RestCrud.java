@@ -126,6 +126,13 @@ public abstract class RestCrud {
     }
 
     private String prepareJson(RestParameters parameters) {
+		/*
+		 * String json = ""; //
+		 * System.out.println(parameters.getListParameter().get(0)); if
+		 * (parameters.getListParameter() != null) { System.out.println("parameters" +
+		 * parameters.getListParameter().size()); json =
+		 * parameters.getListParameter().get(0); }else {
+		 */
 // TODO Use Serialization from Entity
         String json = "{";
         if (parameters != null) {
@@ -156,7 +163,8 @@ public abstract class RestCrud {
                 throwException("prepareJson()");
             }
         }
-        //System.out.println("+++RestGrud json = " + json);
+    	
+        System.out.println("+++RestGrud json = " + json);
         return json;
     }
 

@@ -139,8 +139,7 @@ public final class RestUrlRepository {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
                 .addGetUrl("/place/{" + KeyParameters.PLACE_STATUS.toString() + "}")
-                .addPostUrl("place/filter/predicate")
- //               .addPostUrl("")
+                .addPostUrl("")
                 .addPutUrl("")
                 .addDeleteUrl("")
                 .addPatchUrl("");
@@ -152,6 +151,26 @@ public final class RestUrlRepository {
                 .addBaseUrl(remoteServer)
 //                .addBaseUrl(localServer)
                 .addGetUrl("/place/about/{" + KeyParameters.PLACE_ID.toString() + "}")
+                .addPostUrl("")
+                .addPutUrl("")
+                .addDeleteUrl("")
+                .addPatchUrl("");
+    }
+    
+    public static RestUrl getPlacesByPredicate() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                .addGetUrl("")
+                .addPostUrl("/place/filter/predicate")
+                .addPutUrl("")
+                .addDeleteUrl("")
+                .addPatchUrl("");
+    }
+    
+    public static RestUrl getPlaceInfoId() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                .addGetUrl("/place/info/favorite/{" + KeyParameters.PLACE_ID.toString() + "}")
                 .addPostUrl("")
                 .addPutUrl("")
                 .addDeleteUrl("")

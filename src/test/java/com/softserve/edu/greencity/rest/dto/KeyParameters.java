@@ -30,7 +30,7 @@ public enum KeyParameters {
 	PLACE_STATUS("status"),
     HABIT_ID("habitId"),
     CONTENT_TYPE("Content-Type"),
-    
+
     //places
     DISCOUNT_DTO("discountDto"),
     DISTANCE_FROM_USER_DTO ("distanceFromUserDto"),
@@ -39,7 +39,7 @@ public enum KeyParameters {
     STATUS ("status"),
     TIME ("time");
 
-
+	
     private String key;
 
     private KeyParameters(String key) {

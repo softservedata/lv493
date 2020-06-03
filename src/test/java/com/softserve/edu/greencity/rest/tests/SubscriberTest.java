@@ -37,7 +37,8 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().temporary(), UserSubscriberRepository.getSingleEmail()}};
     }
 
-   @Test(dataProvider = "existEmail")
+
+    @Test(dataProvider = "existEmail")
     public void existSubscriber(User user, UserSubscriber userSubscriber) {
        logger.info("Start existSubscriber(" + user + ")");
        TipsTricksService tipsTricksService = loadApplication()
