@@ -31,7 +31,9 @@ public class PlacesService extends LogginedUserService {
 		this.placesResource = new PlacesResource();
 		this.placePredicateRsourse = new PlacePredicateRsourse();
 	}
-
+	
+	// getters
+	
 	public PlaceStatusResourse getPlaceStatusResourse() {
 		return placeStatusResourse;
 	}
@@ -63,8 +65,6 @@ public class PlacesService extends LogginedUserService {
                         .addHeaderParameters(headerParameters)
                         .addPathVariables(pathVariables)
                         .addUrlParameters(urlParameter));
-
-        System.out.println("***pageEntities = " + pageEntity);
 
         return pageEntity;
     }
@@ -126,9 +126,7 @@ public class PlacesService extends LogginedUserService {
         //
         RestParameters pathVariables = new RestParameters()
                 .addParameter(KeyParameters.PLACE_ID, String.valueOf(placeId.getId()));
-        
-        // add  "PlaceEntity"
-        
+ 
         
         PlaceEntity placeAboutIDEntity = placesResource
                 .httpGetAsEntity(methodParameters.addPathVariables(pathVariables).addHeaderParameters(headerParameters));

@@ -11,7 +11,7 @@ public final class PageParameterRepository {
 	}
 	
 	public static PageParameters getNews() {
-		return new PageParameters("1","5");
+		return new PageParameters("0","5");
 	}
 	
 }
