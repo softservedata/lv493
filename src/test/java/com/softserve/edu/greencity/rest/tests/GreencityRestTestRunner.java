@@ -1,7 +1,10 @@
 package com.softserve.edu.greencity.rest.tests;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -19,10 +22,15 @@ public abstract class GreencityRestTestRunner {
 	@BeforeSuite
 	public void beforeSuite() {
 	}
-
+	
+	@Step
 	@BeforeClass
-	public void setUpBeforeClass() {
+	public void beforeClass(ITestContext context) {
+			for (Map.Entry<String, String> entry : context.getCurrentXmlTest().getAllParameters().entrySet()) {
+				System.out.println("Key: " + entry.getKey() + "  Value: " + entry.getValue());
+		}
 	}
+	
 
 	@AfterClass(alwaysRun = true)
 	public void tearDownAfterClass() throws Exception {

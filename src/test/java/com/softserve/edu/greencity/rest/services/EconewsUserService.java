@@ -10,6 +10,7 @@ import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.NewsEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.PageEntity;
+import com.softserve.edu.greencity.rest.entity.econewsEntity.TagsEntity;
 import com.softserve.edu.greencity.rest.resources.econews.*;
 
 import java.util.ArrayList;
@@ -65,14 +66,14 @@ public class EconewsUserService extends LogginedUserService {
 //		return NewsItems.converToNewsItemsList(newsEntities);
         return newsEntities;
     }
-
-    public String getTags() {
+    
+    public TagsEntity getTags() {
         MethodParameters methodParameters = new MethodParameters();
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
                 .addParameter(KeyParameters.AUTHORIZATION,
                         KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
-        String tagsEntity = tagsResurse
+        TagsEntity tagsEntity = tagsResurse
                 .httpGetAsEntity(methodParameters
                         .addHeaderParameters(headerParameters));
 

@@ -105,7 +105,25 @@
 			<artifactId>commons-io</artifactId>
 			<version>${apache.commons.io.version}</version>
 		</dependency>
-
+		
+		<!-- Mock-->
+		
+<!-- 		<dependency> -->
+<!-- 		    <groupId>org.powermock</groupId> -->
+<!-- 		    <artifactId>powermock-module-junit4</artifactId> -->
+<!-- 		    <version>1.7.4</version> -->
+<!-- 		    <scope>test</scope> -->
+<!-- 		</dependency> -->
+		
+				
+<!-- 		<dependency> -->
+<!-- 		    <groupId>org.powermock</groupId> -->
+<!-- 		    <artifactId>powermock-api-mockito</artifactId> -->
+<!-- 		    <version>${org.powermock.version}</version> -->
+<!-- 		    <scope>test</scope> -->
+<!-- 		</dependency> -->
+	
+		
 		<!-- - - - Logger - - - -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

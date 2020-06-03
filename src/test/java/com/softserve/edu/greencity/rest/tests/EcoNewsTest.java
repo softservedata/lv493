@@ -1,6 +1,8 @@
 package com.softserve.edu.greencity.rest.tests;
 
+
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.rest.data.User;
@@ -8,6 +10,7 @@ import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.data.econews.PageParameterRepository;
 import com.softserve.edu.greencity.rest.data.econews.PageParameters;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.PageEntity;
+import com.softserve.edu.greencity.rest.entity.econewsEntity.TagsEntity;
 import com.softserve.edu.greencity.rest.services.EconewsUserService;
 
 import io.qameta.allure.Description;
@@ -33,19 +36,21 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 		return new Object[][] { { UserRepository.get().temporary(), PageParameterRepository.getNews() } };
 	}
 	
-	@Epic("AllureTest")
-	@Feature("Login_Application_Test FEATURE")
-	//@Test(dataProvider = "users")
+	
+	@Description("Check Tags that system returns")
+	@Parameters({"Loggined User Token"})
+	@Epic("EcoNews")
+	@Test(dataProvider = "users")
 	public void checkAllTags(User user) {
+		
 		logger.info("Start checkAllTags(" + user + ")");
 		EconewsUserService tagsService = loadApplication()
 				.successfulUserLogin(user)
 				.gotoEconewsUserService();
-		System.out.println("logginedUserEntity = "
-				+ tagsService.getLogginedUserEntity());
-		String tagsEntity = tagsService.getTags();
-//		String[] tagsEntity = tagsService.getTags();
-		System.out.println("***tagsEntity = "+ tagsEntity);
+		
+		TagsEntity tagsEntity = tagsService.getTags();
+
+		logger.info("tagsEntity = " + tagsEntity);
 //		Assert.assertEquals(logginedUserService.getLogginedUserEntity().getName(),
 //				user.getName());
 	}
@@ -56,7 +61,7 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 	@Issue("LVATQAOMS-776")
 	@Link(name = "allure", type = "mylink")
 	@Link("https://softserve.academy/")
-	@Test(dataProvider = "users")
+	//@Test(dataProvider = "users")
 	public void checkFreshNews(User user) {
 		logger.info("Start checkFreshNews(" + user + ")");
 		EconewsUserService newsService = loadApplication()
@@ -72,7 +77,7 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 
 	}
 	
-	@Test(dataProvider = "econews")
+	//@Test(dataProvider = "econews")
 	public void checkhNews(User user, PageParameters pageParameters) {
 		logger.info("Start checkFreshNews(" + user + ")");
 		EconewsUserService pageService = loadApplication()

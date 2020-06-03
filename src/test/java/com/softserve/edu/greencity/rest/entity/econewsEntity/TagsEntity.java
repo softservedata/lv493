@@ -5,28 +5,53 @@ import java.util.List;
 
 public class TagsEntity {
 
-    private String tag;
+  //  private List<String> tags;
+    private String tags[];
 
-    public TagsEntity() {
-        tag = "";
-    }
+//    public TagsEntity() {
+//    	 tags = new ArrayList<String>();
+//    }
 
-    public TagsEntity(String tag) {
-        this.tag = tag;
-    }
+	/*
+	 * public TagsEntity(List<String> tags) { this.tags = tags; }
+	 */
+	
+//    
+//	public TagsEntity(String... tag) {
+//		for(String current :  tag)  {
+//		tags.add(current);
+//		}
+//	}
 
-    public String getTag() {
-        return tag;
-    }
+	public TagsEntity(String[] tags) {
+	
+	this.tags = tags;
+}
 
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
+/*
+ * public List<String> getTags() { return tags; }
+ */
 
-    @Override
-    public String toString() {
-        return "TagsEntity [tags=" + tag + "]";
-    }
+	@Override
+	public String toString() {
+		return "TagsEntity [tags=" + tags.toString() + "]";
+	}
+
+	public String[] getTags() {
+		return tags;
+	}
+
+	
+    
+	
+    
+
+   
+
+   
+
+    
+
 
 }
 	
