@@ -14,6 +14,7 @@ import com.softserve.edu.greencity.rest.data.econews.PageParameters;
 import com.softserve.edu.greencity.rest.data.places.PlaceId;
 import com.softserve.edu.greencity.rest.data.places.PlacesInfoRepository;
 import com.softserve.edu.greencity.rest.entity.places.PageEntity;
+import com.softserve.edu.greencity.rest.entity.places.PlaceEntity;
 import com.softserve.edu.greencity.rest.entity.places.PlaceInfoEntity;
 import com.softserve.edu.greencity.rest.services.PlacesGuestService;
 import com.softserve.edu.greencity.rest.services.PlacesService;
@@ -110,6 +111,23 @@ public class PlasesTest  extends GreencityRestTestRunner{
 
 			Assert.assertEquals("Test checkInfoPlace failed", placeEntity.getId(), placeId);
 		}
+		
+		 @DataProvider
+		    public Object[][] users() {
+		        return new Object[][] { { UserRepository.get().temporary(), PlacesInfoRepository.getPlaceId() } };
+		    }
+	    
+
+			@Test(dataProvider = "users")
+			public void checkPlaceAboutID(User user, PlaceId placeId) {
+				logger.info("Start checkPlaceAboutID(" + user + ")");
+				PlaceEntity placeAboutIDEntity = loadApplication().successfulUserLogin(user).gotoPlacesService()
+						.placeAboutID(placeId);
+				Assert.assertEquals("Test checkInfoPlace failed", placeAboutIDEntity.getId(), placeId.getId());
+
+				logger.info("placeAboutIDEntity ID" + placeAboutIDEntity.getId());
+
+			}
 		
 		//TODO
 //		 @DataProvider
