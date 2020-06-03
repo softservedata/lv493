@@ -24,11 +24,11 @@ public final class PageParameterRepository {
 	}
 	
 	public static PageParameters getPageParameters() {
-		return new PageParameters("0","10");
+		return new PageParameters("1","10");
 	}
 
 	public static PageParameters getTagsParameters() {
-		PageParameters pageParameter = new PageParameters("0","10");
+		PageParameters pageParameter = new PageParameters("1","10");
 				pageParameter.addTag("news").addTag("events");
 				return pageParameter;
 	}

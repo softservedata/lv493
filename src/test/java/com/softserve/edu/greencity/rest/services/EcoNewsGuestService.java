@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.rest.services;
 
 import com.softserve.edu.greencity.rest.data.econews.News;
+import com.softserve.edu.greencity.rest.data.econews.Tags;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
@@ -92,10 +93,15 @@ public class EcoNewsGuestService extends GuestService {
                 .addParameter(KeyParameters.SIZE, size)
                 .addParameter(KeyParameters.TAGS, tags.stream().collect(Collectors.joining(",")));
 
+//        for (String currentTag : tags) {
+//            urlParameter.addListParameter(KeyParameters.TAGS, currentTag);
+//        }
+
         PageEntity newsResponse = econewsTagsResource
                 .httpGetAsEntity(methodParameters
                         .addHeaderParameters(headerParameters)
                         .addUrlParameters(urlParameter));
+        System.out.println(newsResponse.getPage().get(1));
         return News.converToNewsList(newsResponse.getPage());
     }
 
@@ -119,6 +125,6 @@ public class EcoNewsGuestService extends GuestService {
                 .httpGetAsEntity(methodParameters
                         .addHeaderParameters(headerParameters)
                         .addPathVariables(pathVariables));
-        return News.converToNews(news);
+        return News.convertToNews(news);
     }
 }

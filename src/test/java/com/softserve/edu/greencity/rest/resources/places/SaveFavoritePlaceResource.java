@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.rest.resources.places;
 import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestUrlRepository;
 import com.softserve.edu.greencity.rest.engine.RestQueries;
-import com.softserve.edu.greencity.rest.entity.FavoritePlaceEntity;
+import com.softserve.edu.greencity.rest.entity.places.FavoritePlaceEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.places.PlaceEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;

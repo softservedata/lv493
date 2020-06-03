@@ -8,6 +8,12 @@ import java.util.List;
 public class NewsIdRepository {
     private static NewsIdRepository instance = null;
 
+    /**
+     * Variable List<Integer> newsId
+     * to path value from test checkUploadEconews to deleteNews test
+     */
+    private List<Integer> newsId = new ArrayList<>();
+
     private NewsIdRepository() {
     }
 
@@ -20,6 +26,18 @@ public class NewsIdRepository {
             }
         }
         return instance;
+    }
+
+    public List<Integer> getNewsId() {
+        return newsId;
+    }
+
+    public void setNewsId(List<Integer> newsId) {
+        this.newsId = newsId;
+    }
+
+    public void addNewsId(int newsId) {
+        this.newsId.add(newsId);
     }
 
     public int getDefault() {

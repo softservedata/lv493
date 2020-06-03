@@ -1,9 +1,7 @@
 package com.softserve.edu.greencity.rest.services;
 
 
-import com.softserve.edu.greencity.rest.data.econews.FileUploadParameters;
-import com.softserve.edu.greencity.rest.data.econews.FileUploadProperties;
-import com.softserve.edu.greencity.rest.data.econews.News;
+import com.softserve.edu.greencity.rest.data.econews.*;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
@@ -64,25 +62,25 @@ public class EcoNewsUserService extends LogginedUserService {
     /**
      * Method to add new eco news.
      *
-     * @param fileUploadProperties
+     * @param newsUploadProperties
      *
      * @return News
      */
-    public News uploadNews(FileUploadProperties fileUploadProperties) {
+    public News uploadNews(NewsUploadProperties newsUploadProperties) {
         MethodParameters methodParameters = new MethodParameters()
                 .addContentType(ContentTypes.IMAGE_JPEG)
                 .addFormDataPartKey(KeyParameters.ECO_NEWS_DTO);
-        FileUploadParameters fileUploadParameters = fileUploadProperties.getFileUploadParameters();
+        FileUploadParameters fileUploadParameters = newsUploadProperties.getFileUploadParameters();
 
         RestParameters formDataPartParameters = new RestParameters()
-                .addParameter(KeyParameters.IMAGE_PATH, fileUploadProperties.getNews().getImagePath())
-                .addParameter(KeyParameters.SOURCE, fileUploadProperties.getNews().getSource())
-                .addParameter(KeyParameters.TEXT, fileUploadProperties.getNews().getText())
-                .addParameter(KeyParameters.TITLE, fileUploadProperties.getNews().getTitle());
-        for (String currentTag : fileUploadProperties.getNews().getTags()) {
+                .addParameter(KeyParameters.IMAGE_PATH, newsUploadProperties.getNews().getImagePath())
+                .addParameter(KeyParameters.SOURCE, newsUploadProperties.getNews().getSource())
+                .addParameter(KeyParameters.TEXT, newsUploadProperties.getNews().getText())
+                .addParameter(KeyParameters.TITLE, newsUploadProperties.getNews().getTitle());
+
+        for (String currentTag : newsUploadProperties.getNews().getTags()) {
             formDataPartParameters.addListParameter(KeyParameters.TAGS, currentTag);
         }
-
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
                 .addParameter(KeyParameters.AUTHORIZATION,
@@ -93,7 +91,9 @@ public class EcoNewsUserService extends LogginedUserService {
                         .addFormDataPartParameters(formDataPartParameters)
                         .addHeaderParameters(headerParameters));
 
-        return News.converToNews(newsEntity);
+        NewsIdRepository.get().addNewsId(newsEntity.getId());
+
+        return News.convertToNews(newsEntity);
     }
     // Business Logic
 }

@@ -3,11 +3,11 @@ package com.softserve.edu.greencity.rest.data.econews;
 /**
  *
  */
-public class FileUploadProperties {
+public class NewsUploadProperties {
     private News news;
     private FileUploadParameters fileUploadParameters;
 
-    public FileUploadProperties(News news, FileUploadParameters fileUploadParameters) {
+    public NewsUploadProperties(News news, FileUploadParameters fileUploadParameters) {
         this.news = news;
         this.fileUploadParameters = fileUploadParameters;
     }
@@ -22,7 +22,7 @@ public class FileUploadProperties {
 
     @Override
     public String toString() {
-        return "FileUploadProperties{" +
+        return "NewsUploadProperties{" +
                 "news=" + news +
                 ", fileUploadParameters=" + fileUploadParameters +
                 '}';

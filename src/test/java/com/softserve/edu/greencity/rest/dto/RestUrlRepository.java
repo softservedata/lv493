@@ -106,21 +106,21 @@ public final class RestUrlRepository {
                 .addPatchUrl("");
     }
 
-    public static RestUrl favoritePlacesById() {
-        return new RestUrl()
-                .addBaseUrl(remoteServer)
-                .addGetUrl("/favorite_place/favorite/{" + KeyParameters.PLACE_ID.toString() + "}")
-                .addPostUrl("")
-                .addPutUrl("")
-                .addDeleteUrl("")
-                .addPatchUrl("");
-    }
-
     public static RestUrl saveFavoritePlace() {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
                 .addGetUrl("")
                 .addPostUrl("/place/save/favorite/")
+                .addPutUrl("")
+                .addDeleteUrl("")
+                .addPatchUrl("");
+    }
+
+    public static RestUrl favoritePlacesById() {
+        return new RestUrl()
+                .addBaseUrl(remoteServer)
+                .addGetUrl("/favorite_place/favorite/{" + KeyParameters.PLACE_ID.toString() + "}")
+                .addPostUrl("")
                 .addPutUrl("")
                 .addDeleteUrl("")
                 .addPatchUrl("");

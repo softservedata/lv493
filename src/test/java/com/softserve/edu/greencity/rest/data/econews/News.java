@@ -5,6 +5,7 @@ import com.softserve.edu.greencity.rest.entity.econewsEntity.NewsEntity;
 import com.softserve.edu.greencity.rest.tools.Verifiable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class News implements Verifiable {
@@ -29,6 +30,16 @@ public class News implements Verifiable {
     public News(String imagePath, String title, String text, String source) {
         this.id = -1;
         this.imagePath = imagePath;
+        this.title = title;
+        this.text = text;
+        this.source = source;
+        this.tags = new ArrayList<>();
+        this.author = new Author();
+    }
+
+    public News(String title, String text, String source) {
+        this.id = -1;
+        this.imagePath = "";
         this.title = title;
         this.text = text;
         this.source = source;
@@ -113,6 +124,7 @@ public class News implements Verifiable {
     }
 
     public List<String> getTags() {
+        Collections.sort(tags);
         return tags;
     }
 
@@ -122,7 +134,7 @@ public class News implements Verifiable {
 
     // static factory
 
-    public static News converToNews(NewsEntity newsEntity) {
+    public static News convertToNews(NewsEntity newsEntity) {
         return new News(newsEntity.getId(), newsEntity.getImagePath(), newsEntity.getTitle(),
                 newsEntity.getText(), newsEntity.getSource(), newsEntity.getTags(), AuthorEntity.convertToAuthor(newsEntity.getAuthor()));
     }
@@ -130,7 +142,7 @@ public class News implements Verifiable {
     public static List<News> converToNewsList(List<NewsEntity> newsEntities) {
         List<News> result = new ArrayList<>();
         for (NewsEntity newsEntity : newsEntities) {
-            result.add(converToNews(newsEntity));
+            result.add(convertToNews(newsEntity));
         }
         return result;
     }
@@ -149,7 +161,7 @@ public class News implements Verifiable {
 
     @Override
     public boolean isValid() {
-        return (id != -1)
+        return (id > -1)
                 &&(title != null) && (title.length() > 0 )
                 &&(text != null) && (text.length() > 0 )
                 &&(tags != null) && (tags.size() > 0 );

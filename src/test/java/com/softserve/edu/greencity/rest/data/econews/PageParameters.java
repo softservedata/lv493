@@ -17,7 +17,7 @@ public class PageParameters {
     public PageParameters(String page, String size) {
         this.page = page;
         this.size = size;
-        this.tags = new ArrayList<>();
+        this.tags = new ArrayList<String>();
     }
 
     public String getPage() {
@@ -62,10 +62,10 @@ public class PageParameters {
             for (String currentTag : tags){
                result =  result || (news.getTags().contains(currentTag));
                if (result){
-                   return result;
+                   return true;
                }
             }
-            return result;
+            return false;
     }
 
     @Override

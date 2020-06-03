@@ -7,13 +7,13 @@ import com.softserve.edu.greencity.rest.data.econews.*;
 import com.softserve.edu.greencity.rest.services.EcoNewsGuestService;
 import com.softserve.edu.greencity.rest.services.EcoNewsUserService;
 import com.softserve.edu.greencity.rest.tools.GreenCity400Exception;
+import com.softserve.edu.greencity.rest.tools.GreenCityCommonException;
 import com.softserve.edu.greencity.rest.tools.VerifyUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,12 +22,6 @@ import java.util.List;
  * @author Mariana
  */
 public class EcoNewsTests extends GreencityRestTestRunner {
-
-    /**
-     * Variable List<Integer> newsId
-     * to path value from test checkUploadEconews to deleteNews test
-     */
-    private List<Integer> newsId = new ArrayList<>();
 
     @DataProvider
     public Object[][] news() {
@@ -47,7 +41,7 @@ public class EcoNewsTests extends GreencityRestTestRunner {
         List<News> news = econewsGuestService.getAllNews(pageParameters.getPage(), pageParameters.getSize());
 
         logger.info(news.size() + " news were founded");
-
+        System.out.println(news);
         Assert.assertTrue(VerifyUtils.verifyClass(news));
 
         Assert.assertEquals(news.size(), Integer.parseInt(pageParameters.getSize()));
@@ -67,10 +61,13 @@ public class EcoNewsTests extends GreencityRestTestRunner {
         List<News> news = econewsGuestService.getNewsByTags(pageParameters.getPage(),
                 pageParameters.getSize(), pageParameters.getTags());
 
+        System.out.println(news.get(1));
         logger.info(news.size() + " news were founded by tags " + pageParameters.getTags());
 
         Assert.assertTrue(VerifyUtils.verifyClass(news));
+
         Assert.assertEquals(news.size(), Integer.parseInt(pageParameters.getSize()));
+
         Assert.assertTrue(pageParameters.verifyNewsByTags(news, pageParameters.getTags()));
     }
 
@@ -78,6 +75,7 @@ public class EcoNewsTests extends GreencityRestTestRunner {
     public Object[] NewsId() {
         return new Object[]{NewsIdRepository.get().getDefault()};
     }
+
     /**
      * Test of getting news by NewsId.
      */
@@ -98,10 +96,12 @@ public class EcoNewsTests extends GreencityRestTestRunner {
     @DataProvider
     public Object[][] uploadNews() {
         return new Object[][]{
-                {UserRepository.get().getAdminUser(),
-                        FileUploadPropertiesRepository.get().simpleNews()},
-                {UserRepository.get().getAdminUser(),
-                        FileUploadPropertiesRepository.get().minSymbolsNews()}
+                {UserRepository.get().getAdminUser(), // GC-626 Max symbols
+                        NewsUploadPropertiesRepository.get().maxSymbolsNews()},
+                {UserRepository.get().getAdminUser(), // GC-605 min symbols
+                        NewsUploadPropertiesRepository.get().minSymbolsNews()},
+                {UserRepository.get().getAdminUser(), // GC-625 intermediate number of symbols
+                        NewsUploadPropertiesRepository.get().intermediateSymbolsNews()}
         };
     }
 
@@ -109,10 +109,10 @@ public class EcoNewsTests extends GreencityRestTestRunner {
      * Test of news uploading.
      *
      * @param user
-     * @param fileUploadProperties
+     * @param newsUploadProperties
      */
     @Test(dataProvider = "uploadNews", priority = 1)
-    public void checkUploadEconews(User user, FileUploadProperties fileUploadProperties) {
+    public void checkUploadEconews(User user, NewsUploadProperties newsUploadProperties) {
         logger.info("Start checkUploadEconews(" + user + ")");
         EcoNewsUserService econewsUserService = loadApplication()
                 .successfulUserLogin(user)
@@ -120,35 +120,34 @@ public class EcoNewsTests extends GreencityRestTestRunner {
         logger.info("logginedUserEntity = "
                 + econewsUserService.getLogginedUserEntity());
 
-        logger.info(fileUploadProperties.getNews().toString());
-        logger.info(fileUploadProperties.getFileUploadParameters().toString());
+        logger.info(newsUploadProperties.getNews().toString());
+        logger.info(newsUploadProperties.getFileUploadParameters().toString());
 
-        News news = econewsUserService.uploadNews(fileUploadProperties);
+        News news = econewsUserService.uploadNews(newsUploadProperties);
 
         logger.info("Created news = " + news.toString());
-
-        newsId.add(news.getId());
 
         Assert.assertTrue(news.isValid());
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertEquals(news.getTags(), fileUploadProperties.getNews().getTags(),
+        softAssert.assertEquals(news.getTags(), newsUploadProperties.getNews().getTags(),
                 "Tags are not equal");
-        softAssert.assertEquals(news.getText(), fileUploadProperties.getNews().getText(),
+        softAssert.assertEquals(news.getText(), newsUploadProperties.getNews().getText(),
                 "Text fields are not equal");
-        softAssert.assertEquals(news.getTitle(), fileUploadProperties.getNews().getTitle(),
+        softAssert.assertEquals(news.getTitle(), newsUploadProperties.getNews().getTitle(),
                 "Title fields are not equal");
-        softAssert.assertEquals(news.getSource(), fileUploadProperties.getNews().getSource(),
-                "Source fields are not equal");
+//        softAssert.assertEquals(news.getSource(), newsUploadProperties.getNews().getSource(),
+//                "Source fields are not equal");
 
         softAssert.assertAll();
+        //https://github.com/ita-social-projects/GreenCity/issues/832
     }
 
     @DataProvider
     public Object[] deleteNews() {
-        return NewsIdRepository.get().generateData(newsId,
-                UserRepository.get().getAdminUser() );
+        return NewsIdRepository.get().generateData(NewsIdRepository.get().getNewsId(),
+                UserRepository.get().getAdminUser());
     }
 
     /**
@@ -159,7 +158,7 @@ public class EcoNewsTests extends GreencityRestTestRunner {
      */
     @Test(dataProvider = "deleteNews", priority = 3, expectedExceptions = GreenCity400Exception.class)
     public void deleteNews(User user, int newsId) {
-        logger.info("Start deleteNews(" +  newsId + ")");
+        logger.info("Start deleteNews(" + newsId + ")");
         EcoNewsUserService econewsUserService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoEconewsUserService();
@@ -170,6 +169,55 @@ public class EcoNewsTests extends GreencityRestTestRunner {
         EcoNewsGuestService econewsGuestService = loadApplication().gotoEconewsGuestService();
 
         econewsGuestService.getNewsById(String.valueOf(newsId));
+    }
+
+    //**_____________________________________________________________________________________________**\\
+
+    @DataProvider
+    public Object[][] uploadNewsNegativeData() {
+        return new Object[][]{
+                {UserRepository.get().getAdminUser(), // GC-594 more than 3 tags
+                        NewsUploadPropertiesRepository.get().tooManyTagsOfNews()}, //defect https://github.com/ita-social-projects/GreenCity/issues/717
+                {UserRepository.get().getAdminUser(), // GC-571 all empty values
+                        NewsUploadPropertiesRepository.get().emptyNews()},
+                {UserRepository.get().getAdminUser(), // GC-581 more than 170 characters in ‘title’ field
+                        NewsUploadPropertiesRepository.get().titleSizeInvalidOfNews()},
+                {UserRepository.get().getAdminUser(), // GC-572 empty ‘title’ value
+                        NewsUploadPropertiesRepository.get().emptyTitleOfNews()},
+                {UserRepository.get().getAdminUser(), //GC-600 empty ‘text’ value
+                        NewsUploadPropertiesRepository.get().emptyTextOfNews()},
+
+
+//                {UserRepository.get().getAdminUser(), // GC-585 without any tags
+//                        NewsUploadPropertiesRepository.get().emptyTagsOfNews()},  //bad
+
+        };
+    }
+
+    /**
+     * Test of news uploading.
+     *
+     * @param user
+     * @param newsUploadProperties
+     */
+    @Test(dataProvider = "uploadNewsNegativeData", expectedExceptions = GreenCityCommonException.class)
+    public void creteNewsNegative(User user, NewsUploadProperties newsUploadProperties) {
+        logger.info("Start checkUploadEconews(" + user + ")");
+        EcoNewsUserService econewsUserService = loadApplication()
+                .successfulUserLogin(user)
+                .gotoEconewsUserService();
+        logger.info("logginedUserEntity = "
+                + econewsUserService.getLogginedUserEntity());
+
+        logger.info(newsUploadProperties.getNews().toString());
+        logger.info(newsUploadProperties.getFileUploadParameters().toString());
+
+        News news = econewsUserService.uploadNews(newsUploadProperties);
+
+        logger.info("Created news = " + news.toString());
+
+        Assert.assertFalse(news.isValid());
+
     }
 }
 

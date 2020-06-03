@@ -20,7 +20,7 @@ public class AuthorEntity {
 		this.email = "";
 	}
 
-	public AuthorEntity(int id, String name, String email) { //new
+	public AuthorEntity(int id, String name, String email) {
 		
 		this.id = id;
 		this.name = name;
@@ -45,7 +45,7 @@ public class AuthorEntity {
 	}
 
 	public static Author convertToAuthor(AuthorEntity authorEntity) {
-		return new Author(authorEntity.getId(), authorEntity.getName() );
+		return new Author(authorEntity.getId(), authorEntity.getName());
 	}
     
 

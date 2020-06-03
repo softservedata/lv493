@@ -1,10 +1,11 @@
 package com.softserve.edu.greencity.rest.services;
 
+import com.softserve.edu.greencity.rest.data.places.FavoritePlace;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
-import com.softserve.edu.greencity.rest.entity.FavoritePlaceEntity;
+import com.softserve.edu.greencity.rest.entity.places.FavoritePlaceEntity;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.places.PlaceEntity;
@@ -20,22 +21,22 @@ import java.util.List;
  * @author Mariana
  */
 public class FavoritePlacesService extends LogginedUserService{
-    private PlaceEntity placeEntity;
+   // private PlaceEntity placeEntity;
     private FavoritePlaceResources favoritePlaceResources;
     private FavoritePlaceByIdResource favoritePlaceByIdResource;
     private SaveFavoritePlaceResource saveFavoritePlaceResource;
 
     public FavoritePlacesService(LogginedUserEntity logginedUserEntity) {
         super(logginedUserEntity);
-        placeEntity = new PlaceEntity();
+   //     placeEntity = new PlaceEntity();
         favoritePlaceResources = new FavoritePlaceResources();
         favoritePlaceByIdResource = new FavoritePlaceByIdResource();
         saveFavoritePlaceResource = new SaveFavoritePlaceResource();
     }
 
-    public PlaceEntity getPlaceEntity() {
-        return placeEntity;
-    }
+  //  public PlaceEntity getPlaceEntity() {
+     //   return placeEntity;
+ //   }
 
     public FavoritePlaceResources getFavoritePlaceResources() {
         return favoritePlaceResources;
@@ -54,7 +55,7 @@ public class FavoritePlacesService extends LogginedUserService{
      *
      * @return List<FavoritePlaceEntity>
      */
-    public List<FavoritePlaceEntity> getFavoritePlaces() {
+    public List<FavoritePlace> getFavoritePlaces() {
         MethodParameters methodParameters = new MethodParameters();
 
         RestParameters headerParameters = new RestParameters()
@@ -65,7 +66,7 @@ public class FavoritePlacesService extends LogginedUserService{
         List<FavoritePlaceEntity> favoritePlaceEntities= favoritePlaceResources
                 .httpGetAsListEntity(methodParameters.addHeaderParameters(headerParameters));
 
-        return favoritePlaceEntities;
+        return FavoritePlace.convertToPlacesList(favoritePlaceEntities);
     }
 
     /**
@@ -96,7 +97,7 @@ public class FavoritePlacesService extends LogginedUserService{
      *
      * @return FavoritePlaceEntity
      */
-    public FavoritePlaceEntity saveFavoritePlace(int placeId, String placeName) {
+    public FavoritePlace saveFavoritePlace(int placeId, String placeName) {
         MethodParameters methodParameters = new MethodParameters()
                 .addContentType(ContentTypes.APPLICATION_JSON);
 
@@ -114,7 +115,7 @@ public class FavoritePlacesService extends LogginedUserService{
                         .addHeaderParameters(headerParameters)
                         .addMediaTypeParameters(mediaTypeParameters));
 
-        return favoritePlaceEntity;
+        return FavoritePlace.convertToPlace(favoritePlaceEntity);
     }
 
     /**
@@ -122,7 +123,7 @@ public class FavoritePlacesService extends LogginedUserService{
      *
      * @return FavoritePlaceEntity
      */
-    public FavoritePlaceEntity updateFavoritePlace(int placeId, String placeName) {
+    public FavoritePlace updateFavoritePlace(int placeId, String placeName) {
         MethodParameters methodParameters = new MethodParameters()
                 .addContentType(ContentTypes.APPLICATION_JSON);
 
@@ -140,7 +141,7 @@ public class FavoritePlacesService extends LogginedUserService{
                         .addHeaderParameters(headerParameters)
                         .addMediaTypeParameters(mediaTypeParameters));
 
-        return favoritePlaceEntity;
+        return FavoritePlace.convertToPlace(favoritePlaceEntity);
     }
 
     /**

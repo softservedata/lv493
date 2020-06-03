@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.rest.entity;
+package com.softserve.edu.greencity.rest.entity.places;
 
 public class FavoritePlaceEntity {
     private int placeId;
@@ -11,8 +11,7 @@ public class FavoritePlaceEntity {
         this.name = "";
     }
 
-    public FavoritePlaceEntity(int id, int placeId, String name) {
-        this.id = id;
+    public FavoritePlaceEntity(int placeId, String name) {
         this.placeId = placeId;
         this.name = name;
     }

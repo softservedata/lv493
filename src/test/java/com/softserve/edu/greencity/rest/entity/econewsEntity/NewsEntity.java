@@ -1,6 +1,9 @@
 package com.softserve.edu.greencity.rest.entity.econewsEntity;
 
+import com.softserve.edu.greencity.rest.data.econews.Tags;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NewsEntity {
@@ -93,6 +96,7 @@ public class NewsEntity {
     }
 
     public List<String> getTags() {
+        Collections.sort(tags);
         return tags;
     }
 

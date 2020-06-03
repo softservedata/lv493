@@ -3,11 +3,13 @@ package com.softserve.edu.greencity.rest.tests;
 import com.softserve.edu.greencity.rest.data.ResponseCode;
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
+import com.softserve.edu.greencity.rest.data.places.FavoritePlace;
 import com.softserve.edu.greencity.rest.data.places.FavoritePlacesRepository;
-import com.softserve.edu.greencity.rest.entity.FavoritePlaceEntity;
+import com.softserve.edu.greencity.rest.entity.places.FavoritePlaceEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.places.PlaceEntity;
 import com.softserve.edu.greencity.rest.services.FavoritePlacesService;
+import com.softserve.edu.greencity.rest.tools.VerifyUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -22,9 +24,9 @@ import java.util.List;
 public class FavoritePlaceTest extends GreencityRestTestRunner {
 
     @DataProvider
-    public Object[][] placeId() {
+    public Object[][] places() {
         return new Object[][]{
-                {UserRepository.get().getAdminUser(), FavoritePlacesRepository.get().getDefault() }
+                {UserRepository.get().getAdminUser(), FavoritePlacesRepository.get().getDefaultPlace() }
         };
     }
 
@@ -32,10 +34,10 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
      * Test to Save place as favorite..
      * (CRUD - Create)
      * @param user
-     * @param placeId
+     * @param place
      */
-    @Test(dataProvider = "placeId", priority = 1)
-    public void saveFavoritePlace(User user, int placeId) {
+    @Test(dataProvider = "places", priority = 1)
+    public void saveFavoritePlace(User user, FavoritePlaceEntity place) {
         logger.info("Start getFavoritePlace(" + user + ")");
         FavoritePlacesService favoritePlacesService = loadApplication()
                 .successfulUserLogin(user)
@@ -44,12 +46,13 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
         logger.info("logginedUserEntity = "
                 + favoritePlacesService.getLogginedUserEntity());
 
-        FavoritePlaceEntity favoritePlaceEntity = favoritePlacesService
-                .saveFavoritePlace(placeId, "Place");
+        FavoritePlace favoritePlace = favoritePlacesService
+                .saveFavoritePlace(place.getPlaceId(), place.getName());
 
-        logger.info(favoritePlaceEntity.toString());
+        logger.info(favoritePlace.toString());
 
-        Assert.assertEquals(favoritePlaceEntity.getName(), "Place");
+        Assert.assertTrue(favoritePlace.isValid());
+        Assert.assertEquals(favoritePlace.getName(), place.getName());
     }
 
     @DataProvider
@@ -73,14 +76,22 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
         logger.info("logginedUserEntity = "
                 + favoritePlacesService.getLogginedUserEntity());
 
-        List<FavoritePlaceEntity> favoritePlaceEntity = favoritePlacesService
+        List<FavoritePlace> favoritePlaces = favoritePlacesService
                 .getFavoritePlaces();
 
-        logger.info("FavoritePlaces = " + favoritePlaceEntity);
+        logger.info("FavoritePlaces = " + favoritePlaces);
 
-        Assert.assertTrue(favoritePlaceEntity.size()>0);
+        Assert.assertTrue(VerifyUtils.verifyClass(favoritePlaces));
+        Assert.assertTrue(favoritePlaces.size()>0);
     }
 
+
+    @DataProvider
+    public Object[][] placeId() {
+        return new Object[][]{
+                {UserRepository.get().getAdminUser(), FavoritePlacesRepository.get().getDefault() }
+        };
+    }
     /**
      * Test to get favorite place by Place Id
      * (CRUD - Read)
@@ -109,10 +120,10 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
      * (CRUD - Update)
      *
      * @param user
-     * @param placeId
+     * @param place
      */
-    @Test(dataProvider = "placeId", priority = 4)
-    public void updateFavoritePlace(User user, int placeId) {
+    @Test(dataProvider = "places", priority = 4)
+    public void updateFavoritePlace(User user, FavoritePlaceEntity place) {
         logger.info("Start getFavoritePlace(" + user + ")");
         FavoritePlacesService favoritePlacesService = loadApplication()
                 .successfulUserLogin(user)
@@ -121,10 +132,15 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
         logger.info("logginedUserEntity = "
                 + favoritePlacesService.getLogginedUserEntity());
 
-        FavoritePlaceEntity favoritePlaceEntity = favoritePlacesService
-                .updateFavoritePlace(placeId, "Place");
+        FavoritePlace favoritePlace = favoritePlacesService
+                .updateFavoritePlace(place.getPlaceId(), place.getName()+"la-la");
 
-        logger.info("placeAboutIDEntity = " + favoritePlaceEntity);
+        logger.info("placeAboutIDEntity = " + favoritePlace);
+
+        Assert.assertTrue(favoritePlace.isValid());
+
+        Assert.assertEquals(favoritePlace.getName(), place.getName()+"la-la");
+
     }
 
     /**
