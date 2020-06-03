@@ -85,24 +85,6 @@ public class PlasesTest  extends GreencityRestTestRunner{
 
 		}
 	    
-	   // @Test (dataProvider = "places")
-		    public void checkPlace(User user, PageParameters pageParameters) {
-		    		//, PlaceStatus status) {
-		       logger.info("checkPlaceStatusWithInvalidEmail(" + user + ")");
-		        PlacesService placesService = loadApplication()
-		                .successfulUserLogin(user)
-		                .gotoPlacesService();
-
-		        System.out.println("placesServiceEntity = "
-		                + placesService.getPlacePredicateRsourse());
-		       PageEntity pageEntity = placesService.getPlasesByPredicate(pageParameters);
-		    		   //, status);
-		       System.out.println(pageEntity);
-//		       Assert.assertArrayEquals(expecteds, actuals);
-
-		    }
-	    
-
 	    @DataProvider
 	    public Object[][] placeInfo() {
 	        return new Object[][] { {PlacesInfoRepository.getPlaceId() } };
@@ -127,6 +109,29 @@ public class PlasesTest  extends GreencityRestTestRunner{
 			PlaceInfoEntity placeEntity = placesService.placeInfoID(placeId);
 
 			Assert.assertEquals("Test checkInfoPlace failed", placeEntity.getId(), placeId);
-
-		 }
+		}
+		
+		//TODO
+//		 @DataProvider
+//			public Object[][] places2() {
+//						return new Object[][] { { UserRepository.get().temporary(), PageParameterRepository.getNews() } };
+//			}
+//		 	
+//	   @Test (dataProvider = "places2")
+//		    public void checkPlace(User user, PageParameters pageParameters) {
+//		    		//, PlaceStatus status) {
+//		       logger.info("checkPlaceStatusWithInvalidEmail(" + user + ")");
+//		        PlacesService placesService = loadApplication()
+//		                .successfulUserLogin(user)
+//		                .gotoPlacesService();
+//
+//		        System.out.println("placesServiceEntity = "
+//		                + placesService.getPlacePredicateRsourse().toString());
+//		       PageEntity pageEntity = placesService.getPlasesByPredicate(pageParameters);
+//		    		   //, status);
+//		       System.out.println(pageEntity);
+////		       Assert.assertArrayEquals(expecteds, actuals);
+//
+//		    }
+//	    
 }
