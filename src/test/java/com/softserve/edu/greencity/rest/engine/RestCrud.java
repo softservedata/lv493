@@ -185,6 +185,11 @@ public abstract class RestCrud {
 				json = json + ",";
 			}
 			json = json.substring(0, json.length() -1) + "}";
+			//
+			if (parameters.getDirectJsonParameter() != null) {
+				json = parameters.getDirectJsonParameter();
+			}
+			//
 			if (json.length() < 3) { // TODO
 				throwException("prepareJson()");
 			}

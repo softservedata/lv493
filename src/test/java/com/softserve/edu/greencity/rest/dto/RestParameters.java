@@ -10,6 +10,7 @@ public class RestParameters {
 	private Map<KeyParameters, List<String>> listParameters;
 	private Map<KeyParameters, Object> objectParameters;
 	private List<Map<KeyParameters, Object>> stackKeys;
+	private String directJson;
 
 	public RestParameters() {
 		parameters = new HashMap<>();
@@ -17,6 +18,7 @@ public class RestParameters {
 		objectParameters = new HashMap<>();
 		stackKeys = new ArrayList<>();
 		stackKeys.add(objectParameters);
+		directJson = null;
 	}
 
 	public RestParameters addParameter(KeyParameters key, String value) {
@@ -74,6 +76,11 @@ public class RestParameters {
 		return this;
 	}
 	
+	public RestParameters addDirectJsonParameter(String directJson) {
+		this.directJson = directJson;
+		return this;
+	}
+	
 	public String getParameter(KeyParameters key) {
 		return parameters.get(key);
 	}
@@ -108,4 +115,7 @@ public class RestParameters {
 		return objectParameters;
 	}
 
+	public String getDirectJsonParameter() {
+		return directJson;
+	}
 }

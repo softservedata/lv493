@@ -11,6 +11,7 @@ import com.softserve.edu.greencity.rest.data.IgnoreError400;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestHttpMethods;
 import com.softserve.edu.greencity.rest.dto.RestUrl;
+import com.softserve.edu.greencity.rest.entity.BaseEntity;
 import com.softserve.edu.greencity.rest.entity.ErrorEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 
@@ -109,13 +110,32 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
 		//return convertToEntity(json, classTGET);
 		return convertToEntity(json, entityParameters.get(RestHttpMethods.GET));
 	}
-
+	
+	private String updateJson(String json) {
+		if (json.contains("[") && json.contains("news")) {
+			return "{\"base\":" + json + "}";
+		} //else if () {}
+		return json;
+	}
+	
 	public TPOST httpPostAsEntity(MethodParameters methodParameters) {
-		validateParameter(RestHttpMethods.POST, entityParameters);
-		String json = httpPostAsText(methodParameters);
-		validateJson(json);
+		//validateParameter(RestHttpMethods.POST, entityParameters);
+		//String json = httpPostAsText(methodParameters);
+		//String json = "[{\"name\":\"password\",\"message\":\"mustnotbeblank\"},{\"name\":\"name\",\"message\":\"mustnotbeblank\"}]";
+		//
+		//		String json = "[{}]";
+		//		json = "{\"error400Entity\":" + json + "}";
+		//
+		String json = "[\"news\",\"news2\",\"news3\"]";
+		json = updateJson(json);
+		//json = "{\"base\":" + json + "}";
+		////validateJson(json);
 		//return convertToEntity(json, classTPOST);
-		return convertToEntity(json, entityParameters.get(RestHttpMethods.POST));
+		////return convertToEntity(json, entityParameters.get(RestHttpMethods.POST));
+		//
+		//return convertToEntity(json, RegisterUserEntity.class);
+		//return convertToEntity(json, new GenericConverter<List<String>>(){}.getGenericType());
+		return convertToEntity(json, BaseEntity.class);
 	}
 
 	public TPUT httpPutAsEntity(MethodParameters methodParameters) {
