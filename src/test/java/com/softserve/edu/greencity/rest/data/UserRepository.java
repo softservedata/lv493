@@ -25,4 +25,12 @@ public final class UserRepository {
 		return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
 	}
 	
+	public User getAdminUser() {
+        return new User("green.city.marjana@gmail.com", "marJana", "Greencity!1");
+    }
+	
+	public User ashot() {
+        return new User("acheuusdukwyhuhfab@ttirv.com", "ashot", "QwertY12!");
+    }
+	
 }

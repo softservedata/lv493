@@ -5,11 +5,11 @@
 
 	<test name="Test01a">
 		<classes>
-			<class name="com.softserve.edu.AppTest" />
-			<class name="com.softserve.edu.SearchTest">
-				<methods>
-					<include name="checkCart" />
-				</methods>
+			<class name="com.softserve.edu.greencity.rest.tests.SubscriberTest" />
+			<class name="com.softserve.edu.greencity.rest.tests.AdvicesTest">
+	<!--  			<methods> -->
+	<!-- 		<include name="checkCart" />  -->
+	<!-- 			</methods>  -->
 			</class>
 		</classes>
 	</test> <!-- Test -->
