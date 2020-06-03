@@ -46,6 +46,14 @@ public class DoCustomGoalsTest extends GreencityRestTestRunner {
                 .selectUserGoals(new ArrayList<>(), createdGoals);
     }
 
+    @AfterMethod(alwaysRun = true, description = "Undo user goal")
+    public void afterMethod() {
+        logger.info("Start afterMethod() for " + getClass().getSimpleName());
+
+        logger.info("Undo user goal: " + userCustomGoal);
+        userGoalsService.doUserGoal(userCustomGoal);
+    }
+
     @AfterClass(alwaysRun = true, description = "Deselect goals and delete created ones")
     public void afterClass() {
         logger.info("Start afterClass() for " + getClass().getSimpleName());
@@ -55,14 +63,6 @@ public class DoCustomGoalsTest extends GreencityRestTestRunner {
 
         logger.info("Delete created goals: " + createdGoals);
         userGoalsService.gotoUserCustomGoalsService().deleteCustomGoals(createdGoals);
-    }
-
-    @AfterMethod(alwaysRun = true, description = "Undo user goal")
-    public void afterMethod() {
-        logger.info("Start afterMethod() for " + getClass().getSimpleName());
-
-        logger.info("Undo user goal: " + userCustomGoal);
-        userGoalsService.doUserGoal(userCustomGoal);
     }
 
     @DataProvider

@@ -17,6 +17,8 @@ import com.softserve.edu.greencity.rest.entity.myhabits.UserGoalEntity;
 import com.softserve.edu.greencity.rest.resources.myhabits.UserGoalsResource;
 import com.softserve.edu.greencity.rest.tools.JsonUtils;
 
+import io.qameta.allure.Step;
+
 public class UserGoalsService extends MyHabitsService {
     protected UserGoalsResource userGoalsResource;
 
@@ -38,6 +40,7 @@ public class UserGoalsService extends MyHabitsService {
      * @param language code
      * @return list of goal entities
      */
+    @Step("Get selected user goals")
     public List<UserGoalEntity> userGoalsEntities(LanguagesCode language) {
         return getUserGoalsResource().httpGetAsListEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
@@ -49,6 +52,7 @@ public class UserGoalsService extends MyHabitsService {
      * Get all selected goals of current user.
      * @return list of goal entities
      */
+    @Step("Get selected user goals")
     public List<UserGoalEntity> userGoalsEntities() {
         return userGoalsEntities(LanguagesCode.ENGLISH);
     }
@@ -58,6 +62,7 @@ public class UserGoalsService extends MyHabitsService {
      * @param language code
      * @return list of goals
      */
+    @Step("Get selected user goals")
     public List<UserGoal> userGoals(LanguagesCode language) {
         return UserGoal.converToUserGoalList(userGoalsEntities(language));
     }
@@ -66,6 +71,7 @@ public class UserGoalsService extends MyHabitsService {
      * Get all selected goals of current user.
      * @return list of goals
      */
+    @Step("Get selected user goals")
     public List<UserGoal> userGoals() {
         return UserGoal.converToUserGoalList(userGoalsEntities());
     }
@@ -75,6 +81,7 @@ public class UserGoalsService extends MyHabitsService {
      * @param user goal status
      * @return list of goals
      */
+    @Step("Get user goals by status")
     public List<UserGoal> userGoalsByStatus(UserGoalStatus userGoalStatus) {
         List<UserGoal> result = userGoals();
         for (Iterator<UserGoal> iterator = result.iterator(); iterator
@@ -93,6 +100,7 @@ public class UserGoalsService extends MyHabitsService {
      * @param language
      * @return list of goal entities
      */
+    @Step("Get available user goals")
     public List<UserGoalEntity> availableUserGoalsEntities(LanguagesCode language) {
         return getUserGoalsResource().httpGetAsListEntity(new MethodParameters()
                 .setIndex(1).addHeaderParameters(getHeaderParameters())
@@ -104,6 +112,7 @@ public class UserGoalsService extends MyHabitsService {
      * Get all available goals of current user for selecting.
      * @return list of goal entities
      */
+    @Step("Get available user goals")
     public List<UserGoalEntity> availableUserGoalsEntities() {
         return availableUserGoalsEntities(LanguagesCode.ENGLISH);
     }
@@ -113,6 +122,7 @@ public class UserGoalsService extends MyHabitsService {
      * @param language
      * @return list of goals
      */
+    @Step("Get available user goals")
     public List<UserGoal> availableUserGoals(LanguagesCode language) {
         return UserGoal.converToUserGoalList(availableUserGoalsEntities(language));
     }
@@ -121,6 +131,7 @@ public class UserGoalsService extends MyHabitsService {
      * Get all available goals for selecting.
      * @return list of goals
      */
+    @Step("Get available user goals")
     public List<UserGoal> availableUserGoals() {
         return UserGoal.converToUserGoalList(availableUserGoalsEntities());
     }
@@ -132,6 +143,7 @@ public class UserGoalsService extends MyHabitsService {
      * @param language code
      * @return list of selected goal entities
      */
+    @Step("Select user goals")
     public List<UserGoalEntity> selectUserGoals(List<UserGoalEntity> goals, List<UserGoalEntity> customGoals, LanguagesCode language) {
         RestParameters mediaTypeParameters = new RestParameters()
                .addDirectJsonParameter(new JsonUtils()
@@ -152,6 +164,7 @@ public class UserGoalsService extends MyHabitsService {
      * @param custom goals
      * @return list of selected goal entities
      */
+    @Step("Select user goals")
     public List<UserGoalEntity> selectUserGoals(List<UserGoalEntity> goals, List<UserGoalEntity> customGoals) {
         return selectUserGoals(goals, customGoals, LanguagesCode.ENGLISH);
     }
@@ -162,6 +175,7 @@ public class UserGoalsService extends MyHabitsService {
     * @param language code
     * @return
     */
+    @Step("Do user goal")
     public UserGoalEntity doUserGoal(UserGoalEntity goal, LanguagesCode language) {
         RestParameters pathVariables = new RestParameters()
                 .addParameter(KeyParameters.USER_ID, String.valueOf(getLogginedUserEntity().getUserId()))
@@ -178,6 +192,7 @@ public class UserGoalsService extends MyHabitsService {
      * @param goal
      * @return
      */
+    @Step("Do user goal")
     public UserGoalEntity doUserGoal(UserGoalEntity goal) {
         return doUserGoal(goal, LanguagesCode.ENGLISH);
     }
@@ -192,6 +207,7 @@ public class UserGoalsService extends MyHabitsService {
     // swagger - only id
     // work correct
 
+    @Step("Deselect user goals")
     public ResponseCodeEntity deselectUserGoals(List<UserGoalEntity> goals) {
         return getUserGoalsResource().httpDeleteAsEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())

@@ -15,6 +15,8 @@ import com.softserve.edu.greencity.rest.entity.myhabits.UserGoalEntity;
 import com.softserve.edu.greencity.rest.resources.myhabits.UserCustomGoalsResource;
 import com.softserve.edu.greencity.rest.tools.JsonUtils;
 
+import io.qameta.allure.Step;
+
 public class UserCustomGoalsService extends MyHabitsService {
 	protected UserCustomGoalsResource userCustomGoalsResource;
 
@@ -36,6 +38,7 @@ public class UserCustomGoalsService extends MyHabitsService {
      * Get all custom goals of current user.
      * @return list of goal entities
      */
+	@Step("Get selected user custom goals")
     public List<UserGoalEntity> customGoalsEntities(){
         return getUserCustomGoalsResource().httpGetAsListEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
@@ -46,6 +49,7 @@ public class UserCustomGoalsService extends MyHabitsService {
      * Get all custom goals of current user.
      * @return list of goals
      */
+    @Step("Get selected user custom goals")
     public List<UserGoal> customGoals(){
         return UserGoal.converToUserGoalList(customGoalsEntities());
     }
@@ -54,6 +58,7 @@ public class UserCustomGoalsService extends MyHabitsService {
      * Get all available custom goals of current user for selecting.
      * @return list of goal entities
      */
+    @Step("Get available user custom goals")
     public List<UserGoalEntity> availableCustomGoalsEntities(){
         return getUserCustomGoalsResource().httpGetAsListEntity(new MethodParameters()
                 .setIndex(1)
@@ -65,6 +70,7 @@ public class UserCustomGoalsService extends MyHabitsService {
      * Get all available custom goals of current user for selecting.
      * @return list of goals
      */
+    @Step("Get available user custom goals")
     public List<UserGoal> availableCustomGoals(){
         return UserGoal.converToUserGoalList(availableCustomGoalsEntities());
     }
@@ -74,6 +80,7 @@ public class UserCustomGoalsService extends MyHabitsService {
      * @param goals
      * @return list of created goal entities
      */
+    @Step("Create user custom goals")
     public List<UserGoalEntity> createCustomGoals(List<UserGoal> goals){
         List<CustomGoalSaveEntity.CustomGoal> customGoalSaveRequestDtoList = new ArrayList<>();
         goals.forEach(goal -> customGoalSaveRequestDtoList.add(new CustomGoalSaveEntity.CustomGoal(goal.getText())));
@@ -95,6 +102,7 @@ public class UserCustomGoalsService extends MyHabitsService {
      * @param new goals
      * @return list of created goal entities
      */
+    @Step("Update user custom goals")
     public List<UserGoalEntity> updateCustomGoals(List<UserGoalEntity> goals, List<UserGoal> newGoals ){
         List<CustomGoalUpdateEntity.CustomGoal> customGoals  = new ArrayList<>();
         for(int i = 0; i< goals.size(); i++) {
@@ -117,6 +125,7 @@ public class UserCustomGoalsService extends MyHabitsService {
      * @param new goals
      * @return list of created goal entities
      */
+    @Step("Update user custom goals")
     public List<UserGoalEntity> updateCustomGoals(List<UserGoalEntity> goals){
         return updateCustomGoals(goals, UserGoal.converToUserGoalList(goals));
     }
@@ -127,6 +136,7 @@ public class UserCustomGoalsService extends MyHabitsService {
      * @param goals
      * @return
      */
+    @Step("Delete user custom goals")
     public ResponseCodeEntity deleteCustomGoals(List<UserGoalEntity> goals){
         return getUserCustomGoalsResource().httpDeleteAsEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())

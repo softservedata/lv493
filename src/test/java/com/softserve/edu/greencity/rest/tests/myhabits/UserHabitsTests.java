@@ -75,7 +75,7 @@ public class UserHabitsTests extends GreencityRestTestRunner {
 
     @DataProvider
     public Object[][] availableHabits() {
-        return new Object[][] { { UserHabitRepository.get().typicalHabits() } };
+        return new Object[][] { { UserHabitRepository.get().availableHabits() } };
     }
 
     @Description("Check user habits availability")
@@ -93,7 +93,7 @@ public class UserHabitsTests extends GreencityRestTestRunner {
 
     @DataProvider
     public Object[][] availableHabitsWithLanguage() {
-        return new Object[][] { { UserHabitRepository.get().typicalHabitsUK(),
+        return new Object[][] { { UserHabitRepository.get().availableHabitsUK(),
                 LanguagesCode.UKRAINIAN } };
     }
 

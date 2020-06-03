@@ -42,20 +42,20 @@ public class DoGoalsTest extends GreencityRestTestRunner {
                 .selectUserGoals(UserGoalEntityRepository.get().goalsForDoing(), new ArrayList<>());
     }
 
-    @AfterClass(alwaysRun = true, description = "Deselect goals")
-    public void afterClass() {
-        logger.info("Start afterClass() for " + getClass().getSimpleName());
-
-        logger.info("Deselect user goals: " + selectedGoals);
-        userGoalsService.deselectUserGoals(selectedGoals);
-    }
-
     @AfterMethod(alwaysRun = true, description = "Undo goal")
     public void afterMethod() {
         logger.info("Start afterMethod() for " + getClass().getSimpleName());
 
         logger.info("Undo user goal: " + userGoal);
         userGoalsService.doUserGoal(userGoal);
+    }
+
+    @AfterClass(alwaysRun = true, description = "Deselect goals")
+    public void afterClass() {
+        logger.info("Start afterClass() for " + getClass().getSimpleName());
+
+        logger.info("Deselect user goals: " + selectedGoals);
+        userGoalsService.deselectUserGoals(selectedGoals);
     }
 
     @DataProvider

@@ -62,7 +62,7 @@ public class CreateGoalsTest extends GreencityRestTestRunner {
     @DataProvider
     public Object[][] userGoalsDeleting() {
         return new Object[][] {
-                { UserGoalEntityRepository.get().goalsForDeleting(), ResponseCode.RESPONSE200} // TODO
+                { UserGoalEntityRepository.get().goalsForDeleting(), ResponseCode.RESPONSE200}
         };
     }
 
@@ -73,8 +73,7 @@ public class CreateGoalsTest extends GreencityRestTestRunner {
         logger.info("Start deleteUserGoals()");
 
         logger.info("Delete custom goals: " + goals);
-        ResponseCodeEntity createdGoals = userCustomGoalsService
-                .deleteCustomGoals(goals);
+        ResponseCodeEntity createdGoals = userCustomGoalsService.deleteCustomGoals(goals);
 
         Assert.assertEquals(createdGoals.getResponsecode(), code.getValue(),
                 "Goals are not deleted: ");

@@ -39,20 +39,20 @@ public class UpdateGoalsTest extends GreencityRestTestRunner {
         createdGoals = userCustomGoalsService.createCustomGoals(UserGoalRepository.get().customGoalsForUpdating());
     }
 
-    @AfterClass(alwaysRun = true, description = "Delete created goals")
-    public void afterClass() {
-        logger.info("Start afterClass() for " + getClass().getSimpleName());
-
-        logger.info("Delete created goals: " + createdGoals);
-        userCustomGoalsService.deleteCustomGoals(createdGoals);
-    }
-
     @AfterMethod(alwaysRun = true, description = "ReUpdate user goals")
     public void afterMethod() {
         logger.info("Start afterMethod() for " + getClass().getSimpleName());
 
         logger.info("ReUpdate user goals: " + createdGoals);
         userCustomGoalsService.updateCustomGoals(createdGoals);
+    }
+
+    @AfterClass(alwaysRun = true, description = "Delete created goals")
+    public void afterClass() {
+        logger.info("Start afterClass() for " + getClass().getSimpleName());
+
+        logger.info("Delete created goals: " + createdGoals);
+        userCustomGoalsService.deleteCustomGoals(createdGoals);
     }
 
     @DataProvider

@@ -5,6 +5,8 @@ import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.myhabits.UserHabitStatisticEntity;
 import com.softserve.edu.greencity.rest.resources.myhabits.UserHabitStatisticResource;
 
+import io.qameta.allure.Step;
+
 public class UserHabitStatisticService extends MyHabitsService{
 	protected UserHabitStatisticResource userHabitStatisticResource;
 
@@ -25,6 +27,7 @@ public class UserHabitStatisticService extends MyHabitsService{
 	 * Get statistic for habits of current user.
 	 * @return habit statistic entity
 	 */
+	@Step("Get user habits statistic")
 	public UserHabitStatisticEntity userHabitStatistic(){
         return getUserHabitStatisticResource().httpGetAsEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())

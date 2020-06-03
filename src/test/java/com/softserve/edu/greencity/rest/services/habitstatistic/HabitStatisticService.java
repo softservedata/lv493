@@ -53,13 +53,12 @@ public class HabitStatisticService extends LogginedUserService{
 	 * @return
 	 */
 
-	// do not work at all
     public ResponseCodeEntity addHabitStatistic(HabitStatisticEntity statistic, UserHabitEntity habit) {
         RestParameters mediaTypeParameters = new RestParameters()
                 .addParameter(KeyParameters.AMOUNT_OF_ITEMS, String.valueOf(statistic.getAmountOfItems()))
                 .addParameter(KeyParameters.CREATED_ON, statistic.getCreatedOn())
                 .addParameter(KeyParameters.HABIT_RATE, String.valueOf(statistic.getHabitRate()))
-                .addParameter(KeyParameters.ID,String.valueOf( statistic.getId()))
+                //.addParameter(KeyParameters.ID,String.valueOf( statistic.getId()))
                 .addParameter(KeyParameters.HABIT_ID, String.valueOf(habit.getId()));
 
         return getHabitStatisticResource().httpPostAsEntity(new MethodParameters()

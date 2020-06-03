@@ -285,9 +285,9 @@
 						<suiteXmlFile>${application.test}</suiteXmlFile>
 					</suiteXmlFiles>
 					<reportsDirectory>${testng.reports.directory}</reportsDirectory>
-					<!-- <argLine> -->
-					<!-- 	-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" -->
-					<!-- </argLine> -->
+					<argLine>
+					 	-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+					</argLine>
 				</configuration>
 				<!-- <dependencies> -->
 				<!-- <dependency> -->

@@ -17,6 +17,8 @@ import com.softserve.edu.greencity.rest.resources.myhabits.UserHabitsResource;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 import com.softserve.edu.greencity.rest.tools.JsonUtils;
 
+import io.qameta.allure.Step;
+
 public class UserHabitsService extends MyHabitsService {
 	protected UserHabitsResource userHabitsResource;
 
@@ -38,6 +40,7 @@ public class UserHabitsService extends MyHabitsService {
 	 * @param language code
 	 * @return list of habit entities
 	 */
+	@Step("Get user habits")
 	public List<UserHabitEntity> userHabitEntities(LanguagesCode language){
         return getUserHabitsResource().httpGetAsListEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
@@ -49,6 +52,7 @@ public class UserHabitsService extends MyHabitsService {
      * Get all selected habits of current user.
      * @return list of habit entities
      */
+	@Step("Get user habits")
 	public List<UserHabitEntity> userHabitEntities(){
         return userHabitEntities(LanguagesCode.ENGLISH);
     }
@@ -58,6 +62,7 @@ public class UserHabitsService extends MyHabitsService {
      * @param language code
      * @return list of habits
      */
+	@Step("Get user habits")
     public List<UserHabit> userHabits(LanguagesCode language) {
         return UserHabit.converToUserHabitList(userHabitEntities(language));
     }
@@ -66,6 +71,7 @@ public class UserHabitsService extends MyHabitsService {
      * Get all selected habits of current user.
      * @return list of habits
      */
+	@Step("Get user habits")
     public List<UserHabit> userHabits() {
         return UserHabit.converToUserHabitList(userHabitEntities());
     }
@@ -75,6 +81,7 @@ public class UserHabitsService extends MyHabitsService {
      * @param language code
      * @return list of habit entities
      */
+	@Step("Get available user habits")
 	public List<UserHabitEntity> userAvailableHabitEntities(LanguagesCode language){
         return getUserHabitsResource().httpGetAsListEntity(new MethodParameters()
                 .setIndex(1)
@@ -87,6 +94,7 @@ public class UserHabitsService extends MyHabitsService {
      * Get all available habits of current user for selecting.
      * @return list of habit entities
      */
+	@Step("Get available user habits")
 	public List<UserHabitEntity> userAvailableHabitEntities(){
         return userAvailableHabitEntities(LanguagesCode.ENGLISH);
     }
@@ -96,6 +104,7 @@ public class UserHabitsService extends MyHabitsService {
      * @param language code
      * @return list of habits
      */
+	@Step("Get available user habits")
 	public List<UserHabit> userAvailableHabits(LanguagesCode language){
 	    return UserHabit.converToUserHabitList(userAvailableHabitEntities(language));
     }
@@ -104,6 +113,7 @@ public class UserHabitsService extends MyHabitsService {
      * Get all available habits of current user for selecting.
      * @return list of habits
      */
+	@Step("Get available user habits")
     public List<UserHabit> userAvailableHabits(){
         return UserHabit.converToUserHabitList(userAvailableHabitEntities());
     }
@@ -118,7 +128,7 @@ public class UserHabitsService extends MyHabitsService {
 	// Error
 	// code 400
 	// But work correct, habit is saved
-
+	@Step("Add user habits")
     public ResponseCodeEntity addUserHabit(List<UserHabitEntity> habits, LanguagesCode language){
         List<HabitDictionaryIdEntity> habitDirectoryIds = new ArrayList<>();
         habits.forEach(habit -> habitDirectoryIds.add(new HabitDictionaryIdEntity(habit.getId())));
@@ -140,6 +150,7 @@ public class UserHabitsService extends MyHabitsService {
      * @param habits
      * @return
      */
+	@Step("Add user habits")
     public ResponseCodeEntity addUserHabit(List<UserHabitEntity> habits){
         return addUserHabit(habits, LanguagesCode.ENGLISH );
     }
@@ -151,6 +162,7 @@ public class UserHabitsService extends MyHabitsService {
      */
     // No response, only code
     // Do not work at all
+	@Step("Delete user habits")
     public ResponseCodeEntity deleteUserHabit(UserHabitEntity habit){
         RestParameters pathVariables  = new RestParameters()
                 .addParameter(KeyParameters.USER_ID, String.valueOf(getLogginedUserEntity().getUserId()))

@@ -35,7 +35,6 @@ public class LogginedUserService {
                 .addParameter(KeyParameters.LANGUAGE, String.valueOf(language));
     }
 
-	// Business Logic
 
 	public MyHabitsService gotoMyhabitsService() {
         return new MyHabitsService(logginedUserEntity);
