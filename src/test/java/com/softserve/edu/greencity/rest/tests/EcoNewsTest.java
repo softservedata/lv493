@@ -38,6 +38,7 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 	
 	
 	@Description("Check Tags that system returns")
+	@Severity(SeverityLevel.CRITICAL)
 	@Parameters({"Loggined User Token"})
 	@Epic("EcoNews")
 	@Test(dataProvider = "users")
@@ -55,23 +56,20 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 //				user.getName());
 	}
 	
-	@Description("Test Description: class LoginLogoutTest; verifyLifeTimeToken()")
+	@Description("Return three NewsItem")
 	@Severity(SeverityLevel.CRITICAL)
-	@Story("testApp2 STORY")
-	@Issue("LVATQAOMS-776")
-	@Link(name = "allure", type = "mylink")
-	@Link("https://softserve.academy/")
+	@Parameters({"Loggined User Token"})
+	@Epic("EcoNews")
 	//@Test(dataProvider = "users")
 	public void checkFreshNews(User user) {
+		
 		logger.info("Start checkFreshNews(" + user + ")");
 		EconewsUserService newsService = loadApplication()
 				.successfulUserLogin(user)
 				.gotoEconewsUserService();
 		System.out.println("newsService  = "
 				+ newsService.getLogginedUserEntity());
-//		List<NewsItems> newsItems = newsService.getNewsEntity();
-		//List<NewsEntity> newsEntity = newsService.getNewsEntity();
-	//	System.out.println("***newsEntity = "+  newsEntity);
+
 				
 	//	Assert.assertTrue(VerifyUtils.verifyClass(newsEntity));
 
