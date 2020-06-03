@@ -123,12 +123,12 @@ public class PlasesTest  extends GreencityRestTestRunner{
 		 @Epic("Places")
 		 @Test(dataProvider = "boutPlace")
 		 public void checkPlaceAboutID(User user, PlaceId placeId) {
-			logger.info("Start checkPlaceAboutID(" + user + ")");
+			logger.info("Start checkPlaceAboutID");
 			PlaceEntity placeAboutIDEntity = loadApplication().successfulUserLogin(user).gotoPlacesService()
 						.placeAboutID(placeId);
 			Assert.assertEquals("Test checkInfoPlace failed", placeAboutIDEntity.getId(), placeId.getId());
 
-				logger.info("placeAboutIDEntity ID" + placeAboutIDEntity.getId());
+			logger.info("placeAboutIDEntity ID" + placeAboutIDEntity.getId());
 
 			}
 
