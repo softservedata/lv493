@@ -2,12 +2,12 @@ package com.softserve.edu.greencity.rest.data.econews;
 
 import com.softserve.edu.greencity.rest.entity.econewsEntity.AuthorEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.NewsEntity;
-import com.softserve.edu.greencity.rest.tools.Verifeible;
+import com.softserve.edu.greencity.rest.tools.Verifiable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class News implements Verifeible {
+public class News implements Verifiable {
     private String imagePath;
     private String title;
     private String text;

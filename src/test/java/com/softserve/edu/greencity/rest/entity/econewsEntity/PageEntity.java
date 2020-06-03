@@ -3,7 +3,9 @@ package com.softserve.edu.greencity.rest.entity.econewsEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageEntity {
+import com.softserve.edu.greencity.rest.tools.Verifiable;
+
+public class PageEntity implements Verifiable {
     private List<NewsEntity> page;
     private int totalElements;
     private int currentPage;
@@ -48,4 +50,9 @@ public class PageEntity {
     public String toString() {
         return "PageEntity [page=" + page + ", totalElements=" + totalElements + ", currentPage=" + currentPage + "]";
     }
+
+	@Override
+	public boolean isValid() {
+		return (page != null);
+	}
 }

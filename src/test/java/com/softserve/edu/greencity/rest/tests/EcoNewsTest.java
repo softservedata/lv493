@@ -1,33 +1,41 @@
 package com.softserve.edu.greencity.rest.tests;
 
 
+import java.util.List;
+
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
+import com.softserve.edu.greencity.rest.data.econews.ExpectedResponce;
+import com.softserve.edu.greencity.rest.data.econews.NewsRepository;
 import com.softserve.edu.greencity.rest.data.econews.PageParameterRepository;
 import com.softserve.edu.greencity.rest.data.econews.PageParameters;
+import com.softserve.edu.greencity.rest.entity.econewsEntity.NewsEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.PageEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.TagsEntity;
 import com.softserve.edu.greencity.rest.services.EconewsUserService;
+import com.softserve.edu.greencity.rest.tools.VerifyUtils;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Issue;
-import io.qameta.allure.Link;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
 
 
 public class EcoNewsTest extends GreencityRestTestRunner {
 	
 	@DataProvider
 	public Object[][] users() {
-		return new Object[][] { { UserRepository.get().temporary() } };
+		return new Object[][] { { UserRepository.get().temporary() }};
+	}
+	
+	@DataProvider
+	public Object[][] news() {
+		return new Object[][] { { UserRepository.get().temporary(),  NewsRepository.get().getResponceCode()} };
 	}
 	
 
@@ -36,13 +44,17 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 		return new Object[][] { { UserRepository.get().temporary(), PageParameterRepository.getNews() } };
 	}
 	
-	
+	/**
+	 * Check tags
+	 * @param user
+	 * @param expectedResponce
+	 */
 	@Description("Check Tags that system returns")
-	@Severity(SeverityLevel.CRITICAL)
-	@Parameters({"Loggined User Token"})
+	@Severity(SeverityLevel.NORMAL)
+	@Parameters({"Loggined User", "responce"})
 	@Epic("EcoNews")
-	@Test(dataProvider = "users")
-	public void checkAllTags(User user) {
+	@Test(dataProvider = "news")
+	public void checkAllTags(User user, ExpectedResponce expectedResponce) {
 		
 		logger.info("Start checkAllTags(" + user + ")");
 		EconewsUserService tagsService = loadApplication()
@@ -52,40 +64,54 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 		TagsEntity tagsEntity = tagsService.getTags();
 
 		logger.info("tagsEntity = " + tagsEntity);
-//		Assert.assertEquals(logginedUserService.getLogginedUserEntity().getName(),
-//				user.getName());
+		Assert.assertEquals(tagsEntity.getResponsecode(), 
+				expectedResponce.getResponcecode(), "Test checkAllTags: the tag names do not match");
 	}
 	
-	@Description("Return three NewsItem")
-	@Severity(SeverityLevel.CRITICAL)
-	@Parameters({"Loggined User Token"})
+	/**
+	 * Get three random news
+	 * @param user
+	 */
+	@Description("Return three NewsItem for topic \"May be interesting for you\"")
+	@Severity(SeverityLevel.NORMAL)
+	@Parameters({"Loggined User"})
 	@Epic("EcoNews")
-	//@Test(dataProvider = "users")
+	@Test(dataProvider = "users")
 	public void checkFreshNews(User user) {
 		
-		logger.info("Start checkFreshNews(" + user + ")");
+		logger.info("Start test checkFreshNews(" + user + ")");
 		EconewsUserService newsService = loadApplication()
 				.successfulUserLogin(user)
 				.gotoEconewsUserService();
-		System.out.println("newsService  = "
-				+ newsService.getLogginedUserEntity());
-
-				
-	//	Assert.assertTrue(VerifyUtils.verifyClass(newsEntity));
+		
+		List<NewsEntity> newsEntity = newsService.getNewsEntity();
+		logger.info("newsEntity" + newsEntity);
+		Assert.assertTrue(VerifyUtils.verifyClass(newsEntity));
 
 	}
 	
-	//@Test(dataProvider = "econews")
+	/** return EcoNews page with news by number of page & number of news
+	 * 
+	 * @param user
+	 * @param pageParameters
+	 */
+	@Description("Return page with news")
+	@Severity(SeverityLevel.CRITICAL)
+	@Parameters({"Loggined User", "PageParameters: page's number & new's number" })
+	@Epic("EcoNews")
+	@Test(dataProvider = "econews")
 	public void checkhNews(User user, PageParameters pageParameters) {
+		
 		logger.info("Start checkFreshNews(" + user + ")");
+		
 		EconewsUserService pageService = loadApplication()
 				.successfulUserLogin(user)
 				.gotoEconewsUserService();
-		System.out.println("newsService  = "
-				+ pageService.getLogginedUserEntity());
-//		List<NewsItems> newsItems = newsService.getNewsEntity();
+		
 		PageEntity pageEntity = pageService.getPageEntity(pageParameters);
-//		System.out.println("***pageEntity = "+  pageEntity);
+		logger.info("pageEntity" + pageEntity );
+		
+		Assert.assertTrue(VerifyUtils.verifyClass(pageEntity.getPage())  );
     
 	}
 

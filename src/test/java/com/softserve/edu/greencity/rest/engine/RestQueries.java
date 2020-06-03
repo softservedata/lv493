@@ -108,15 +108,25 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
         // return gson.fromJson(json, typeToken.getType());
         return gson.fromJson(json, typeToken.getType());
     }
+    
+//    private String updateJson() {
+//    	String json = "[ \"news\",\"events\", \"initiatives\" ,\"ads\",  \"education\"]";
+//		if (json.contains("[") && json.contains("news")) {
+//			System.out.println(json);
+//			return "{\"tags\":" + json + "}";
+//		} //else if () {}
+//		return json;
+//	}
 
     // Entity - - - - - - - - - - - - - - - - - - - -
 
     public TGET httpGetAsEntity(MethodParameters methodParameters) {
         validateParameter(RestHttpMethods.GET, entityParameters);
         String json = httpGetAsText(methodParameters);
+ //       json = updateJson();
+ 
         validateJson(json);
-        // return convertToEntity(json, new TypeToken<TGET>(){});
-        // return convertToEntity(json, classTGET);
+      
         return convertToEntity(json, entityParameters.get(RestHttpMethods.GET));
     }
 

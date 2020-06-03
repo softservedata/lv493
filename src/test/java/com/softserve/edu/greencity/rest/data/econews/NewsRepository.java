@@ -24,6 +24,10 @@ public class NewsRepository {
     public News getDefault() {
         return temporary();
     }
+    
+    public ExpectedResponce getResponceCode() {
+        return new ExpectedResponce(200);
+    }
 
     public News temporary() {
         List <String > tags = new ArrayList<>();

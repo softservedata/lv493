@@ -27,10 +27,6 @@ public class PlaceAboutIDTest extends GreencityRestTestRunner {
         PlaceEntity placeAboutIDEntity = loadApplication()
                 .successfulUserLogin(user)
                 .gotoPlacesService().placeAboutID(placeId);
-        System.out.println("placeAboutIDEntity = "
-                + placeAboutIDEntity);
-//        List<UserGoal> userGoals = myhabitsService.userGoals();
-//        System.out.println("userGoals = "+ userGoals);
-//        Assert.assertEquals(userGoals, expectedGoals);
+        
     }
 }

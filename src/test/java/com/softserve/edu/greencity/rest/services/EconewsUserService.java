@@ -50,7 +50,6 @@ public class EconewsUserService extends LogginedUserService {
 
     // Functionals
 
-    //	public List<NewsItems> getNewsEntity() {
     public List<NewsEntity> getNewsEntity() {
         MethodParameters methodParameters = new MethodParameters();
         RestParameters headerParameters = new RestParameters()
@@ -62,8 +61,6 @@ public class EconewsUserService extends LogginedUserService {
                 .httpGetAsListEntity(methodParameters
                         .addHeaderParameters(headerParameters));
 
-        System.out.println("***newsEntities = " + newsEntities);
-//		return NewsItems.converToNewsItemsList(newsEntities);
         return newsEntities;
     }
     
@@ -93,10 +90,7 @@ public class EconewsUserService extends LogginedUserService {
                 .httpGetAsEntity(methodParameters
                         .addUrlParameters(urlParameters)
                         .addHeaderParameters(headerParameters));
-        //   			.httpGetAsListEntity(methodParameters
-        //   					.addHeaderParameters(headerParameters));
-        System.out.println("***pageEntity = " + pageEntity);
-//		return NewsItems.converToNewsItemsList(newsEntities);
+       
         return pageEntity;
     }
 
@@ -143,6 +137,7 @@ public class EconewsUserService extends LogginedUserService {
                         .addHeaderParameters(headerParameters));
         return News.converToNews(newsEntity);
     }
+    
     // Business Logic
 
     
