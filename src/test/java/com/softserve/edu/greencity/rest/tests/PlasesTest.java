@@ -113,22 +113,25 @@ public class PlasesTest  extends GreencityRestTestRunner{
 		}
 		
 		 @DataProvider
-		    public Object[][] users() {
+		 public Object[][] aboutPlace() {
 		        return new Object[][] { { UserRepository.get().temporary(), PlacesInfoRepository.getPlaceId() } };
-		    }
+		 }
 	    
-
-			@Test(dataProvider = "users")
-			public void checkPlaceAboutID(User user, PlaceId placeId) {
-				logger.info("Start checkPlaceAboutID(" + user + ")");
-				PlaceEntity placeAboutIDEntity = loadApplication().successfulUserLogin(user).gotoPlacesService()
+		 @Description("check Information about place")
+		 @Severity(SeverityLevel.NORMAL)
+		 @Parameters({ "Loggined User", "place ID" })
+		 @Epic("Places")
+		 @Test(dataProvider = "boutPlace")
+		 public void checkPlaceAboutID(User user, PlaceId placeId) {
+			logger.info("Start checkPlaceAboutID(" + user + ")");
+			PlaceEntity placeAboutIDEntity = loadApplication().successfulUserLogin(user).gotoPlacesService()
 						.placeAboutID(placeId);
-				Assert.assertEquals("Test checkInfoPlace failed", placeAboutIDEntity.getId(), placeId.getId());
+			Assert.assertEquals("Test checkInfoPlace failed", placeAboutIDEntity.getId(), placeId.getId());
 
 				logger.info("placeAboutIDEntity ID" + placeAboutIDEntity.getId());
 
 			}
-		
+
 		//TODO
 //		 @DataProvider
 //			public Object[][] places2() {
