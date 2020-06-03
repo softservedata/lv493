@@ -23,7 +23,6 @@ public class PlacesService extends LogginedUserService {
 	private PlaceStatusResourse placeStatusResourse;
     private PlacesResource placesResource;
     private PlacePredicateRsourse placePredicateRsourse;
-//    private InfoPlaceResourse placeInfoResourse;
 
 	public PlacesService(LogginedUserEntity logginedUserEntity) {
 		super(logginedUserEntity);
@@ -46,84 +45,60 @@ public class PlacesService extends LogginedUserService {
         return placePredicateRsourse;
     }
 	
-    public PageEntity getPlasesByStatus(PageParameters pageParameters, PlaceStatus status) {
-        MethodParameters methodParameters = new MethodParameters();
-        RestParameters headerParameters = new RestParameters()
-                .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
-                .addParameter(KeyParameters.AUTHORIZATION,
-                        KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
-        
-        RestParameters pathVariables = new RestParameters()
-                .addParameter(KeyParameters.PLACE_STATUS, status.toString());
-        
-        RestParameters urlParameter = new RestParameters()
-                .addParameter(KeyParameters.PAGE, pageParameters.getPage())
-                .addParameter(KeyParameters.SIZE, pageParameters.getSize());
-      
-        PageEntity pageEntity = placeStatusResourse
-                .httpGetAsEntity(methodParameters
-                        .addHeaderParameters(headerParameters)
-                        .addPathVariables(pathVariables)
-                        .addUrlParameters(urlParameter));
+	public PageEntity getPlasesByStatus(PageParameters pageParameters, PlaceStatus status) {
+		MethodParameters methodParameters = new MethodParameters();
+		RestParameters headerParameters = new RestParameters()
+				.addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
+				.addParameter(KeyParameters.AUTHORIZATION,
+						KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
 
-        return pageEntity;
-    }
-    
-    public PageEntity getPlasesByPredicate(PageParameters pageParameters) {
- //   		, PlaceStatus status) {
-//PlacePredicate placePredicate) {
-    	
-    	// MethodParameters methodParameters = new MethodParameters().addContentType(ContentTypes.APPLICATION_JSON);
-    	// RestParameters mediaTypeParameters = new RestParameters().addParameter(KeyParameters.EMAIL, user.getEmail())
-        MethodParameters methodParameters = new MethodParameters()
-    	 .addContentType(ContentTypes.APPLICATION_JSON);
-        RestParameters mediaTypeParameters = new RestParameters()
-    			.addNewObjectParameter(KeyParameters.DISCOUNT_DTO)
-    				.addObjectParameter(KeyParameters.DISCOUNT_MAX, 0)
-    				.addObjectParameter(KeyParameters.DISCOUNT_MIN, 0)
-    				.addNewObjectParameter(KeyParameters.SPECIFICATION)
-    					.addObjectParameter(KeyParameters.NAME, "string")
-    				.buildCurrentObjectParameter()
-    			.buildCurrentObjectParameter()
-    			.addNewObjectParameter(KeyParameters.DISTANCE_FROM_USER_DTO)
-    				.addObjectParameter(KeyParameters.DISTANCE, 0)
-    				.addObjectParameter(KeyParameters.LAT, 0)
-    				.addObjectParameter(KeyParameters.LNG, 0)
-    			.buildCurrentObjectParameter()
-    			.addNewObjectParameter(KeyParameters.MAP_BOUNDS_DTO)
-    				.addObjectParameter(KeyParameters.NORTH_EAST_LAT, 0)
-    				.addObjectParameter(KeyParameters.NORTH_EAST_LNG, 0)
-    				.addObjectParameter(KeyParameters.SOUTH_WEST_LAT, 0)
-    				.addObjectParameter(KeyParameters.SOUTH_WEST_LNG, 0)
-    			.buildCurrentObjectParameter()
-    			.addObjectParameter(KeyParameters.SEARCH_REG, "string")
-    			.addObjectParameter(KeyParameters.STATUS, "PROPOSED")
-    			.addObjectParameter(KeyParameters.TIME, "29/05/2020 23:06:22");
-      
-  
+		RestParameters pathVariables = new RestParameters().addParameter(KeyParameters.PLACE_STATUS, status.toString());
+
+		RestParameters urlParameter = new RestParameters().addParameter(KeyParameters.PAGE, pageParameters.getPage())
+				.addParameter(KeyParameters.SIZE, pageParameters.getSize());
+
+		PageEntity pageEntity = placeStatusResourse.httpGetAsEntity(methodParameters
+				.addHeaderParameters(headerParameters).addPathVariables(pathVariables).addUrlParameters(urlParameter));
+
+		return pageEntity;
+	}
+
+	public PageEntity getPlasesByPredicate(PageParameters pageParameters) {
+
+		MethodParameters methodParameters = new MethodParameters().addContentType(ContentTypes.APPLICATION_JSON);
+		RestParameters mediaTypeParameters = new RestParameters().addNewObjectParameter(KeyParameters.DISCOUNT_DTO)
+				.addObjectParameter(KeyParameters.DISCOUNT_MAX, 0).addObjectParameter(KeyParameters.DISCOUNT_MIN, 0)
+				.addNewObjectParameter(KeyParameters.SPECIFICATION).addObjectParameter(KeyParameters.NAME, "string")
+				.buildCurrentObjectParameter().buildCurrentObjectParameter()
+				.addNewObjectParameter(KeyParameters.DISTANCE_FROM_USER_DTO)
+				.addObjectParameter(KeyParameters.DISTANCE, 0).addObjectParameter(KeyParameters.LAT, 0)
+				.addObjectParameter(KeyParameters.LNG, 0).buildCurrentObjectParameter()
+				.addNewObjectParameter(KeyParameters.MAP_BOUNDS_DTO).addObjectParameter(KeyParameters.NORTH_EAST_LAT, 0)
+				.addObjectParameter(KeyParameters.NORTH_EAST_LNG, 0).addObjectParameter(KeyParameters.SOUTH_WEST_LAT, 0)
+				.addObjectParameter(KeyParameters.SOUTH_WEST_LNG, 0).buildCurrentObjectParameter()
+				.addObjectParameter(KeyParameters.SEARCH_REG, "string")
+				.addObjectParameter(KeyParameters.STATUS, "PROPOSED")
+				.addObjectParameter(KeyParameters.TIME, "29/05/2020 23:06:22");
+
 //        		.addParameter(KeyParameters.STATUS, "APPROVED")
 //        		.addParameter(KeyParameters.TIME, "29/05/2020 23:06:22");
-        RestParameters headerParameters = new RestParameters()
-                .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
-                .addParameter(KeyParameters.AUTHORIZATION,
-                        KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
-        
-        RestParameters urlParameter = new RestParameters()
-                .addParameter(KeyParameters.PAGE, pageParameters.getPage())
-                .addParameter(KeyParameters.SIZE, pageParameters.getSize());
-     
-        PageEntity pageEntity = placePredicateRsourse
-        		
-                .httpPostAsEntity(methodParameters
- //               		 .addContentType(ContentTypes.APPLICATION_JSON)
-                		.addMediaTypeParameters(mediaTypeParameters)
-                        .addHeaderParameters(headerParameters)
-                        .addUrlParameters(urlParameter));
+		RestParameters headerParameters = new RestParameters()
+				.addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
+				.addParameter(KeyParameters.AUTHORIZATION,
+						KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
 
-        System.out.println("***pageEntities = " + pageEntity);
+		RestParameters urlParameter = new RestParameters().addParameter(KeyParameters.PAGE, pageParameters.getPage())
+				.addParameter(KeyParameters.SIZE, pageParameters.getSize());
 
-        return pageEntity;
-    }
+		PageEntity pageEntity = placePredicateRsourse
+
+				.httpPostAsEntity(methodParameters.addMediaTypeParameters(mediaTypeParameters)
+						.addHeaderParameters(headerParameters).addUrlParameters(urlParameter));
+
+		System.out.println("***pageEntities = " + pageEntity);
+
+		return pageEntity;
+	}
 	
 	// https://***/place/about/1" -H "accept: */*" -H "Authorization: Bearer ***"
     public PlaceEntity placeAboutID(PlaceId placeId) {
