@@ -21,22 +21,18 @@ import java.util.List;
  * @author Mariana
  */
 public class FavoritePlacesService extends LogginedUserService{
-   // private PlaceEntity placeEntity;
+
     private FavoritePlaceResources favoritePlaceResources;
     private FavoritePlaceByIdResource favoritePlaceByIdResource;
     private SaveFavoritePlaceResource saveFavoritePlaceResource;
 
     public FavoritePlacesService(LogginedUserEntity logginedUserEntity) {
         super(logginedUserEntity);
-   //     placeEntity = new PlaceEntity();
+
         favoritePlaceResources = new FavoritePlaceResources();
         favoritePlaceByIdResource = new FavoritePlaceByIdResource();
         saveFavoritePlaceResource = new SaveFavoritePlaceResource();
     }
-
-  //  public PlaceEntity getPlaceEntity() {
-     //   return placeEntity;
- //   }
 
     public FavoritePlaceResources getFavoritePlaceResources() {
         return favoritePlaceResources;

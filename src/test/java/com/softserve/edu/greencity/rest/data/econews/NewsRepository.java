@@ -41,10 +41,12 @@ public class NewsRepository {
     }
 
     public News getIntermediateSymbolsNews(){
-        String text = "12345678901234567890";
-        String title = "1";
-        return new News(title, text, "")
-                .addTags("news");
+        String text = "While we all are going through these strange times, let’s appreciate what we " +
+                "already have. We are lucky to be born on this magnificent planet.";
+        String title = "Earth Day 2020";
+        String source = "http://www.greenpeace.org/international/story/30150/earth-day-2020/";
+        return new News(title, text, source)
+                .addTags("news").addTags("ads");
     }
 
     public News getMaxSymbolsNews(){

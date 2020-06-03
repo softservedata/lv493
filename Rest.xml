@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="Suite1">
+<suite name="Suite1" parallel="tests" thread-count="2">
 
-    <test name="Test01a">
+    <test name="Test01a" verbose="7">
         <classes>
-            <class name="com.softserve.edu.greencity.rest.tests.EcoNewsTests" />
-
-            <class name="com.softserve.edu.greencity.rest.tests.FavoritePlaceTest" />
-
+            <class name="com.softserve.edu.greencity.rest.tests.EcoNewsTests">
+                <methods>
+                    <include name="checkUploadEconews"/>
+                    <include name="getNewsById"/>
+                    <include name="getNewsByTags"/>
+                    <include name="getAllNews"/>
+                    <include name="creteNewsNegative"/>
+                    <include name="deleteNews"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Test01b" verbose="7">
+        <classes>
+            <class name="com.softserve.edu.greencity.rest.tests.FavoritePlaceTest">
+                <methods>
+                    <include name="saveFavoritePlace"/>
+                    <include name="getFavoritePlaces"/>
+                    <include name="getFavoritePlaceByPlaceId"/>
+                    <include name="updateFavoritePlace"/>
+                    <include name="deleteFavoritePlace"/>
+                </methods>
+            </class>
         </classes>
     </test> <!-- Test -->
 

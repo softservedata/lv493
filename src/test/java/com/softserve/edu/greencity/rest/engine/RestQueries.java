@@ -123,8 +123,6 @@ public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends Re
     public TPOST httpPostAsEntity(MethodParameters methodParameters) {
         validateParameter(RestHttpMethods.POST, entityParameters);
         String json = httpPostAsText(methodParameters);
-
-        System.out.println("json" + json);
         validateJson(json);
         // return convertToEntity(json, classTPOST);
         return convertToEntity(json, entityParameters.get(RestHttpMethods.POST));

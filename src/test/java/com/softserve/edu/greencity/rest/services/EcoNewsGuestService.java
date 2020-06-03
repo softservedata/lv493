@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.rest.services;
 
 import com.softserve.edu.greencity.rest.data.econews.News;
-import com.softserve.edu.greencity.rest.data.econews.Tags;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
@@ -56,9 +55,6 @@ public class EcoNewsGuestService extends GuestService {
     public List<News> getAllNews(String page, String size) {
         MethodParameters methodParameters = new MethodParameters();
 
-        RestParameters pathVariables = new RestParameters()
-                .addParameter(KeyParameters.ID, "");
-
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString());
         RestParameters urlParameter = new RestParameters()
@@ -67,9 +63,7 @@ public class EcoNewsGuestService extends GuestService {
         PageEntity newsResponse = econewsResource
                 .httpGetAsEntity(methodParameters
                         .addHeaderParameters(headerParameters)
-                        .addUrlParameters(urlParameter)
-                        .addPathVariables(pathVariables));
-
+                        .addUrlParameters(urlParameter));
         return News.converToNewsList(newsResponse.getPage());
     }
 
@@ -96,12 +90,10 @@ public class EcoNewsGuestService extends GuestService {
 //        for (String currentTag : tags) {
 //            urlParameter.addListParameter(KeyParameters.TAGS, currentTag);
 //        }
-
         PageEntity newsResponse = econewsTagsResource
                 .httpGetAsEntity(methodParameters
                         .addHeaderParameters(headerParameters)
                         .addUrlParameters(urlParameter));
-        System.out.println(newsResponse.getPage().get(1));
         return News.converToNewsList(newsResponse.getPage());
     }
 

@@ -25,7 +25,7 @@ public class EcoNewsTests extends GreencityRestTestRunner {
 
     @DataProvider
     public Object[][] news() {
-        return new Object[][]{{PageParameterRepository.get().getTagsParameters()}};
+        return new Object[][]{{PageParameterRepository.get().getPageParameters()}};
     }
 
     /**
@@ -41,10 +41,15 @@ public class EcoNewsTests extends GreencityRestTestRunner {
         List<News> news = econewsGuestService.getAllNews(pageParameters.getPage(), pageParameters.getSize());
 
         logger.info(news.size() + " news were founded");
-        System.out.println(news);
+
         Assert.assertTrue(VerifyUtils.verifyClass(news));
 
         Assert.assertEquals(news.size(), Integer.parseInt(pageParameters.getSize()));
+    }
+
+    @DataProvider
+    public Object[][] tags() {
+        return new Object[][]{{PageParameterRepository.get().getTagsParameters()}};
     }
 
     /**
@@ -52,7 +57,7 @@ public class EcoNewsTests extends GreencityRestTestRunner {
      *
      * @param pageParameters
      */
-    @Test(dataProvider = "news")
+    @Test(dataProvider = "tags")
     public void getNewsByTags(PageParameters pageParameters) {
         logger.info("Start getNewsByTags with " + pageParameters.toStringWithTags());
         EcoNewsGuestService econewsGuestService = loadApplication()
@@ -61,7 +66,6 @@ public class EcoNewsTests extends GreencityRestTestRunner {
         List<News> news = econewsGuestService.getNewsByTags(pageParameters.getPage(),
                 pageParameters.getSize(), pageParameters.getTags());
 
-        System.out.println(news.get(1));
         logger.info(news.size() + " news were founded by tags " + pageParameters.getTags());
 
         Assert.assertTrue(VerifyUtils.verifyClass(news));
@@ -72,14 +76,14 @@ public class EcoNewsTests extends GreencityRestTestRunner {
     }
 
     @DataProvider
-    public Object[] NewsId() {
+    public Object[] newsId() {
         return new Object[]{NewsIdRepository.get().getDefault()};
     }
 
     /**
      * Test of getting news by NewsId.
      */
-    @Test(dataProvider = "NewsId", priority = 2)
+    @Test(dataProvider = "newsId")
     public void getNewsById(int newsId) {
         logger.info("Start getNewsById(" + newsId + ")");
 
@@ -119,7 +123,6 @@ public class EcoNewsTests extends GreencityRestTestRunner {
                 .gotoEconewsUserService();
         logger.info("logginedUserEntity = "
                 + econewsUserService.getLogginedUserEntity());
-
         logger.info(newsUploadProperties.getNews().toString());
         logger.info(newsUploadProperties.getFileUploadParameters().toString());
 
@@ -186,11 +189,6 @@ public class EcoNewsTests extends GreencityRestTestRunner {
                         NewsUploadPropertiesRepository.get().emptyTitleOfNews()},
                 {UserRepository.get().getAdminUser(), //GC-600 empty ‘text’ value
                         NewsUploadPropertiesRepository.get().emptyTextOfNews()},
-
-
-//                {UserRepository.get().getAdminUser(), // GC-585 without any tags
-//                        NewsUploadPropertiesRepository.get().emptyTagsOfNews()},  //bad
-
         };
     }
 
@@ -200,7 +198,7 @@ public class EcoNewsTests extends GreencityRestTestRunner {
      * @param user
      * @param newsUploadProperties
      */
-    @Test(dataProvider = "uploadNewsNegativeData", expectedExceptions = GreenCityCommonException.class)
+    @Test(dataProvider = "uploadNewsNegativeData", priority = 2, expectedExceptions = GreenCityCommonException.class)
     public void creteNewsNegative(User user, NewsUploadProperties newsUploadProperties) {
         logger.info("Start checkUploadEconews(" + user + ")");
         EcoNewsUserService econewsUserService = loadApplication()

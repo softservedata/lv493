@@ -113,6 +113,8 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
                 .getFavoritePlaceById(placeId);
 
         logger.info("placeAboutIdEntity = " + favoritePlaceEntity);
+
+    //    Assert.assertEquals(favoritePlaceEntity., placeId);
     }
 
     /**

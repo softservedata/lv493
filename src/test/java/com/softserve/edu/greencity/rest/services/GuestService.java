@@ -17,6 +17,7 @@ import com.softserve.edu.greencity.rest.resources.VerifyEmailResource;
 import com.softserve.edu.greencity.rest.resources.places.FavoritePlaceResources;
 import com.softserve.edu.greencity.rest.tools.GetMail10MinTools;
 import com.softserve.edu.greencity.ui.data.Languages;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
