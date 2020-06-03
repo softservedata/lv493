@@ -19,6 +19,7 @@ import com.softserve.edu.greencity.rest.entity.ErrorEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 
 public abstract class RestQueries<TGET, TPOST, TPUT, TDELETE, TPATCH> extends RestCrud {
+    //
     protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     //
     private final String CONVERT_OBJECT_ERROR = "ConvertToObject Error. Service Returned\n%s";

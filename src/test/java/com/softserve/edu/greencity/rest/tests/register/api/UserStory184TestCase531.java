@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.rest.tests.register.api;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.rest.data.User;
@@ -10,6 +11,11 @@ import com.softserve.edu.greencity.rest.data.jira.testcases.GC531Data;
 import com.softserve.edu.greencity.rest.services.LogginedUserService;
 import com.softserve.edu.greencity.rest.tests.GreencityRestRegisterTestRunner;
 import com.softserve.edu.greencity.ui.data.Languages;
+
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 
 /**
  * Registration new user.
@@ -35,6 +41,11 @@ public class UserStory184TestCase531 extends GreencityRestRegisterTestRunner {
      * @param languages Enum
      * @throws Exception need delay for transfer state 'verify email'
      */
+    @Description("Registration new user.")
+    @Issue("GC-531")
+    @Story("Verify that user is registered, after he enters valid values via /ownSecurity/signUp call.")
+    @Step("5. Check response (name)")
+    @Parameters({"User credentials", "languages"})
     @Test(dataProvider = "validCredentialUser")
     public void checkUserStory184TestCase531REST(User userLoginCredentials, Languages languages) throws Exception {
         logger.info("Jira Story: GC-184/GC-468; Test GC-531");

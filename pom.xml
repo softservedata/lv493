@@ -15,7 +15,7 @@
 	<properties>
 		<!-- - - - - - Credentionals - - - - - -->
 		<application.password>null123</application.password>
-		<application.test.xml>registration_testng.xml</application.test.xml>
+		<application.test.xml>testng.xml</application.test.xml>
 		<!-- - - - - - Encoding - - - - - -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
