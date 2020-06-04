@@ -92,7 +92,7 @@ public class SubscriberTest extends GreencityRestTestRunner {
         return new Object[][] { { UserRepository.get().getAdminUser(), AllSubscriberRepository.get().random1()}};
     }
     
-    @Test(dataProvider = "unsubscribers")
+    //@Test(dataProvider = "unsubscribers")
     public void unsubscribers(User user, AllSubscriber allSubscriber) {
         logger.info("getAllSubscriber(" + user + ")");
         TipsTricksService tipsTricksService = loadApplication()
