@@ -47,7 +47,11 @@ public class AllSubscriberRepository {
      public  AllSubscriber getDefault() {
          return new AllSubscriber("aijkvh@jbuf.com", "2c4ef4ab-cb4e-4ef9-be1d-8f5c04f0b5c2");
      }
+     
     public AllSubscriber random1() {
         return new AllSubscriber("2iv7ji5wfziwi1@test.com", "74ceeddb-8830-4581-b39a-f3e43922b593");
+    }
+    public AllSubscriber random2() {
+        return new AllSubscriber("almyyhvxddxxnoct@ttirv.com", "209b48e8-e538-45d3-8878-346aa123bec4");
     }
 }
