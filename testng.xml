@@ -6,7 +6,7 @@
 	<test name="Test01a">
 		<classes>
 			<class name="com.softserve.edu.greencity.rest.tests.SubscriberTest" />
-			<class name="com.softserve.edu.greencity.rest.tests.AdvicesTest">
+	<!--  		<class name="com.softserve.edu.greencity.rest.tests.AdvicesTest"> -->
 	<!--  			<methods> -->
 	<!-- 		<include name="checkCart" />  -->
 	<!-- 			</methods>  -->

@@ -1,7 +1,5 @@
 package com.softserve.edu.greencity.rest.services;
 
-import java.util.List;
-
 import com.softserve.edu.greencity.rest.data.UserSubscriber;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
@@ -23,6 +21,7 @@ public class TipsGuestService extends GuestService {
         return newsSubscriberResource;
     }
 
+   
     public NewsSubscriberEntity withoutLogging(UserSubscriber userSubscriber) {
         MethodParameters methodParameters = new MethodParameters()
                 .addContentType(ContentTypes.APPLICATION_JSON);
@@ -41,22 +40,4 @@ public class TipsGuestService extends GuestService {
         return subscriberEntity;
     }
     
-//    public  NewsSubscriberEntity faultySubscriber(UserSubscriber userSubscriber) {
-////        List<NewsSubscriberEntity> faultyEmail;
-//        MethodParameters methodParameters = new MethodParameters()
-//                .addContentType(ContentTypes.APPLICATION_JSON);
-//        
-//        RestParameters headerParameters = new RestParameters()
-//                .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString());
-//                
-//        RestParameters mediaTypeParameters = new RestParameters()
-//                .addParameter(KeyParameters.EMAIL, userSubscriber.getEmail());
-//
-//        List<NewsSubscriberEntity> faultyEmail = newsSubscriberResource
-//                .httpPostAsListEntity(methodParameters
-//                .addMediaTypeParameters(mediaTypeParameters)
-//                .addHeaderParameters(headerParameters));
-//        
-//        return faultyEmail.get(0);
-//    }
 }
