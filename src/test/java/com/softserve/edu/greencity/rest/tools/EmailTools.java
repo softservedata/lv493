@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ public class EmailTools {
     private static String protocol = "imaps";
     private static TimeUnit delayUnit = TimeUnit.SECONDS;
     private static int delay = 30;
+    private int maxDelay = 3600;
 
     private Session session;
     private User mailUser;
@@ -99,7 +101,14 @@ public class EmailTools {
         Message targetMessage = null;
 
         while (targetMessage == null) {
-            DelayTool.wait(delayUnit, delay);
+            try {
+                DelayTool.wait(delayUnit, delay, maxDelay);
+
+            } catch (TimeoutException e) {
+                logger.error(e.toString());
+                break;
+            }
+
             try {
                 List<Message> filteredMessages = filterMessagesByFrom(from,
                         filterMessagesBySubject(subject, this.getInboxMessages())); // fixme

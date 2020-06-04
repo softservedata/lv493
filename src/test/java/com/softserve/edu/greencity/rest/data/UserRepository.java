@@ -25,6 +25,10 @@ public final class UserRepository {
 		return new User("xdknxusqvjeovowpfk@awdrt.com", "temp", "Temp#001");
 	}
 
+	public User emailUserCredentials() {
+		return new User("usertest4228501@gmail.com", "Qwerty42?", "Qwerty42?");
+	}
+
 	public User wrongUserCredentials() {
 		return new User("xdknxowpfk@awdrt.com", "temp", "Tem#001");
 	}

@@ -17,7 +17,7 @@ public class ChangePasswordTest {
 
     @DataProvider
     public Object[][] emailUser() {
-        return new Object[][] { { UserRepository.get().temporary() } };
+        return new Object[][] { { UserRepository.get().emailUserCredentials() } };
     }
 
 
