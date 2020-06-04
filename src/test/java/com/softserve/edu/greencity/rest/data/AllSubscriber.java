@@ -5,8 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import com.softserve.edu.greencity.rest.entity.NewsSubscriberAllEntity;
+import com.softserve.edu.greencity.rest.tools.Verifiable;
 
-public class AllSubscriber implements Comparable<AllSubscriber>{
+public class AllSubscriber implements Comparable<AllSubscriber>, Verifiable{
    
     private String email;
     private String unsubscribeToken;
@@ -96,5 +97,10 @@ public class AllSubscriber implements Comparable<AllSubscriber>{
         }
         Collections.sort(result);
         return result;
+    }
+    
+    @Override
+    public boolean isValid() {
+        return (email != null) && (unsubscribeToken != null);
     }
 }

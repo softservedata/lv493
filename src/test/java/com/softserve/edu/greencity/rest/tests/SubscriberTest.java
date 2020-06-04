@@ -17,6 +17,7 @@ import com.softserve.edu.greencity.rest.entity.NewsSubscriberEntity;
 import com.softserve.edu.greencity.rest.entity.NewsSubscriberUnsubscribeEntity;
 import com.softserve.edu.greencity.rest.services.TipsGuestService;
 import com.softserve.edu.greencity.rest.services.TipsTricksService;
+import com.softserve.edu.greencity.rest.tools.VerifyUtils;
 
 public class SubscriberTest extends GreencityRestTestRunner {
  
@@ -82,17 +83,17 @@ public class SubscriberTest extends GreencityRestTestRunner {
                 .successfulUserLogin(user)
                 .gotoTipsTricksService();
        List<AllSubscriber> sub = tipsTricksService.allSubscribers();
-        logger.info("***subscriber = " + sub);
-
+        logger.info("subscriber = " + sub);
+        Assert.assertTrue(VerifyUtils.verifyClass(sub));
     }
     
     @DataProvider
     public Object[][] unsubscribers() {
-        return new Object[][] { { UserRepository.get().getAdminUser(), AllSubscriberRepository.get().random2()}};
+        return new Object[][] { { UserRepository.get().getAdminUser(), AllSubscriberRepository.get().random1()}};
     }
     
     @Test(dataProvider = "unsubscribers")
-    public void getUnsubscribers(User user, AllSubscriber allSubscriber) {
+    public void unsubscribers(User user, AllSubscriber allSubscriber) {
         logger.info("getAllSubscriber(" + user + ")");
         TipsTricksService tipsTricksService = loadApplication()
                 .successfulUserLogin(user)
@@ -100,7 +101,23 @@ public class SubscriberTest extends GreencityRestTestRunner {
         NewsSubscriberUnsubscribeEntity sub = tipsTricksService.getUnscribers(allSubscriber);
         logger.info("***subscriber = " + sub);  
     }
-  
+    
+    @DataProvider
+    public Object[][] unsubscribers1() {
+        return new Object[][] { { UserRepository.get().getAdminUser(), AllSubscriberRepository.get().random2()}};
+    }
+    
+    @Test(dataProvider = "unsubscribers1")
+    public void deleted(User user, AllSubscriber allSubscriber) {
+        logger.info("getAllSubscriber(" + user + ")");
+        TipsTricksService tipsTricksService = loadApplication()
+                .successfulUserLogin(user)
+                .gotoTipsTricksService();
+        NewsSubscriberUnsubscribeEntity sub = tipsTricksService.getUnscribers(allSubscriber);
+        logger.info("***subscriber = " + sub);  
+        Assert.assertEquals(sub.getMessage(),  IgnoreError400.DELETED.toString());
+    }
+    
     @DataProvider
     public Object[][] singleEmail() {
         return new Object[][] { { UserSubscriberRepository.getRandomEmail() } };
