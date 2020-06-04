@@ -7,7 +7,7 @@
         <classes>
             <class name="com.softserve.edu.greencity.rest.tests.EcoNewsTests">
                 <methods>
-                    <include name="checkUploadEconews"/>
+                    <include name="uploadEconews"/>
                     <include name="getNewsById"/>
                     <include name="getNewsByTags"/>
                     <include name="getAllNews"/>
