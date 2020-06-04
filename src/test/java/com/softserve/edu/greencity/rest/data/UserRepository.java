@@ -18,7 +18,7 @@ public final class UserRepository {
 	}
 
 	public User getDefault() {
-		return temporary();
+		return remote();
 	}
 
 	public User temporary () {
@@ -28,8 +28,6 @@ public final class UserRepository {
 	public User remote() {
         return new User("yehaho8104@reqaxv.com", "aaaaaaaa", "1!Aaaaaa");
     }
-//	public User temporary() {
-//		return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
-//	}
+
 
 }

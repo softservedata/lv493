@@ -2,8 +2,8 @@ package com.softserve.edu.greencity.rest.dto;
 
 public final class RestUrlRepository {
 	// TODO Send as Parameter
-//    private static String remoteServer = "https://greencity.azurewebsites.net";
-    private static String remoteServer = "http://localhost:8080";
+    private static String remoteServer = "https://greencity.azurewebsites.net";
+//    private static String remoteServer = "http://localhost:8080";
 
     private RestUrlRepository() {
     }
