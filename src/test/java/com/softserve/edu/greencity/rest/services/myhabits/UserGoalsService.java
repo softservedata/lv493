@@ -149,8 +149,7 @@ public class UserGoalsService extends MyHabitsService {
                .addDirectJsonParameter(new JsonUtils()
                        .entityToJson(GoalsEntity.convertToGoalsEntity(goals, customGoals), GoalsEntity.class));
 
-        return getUserGoalsResource()
-                .httpPostAsListEntity(new MethodParameters()
+        return getUserGoalsResource().httpPostAsListEntity(new MethodParameters()
                         .addHeaderParameters(getHeaderParameters())
                         .addUrlParameters(getLanguageParameter(language))
                         .addPathVariables(getUserIdParameter())
@@ -204,7 +203,6 @@ public class UserGoalsService extends MyHabitsService {
      */
 
     // no response
-    // swagger - only id
     // work correct
 
     @Step("Deselect user goals")

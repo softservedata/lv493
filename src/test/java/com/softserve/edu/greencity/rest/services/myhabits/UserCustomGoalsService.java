@@ -137,6 +137,7 @@ public class UserCustomGoalsService extends MyHabitsService {
      * @return
      */
     @Step("Delete user custom goals")
+    // no response
     public ResponseCodeEntity deleteCustomGoals(List<UserGoalEntity> goals){
         return getUserCustomGoalsResource().httpDeleteAsEntity(new MethodParameters()
                 .addHeaderParameters(getHeaderParameters())
