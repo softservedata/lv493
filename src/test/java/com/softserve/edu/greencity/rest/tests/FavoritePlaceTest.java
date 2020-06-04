@@ -122,7 +122,7 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
     @DataProvider
     public Object[][] updatePlace() {
         return new Object[][]{
-                {UserRepository.get().getAdminUser(), FavoritePlacesRepository.get().getDefaultPlace()}
+                {UserRepository.get().getAdminUser(), FavoritePlacesRepository.get().getUpdatePlace()}
         };
     }
 

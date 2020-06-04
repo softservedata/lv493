@@ -25,15 +25,15 @@ public class FavoritePlacesRepository {
     }
 
     public int getDefault() {
-        return 2;
+        return 3;
     }
 
     public FavoritePlaceEntity getDefaultPlace() {
-        return new FavoritePlaceEntity(2, "My Place");
+        return new FavoritePlaceEntity(3, "My Place");
     }
 
     public FavoritePlaceEntity getUpdatePlace() {
-        return new FavoritePlaceEntity(2, "Victoria Gardens");
+        return new FavoritePlaceEntity(3, "Victoria Gardens");
     }
 
     public String temporary() {
