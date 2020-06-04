@@ -1,5 +1,7 @@
 package com.softserve.edu.greencity.rest.data.econews;
 
+import com.softserve.edu.greencity.rest.entity.econewsEntity.AuthorEntity;
+
 /**
  *
  */
@@ -32,6 +34,7 @@ public class Author {
     public void setName(String name) {
         this.name = name;
     }
+
 
     @Override
     public String toString() {

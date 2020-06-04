@@ -87,9 +87,6 @@ public class EcoNewsGuestService extends GuestService {
                 .addParameter(KeyParameters.SIZE, size)
                 .addParameter(KeyParameters.TAGS, tags.stream().collect(Collectors.joining(",")));
 
-//        for (String currentTag : tags) {
-//            urlParameter.addListParameter(KeyParameters.TAGS, currentTag);
-//        }
         PageEntity newsResponse = econewsTagsResource
                 .httpGetAsEntity(methodParameters
                         .addHeaderParameters(headerParameters)

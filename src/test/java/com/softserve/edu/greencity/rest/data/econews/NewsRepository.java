@@ -26,18 +26,13 @@ public class NewsRepository {
     }
 
     public News temporary() {
-        List<String> tags = new ArrayList<String>();
-        tags.add("news");
-        tags.add("events");
-        return new News("C:\\Users\\mJana\\Documents\\GitHub\\lv493\\src\\test\\resources\\ecobag.jpg", "Reusable shopping bag",
-                "A reusable shopping bag, sometimes called bag-for-life in the UK", "", tags);
+        return new News("Reusable shopping bag", "A reusable shopping bag, sometimes called bag-for-life in the UK",
+                "http://").addTags("events").addTags("news");
     }
 
     public News minSymbolsNews(){
-        List<String> tags = new ArrayList<String>();
-        tags.add("news");
-        return new News("", "1",
-                "12345678901234567890", "http://", tags);
+        return new News("1",
+                "12345678901234567890", "http://").addTags("news");
     }
 
     public News getIntermediateSymbolsNews(){

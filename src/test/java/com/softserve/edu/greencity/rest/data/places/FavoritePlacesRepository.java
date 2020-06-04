@@ -32,6 +32,10 @@ public class FavoritePlacesRepository {
         return new FavoritePlaceEntity(2, "My Place");
     }
 
+    public FavoritePlaceEntity getUpdatePlace() {
+        return new FavoritePlaceEntity(2, "Victoria Gardens");
+    }
+
     public String temporary() {
         return getPlaceId();
     }

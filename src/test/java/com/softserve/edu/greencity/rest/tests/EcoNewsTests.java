@@ -37,7 +37,7 @@ public class EcoNewsTests extends GreencityRestTestRunner {
     public void getAllNews(PageParameters pageParameters) {
         logger.info("Start getAllNews");
         EcoNewsGuestService econewsGuestService = loadApplication()
-                .gotoEconewsGuestService();
+                .gotoEcoNewsGuestService();
         List<News> news = econewsGuestService.getAllNews(pageParameters.getPage(), pageParameters.getSize());
 
         logger.info(news.size() + " news were founded");
@@ -61,7 +61,7 @@ public class EcoNewsTests extends GreencityRestTestRunner {
     public void getNewsByTags(PageParameters pageParameters) {
         logger.info("Start getNewsByTags with " + pageParameters.toStringWithTags());
         EcoNewsGuestService econewsGuestService = loadApplication()
-                .gotoEconewsGuestService();
+                .gotoEcoNewsGuestService();
 
         List<News> news = econewsGuestService.getNewsByTags(pageParameters.getPage(),
                 pageParameters.getSize(), pageParameters.getTags());
@@ -88,10 +88,10 @@ public class EcoNewsTests extends GreencityRestTestRunner {
         logger.info("Start getNewsById(" + newsId + ")");
 
         EcoNewsGuestService econewsGuestService = loadApplication()
-                .gotoEconewsGuestService();
+                .gotoEcoNewsGuestService();
 
         News news = econewsGuestService.getNewsById(String.valueOf(newsId));
-
+        logger.info("Found " +news);
         Assert.assertEquals(news.getId(), newsId);
 
         Assert.assertTrue(news.isValid());
@@ -116,11 +116,11 @@ public class EcoNewsTests extends GreencityRestTestRunner {
      * @param newsUploadProperties
      */
     @Test(dataProvider = "uploadNews", priority = 1)
-    public void checkUploadEconews(User user, NewsUploadProperties newsUploadProperties) {
+    public void uploadEconews(User user, NewsUploadProperties newsUploadProperties) {
         logger.info("Start checkUploadEconews(" + user + ")");
         EcoNewsUserService econewsUserService = loadApplication()
                 .successfulUserLogin(user)
-                .gotoEconewsUserService();
+                .gotoEcoNewsUserService();
         logger.info("logginedUserEntity = "
                 + econewsUserService.getLogginedUserEntity());
         logger.info(newsUploadProperties.getNews().toString());
@@ -140,9 +140,8 @@ public class EcoNewsTests extends GreencityRestTestRunner {
                 "Text fields are not equal");
         softAssert.assertEquals(news.getTitle(), newsUploadProperties.getNews().getTitle(),
                 "Title fields are not equal");
-//        softAssert.assertEquals(news.getSource(), newsUploadProperties.getNews().getSource(),
-//                "Source fields are not equal");
-
+        softAssert.assertEquals(news.getSource(), newsUploadProperties.getNews().getSource(),
+                "Source fields are not equal");
         softAssert.assertAll();
         //https://github.com/ita-social-projects/GreenCity/issues/832
     }
@@ -164,12 +163,12 @@ public class EcoNewsTests extends GreencityRestTestRunner {
         logger.info("Start deleteNews(" + newsId + ")");
         EcoNewsUserService econewsUserService = loadApplication()
                 .successfulUserLogin(user)
-                .gotoEconewsUserService();
+                .gotoEcoNewsUserService();
         logger.info("logginedUserEntity = "
                 + econewsUserService.getLogginedUserEntity());
         Assert.assertEquals(econewsUserService.deleteNews(String.valueOf(newsId)), ResponseCode.RESPONSE200.getValue());
 
-        EcoNewsGuestService econewsGuestService = loadApplication().gotoEconewsGuestService();
+        EcoNewsGuestService econewsGuestService = loadApplication().gotoEcoNewsGuestService();
 
         econewsGuestService.getNewsById(String.valueOf(newsId));
     }
@@ -203,7 +202,7 @@ public class EcoNewsTests extends GreencityRestTestRunner {
         logger.info("Start checkUploadEconews(" + user + ")");
         EcoNewsUserService econewsUserService = loadApplication()
                 .successfulUserLogin(user)
-                .gotoEconewsUserService();
+                .gotoEcoNewsUserService();
         logger.info("logginedUserEntity = "
                 + econewsUserService.getLogginedUserEntity());
 

@@ -212,7 +212,12 @@ public class GuestService {
         return VerifyEmail.converToVerifyEmail(verifyEmailEntity);
     }
 
-    public EcoNewsGuestService gotoEconewsGuestService() {
+    /**
+     * Method go to EcoNewsGuestService
+     *
+     * @return EcoNewsGuestService
+     */
+    public EcoNewsGuestService gotoEcoNewsGuestService() {
         return new EcoNewsGuestService();
     }
 

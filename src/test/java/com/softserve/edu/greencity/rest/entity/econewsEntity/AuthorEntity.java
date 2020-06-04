@@ -39,14 +39,13 @@ public class AuthorEntity {
 		return email;
 	}
 
+	public static Author convertToAuthor(AuthorEntity authorEntity) {
+		return new Author(authorEntity.getId(), authorEntity.getName());
+	}
+
 	@Override
 	public String toString() {
 		return "AuthorEntity [id=" + id + ", name=" + name + ", email=" + email + "]";
 	}
-
-	public static Author convertToAuthor(AuthorEntity authorEntity) {
-		return new Author(authorEntity.getId(), authorEntity.getName());
-	}
-    
 
 }

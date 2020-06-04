@@ -51,13 +51,11 @@ public class LogginedUserService {
     }
 
     private UserDtoEntity getUserDtoEntity() {
-//        userDtoEntity = new UserDtoEntity();
         return userDtoEntity;
     }
 
     // Functionals
 
-    // http://***/googleSecurity?idToken=**" -H "accept: */*" -H "Authorization: Bearer ***"
 
     /**
      * Google security authentication
@@ -108,10 +106,20 @@ public class LogginedUserService {
 
     // Business Logic
 
-    public EcoNewsUserService gotoEconewsUserService() {
+    /**
+     * Method go to EcoNewsUserService
+     *
+     * @return EcoNewsUserService
+     */
+    public EcoNewsUserService gotoEcoNewsUserService() {
         return new EcoNewsUserService(logginedUserEntity);
     }
 
+    /**
+     * Method go to FavoritePlacesService
+     *
+     * @return FavoritePlacesService
+     */
     public FavoritePlacesService gotoFavoritePlacesService() {
         return new FavoritePlacesService(logginedUserEntity);
     }

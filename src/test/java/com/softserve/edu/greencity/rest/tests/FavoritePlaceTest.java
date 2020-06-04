@@ -26,13 +26,14 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
     @DataProvider
     public Object[][] places() {
         return new Object[][]{
-                {UserRepository.get().getAdminUser(), FavoritePlacesRepository.get().getDefaultPlace() }
+                {UserRepository.get().getAdminUser(), FavoritePlacesRepository.get().getDefaultPlace()}
         };
     }
 
     /**
      * Test to Save place as favorite..
      * (CRUD - Create)
+     *
      * @param user
      * @param place
      */
@@ -82,16 +83,17 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
         logger.info("FavoritePlaces = " + favoritePlaces);
 
         Assert.assertTrue(VerifyUtils.verifyClass(favoritePlaces));
-        Assert.assertTrue(favoritePlaces.size()>0);
+        Assert.assertTrue(favoritePlaces.size() > 0);
     }
 
 
     @DataProvider
     public Object[][] placeId() {
         return new Object[][]{
-                {UserRepository.get().getAdminUser(), FavoritePlacesRepository.get().getDefault() }
+                {UserRepository.get().getAdminUser(), FavoritePlacesRepository.get().getDefault()}
         };
     }
+
     /**
      * Test to get favorite place by Place Id
      * (CRUD - Read)
@@ -114,7 +116,14 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
 
         logger.info("placeAboutIdEntity = " + favoritePlaceEntity);
 
-    //    Assert.assertEquals(favoritePlaceEntity., placeId);
+        Assert.assertTrue(favoritePlaceEntity.isValid());
+    }
+
+    @DataProvider
+    public Object[][] updatePlace() {
+        return new Object[][]{
+                {UserRepository.get().getAdminUser(), FavoritePlacesRepository.get().getDefaultPlace()}
+        };
     }
 
     /**
@@ -124,7 +133,7 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
      * @param user
      * @param place
      */
-    @Test(dataProvider = "places", priority = 4)
+    @Test(dataProvider = "updatePlace", priority = 4)
     public void updateFavoritePlace(User user, FavoritePlaceEntity place) {
         logger.info("Start getFavoritePlace(" + user + ")");
         FavoritePlacesService favoritePlacesService = loadApplication()
@@ -134,21 +143,24 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
         logger.info("logginedUserEntity = "
                 + favoritePlacesService.getLogginedUserEntity());
 
+        logger.info("Test data: " + place);
+
         FavoritePlace favoritePlace = favoritePlacesService
-                .updateFavoritePlace(place.getPlaceId(), place.getName()+"la-la");
+                .updateFavoritePlace(place.getPlaceId(), place.getName());
 
         logger.info("placeAboutIDEntity = " + favoritePlace);
 
         Assert.assertTrue(favoritePlace.isValid());
 
-        Assert.assertEquals(favoritePlace.getName(), place.getName()+"la-la");
+        Assert.assertEquals(favoritePlace.getName(), place.getName());
 
     }
 
     /**
      * Test to delete favorite place by Place Id
-     *
+     * <p>
      * (CRUD - Delete)
+     *
      * @param user
      * @param placeId
      */
@@ -158,7 +170,6 @@ public class FavoritePlaceTest extends GreencityRestTestRunner {
         FavoritePlacesService favoritePlacesService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoFavoritePlacesService();
-
         logger.info("Start deleteFavoritePlace(" + placeId + ")");
         ResponseCodeEntity response = favoritePlacesService
                 .deleteFavoritePlace(placeId);
