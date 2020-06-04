@@ -23,6 +23,14 @@ public class NewsSubscriberAllEntity {
         return unsubscribeToken;
     }
     
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public void setUnsubscribeToken(String unsubscribeToken) {
+        this.unsubscribeToken = unsubscribeToken;
+    }
+    
     @Override
     public String toString() {
         return "NewsSubscriberAllEntity [email=" + email 

@@ -2,42 +2,42 @@ package com.softserve.edu.greencity.rest.services;
 
 import java.util.List;
 
-import com.softserve.edu.greencity.rest.data.Advices;
 import com.softserve.edu.greencity.rest.data.AllSubscriber;
 import com.softserve.edu.greencity.rest.data.UserSubscriber;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
 import com.softserve.edu.greencity.rest.dto.RestParameters;
-import com.softserve.edu.greencity.rest.entity.AdvicesRandomEntity;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.NewsSubscriberAllEntity;
 import com.softserve.edu.greencity.rest.entity.NewsSubscriberEntity;
-import com.softserve.edu.greencity.rest.resources.AdvicesRandomResource;
+import com.softserve.edu.greencity.rest.entity.NewsSubscriberUnsubscribeEntity;
 import com.softserve.edu.greencity.rest.resources.NewsSubscriberResource;
-import com.softserve.edu.greencity.ui.data.Languages;
+import com.softserve.edu.greencity.rest.resources.NewsSubscriberUnsubscribeResource;
 
 public class TipsTricksService extends LogginedUserService {
     
     private NewsSubscriberResource subscriberResource;
     private NewsSubscriberAllEntity newsSubscriberAllEntity;
     private NewsSubscriberEntity subscribeEntity;
+    private NewsSubscriberUnsubscribeEntity newsSubscriberUnsubscribeEntity;
     private UserSubscriber userSubscriber;
-    protected AdvicesRandomEntity advicesRandomEntity;
-    private Advices advices;
-    private AdvicesRandomResource advicesRandomResource;
+    private AllSubscriber allSubscriber;
+    private NewsSubscriberUnsubscribeResource newsSubscriberUnsubscribeResource;
+ 
     
     public TipsTricksService(LogginedUserEntity logginedUserEntity) {
         super(logginedUserEntity);
         subscriberResource = new NewsSubscriberResource();
         subscribeEntity = new NewsSubscriberEntity(); 
-        advicesRandomResource = new AdvicesRandomResource();
-        advicesRandomEntity = new AdvicesRandomEntity();
         newsSubscriberAllEntity = new NewsSubscriberAllEntity();
+        newsSubscriberUnsubscribeResource = new NewsSubscriberUnsubscribeResource();
     }
 
-    // getters
 
+    
+    // getters
+    
     public NewsSubscriberResource getSubscriberResource() {
         return subscriberResource;
     }
@@ -48,27 +48,29 @@ public class TipsTricksService extends LogginedUserService {
     
     public UserSubscriber getUserSubcribe() {
         return userSubscriber;
-    }
-    
-    public AdvicesRandomResource getAdvicesRandomResource() {
-        return advicesRandomResource;
-    }
-    
-    public AdvicesRandomEntity getAdvicesRandomEntity() {
-        return advicesRandomEntity;
-    }
-    
-    public Advices getAdvices() {
-        return advices;
-    }
+    }   
     
     public NewsSubscriberAllEntity getNewsSubscriberAllEntity() {
         return newsSubscriberAllEntity;
     }
-
     
+    public NewsSubscriberUnsubscribeEntity getNewsSubscriberUnsubscribeEntity() {
+        return newsSubscriberUnsubscribeEntity;
+    }
+    
+    public NewsSubscriberUnsubscribeResource getNewsSubscriberUnsubscribeResource() {
+        return newsSubscriberUnsubscribeResource;
+    }
+    
+    public AllSubscriber getAllSubscriber() {
+        return allSubscriber;
+    }
+      
     // Functionals
-
+    /**
+     * POST
+     * subscribeEntity use to subscribe a new email for news
+     */
     public NewsSubscriberEntity subscribeEntity(UserSubscriber userSubscriber) {
         MethodParameters methodParameters = new MethodParameters()
                 .addContentType(ContentTypes.APPLICATION_JSON);
@@ -80,7 +82,6 @@ public class TipsTricksService extends LogginedUserService {
         
         RestParameters mediaTypeParameters = new RestParameters()
                 .addParameter(KeyParameters.EMAIL, userSubscriber.getEmail());
-//        System.out.println("**** user = " + userSubscriber.getEmail());
 
         NewsSubscriberEntity subscriberEntity = subscriberResource
                     .httpPostAsEntity(methodParameters
@@ -90,6 +91,11 @@ public class TipsTricksService extends LogginedUserService {
         return subscriberEntity;
     }
  
+    /**
+     * POST
+     * faultySubscriber for faulty email or exist subscriber
+     */
+    
     public  NewsSubscriberEntity faultySubscriber(UserSubscriber userSubscriber) {
         List<NewsSubscriberEntity> faultySubscriber;
         MethodParameters methodParameters = new MethodParameters()
@@ -111,6 +117,11 @@ public class TipsTricksService extends LogginedUserService {
         return faultySubscriber.get(0);
     }
     
+    /**
+     * GET 
+     * getSubscribers for get all news subscribers. This method uses only Admin
+     */
+    
     public List<NewsSubscriberAllEntity> getSubscribers() {
         MethodParameters methodParameters = new MethodParameters();
                 
@@ -121,40 +132,44 @@ public class TipsTricksService extends LogginedUserService {
         
         List<NewsSubscriberAllEntity> getSubscrbers = subscriberResource
                 .httpGetAsListEntity(methodParameters
-                        .addHeaderParameters(headerParameters));
-
+                .addHeaderParameters(headerParameters));
+        
          return getSubscrbers;
     }
     
     public List<AllSubscriber> allSubscribers() {
         return AllSubscriber.converToAllSubscriberList(getSubscribers());
-    }
-
-    public List<AdvicesRandomEntity> advice(Languages language, Advices habitId) {
-        
-        MethodParameters methodParameters = new MethodParameters();
+   }
+   
+    /**
+     * DELETE subscriber. This method uses only Admin
+     */
+    
+    public NewsSubscriberUnsubscribeEntity getUnscribers(AllSubscriber allSubscriber ){
        
+        MethodParameters methodParameters = new MethodParameters();
+        
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString()) 
                 .addParameter(KeyParameters.AUTHORIZATION,
                         KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
         
-        RestParameters pathVariables = new RestParameters()
-                .addParameter(KeyParameters.HABIT_ID, String.valueOf(getAdvicesRandomEntity().getId()));
-        
         RestParameters urlParameters = new RestParameters()
-                .addParameter(KeyParameters.LANGUAGE, language.toString());
-
-        List<AdvicesRandomEntity> advice =  advicesRandomResource
-                 .httpGetAsListEntity(methodParameters
-                 .addPathVariables(pathVariables)
-                 .addUrlParameters(urlParameters)
-                 .addHeaderParameters(headerParameters));
-       
-       System.out.println("***advice = " + advice);
+                .addParameter(KeyParameters.EMAIL, allSubscriber.getEmail())
+                .addParameter(KeyParameters.UNSUBSCRIBE_TOKEN, allSubscriber.getUnsubscribeToken());
         
-        return advice;
+       NewsSubscriberUnsubscribeEntity unscribers = newsSubscriberUnsubscribeResource
+                .httpGetAsEntity(methodParameters
+                .addUrlParameters(urlParameters)
+                .addHeaderParameters(headerParameters));
+        
+        return unscribers;
     }
+
+
+        
+        
+
     
 
     // Business Logic

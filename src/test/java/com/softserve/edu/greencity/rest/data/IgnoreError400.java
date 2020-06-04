@@ -9,7 +9,8 @@ public enum IgnoreError400 {
     BLANK_FIELD("must not be blank"), 
     ALREADY_REGISTERED("User with this email is already registered"),
     VERIFY_EMAIL("No any email to verify by this token"),
-    GOOGLE_SECURITY("No message available");
+    GOOGLE_SECURITY("No message available"),
+    Ba_Id("The name does not exist by this id");
 
     private String message;
 

@@ -2,7 +2,8 @@ package com.softserve.edu.greencity.rest.data;
 
 public enum IgnoreError403 {
 
-    MESSAGE("message");
+    MESSAGE("message"),
+    FORBIDDEN ("You don't have authorities.");
 
     private String message;
 

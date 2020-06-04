@@ -82,6 +82,7 @@ public class AllSubscriber implements Comparable<AllSubscriber>{
         return "AllSubscriber [email=" + email 
                 +" unsubscribeToken="+ unsubscribeToken +"]";
     }
+    
     //static factory
     
     public static AllSubscriber converToAllSubscriber(NewsSubscriberAllEntity newsSubscriberAllEntity) {

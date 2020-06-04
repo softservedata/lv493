@@ -32,4 +32,7 @@ public class GuestService {
 		return new LogginedUserService(logginedUserEntity);
 	}
     
+    public TipsGuestService gotoTipsTricksGuestService() {
+        return new TipsGuestService();
+    }
 }

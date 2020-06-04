@@ -30,6 +30,7 @@ public enum KeyParameters {
     PLACE_STATUS("status"),
     HABIT_ID("habitId"),
     CONTENT_TYPE("Content-Type"),
+    UNSUBSCRIBE_TOKEN("unsubscribeToken"),
 
     //places
     DISCOUNT_DTO("discountDto"),
