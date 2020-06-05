@@ -46,9 +46,15 @@ public enum KeyParameters {
     HABIT_STATISTIC_ID("habitStatisticId"),
     AMOUNT_OF_ITEMS("amountOfItems"),
     HABIT_RATE("habitRate"),
-    CREATED_ON("createdOn");
+    CREATED_ON("createdOn"),
+    //
+    UNSUBSCRIBE_TOKEN("unsubscribeToken");
 
-
+    
+    
+    
+    
+    
     private String key;
 
     private KeyParameters(String key) {
