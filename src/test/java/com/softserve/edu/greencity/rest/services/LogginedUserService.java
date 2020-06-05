@@ -76,10 +76,8 @@ public class LogginedUserService {
     }
 
     // http://***/googleSecurity?idToken=**" -H "accept: */*" -H "Authorization: Bearer ***"
-
     /**
      * Google security authentication
-     *
      * @return GoogleSecurityEntity
      */
     public GoogleSecurityEntity googleSecurity() {
@@ -90,21 +88,26 @@ public class LogginedUserService {
         //
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
-                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() 
+                             + getLogginedUserEntity().getAccessToken());
         //
         RestParameters urlParameters = new RestParameters()
                 .addParameter(KeyParameters.ID_TOKEN, String.valueOf(getLogginedUserEntity().getUserId()));
         //
+        logger.trace("send REST POST request for Google security authentication");
         GoogleSecurityEntity googleSecurityEntity = googleSecurityResource
-                .httpGetAsEntity(methodParameters.addUrlParameters(urlParameters).addHeaderParameters(headerParameters));
-        // System.out.println("***googleSecurityEntity = " +
-        // googleSecurityEntity);
+                .httpGetAsEntity(methodParameters
+                        .addUrlParameters(urlParameters)
+                        .addHeaderParameters(headerParameters));
+        //
+        logger.trace("got REST POST response: " + googleSecurityEntity);
+        logger.info("got REST POST response: " + googleSecurityEntity);
         return googleSecurityEntity;
     }
 
     //"http://***/user" -H "accept: */*" -H "Authorization: Bearer ***"
     /**
-     * User Dto Email Notification.
+     * Getting User Dto Email Notification.
      * @return UserDtoEntity
      */
     public UserDtoEntity userDtoEmailNotification() {
@@ -116,11 +119,16 @@ public class LogginedUserService {
         //
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
-                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() 
+                             + getLogginedUserEntity().getAccessToken());
         //
+        logger.trace("send REST POST request for getting User Dto Email Notification");
         UserDtoEntity userDtoEntity = userDtoResource
-                .httpGetAsEntity(methodParameters.addHeaderParameters(headerParameters));
+                .httpGetAsEntity(methodParameters
+                        .addHeaderParameters(headerParameters));
         //
+        logger.trace("got REST POST response: " + userDtoEntity);
+        logger.info("got REST POST response: " + userDtoEntity);
         return userDtoEntity;
     }
 

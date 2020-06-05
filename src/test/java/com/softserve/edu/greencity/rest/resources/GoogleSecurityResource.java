@@ -9,6 +9,9 @@ import com.softserve.edu.greencity.rest.entity.GoogleSecurityEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
+/**
+ * GoogleSecurityResource class. Includes only a GET method.
+ */
 public class GoogleSecurityResource extends
         RestQueries<GoogleSecurityEntity, ResponseCodeEntity, 
                     ResponseCodeEntity, ResponseCodeEntity, 

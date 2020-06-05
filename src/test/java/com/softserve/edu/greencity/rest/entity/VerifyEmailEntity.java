@@ -1,36 +1,56 @@
 package com.softserve.edu.greencity.rest.entity;
 
+/**
+ * VerifyEmail entity class.
+ */
 public class VerifyEmailEntity {
 
     private String message;
     private String status;
     private String token;
-    private String user_id;
+    private int user_id;
 
+    /**
+     * Default constructor.
+     */
     public VerifyEmailEntity() {
         this.message = "";
         this.status = "";
         this.token = "";
-        this.user_id = "";
+        this.user_id = -1;
     }
 
+    /**
+     * Constructor.
+     * @param text String
+     */
     public VerifyEmailEntity(String text) {
         this.message = text;
         this.status = "";
         this.token = "";
-        this.user_id = "";
+        this.user_id = -1;
     }
-    
-    public VerifyEmailEntity(String token, String user_id) {
+
+    /**
+     * Constructor.
+     * @param token String
+     * @param user_id int
+     */
+    public VerifyEmailEntity(String token, int user_id) {
         this.message = "";
         this.status = "";
         this.token = token;
         this.user_id = user_id;
     }
-    
-    
 
-    public VerifyEmailEntity(String message, String status, String token, String user_id) {
+    /**
+     * Constructor.
+     * @param message String
+     * @param status String
+     * @param token String
+     * @param user_id int
+     */
+    public VerifyEmailEntity(String message, String status, String token, int user_id) {
         this.message = message;
         this.status = status;
         this.token = token;
@@ -49,7 +69,7 @@ public class VerifyEmailEntity {
         return token;
     }
 
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 

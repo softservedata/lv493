@@ -1,5 +1,8 @@
 package com.softserve.edu.greencity.rest.entity;
 
+/**
+ * GoogleSecurity entity class.
+ */
 public class GoogleSecurityEntity {
 
     private int id;
@@ -18,6 +21,11 @@ public class GoogleSecurityEntity {
         this.ownRegistrations = false;
     }
     
+    /**
+     * Default constructor.
+     * @param text String
+     * @param status String
+     */
     public GoogleSecurityEntity(String text, String status) {
         this.id = -1;
         this.name = "";
@@ -28,6 +36,14 @@ public class GoogleSecurityEntity {
         this.status = status;
     }
 
+    /**
+     * Constructor.
+     * @param id int
+     * @param name String
+     * @param accessToken String
+     * @param refreshToken String
+     * @param ownRegistrations boolean
+     */
     public GoogleSecurityEntity(int id, String name, String accessToken,
             String refreshToken, boolean ownRegistrations) {
         this.id = id;

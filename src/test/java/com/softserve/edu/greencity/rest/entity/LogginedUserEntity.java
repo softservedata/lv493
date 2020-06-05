@@ -6,7 +6,9 @@ public class LogginedUserEntity {
 	private String refreshToken;
 	private String name;
 	private boolean ownRegistrations;
-
+	//
+	private String message;
+	
 	public LogginedUserEntity() {
 		userId = -1;
 		accessToken = "";
@@ -24,6 +26,10 @@ public class LogginedUserEntity {
 		this.name = name;
 		this.ownRegistrations = ownRegistrations;
 	}
+	
+	public LogginedUserEntity(String message) {
+        this.message = message;
+    }
 
 	public int getUserId() {
 		return userId;
@@ -54,5 +60,9 @@ public class LogginedUserEntity {
 				+ name + ", ownRegistrations="
 				+ ownRegistrations + "]";
 	}
+	
+	public String getMessage() {
+        return message;
+    }
 	
 }

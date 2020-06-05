@@ -9,7 +9,9 @@ public enum IgnoreError400 {
     BLANK_FIELD("must not be blank"), 
     ALREADY_REGISTERED("User with this email is already registered"),
     VERIFY_EMAIL("No any email to verify by this token"),
-    GOOGLE_SECURITY("No message available");
+    GOOGLE_SECURITY("No message available"),
+    REGISTRATION_WITH_EMPTY_PARAMETERS_1("must not be blank"),
+    REGISTRATION_WITH_EMPTY_PARAMETERS_2("Password has contain at least");
 
     private String message;
 

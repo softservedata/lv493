@@ -9,6 +9,10 @@ import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.VerifyEmailEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
+/**
+ * VerifyEmailResource class for verification user mail. Includes only a GET
+ * method. !!! Changes a condition of the user.
+ */
 public class VerifyEmailResource
         extends RestQueries<VerifyEmailEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity, ResponseCodeEntity> {
 

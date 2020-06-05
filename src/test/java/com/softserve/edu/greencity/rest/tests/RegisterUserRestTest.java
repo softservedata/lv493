@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.rest.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.rest.data.User;
@@ -9,6 +10,8 @@ import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.entity.RegisterUserEntity;
 import com.softserve.edu.greencity.rest.services.LogginedUserService;
 import com.softserve.edu.greencity.ui.data.Languages;
+
+import io.qameta.allure.Description;
 
 /**
  * Registration new user with a random name and email address from a temporary
@@ -32,6 +35,10 @@ public class RegisterUserRestTest extends GreencityRestRegisterTestRunner {
      * @param languages Enum
      * @throws Exception need delay for transfer state 'verify email'
      */
+    @Description("Test of successful user registration and verify a user logging.")
+//  @Story("---")
+//  @Step("---")
+    @Parameters({"User credentials", "languages"})
     @Test(dataProvider = "validCredentialUser")
     public void checkRegistrationREST(User userLoginCredentials, Languages languages) throws Exception {
         logger.info("start test checkRegistrationREST with user = " + userLoginCredentials.toString());

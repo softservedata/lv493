@@ -10,6 +10,9 @@ import com.softserve.edu.greencity.rest.entity.RegisterUserEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
+/**
+ * SignUpResource class for user registration. Includes only a POST method.
+ */
 public class SignUpResource extends RestQueries<ResponseCodeEntity, 
                             RegisterUserEntity, ResponseCodeEntity, 
                             ResponseCodeEntity, ResponseCodeEntity> {
