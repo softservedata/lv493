@@ -14,7 +14,7 @@ public class NewsSubscriberUnsubscribeResource  extends RestQueries<NewsSubscrib
                             ResponseCodeEntity, ResponseCodeEntity,
                             ResponseCodeEntity, ResponseCodeEntity> {
 
-    protected NewsSubscriberUnsubscribeResource() {
+    public NewsSubscriberUnsubscribeResource() {
         super(RestUrlRepository.getNewsSubscriberUnsubscribe());
         initParameters();
         
