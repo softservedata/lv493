@@ -4,6 +4,7 @@ public enum KeyParameters {
 
 	EMAIL("email"),
     PASSWORD("password"),
+    CONFIRM_PASSWORD("confirmPassword"),
     ACCEPT("accept"),
     AUTHORIZATION("Authorization"),
     LANGUAGE("language"),

@@ -29,7 +29,7 @@ public final class UserRepository {
 	
 
 	public User temporaryInvalidEmail() {
-		return new User("xdknxusqvpfk@awdrt.com", "temp", "Temp#001");
+		return new User("xdknxusqvpfk@awdrt.com", "temp", "Tempпше згдд#001");
 	}
 	
 	public User temporary2() {
@@ -66,7 +66,26 @@ public final class UserRepository {
 	 public User ashot() {
          return new User("acheuusdukwyhuhfab@ttirv.com", "ashot", "QwertY12!");
      }
-	 
+	/**
+	 * User Credentials for checking email
+	 * email "usertest4228501@gmail.com";
+	 * name "Qwerty42?"
+	 * password "Qwerty42?".
+	 * @return UserData
+	 */
+	public User emailUserCredentials() {
+		return new User("usertest4228501@gmail.com", "Qwerty42?", "Qwerty42?");
+	}
+	/**
+	 * Not exist user credentials
+	 * email "xdknxowpfk@awdrt.com";
+	 * name "temp"
+	 * password "Tem#001".
+	 * @return UserData
+	 */
+	public User wrongUserCredentials() {
+		return new User("xdknxowpfk@awdrt.com", "temp", "Tem#001");
+	}
 	 
 
 }
