@@ -6,7 +6,7 @@
     <test name="Test01a">
         <classes>
             <!-- Test for registration -->
-            <class name="com.softserve.edu.greencity.rest.tests.LoginTest" />git
+            <class name="com.softserve.edu.greencity.rest.tests.LoginTest" />
         </classes>
     </test> <!-- Test -->
 
