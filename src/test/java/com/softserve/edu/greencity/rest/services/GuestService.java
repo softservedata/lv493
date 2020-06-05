@@ -694,4 +694,8 @@ public class GuestService {
     public PlacesGuestService gotoPlacesGuestService() {
         return new PlacesGuestService();
     }
+    
+    public TipsGuestService gotoTipsTricksGuestService() {
+        return new TipsGuestService();
+    }
 }
