@@ -1,7 +1,5 @@
 package com.softserve.edu.greencity.rest.tests;
 
-import java.util.List;
-
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -25,7 +23,7 @@ public class AdvicesTest extends GreencityRestTestRunner {
         TipsTricksService tipsTricksService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoTipsTricksService();
-        List<AdvicesRandomEntity> adv =  tipsTricksService.advice(language, habitId);
+        AdvicesRandomEntity adv =  tipsTricksService.advice(language, habitId);
         System.out.println("***adv= " + adv);
     }
 

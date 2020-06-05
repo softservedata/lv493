@@ -7,13 +7,17 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.rest.data.AllSubscriber;
+import com.softserve.edu.greencity.rest.data.AllSubscriberRepository;
 import com.softserve.edu.greencity.rest.data.IgnoreError400;
 import com.softserve.edu.greencity.rest.data.User;
 import com.softserve.edu.greencity.rest.data.UserRepository;
 import com.softserve.edu.greencity.rest.data.UserSubscriber;
 import com.softserve.edu.greencity.rest.data.UserSubscriberRepository;
 import com.softserve.edu.greencity.rest.entity.NewsSubscriberEntity;
+import com.softserve.edu.greencity.rest.entity.NewsSubscriberUnsubscribeEntity;
+import com.softserve.edu.greencity.rest.services.TipsGuestService;
 import com.softserve.edu.greencity.rest.services.TipsTricksService;
+import com.softserve.edu.greencity.rest.tools.VerifyUtils;
 
 public class SubscriberTest extends GreencityRestTestRunner {
  
@@ -78,9 +82,53 @@ public class SubscriberTest extends GreencityRestTestRunner {
         TipsTricksService tipsTricksService = loadApplication()
                 .successfulUserLogin(user)
                 .gotoTipsTricksService();
-        List<AllSubscriber> sub = tipsTricksService.allSubscribers();
-        logger.info("***subscriber = " + sub);
-
+       List<AllSubscriber> sub = tipsTricksService.allSubscribers();
+        logger.info("subscriber = " + sub);
+        Assert.assertTrue(VerifyUtils.verifyClass(sub));
     }
+    
+    @DataProvider
+    public Object[][] unsubscribers1() {
+        return new Object[][] { { UserRepository.get().getAdminUser(), AllSubscriberRepository.get().random2()}};
+    }
+    
+    @Test(dataProvider = "unsubscribers1")
+    public void deleted(User user, AllSubscriber allSubscriber) {
+        logger.info("getAllSubscriber(" + user + ")");
+        TipsTricksService tipsTricksService = loadApplication()
+                .successfulUserLogin(user)
+                .gotoTipsTricksService();
+        NewsSubscriberUnsubscribeEntity sub = tipsTricksService.getUnscribers(allSubscriber);
+        logger.info("***subscriber = " + sub);  
+        Assert.assertEquals(sub.getMessage(),  IgnoreError400.DELETED.toString());
+    }
+    @DataProvider
+    public Object[][] singleEmail() {
+        return new Object[][] { { UserSubscriberRepository.getRandomEmail() } };
+    }
+    
+    @Test(dataProvider = "singleEmail")
+    public void notlogginedUser(UserSubscriber userSubscriber) {
+        logger.info("notlogginedUser " + userSubscriber);
+        TipsGuestService tipsGuestService = loadApplication()
+                .gotoTipsTricksGuestService();
+        Assert.assertEquals(tipsGuestService.withoutLogging(userSubscriber).getEmail(), userSubscriber.getEmail());       
+        
+    }
+    @DataProvider
+    public Object[][] existEmail1() {
+        return new Object[][] { { UserSubscriberRepository.getSingleEmail() } };
+    }
+    
+    @Test(dataProvider = "existEmail1")
+    public void existNotLogginedUser(UserSubscriber userSubscriber) {
+        logger.info("notlogginedUser " + userSubscriber);
+        TipsGuestService tipsGuestService = loadApplication()
+                .gotoTipsTricksGuestService();
+        NewsSubscriberEntity sub = tipsGuestService.withoutLogging(userSubscriber);
+        Assert.assertEquals(sub.getMessage(), IgnoreError400.EXIST_EMAIL.toString());       
+    }
+
+    
     
 }
