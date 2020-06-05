@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.rest.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.softserve.edu.greencity.rest.data.LanguagesCode;
 import com.softserve.edu.greencity.rest.dto.ContentTypes;
 import com.softserve.edu.greencity.rest.dto.KeyParameters;
 import com.softserve.edu.greencity.rest.dto.MethodParameters;
@@ -14,6 +15,9 @@ import com.softserve.edu.greencity.rest.entity.UserDtoEntity;
 import com.softserve.edu.greencity.rest.resources.GoogleSecurityResource;
 import com.softserve.edu.greencity.rest.resources.UserDtoResource;
 import com.softserve.edu.greencity.rest.resources.places.PlacesResource;
+import com.softserve.edu.greencity.rest.services.habitstatistic.HabitStatisticService;
+import com.softserve.edu.greencity.rest.services.habitstatistic.TodayHabitStatisticService;
+import com.softserve.edu.greencity.rest.services.myhabits.MyHabitsService;
 
 public class LogginedUserService {
 
@@ -59,6 +63,17 @@ public class LogginedUserService {
     }
 
     // Functionals
+
+    protected RestParameters getHeaderParameters() {
+        return new RestParameters()
+                .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
+                .addParameter(KeyParameters.AUTHORIZATION, KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
+    }
+
+    protected RestParameters getLanguageParameter(LanguagesCode language) {
+        return new RestParameters()
+                .addParameter(KeyParameters.LANGUAGE, String.valueOf(language));
+    }
 
     // http://***/googleSecurity?idToken=**" -H "accept: */*" -H "Authorization: Bearer ***"
 
@@ -110,14 +125,11 @@ public class LogginedUserService {
     }
 
     // Business Logic
-    public MyhabitsService gotoMyhabitsService() {
-        return new MyhabitsService(logginedUserEntity);
-    }
 
     public EconewsUserService gotoEconewsUserService() {
         return new EconewsUserService(logginedUserEntity);
     }
-	
+
 	public PlacesService gotoPlacesService() {
         return new PlacesService(logginedUserEntity);
     }
@@ -128,6 +140,26 @@ public class LogginedUserService {
 
     public FavoritePlacesService gotoFavoritePlacesService() {
         return new FavoritePlacesService(logginedUserEntity);
+    }
+
+    public MyHabitsService gotoMyhabitsService() {
+        return new MyHabitsService(logginedUserEntity);
+    }
+
+    public HabitStatisticService gotoHabitStatisticService() {
+        return new HabitStatisticService(logginedUserEntity);
+    }
+
+    public TodayHabitStatisticService gotoTodayHabitStatisticService() {
+        return new TodayHabitStatisticService(logginedUserEntity);
+    }
+
+    public AchievementService gotoAchievementService() {
+        return new AchievementService(logginedUserEntity);
+    }
+
+    public GoalsService gotoGoalsService() {
+        return new GoalsService(logginedUserEntity);
     }
 }
 

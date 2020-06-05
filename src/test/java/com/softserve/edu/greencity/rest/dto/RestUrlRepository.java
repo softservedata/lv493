@@ -11,7 +11,7 @@ public final class RestUrlRepository {
     public static RestUrl getDefault() {
     	return getSignin();
     }
-    
+
     public static RestUrl getSignin() {
 
         return new RestUrl()
@@ -23,7 +23,7 @@ public final class RestUrlRepository {
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
-    
+
     public static RestUrl getSignUp() {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
@@ -35,16 +35,6 @@ public final class RestUrlRepository {
                 .addPatchUrl("");
     }
 
-    public static RestUrl getUserGoals() {
-        return new RestUrl()
-                .addBaseUrl(remoteServer)
-                .addGetUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/goals")
-                .addPostUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/goals")
-                .addPutUrl("")
-                .addDeleteUrl("")
-                .addPatchUrl("");
-    }
-    
     // http://***/googleSecurity?idToken=**" -H "accept: */*" -H "Authorization: Bearer ***"
     public static RestUrl getGoogleSecurity() {
         return new RestUrl()
@@ -56,7 +46,7 @@ public final class RestUrlRepository {
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
-    
+
     // http://***/ownSecurity/verifyEmail?token=***&user_id=***" -H "accept: */*
     public static RestUrl getVerifyEmail() {
         return new RestUrl()
@@ -68,7 +58,7 @@ public final class RestUrlRepository {
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
-    
+
     //"http://***/user" -H "accept: */*" -H "Authorization: Bearer ***"
     public static RestUrl getUserDto() {
         return new RestUrl()
@@ -80,7 +70,7 @@ public final class RestUrlRepository {
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
-    
+
 // EcoNews ---------------------------------------------------------------------
 
     public static RestUrl getAllTags() {
@@ -92,7 +82,7 @@ public final class RestUrlRepository {
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
-    
+
     public static RestUrl getRecentlyCreatedNews() {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
@@ -153,7 +143,7 @@ public final class RestUrlRepository {
     }
 
     //Places ---------------------------------------------------------------------
-    
+
     public static RestUrl getPlacesByStatus() {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
@@ -163,7 +153,7 @@ public final class RestUrlRepository {
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
-	
+
 	// https://***/place/about/1 -H "accept: */*" -H "Authorization: Bearer **"
     public static RestUrl getPlaceAbouId() {
         return new RestUrl()
@@ -175,7 +165,7 @@ public final class RestUrlRepository {
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
-    
+
     public static RestUrl getPlacesByPredicate() {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
@@ -185,7 +175,7 @@ public final class RestUrlRepository {
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
-    
+
     public static RestUrl getPlaceInfoId() {
         return new RestUrl()
                 .addBaseUrl(remoteServer)
@@ -195,7 +185,7 @@ public final class RestUrlRepository {
                 .addDeleteUrl("")
                 .addPatchUrl("");
     }
-    
+
 
     //Favorite Places ---------------------------------------------------------------------
     public static RestUrl favoritePlaces() {
@@ -256,4 +246,96 @@ public final class RestUrlRepository {
 
    }
 
+   // User Goals ---------------------------------------------------------------------
+
+   public static RestUrl getUserGoals() {
+       return new RestUrl()
+               .addBaseUrl(remoteServer)
+               .addGetUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/goals")
+               .addGetUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/goals/available")
+               .addPostUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/goals")
+               .addPutUrl("")
+               .addDeleteUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/userGoals")
+               .addPatchUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/goals/{" + KeyParameters.GOAL_ID.toString() + "}");
+   }
+
+   public static RestUrl getCustomUserGoals() {
+       return new RestUrl()
+               .addBaseUrl(remoteServer)
+               .addGetUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/customGoals")
+               .addGetUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/customGoals/available")
+               .addPostUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/customGoals")
+               .addPutUrl("")
+               .addDeleteUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/customGoals")
+               .addPatchUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/customGoals");
+   }
+
+   // All goals ---------------------------------------------------------------------
+
+   public static RestUrl getAllGoals() { // Admin
+       return new RestUrl()
+               .addBaseUrl(remoteServer)
+               .addGetUrl("/goals")
+               .addPostUrl("")
+               .addPutUrl("")
+               .addDeleteUrl("")
+               .addPatchUrl("");
+   }
+
+   // Achievement ---------------------------------------------------------------------
+
+   public static RestUrl getAchievement() { // Admin
+       return new RestUrl()
+               .addBaseUrl(remoteServer)
+               .addGetUrl("/achievements")
+               .addPostUrl("")
+               .addPutUrl("")
+               .addDeleteUrl("")
+               .addPatchUrl("");
+   }
+
+   // Habits Statistic ---------------------------------------------------------------------
+
+   public static RestUrl getHabitStatistic() { // Admin
+       return new RestUrl()
+               .addBaseUrl(remoteServer)
+               .addGetUrl("/habit/statistic/{" + KeyParameters.HABIT_ID + "}")
+               .addPostUrl("/habit/statistic/")
+               .addPutUrl("")
+               .addDeleteUrl("")
+               .addPatchUrl("/habit/statistic/{" + KeyParameters.HABIT_STATISTIC_ID + "}");
+   }
+
+   public static RestUrl getTodayHabitStatistic() {
+       return new RestUrl()
+               .addBaseUrl(remoteServer)
+               .addGetUrl("/habit/statistic/todayStatisticsForAllHabitItems")
+               .addPostUrl("")
+               .addPutUrl("")
+               .addDeleteUrl("")
+               .addPatchUrl("");
+   }
+
+   // User habits ---------------------------------------------------------------------
+
+   public static RestUrl getUserHabits() {
+       return new RestUrl()
+               .addBaseUrl(remoteServer)
+               .addGetUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/habits")
+               .addGetUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/habit-dictionary/available")
+               .addPostUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/habit")
+               .addPutUrl("")
+               .addDeleteUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/habit/{" + KeyParameters.HABIT_ID + "}")
+               .addPatchUrl("");
+   }
+
+   public static RestUrl getUserHabitsStatistic() {
+       return new RestUrl()
+               .addBaseUrl(remoteServer)
+               .addGetUrl("/user/{" + KeyParameters.USER_ID.toString() + "}/habits/statistic")
+               .addPostUrl("")
+               .addPutUrl("")
+               .addDeleteUrl("")
+               .addPatchUrl("");
+   }
 }

@@ -2,6 +2,8 @@ package com.softserve.edu.greencity.rest.engine;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,15 +127,42 @@ public abstract class RestCrud {
         return url;
     }
 
+    @SuppressWarnings("unchecked")
+    private String prepareObjectJson(Map<KeyParameters, Object> objectParameters) {
+        String result = new String();
+        for (KeyParameters currentKey : objectParameters.keySet()) {
+            Object value = objectParameters.get(currentKey);
+            if (value == null) {
+                continue;
+            }
+            result = result + "\"" + String.valueOf(currentKey)+ "\":";
+            if (value instanceof String) {
+                result = result + "\"" + value + "\",";
+            } if (value instanceof Integer) {
+                result = result + value + ",";
+            } else if (value instanceof List) {
+                result = result + "[";
+                for (String currentString : (List<String>)value) {
+                    result = result + "\""+ currentString + "\",";
+                }
+                if (result.charAt(result.length() - 1) == ',') {
+                    result = result.substring(0, result.length() - 1);
+                }
+                result = result + "],";
+            } else if (value instanceof Map) {
+                result = result + "{";
+                result = result + prepareObjectJson((Map<KeyParameters, Object>) value);
+                if (result.length() == 1) {
+                    result = result + ",";
+                }
+                result = result.substring(0, result.length() -1) + "},";
+            }
+        }
+        return result;
+    }
+
     private String prepareJson(RestParameters parameters) {
-		/*
-		 * String json = ""; //
-		 * System.out.println(parameters.getListParameter().get(0)); if
-		 * (parameters.getListParameter() != null) { System.out.println("parameters" +
-		 * parameters.getListParameter().size()); json =
-		 * parameters.getListParameter().get(0); }else {
-		 */
-// TODO Use Serialization from Entity
+     // TODO Use Serialization from Entity
         String json = "{";
         if (parameters != null) {
             for (KeyParameters currentKey : parameters.getAllParameters().keySet()) {
@@ -148,23 +177,30 @@ public abstract class RestCrud {
             for (KeyParameters currentKey : parameters.getAllListParameters().keySet()) {
                 json = json + "\"" + String.valueOf(currentKey) + "\":[";
                 for (String currentString : parameters.getListParameter(currentKey)) {
-                    json = json + "\"" + currentString + "\",";
+                    json = json + "\""+ currentString + "\",";
                 }
                 if (json.charAt(json.length() - 1) == ',') {
                     json = json.substring(0, json.length() - 1);
                 }
                 json = json + "],";
             }
+            //
+            json = json + prepareObjectJson(parameters.getObjectParameters());
+            //
             if (json.length() == 1) {
                 json = json + ",";
             }
-            json = json.substring(0, json.length() - 1) + "}";
+            json = json.substring(0, json.length() -1) + "}";
+            //
+            if (parameters.getDirectJsonParameter() != null) {
+                json = parameters.getDirectJsonParameter();
+            }
+            //
             if (json.length() < 3) { // TODO
                 throwException("prepareJson()");
             }
         }
-    	
-        System.out.println("+++RestGrud json = " + json);
+        //System.out.println("+++RestGrud json = " + json);
         return json;
     }
 
@@ -209,7 +245,7 @@ public abstract class RestCrud {
                 ? prepareRequestBodyMediaType(methodParameters.getContentType(), methodParameters.getMediaTypeParameters())
                 : prepareRequestBody(methodParameters.getBodyParameters());
 	}
-	
+
 	private Request.Builder prepareHeader(Request.Builder builder, RestParameters headerParameters) {
 		if (headerParameters != null) {
 			for (KeyParameters currentKey : headerParameters.getAllParameters().keySet()) {
@@ -218,7 +254,7 @@ public abstract class RestCrud {
 		}
 		return builder;
 	}
-	
+
 	// Request - - - - - - - - - - - - - - - - - - - -
 
     private Request.Builder prepareRequestBuilder(String requestUrl, RestParameters pathVariables,

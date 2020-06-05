@@ -29,7 +29,6 @@ public enum KeyParameters {
 	ADVICE_ID("adviceId"),
     PLACE_ID("id"),
 	PLACE_STATUS("status"),
-    HABIT_ID("habitId"),
     CONTENT_TYPE("Content-Type"),
 
     //places
@@ -38,9 +37,18 @@ public enum KeyParameters {
     MAP_BOUNDS_DTO ("mapBoundsDto"),
     SEARCH_REG ("searchReg"),
     STATUS ("status"),
-    TIME ("time");
+    TIME ("time"),
+    //
+    GOAL_ID("goalId"),
+    IDS("ids"),
+    FACT_ID("factId"),
+    HABIT_ID("habitId"),
+    HABIT_STATISTIC_ID("habitStatisticId"),
+    AMOUNT_OF_ITEMS("amountOfItems"),
+    HABIT_RATE("habitRate"),
+    CREATED_ON("createdOn");
 
-	
+
     private String key;
 
     private KeyParameters(String key) {
