@@ -9,7 +9,7 @@ import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.TagsEntity;
 import com.softserve.edu.greencity.rest.tools.GenericConverter;
 
-public class TagsResurse extends RestQueries<String, ResponseCodeEntity,
+public class TagsResurse extends RestQueries<TagsEntity, ResponseCodeEntity,
 		ResponseCodeEntity, ResponseCodeEntity, 
 		ResponseCodeEntity> {
 
@@ -19,7 +19,7 @@ public class TagsResurse extends RestQueries<String, ResponseCodeEntity,
 	}
 
 	private void initParameters() {
-		addEntityParameters(RestHttpMethods.GET, String.class );
+		addEntityParameters(RestHttpMethods.GET, TagsEntity.class );
 		addEntityParameters(RestHttpMethods.POST, ResponseCodeEntity.class);
 		addEntityParameters(RestHttpMethods.PUT, ResponseCodeEntity.class);
 		addEntityParameters(RestHttpMethods.DELETE, ResponseCodeEntity.class);

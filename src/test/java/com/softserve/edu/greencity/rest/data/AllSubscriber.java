@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import com.softserve.edu.greencity.rest.entity.NewsSubscriberAllEntity;
-import com.softserve.edu.greencity.rest.tools.Verifeible;
+import com.softserve.edu.greencity.rest.tools.Verifiable;
 
-public class AllSubscriber implements Comparable<AllSubscriber>, Verifeible {
+public class AllSubscriber implements Comparable<AllSubscriber>, Verifiable {
    
     private String email;
     private String unsubscribeToken;

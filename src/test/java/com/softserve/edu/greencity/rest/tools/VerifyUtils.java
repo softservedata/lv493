@@ -11,7 +11,7 @@ public class VerifyUtils {
 	public static  boolean verifyClass(List<?> list) {
 		boolean result = true;
 		
-		for(Verifeible current : (List<Verifeible>)list) {
+		for(Verifiable current : (List<Verifiable>)list) {
 			result = result && current.isValid();
 			if (!result) {
 				break;

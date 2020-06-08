@@ -32,5 +32,9 @@ public class NewsRepository {
         return new News("C:\\Users\\mJana\\Documents\\GitHub\\lv493\\src\\test\\resources\\ecobag.jpg", "Reusable shopping bag",
                 "A reusable shopping bag, sometimes called bag-for-life in the UK", "", tags, null );
     }
+    
+    public ExpectedResponce getResponceCode() {
+        return new ExpectedResponce(200);
+    }
 
 }

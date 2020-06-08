@@ -3,7 +3,9 @@ package com.softserve.edu.greencity.rest.entity.econewsEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsEntity {
+import com.softserve.edu.greencity.rest.tools.Verifiable;
+
+public class NewsEntity implements Verifiable {
     private int id;
     private String creationDate;
     private String imagePath;
@@ -99,4 +101,16 @@ public class NewsEntity {
     public void setTags(List<String> tags) {
         this.tags = tags;
     }
+    
+    @Override
+	public String toString() {
+		return "NewsEntity [id=" + id + ", creationDate=" + creationDate + ", imagePath=" + imagePath + ", title="
+				+ title + ", text=" + text + ", source=" + source + ", author=" + author + ", tags=" + tags + "]";
+	}
+
+	@Override
+	public boolean isValid() {
+		
+		return (id != 0 ) && (creationDate != null) && (title != null) && (author != null);
+	}
 }

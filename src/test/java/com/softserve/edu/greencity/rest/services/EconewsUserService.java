@@ -10,6 +10,7 @@ import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.NewsEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.PageEntity;
+import com.softserve.edu.greencity.rest.entity.econewsEntity.TagsEntity;
 import com.softserve.edu.greencity.rest.resources.econews.*;
 
 import java.util.ArrayList;
@@ -49,7 +50,6 @@ public class EconewsUserService extends LogginedUserService {
 
     // Functionals
 
-    //	public List<NewsItems> getNewsEntity() {
     public List<NewsEntity> getNewsEntity() {
         MethodParameters methodParameters = new MethodParameters();
         RestParameters headerParameters = new RestParameters()
@@ -61,18 +61,16 @@ public class EconewsUserService extends LogginedUserService {
                 .httpGetAsListEntity(methodParameters
                         .addHeaderParameters(headerParameters));
 
-        System.out.println("***newsEntities = " + newsEntities);
-//		return NewsItems.converToNewsItemsList(newsEntities);
         return newsEntities;
     }
-
-    public String getTags() {
+    
+    public TagsEntity getTags() {
         MethodParameters methodParameters = new MethodParameters();
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
                 .addParameter(KeyParameters.AUTHORIZATION,
                         KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
-        String tagsEntity = tagsResurse
+        TagsEntity tagsEntity = tagsResurse
                 .httpGetAsEntity(methodParameters
                         .addHeaderParameters(headerParameters));
 
@@ -92,10 +90,7 @@ public class EconewsUserService extends LogginedUserService {
                 .httpGetAsEntity(methodParameters
                         .addUrlParameters(urlParameters)
                         .addHeaderParameters(headerParameters));
-        //   			.httpGetAsListEntity(methodParameters
-        //   					.addHeaderParameters(headerParameters));
-        System.out.println("***pageEntity = " + pageEntity);
-//		return NewsItems.converToNewsItemsList(newsEntities);
+       
         return pageEntity;
     }
 
@@ -145,23 +140,5 @@ public class EconewsUserService extends LogginedUserService {
     // Business Logic
 
     
-    // TODO
-//    public NewsEntity uploadNews() {
-//        MethodParameters methodParameters = new MethodParameters()
-//                .addContentType(ContentTypes.IMAGE_JPEG)
-//                .addFormDataPartKey(KeyParameters.ECO_NEWS_DTO);
-//        FileUploadParameters fileUploadParameters = new FileUploadParameters("image", "@111.jpg", "D:\\Title1.jpeg");
-//        RestParameters formDataPartParameters = new RestParameters()
-//                .addParameter(KeyParameters.IMAGE_PATH, "string0")
-//                .addParameter(KeyParameters.SOURCE, "string1")
-//                .addParameter(KeyParameters.TAGS, "news")
-//                .addParameter(KeyParameters.TEXT, "string12345string1234500044")
-//                .addParameter(KeyParameters.TITLE, "string2");
-//        NewsEntity newsEntity = econewsResource
-//                .httpPostAsEntity(methodParameters
-//                        .addFileUploadParameters(fileUploadParameters)
-//                        .addFormDataPartParameters(formDataPartParameters));
-//        return newsEntity;
-//    }
 
 }

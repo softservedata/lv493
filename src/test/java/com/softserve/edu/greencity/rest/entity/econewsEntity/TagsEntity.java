@@ -3,32 +3,57 @@ package com.softserve.edu.greencity.rest.entity.econewsEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class contains information about tagd
+ * @author lv-493
+ *
+ */
 public class TagsEntity {
 
-    private String tag;
-
+    private List<String> tags;
+	private int responsecode;
+   
     public TagsEntity() {
-        tag = "";
+    	 tags = new ArrayList<String>();
     }
+    
+	public TagsEntity(List<String> tags, int responsecode) {
 
-    public TagsEntity(String tag) {
-        this.tag = tag;
-    }
+		this.tags = tags;
+		this.responsecode = responsecode;
+	}
+	
+	//getters
+	
+	public int getResponsecode() {
+		return responsecode;
+	}
 
-    public String getTag() {
-        return tag;
-    }
+	public List<String> getTags() {
+		return tags;
+	}
 
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
+	@Override
+	public String toString() {
+		return "TagsEntity [tags=" + tags + ", responsecode=" + responsecode + "]";
+	}
 
-    @Override
-    public String toString() {
-        return "TagsEntity [tags=" + tag + "]";
-    }
+	
+	
+	
+    
+	
+    
+
+   
+
+   
+
+    
+
 
 }
+	
 	
 	
 	
