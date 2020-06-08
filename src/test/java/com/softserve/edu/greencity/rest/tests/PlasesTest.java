@@ -1,5 +1,10 @@
 package com.softserve.edu.greencity.rest.tests;
 
+/**
+ * Class contain test for places page
+ * @author lv-493
+ *
+ */
 import org.junit.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
@@ -18,7 +23,7 @@ import com.softserve.edu.greencity.rest.entity.places.PlaceEntity;
 import com.softserve.edu.greencity.rest.entity.places.PlaceInfoEntity;
 import com.softserve.edu.greencity.rest.services.PlacesGuestService;
 import com.softserve.edu.greencity.rest.services.PlacesService;
-import com.softserve.edu.greencity.rest.tools.VerifyUtils;
+
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;

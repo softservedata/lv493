@@ -45,6 +45,8 @@ public class PlacesService extends LogginedUserService {
         return placePredicateRsourse;
     }
 	
+    //functionall
+    
 	public PageEntity getPlasesByStatus(PageParameters pageParameters, PlaceStatus status) {
 		MethodParameters methodParameters = new MethodParameters();
 		RestParameters headerParameters = new RestParameters()
@@ -80,8 +82,6 @@ public class PlacesService extends LogginedUserService {
 				.addObjectParameter(KeyParameters.STATUS, "PROPOSED")
 				.addObjectParameter(KeyParameters.TIME, "29/05/2020 23:06:22");
 
-//        		.addParameter(KeyParameters.STATUS, "APPROVED")
-//        		.addParameter(KeyParameters.TIME, "29/05/2020 23:06:22");
 		RestParameters headerParameters = new RestParameters()
 				.addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
 				.addParameter(KeyParameters.AUTHORIZATION,

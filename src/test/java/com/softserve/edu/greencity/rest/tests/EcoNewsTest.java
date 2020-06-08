@@ -25,7 +25,11 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 
-
+/**
+ * Class contain test for eco news page
+ * @author lv-493
+ *
+ */
 public class EcoNewsTest extends GreencityRestTestRunner {
 	
 	@DataProvider
