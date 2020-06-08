@@ -3,8 +3,9 @@ package com.softserve.edu.greencity.rest.entity.places;
 import java.util.List;
 
 import com.softserve.edu.greencity.rest.entity.econewsEntity.AuthorEntity;
+import com.softserve.edu.greencity.rest.tools.Verifiable;
 
-public class PlaceEntity {
+public class PlaceEntity implements Verifiable {
 
 	private int id;
 	private String name;
@@ -79,5 +80,9 @@ public class PlaceEntity {
 					+ ", modifiedDate=" + modifiedDate + "]";
 		}
 
-		
+	@Override
+	public boolean isValid() {
+		return (id > -1) && (name != null)
+				&& (name.length() > 0) && (location != null);
+	}
 }

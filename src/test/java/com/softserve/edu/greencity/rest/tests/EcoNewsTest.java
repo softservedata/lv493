@@ -16,7 +16,7 @@ import com.softserve.edu.greencity.rest.data.econews.PageParameters;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.NewsEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.PageEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.TagsEntity;
-import com.softserve.edu.greencity.rest.services.EconewsUserService;
+import com.softserve.edu.greencity.rest.services.EcoNewsUserService;
 import com.softserve.edu.greencity.rest.tools.VerifyUtils;
 
 import io.qameta.allure.Description;
@@ -56,9 +56,9 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 	public void checkAllTags(User user, ExpectedResponce expectedResponce) {
 		
 		logger.info("Start checkAllTags(" + user + ")");
-		EconewsUserService tagsService = loadApplication()
+		EcoNewsUserService tagsService = loadApplication()
 				.successfulUserLogin(user)
-				.gotoEconewsUserService();
+				.gotoEcoNewsUserService();
 		
 		TagsEntity tagsEntity = tagsService.getTags();
 
@@ -79,9 +79,9 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 	public void checkFreshNews(User user) {
 		
 		logger.info("Start test checkFreshNews(" + user + ")");
-		EconewsUserService newsService = loadApplication()
+		EcoNewsUserService newsService = loadApplication()
 				.successfulUserLogin(user)
-				.gotoEconewsUserService();
+				.gotoEcoNewsUserService();
 		
 		List<NewsEntity> newsEntity = newsService.getNewsEntity();
 		logger.info("newsEntity" + newsEntity);
@@ -103,9 +103,9 @@ public class EcoNewsTest extends GreencityRestTestRunner {
 		
 		logger.info("Start checkFreshNews(" + user + ")");
 		
-		EconewsUserService pageService = loadApplication()
+		EcoNewsUserService pageService = loadApplication()
 				.successfulUserLogin(user)
-				.gotoEconewsUserService();
+				.gotoEcoNewsUserService();
 		
 		PageEntity pageEntity = pageService.getPageEntity(pageParameters);
 		logger.info("pageEntity" + pageEntity );

@@ -14,12 +14,18 @@ import com.softserve.edu.greencity.rest.resources.econews.NewsByIdResource;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EconewsGuestService extends GuestService {
+/**
+ * EcoNewsGuestService class implements methods from Eco News Controller
+ * which are for unauthorized user
+ *
+ * @author Mariana
+ */
+public class EcoNewsGuestService extends GuestService {
     protected EconewsResource econewsResource;
     protected EconewsTagsResource econewsTagsResource;
     protected NewsByIdResource newsByIdResource;
 
-    public EconewsGuestService() {
+    public EcoNewsGuestService() {
         super();
         econewsResource = new EconewsResource();
         econewsTagsResource = new EconewsTagsResource();
@@ -38,11 +44,16 @@ public class EconewsGuestService extends GuestService {
         return newsByIdResource;
     }
 
-    public List<News> getAllNews(String page, String size) { // available for guest
+    /**
+     * Method to find all eco news by page.
+     *
+     * @param page
+     * @param size
+     *
+     * @return List<News>
+     */
+    public List<News> getAllNews(String page, String size) {
         MethodParameters methodParameters = new MethodParameters();
-
-        RestParameters pathVariables = new RestParameters()
-                .addParameter(KeyParameters.ID, "");
 
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString());
@@ -52,12 +63,20 @@ public class EconewsGuestService extends GuestService {
         PageEntity newsResponse = econewsResource
                 .httpGetAsEntity(methodParameters
                         .addHeaderParameters(headerParameters)
-                        .addUrlParameters(urlParameter)
-                        .addPathVariables(pathVariables));
+                        .addUrlParameters(urlParameter));
         return News.converToNewsList(newsResponse.getPage());
     }
 
-    public List<News> getNewsByTags(String page, String size, List<String> tags) { // available for guest
+    /**
+     * Method to get eco news by tags.
+     *
+     * @param page
+     * @param size
+     * @param tags
+     *
+     * @return List<News>
+     */
+    public List<News> getNewsByTags(String page, String size, List<String> tags) {
         MethodParameters methodParameters = new MethodParameters();
 
         RestParameters headerParameters = new RestParameters()
@@ -68,8 +87,6 @@ public class EconewsGuestService extends GuestService {
                 .addParameter(KeyParameters.SIZE, size)
                 .addParameter(KeyParameters.TAGS, tags.stream().collect(Collectors.joining(",")));
 
-        System.out.println(urlParameter.getParameter(KeyParameters.TAGS));
-
         PageEntity newsResponse = econewsTagsResource
                 .httpGetAsEntity(methodParameters
                         .addHeaderParameters(headerParameters)
@@ -77,8 +94,14 @@ public class EconewsGuestService extends GuestService {
         return News.converToNewsList(newsResponse.getPage());
     }
 
-
-    public News getNewsById(String id) { // available for guest
+    /**
+     * Method to get eco news by id.
+     *
+     * @param id
+     *
+     * @return News
+     */
+    public News getNewsById(String id) {
         MethodParameters methodParameters = new MethodParameters();
 
         RestParameters pathVariables = new RestParameters()
@@ -91,6 +114,6 @@ public class EconewsGuestService extends GuestService {
                 .httpGetAsEntity(methodParameters
                         .addHeaderParameters(headerParameters)
                         .addPathVariables(pathVariables));
-        return News.converToNews(news);
+        return News.convertToNews(news);
     }
 }

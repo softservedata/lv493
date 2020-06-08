@@ -134,8 +134,13 @@ public class LogginedUserService {
 
     // Business Logic
 
-    public EconewsUserService gotoEconewsUserService() {
-        return new EconewsUserService(logginedUserEntity);
+    /**
+     * Method go to EcoNewsUserService
+     *
+     * @return EcoNewsUserService
+     */
+    public EcoNewsUserService gotoEcoNewsUserService() {
+        return new EcoNewsUserService(logginedUserEntity);
     }
 
 	public PlacesService gotoPlacesService() {
@@ -146,6 +151,11 @@ public class LogginedUserService {
         return new TipsTricksService(logginedUserEntity);
     }
 
+    /**
+     * Method go to FavoritePlacesService
+     *
+     * @return FavoritePlacesService
+     */
     public FavoritePlacesService gotoFavoritePlacesService() {
         return new FavoritePlacesService(logginedUserEntity);
     }

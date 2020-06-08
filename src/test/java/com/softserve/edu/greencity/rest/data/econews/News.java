@@ -5,9 +5,11 @@ import com.softserve.edu.greencity.rest.entity.econewsEntity.NewsEntity;
 import com.softserve.edu.greencity.rest.tools.Verifiable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class News implements Verifiable {
+    private int id;
     private String imagePath;
     private String title;
     private String text;
@@ -15,16 +17,47 @@ public class News implements Verifiable {
     private List<String> tags;
     private Author author;
 
+    public News() {
+        this.id = -1;
+        this.imagePath = "";
+        this.title = "";
+        this.text = "";
+        this.source = "";
+        this.tags = new ArrayList<>();
+        this.author = new Author();
+    }
+
     public News(String imagePath, String title, String text, String source) {
+        this.id = -1;
         this.imagePath = imagePath;
         this.title = title;
         this.text = text;
         this.source = source;
-        tags = new ArrayList<String>();
-        // this.author = author;
+        this.tags = new ArrayList<>();
+        this.author = new Author();
     }
 
-    public News(String imagePath, String title, String text, String source, List<String> tags, Author author) {
+    public News(String title, String text, String source) {
+        this.id = -1;
+        this.imagePath = "";
+        this.title = title;
+        this.text = text;
+        this.source = source;
+        this.tags = new ArrayList<>();
+        this.author = new Author();
+    }
+
+    public News(String imagePath, String title, String text, String source, List<String> tags) {
+        this.imagePath = imagePath;
+        this.title = title;
+        this.text = text;
+        this.source = source;
+        this.tags = tags;
+    }
+
+    public News(int id, String imagePath, String title, String text,
+                String source, List<String> tags, Author author) {
+        this.id = id;
         this.imagePath = imagePath;
         this.title = title;
         this.text = text;
@@ -33,7 +66,11 @@ public class News implements Verifiable {
         this.author = author;
     }
 
-// setters
+    // setters
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
@@ -63,7 +100,12 @@ public class News implements Verifiable {
     public void setAuthor(Author author) {
         this.author = author;
     }
-// getters
+
+    // getters
+
+    public int getId() {
+        return id;
+    }
 
     public String getImagePath() {
         return imagePath;
@@ -82,6 +124,7 @@ public class News implements Verifiable {
     }
 
     public List<String> getTags() {
+        Collections.sort(tags);
         return tags;
     }
 
@@ -91,34 +134,35 @@ public class News implements Verifiable {
 
     // static factory
 
-    public static News converToNews(NewsEntity newsEntity) {
-        return new News(newsEntity.getImagePath(), newsEntity.getTitle(),
+    public static News convertToNews(NewsEntity newsEntity) {
+        return new News(newsEntity.getId(), newsEntity.getImagePath(), newsEntity.getTitle(),
                 newsEntity.getText(), newsEntity.getSource(), newsEntity.getTags(), AuthorEntity.convertToAuthor(newsEntity.getAuthor()));
     }
 
     public static List<News> converToNewsList(List<NewsEntity> newsEntities) {
         List<News> result = new ArrayList<>();
         for (NewsEntity newsEntity : newsEntities) {
-            result.add(converToNews(newsEntity));
+            result.add(convertToNews(newsEntity));
         }
         return result;
     }
 
-
     @Override
     public String toString() {
-        return "\n **News = " +
-                "imagePath='" + imagePath + '\'' +
+        return "News: " +
+                "id=" + id +
+                ", imagePath='" + imagePath + '\'' +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", source='" + source + '\'' +
                 ", tags=" + tags +
-                ", author=" + author + ";";
+                ", author=" + author + "\n";
     }
 
     @Override
     public boolean isValid() {
-        return (title != null) && (title.length() > 0 )
+        return (id > -1)
+                &&(title != null) && (title.length() > 0 )
                 &&(text != null) && (text.length() > 0 )
                 &&(tags != null) && (tags.size() > 0 );
     }

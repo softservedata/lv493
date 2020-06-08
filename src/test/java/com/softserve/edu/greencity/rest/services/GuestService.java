@@ -687,14 +687,15 @@ public class GuestService {
         return resultGC541Data;
     }
 
-    public EconewsGuestService gotoEconewsGuestService() {
-        return new EconewsGuestService();
+    /**
+     * Method go to EcoNewsGuestService
+     *
+     * @return EcoNewsGuestService
+     */
+    public EcoNewsGuestService gotoEcoNewsGuestService() {
+        return new EcoNewsGuestService();
     }
-    
-    public PlacesGuestService gotoPlacesGuestService() {
-        return new PlacesGuestService();
-    }
-    
+
     public TipsGuestService gotoTipsTricksGuestService() {
         return new TipsGuestService();
     }

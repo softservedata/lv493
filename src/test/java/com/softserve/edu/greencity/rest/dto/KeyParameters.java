@@ -28,6 +28,7 @@ public enum KeyParameters {
     ID("id"),
 	ADVICE_ID("adviceId"),
     PLACE_ID("id"),
+    FAVOURITE_PLACE_ID("placeId"),
 	PLACE_STATUS("status"),
     CONTENT_TYPE("Content-Type"),
 

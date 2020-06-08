@@ -1,10 +1,8 @@
 package com.softserve.edu.greencity.rest.services;
 
 
+import com.softserve.edu.greencity.rest.data.econews.*;
 import com.softserve.edu.greencity.rest.data.econews.FileUploadParameters;
-import com.softserve.edu.greencity.rest.data.econews.FileUploadProperties;
-import com.softserve.edu.greencity.rest.data.econews.News;
-import com.softserve.edu.greencity.rest.data.econews.PageParameters;
 import com.softserve.edu.greencity.rest.dto.*;
 import com.softserve.edu.greencity.rest.entity.LogginedUserEntity;
 import com.softserve.edu.greencity.rest.entity.ResponseCodeEntity;
@@ -13,24 +11,27 @@ import com.softserve.edu.greencity.rest.entity.econewsEntity.PageEntity;
 import com.softserve.edu.greencity.rest.entity.econewsEntity.TagsEntity;
 import com.softserve.edu.greencity.rest.resources.econews.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-
-public class EconewsUserService extends LogginedUserService {
+/**
+ * EcoNewsUserService class implements methods from Eco News Controller
+ * which are available only for authorized user
+ *
+ */
+public class EcoNewsUserService extends LogginedUserService {
 
     private NewestNewsResource newestNewsResource;
     private TagsResurse tagsResurse;
     private PageResourse pageResource;
-    protected EconewsResource econewsResource;
+    protected EconewsResource ecoNewsResource;
     protected EconewsTagsResource econewsTagsResource;
 
-    public EconewsUserService(LogginedUserEntity logginedUserEntity) {
+    public EcoNewsUserService(LogginedUserEntity logginedUserEntity) {
         super(logginedUserEntity);
         newestNewsResource = new NewestNewsResource();
         tagsResurse = new TagsResurse();
         pageResource = new PageResourse();
-        econewsResource = new EconewsResource();
+        ecoNewsResource = new EconewsResource();
         econewsTagsResource = new EconewsTagsResource();
     }
 
@@ -95,7 +96,14 @@ public class EconewsUserService extends LogginedUserService {
     }
 
 
-    public int deleteNews(String id) { // available only for admin
+    /**
+     * Method to delete eco news by id.
+     *
+     * @param id
+     *
+     * @return int responseCode
+     */
+    public int deleteNews(String id) {
         RestParameters pathVariables = new RestParameters()
                 .addParameter(KeyParameters.ECONEWS_ID, id);
 
@@ -105,37 +113,48 @@ public class EconewsUserService extends LogginedUserService {
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
                 .addParameter(KeyParameters.AUTHORIZATION,
                         KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
-        ResponseCodeEntity responseCode = econewsResource
+        ResponseCodeEntity responseCode = ecoNewsResource
                 .httpDeleteAsEntity(methodParameters
                         .addHeaderParameters(headerParameters)
                         .addPathVariables(pathVariables));
         return responseCode.getResponsecode();
     }
 
-    public News uploadNews(FileUploadProperties fileUploadProperties) {
+    /**
+     * Method to add new eco news.
+     *
+     * @param newsUploadProperties
+     *
+     * @return News
+     */
+    public News uploadNews(NewsUploadProperties newsUploadProperties) {
         MethodParameters methodParameters = new MethodParameters()
                 .addContentType(ContentTypes.IMAGE_JPEG)
                 .addFormDataPartKey(KeyParameters.ECO_NEWS_DTO);
-        FileUploadParameters fileUploadParameters = fileUploadProperties.getFileUploadParameters();
+        FileUploadParameters fileUploadParameters = newsUploadProperties.getFileUploadParameters();
+
         RestParameters formDataPartParameters = new RestParameters()
-                .addParameter(KeyParameters.IMAGE_PATH, fileUploadProperties.getNews().getImagePath())
-                .addParameter(KeyParameters.SOURCE, fileUploadProperties.getNews().getSource())
-                //.addListParameter(KeyParameters.TAGS, "news")
-                .addParameter(KeyParameters.TEXT, fileUploadProperties.getNews().getText())
-                .addParameter(KeyParameters.TITLE, fileUploadProperties.getNews().getTitle());
-        for (String currentTag : fileUploadProperties.getNews().getTags()) {
+                .addParameter(KeyParameters.IMAGE_PATH, newsUploadProperties.getNews().getImagePath())
+                .addParameter(KeyParameters.SOURCE, newsUploadProperties.getNews().getSource())
+                .addParameter(KeyParameters.TEXT, newsUploadProperties.getNews().getText())
+                .addParameter(KeyParameters.TITLE, newsUploadProperties.getNews().getTitle());
+
+        for (String currentTag : newsUploadProperties.getNews().getTags()) {
             formDataPartParameters.addListParameter(KeyParameters.TAGS, currentTag);
         }
         RestParameters headerParameters = new RestParameters()
                 .addParameter(KeyParameters.ACCEPT, ContentTypes.ALL_TYPES.toString())
                 .addParameter(KeyParameters.AUTHORIZATION,
                         KeyParameters.BEARER.toString() + getLogginedUserEntity().getAccessToken());
-        NewsEntity newsEntity = econewsResource
+        NewsEntity newsEntity = ecoNewsResource
                 .httpPostAsEntity(methodParameters
                         .addFileUploadParameters(fileUploadParameters)
                         .addFormDataPartParameters(formDataPartParameters)
                         .addHeaderParameters(headerParameters));
-        return News.converToNews(newsEntity);
+
+        NewsIdRepository.get().addNewsId(newsEntity.getId());
+
+        return News.convertToNews(newsEntity);
     }
     // Business Logic
 
